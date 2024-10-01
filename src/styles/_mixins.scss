@@ -1,0 +1,125 @@
+@mixin rowflex ($align, $just){
+    display: flex;
+    flex-direction: row;
+    align-items: $align;
+    justify-content: $just;
+}
+  
+@mixin rowRevflex ($align, $just){
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: $align;
+    justify-content: $just;
+}
+
+@mixin colflex ($align, $just){
+    display: flex;
+    flex-direction: column;
+    align-items: $align;
+    justify-content: $just;
+}
+@mixin revcolflex ($align, $just){
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: $align;
+    justify-content: $just;
+}
+
+@mixin rowflexx ($align){
+    display: flex;
+    flex-direction: row;
+    align-items: $align;
+}
+@mixin rowflexxx ($align){
+    display: flex;
+    flex-direction: row;
+    align-items: $align;
+    justify-content: space-between;
+
+}
+
+@mixin colflexx ($align){
+    display: flex;
+    flex-direction: column;
+    align-items: $align;
+}
+@mixin colflexxx ($align){
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: $align;
+}
+
+// font styles
+
+@mixin font($fs, $lh, $color) {
+    font-size: $fs;
+    line-height: $lh;
+    color: $color;
+    font-style: normal;
+    font-family: 'plus jakarta sans', sans-serif;
+    
+}
+
+@mixin fontMain($fs, $lh, $color) {
+    font-size: $fs;
+    line-height: $lh;
+    color: $color;
+    font-style: normal;
+    font-family: 'rubik', sans-serif;
+
+}
+@mixin fontLight($fs, $lh, $color) {
+    @include font($fs, $lh, $color);
+    font-weight: 100;
+}
+
+@mixin fontNormal($fs, $lh, $color) {
+    @include font($fs, $lh, $color);
+    font-weight: 300;
+}
+
+@mixin fontMedium($fs, $lh, $color) {
+    @include font($fs, $lh, $color);
+    font-weight: 400;
+}
+
+@mixin fontSemiBold($fs, $lh, $color) {
+    @include font($fs, $lh, $color);
+    font-weight: 600;
+}
+
+@mixin fontBold($fs, $lh, $color) {
+    @include font($fs, $lh, $color);
+    font-weight: 700;
+}
+
+@mixin fontBlack($fs, $lh, $color) {
+    @include font($fs, $lh, $color);
+    font-weight: 900;
+}
+
+/*********************
+BREAKPOINTS
+*********************/
+
+@mixin breakpoint($point) {
+    @if $point == desktop {
+        @media (min-width: 70em) { @content ; }
+    }
+
+    @else if $point == laptop {
+        @media (min-width: 64em) { @content ; }
+    }
+
+    @else if $point == tablet {
+        @media (min-width: 800px) and (max-width: 1224px) {@content;} 
+    }
+
+    @else if $point == phablet {
+        @media (min-width: 600px) and (max-width: 800px) { @content; }
+    }
+
+    @else if $point == mobileonly {
+        @media (min-width: 300px) and (max-width: 600px) { @content; }
+    }
+}

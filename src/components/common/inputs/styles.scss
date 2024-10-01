@@ -1,0 +1,255 @@
+@import "../../../styles/variables.scss";
+
+.PhoneInput {
+  width: 100%;
+  background-color: #fff !important;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 0px !important;
+
+  *.PhoneInputCountry {
+    width: 80px !important;
+    padding: 0px !important;
+    padding-left: 15px !important;
+    padding-right: 5px !important;
+    background-color: $neutral-200 !important;
+    border: 0.5px solid $neutral-400;
+    border-radius: 5px;
+    margin-right: 20px;
+  }
+  &.PhoneInput *.PhoneInputInput {
+    margin-left: -10px !important;
+    width: 100% !important;
+    height: 40px;
+    position: relative;
+    padding-left: 16px;
+    border-radius: 5px;
+    outline: 0.5px solid $neutral-800 !important ;
+    @include fontNormal(1em, 1em, $neutral-600);
+
+    @include breakpoint(mobileonly) {
+      height: 45px;
+    }
+    @include breakpoint(tablet) {
+      height: 40px;
+    }
+
+    &:focus {
+      border: 0.5px solid $main-800;
+      outline: 0.5px solid $main-800;
+      background-color: $main-100;
+      color: $main-901;
+
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      color: $neutral-800;
+    }
+  }
+  *.PhoneInputCountryIcon.PhoneInputCountryIcon--border {
+    width: 30px !important;
+    height: 30px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+
+    svg {
+      width: 100px !important;
+      height: 100px !important;
+      margin-top: 5px !important;
+      margin-right: 10px !important;
+    }
+  }
+  *select {
+    min-height: 50px !important;
+  }
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+input[type="number"] {
+  -moz-appearance: textfield !important;
+}
+.select-input {
+  .select-box {
+    width: 100%;
+  }
+
+  .select {
+    width: 100% !important;
+    outline: none;
+    height: fit-content;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 0px;
+    position: relative;
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    padding-bottom: 0px;
+    // -webkit-appearance:none !important;
+
+    // @include fontNormal(1em, 1em, $gray-600);
+
+    @include breakpoint(mobileonly) {
+      width: 100% !important;
+      height: fit-content;
+    }
+    @include breakpoint(tablet) {
+      width: 100% !important;
+      height: fit-content;
+    }
+
+    @include breakpoint(phablet) {
+      width: 100% !important; //250PX
+    }
+
+    &:active {
+      // border: .5px solid $main-700;
+      // background-color: $main-100;
+      color: $main-901;
+      outline: none;
+    }
+    &:focus {
+      border: 0.5px solid $main-700;
+      background-color: $main-100;
+      color: $main-901;
+      outline: none !important;
+    }
+
+    option:first-child {
+      // border-top-style: 1px solid $gray-500;
+      border-bottom-style: 1px solid $gray-500;
+    }
+    *:focus {
+      outline: none;
+    }
+    option {
+      z-index: 9999 !important;
+      float: left;
+      @include rowflexx(flex-start);
+      display: flex !important;
+      // @include fontMedium(.75em, 1em, $main-901);
+      font-size: 0.75em !important;
+      background-color: #fff;
+      border-bottom-style: 1px solid $gray-500;
+
+      &:hover {
+        background-color: $main-600;
+        border-bottom-style: 1px solid $main-700;
+      }
+    }
+  }
+}
+
+// cdkeditor
+
+.ck-editor {
+  width: 100% !important;
+  background-color: transparent !important;
+  outline: none !important;
+  border: 0.8px solid $neutral-700 !important;
+  border-radius: 5px;
+
+  div {
+    box-shadow: none !important;
+  }
+
+  &:focus {
+    border: 0.8px solid $main-600 !important;
+    background-color: $main-100 !important;
+  }
+
+  &__top {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 5px !important;
+
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+  &__main {
+    outline: none !important;
+  }
+
+  &__editable {
+    border-radius: 0px 0px 5px 5px !important;
+    height: fit-content !important;
+    border: 0.8px solid $main-100 !important;
+    padding: 5px 1.2em !important;
+    // padding-left: 25px !important;
+    p,
+    ul,
+    li {
+      font-weight: 200 !important;
+      @include fontNormal(1em, 1.4em, $main-901);
+    }
+
+    &:focus {
+      border: 0.8px solid $main-300 !important;
+      background-color: #f8f9ff !important;
+      box-shadow: none !important;
+
+      p {
+        color: $main-901 !important;
+      }
+    }
+  }
+
+  .ck-button {
+    @include fontNormal(3em, 1em, $neutral-700);
+    svg {
+      color: $neutral-700 !important;
+    }
+    &:hover {
+      background-color: $main-100 !important;
+      svg {
+        color: $main-700 !important;
+      }
+    }
+  }
+  .ck-on {
+    background-color: $main-600 !important;
+    svg {
+      color: $main-100 !important;
+    }
+  }
+}
+
+.ck-toolbar_grouping {
+  background-color: #f8f9ff !important;
+  border: none !important;
+  border-radius: 5px 5px 0px 0px !important;
+}
+.ck-powered-by {
+  display: none !important;
+}
+
+// date picker
+
+.react-calendar {
+  z-index: 999999 !important;
+}
+
+button.react-calendar__tile--active {
+  background-color: $main-700 !important;
+  border-radius: 0.5em !important;
+}
+
+textarea.text-box.text-content-box {
+  line-height: 1.5 !important;
+  // box-sizing: content-box !important;
+  max-height: 80em !important;
+  min-height: 10em !important;
+}

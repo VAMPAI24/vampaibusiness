@@ -1,0 +1,276 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap");
+
+@import "./mixins";
+// @import "./reusables";
+
+body {
+  font-size: 16px !important;
+}
+
+.ant-notification-notice-message,
+.ant-notification-notice-description {
+  color: white !important;
+  text-transform: capitalize;
+  font-family: "Rubik";
+}
+
+.ant-notification-notice-message {
+  font-weight: 500 !important;
+}
+
+.ant-notification-notice-description {
+  margin-top: -5px !important;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+}
+
+// Colors
+$main-100: #e5efff;
+$main-200: #b7d3ff;
+$main-300: #8ab7ff;
+$main-400: #5c9bff;
+$main-500: #2e7fff;
+$main-600: #0061f9;
+$main-700: #0051d0;
+$main-800: #0041a7;
+$main-900: #00317f;
+$main-901: #002156;
+$main-902: #001433;
+$main-903: #030407;
+
+$neutral-100: #f7f8fa;
+$neutral-200: #eaebf1;
+$neutral-300: #dde1e9;
+$neutral-400: #d1d5e0;
+$neutral-500: #b6bbc9;
+$neutral-600: #858ca0;
+$neutral-700: #676d7e;
+$neutral-800: #4c5366;
+$neutral-900: #2a3147;
+$neutral-901: #1b2032;
+$neutral-902: #15171b;
+
+$gray-100: #f9f8f9;
+$gray-200: #f8f6f5;
+$gray-300: #eaeaea;
+$gray-400: #cccccc;
+$gray-500: #8b8c8c;
+$gray-600: #4f4f4f;
+$gray-700: #2d2f30;
+$gray-800: #151617;
+
+$green-100: #f0fff6;
+$green-200: #ceffe3;
+$green-300: #adffd0;
+$green-400: #8cffbd;
+$green-500: #69fca8;
+$green-600: #4dda89;
+$green-700: #35b86d;
+$green-800: #219653;
+$green-900: #12743c;
+$green-901: #075227;
+
+$yellow-100: #fffaed;
+$yellow-200: #fff1c6;
+$yellow-300: #ffe79f;
+$yellow-400: #ffdd77;
+$yellow-500: #f2c94c;
+$yellow-600: #d0aa38;
+$yellow-700: #ae8c26;
+$yellow-800: #8c6f18;
+$yellow-900: #6a530d;
+$yellow-901: #483806;
+
+$red-100: #fff5f5;
+$red-200: #fde7e8;
+$red-300: #ffc2c5;
+$red-400: #faa3a7;
+$red-500: #f7787e;
+$red-600: #ec575e;
+$red-700: #d1474e;
+$red-800: #c43138;
+$red-900: #66191d;
+$red-901: #430a0c;
+$red-902: #2e0507;
+
+
+
+//  scrolls
+
+
+.scrolling {
+  scrollbar-width: thin;
+  scrollbar-color: $main-900 transparent;
+}
+
+/* For Chrome, Safari, and Edge */
+.scrolling::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
+}
+
+.scrolling::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+.scrolling::-webkit-scrollbar-thumb {
+  background-color: $main-800;
+  border-radius: 14px;
+  border: 1px solid $main-900;
+}
+
+/* To ensure consistency in various browsers */
+.scrolling::-webkit-scrollbar-thumb:hover {
+  background-color: $main-900;
+}
+
+/* Fallback for other browsers (legacy browsers, IE) */
+.scrolling {
+  overflow-y: auto; /* Enable scrolling */
+  -ms-overflow-style: none;
+}
+
+.scrolling::-webkit-scrollbar-button {
+  display: none;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+// date
+
+.react-datepicker__month-container {
+  background-color: $main-100;
+  color: $main-901;
+  font-size: 1rem;
+  z-index: 10 !important;
+
+  .react-datepicker__month {
+    padding: 1rem 1rem;
+  }
+
+  .react-datepicker__month-text {
+    display: inline-block;
+    width: 5rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    padding: 0.2rem;
+    &:hover {
+      background-color: $main-600;
+    }
+  }
+}
+
+// date
+.react-date-picker {
+  width: 100% !important;
+  border-radius: 5px !important;
+  height: 100% !important;
+  // height: 60px !important;
+  // padding: 50px !important;
+  border: 1px solid $neutral-600 !important;
+  &--enabled {
+    background-color: $main-100 !important;
+    border: 1px solid $main-700 !important;
+  }
+  &--closed {
+    background-color: transparent !important;
+    border: 1px solid $neutral-600 !important;
+  }
+  &__wrapper {
+    border: none !important;
+  }
+}
+
+.react-date-picker__wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+.react-date-picker__inputGroup {
+  // padding: 0px 10px !important;
+  padding-left: 1em !important;
+  &__input {
+    outline: none !important;
+    background-color: none !important;
+    color: $main-901 !important;
+
+    &:invalid {
+      background-color: transparent !important;
+    }
+  }
+}
+
+// .react-date-picker__inputGroup{
+//   width: 80% !important;
+//   display: flex !important;
+//   align-items: center !important;
+//   padding: 0px 10px !important;
+//   // padding: 0px 20px;
+
+//   &__input {
+//     width: 100% !important;
+//     // padding: 0px 20px !important;
+//     outline: none !important;
+//     background-color: none !important;
+//     color: $main-901 !important;
+//     &:invalid{
+//       background-color: transparent !important;
+//     }
+//   }
+// }
+
+.react-date-picker__clear-button {
+  display: none !important;
+}
+.react-date-picker__calendar-button {
+  // width: 30%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: transparent !important;
+  color: #fff !important;
+  position: relative;
+}
+.react-calendar__tile {
+  background-color: $main-100 !important;
+  &--now {
+    border-radius: 5px !important;
+    background-color: $main-600 !important;
+    color: #fff !important;
+  }
+  z-index: 99999 !important;
+}
+.react-calendar {
+  background-color: $main-100 !important;
+  border-radius: 5px !important;
+  margin-top: 5px;
+}
+
+.react-calendar__navigation__arrow {
+  background-color: $main-700 !important;
+  color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 28px !important;
+  font-weight: 300 !important;
+}
+.react-date-picker__button:enabled:hover .react-date-picker__button__icon,
+.react-date-picker__button:enabled:focus .react-date-picker__button__icon {
+  stroke: $neutral-900 !important;
+}
+
+.react-date-picker__button .react-date-picker__button__icon,
+.react-date-picker__button .react-date-picker__button__icon {
+  stroke: $neutral-900 !important;
+}
