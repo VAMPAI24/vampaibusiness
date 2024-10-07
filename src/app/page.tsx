@@ -1,9 +1,17 @@
-import { InterviewScheduling, Recruitment, JobPosting, Footer, Hero } from "@/components/landingpage/sections";
+import {
+  InterviewScheduling,
+  Recruitment,
+  JobPosting,
+  Footer,
+  Hero,
+  TrustedCompanies,
+} from "@/components/landingpage/sections";
 
 export default function Home() {
   return (
     <main>
       <Hero />
+      <TrustedCompanies />
       <JobPosting />
       <Recruitment />
       <InterviewScheduling />
