@@ -37,7 +37,7 @@ const Footer = () => {
               Stay up-to-date with{" "}
               <strong className="text-main-600 font-[400]">
                 Job search hacks
-              </strong>{" "}
+              </strong>
               ,{" "}
               <strong className="text-main-600 font-[400]">
                 Interview tips
