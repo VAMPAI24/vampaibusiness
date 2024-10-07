@@ -1,13 +1,13 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button"
-
-
-
+import { InterviewScheduling, Recruitment, JobPosting, Footer, Hero } from "@/components/landingpage/sections";
 
 export default function Home() {
   return (
     <main>
-      
+      <Hero />
+      <JobPosting />
+      <Recruitment />
+      <InterviewScheduling />
+      <Footer />
     </main>
   );
 }

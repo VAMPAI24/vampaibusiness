@@ -1,17 +1,34 @@
-declare type SignUpParams = {
-  firstName: string;
-  lastName: string;
-  address1: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  dateOfBirth: string;
-  ssn: string;
-  email: string;
-  password: string;
+declare interface SubHeadingProps {
+  title: string;
+  description: string;
 };
 
-declare type LoginUser = {
-  email: string;
-  password: string;
+
+declare interface HeaderBoxProps {
+  title: string;
+  description: string;
+  variant: string;
+
+};
+
+
+declare interface RecruitmentCardProps {
+  imgURL: string;
+  title: string;
+  subtitle: string;
+};
+
+
+declare interface ContainerProps {
+  children: React.ReactNode;
+  variant?: string; 
+}
+
+
+
+
+declare type ButtonProps = {
+  text: string;
+  imgIcon?: React.ReactNode;
+  variant?: string;
 };
