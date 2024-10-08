@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable  @typescript-eslint/no-empty-object-type*/
 import { apiSlice } from "../api/apiSlice";
 import { userLoggedIn, userLoggedOut, userRegistration } from "./authSlice";
 // import Cookies from "js-cookie";
@@ -27,7 +29,7 @@ export const authApi = apiSlice.injectEndpoints({
               token: result.data.activationToken,
             })
           );
-        } catch (error: any) {
+        } catch (error) {
           console.log(error);
         }
       },
@@ -64,7 +66,7 @@ export const authApi = apiSlice.injectEndpoints({
               user: result.data.user,
             })
           );
-        } catch (error: any) {
+        } catch (error) {
           console.log(error);
         }
       },
@@ -93,7 +95,7 @@ export const authApi = apiSlice.injectEndpoints({
               refreshToken: result.data.refreshToken,
             })
           );
-        } catch (error: any) {
+        } catch (error) {
           console.log(error);
         }
       },
@@ -107,7 +109,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           dispatch(userLoggedOut());
-        } catch (error: any) {
+        } catch (error) {
           console.log(error);
         }
       },

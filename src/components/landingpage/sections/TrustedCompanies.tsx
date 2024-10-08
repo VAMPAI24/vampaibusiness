@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, HeaderBox } from "@/components/landingpage";
+import { Container } from "@/components/landingpage";
 
 const TrustedCompanies = () => {
   return (

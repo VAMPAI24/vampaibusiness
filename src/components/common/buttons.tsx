@@ -3,6 +3,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 interface btnProps {
   type: string;
   name?: string;
@@ -10,7 +11,7 @@ interface btnProps {
   title?: string;
   small?: boolean;
   prefetch?: boolean;
-  icon?: any;
+  icon?: IconProp;
   icStyle?: string;
   addOns?: string;
   loading?: boolean;
@@ -20,14 +21,14 @@ interface btnProps {
 }
 
 export const Platformbtn: React.FC<btnProps> = (props) => {
-  let handleClick = () => {
-    props.click && props.click();
+  const handleClick = () => {
+    props.click?.();
   };
 
-  let btnClass = `bg-main-600 font-jakarta w-full h-[50px] flex items-center justify-center gap-[20px] rounded-[10px] text-white hover:scale-[1.1] capitalize text-[1em] font-[400] hover:bg-main-800 disabled:bg-main-902 whitespace-nowrap px-[1em] disabled:cursor-not-allowed transition-all duration-300 ease-in-out
+  const btnClass = `bg-main-600 font-jakarta w-full h-[50px] flex items-center justify-center gap-[20px] rounded-[10px] text-white hover:scale-[1.1] capitalize text-[1em] font-[400] hover:bg-main-800 disabled:bg-main-902 whitespace-nowrap px-[1em] disabled:cursor-not-allowed transition-all duration-300 ease-in-out
  ${props.small && " h-[48px]"}  ${props.addOns} `;
 
-  let _renderbtn = () => {
+  const _renderbtn = () => {
     switch (props.type) {
       case "normal":
         return (
@@ -116,7 +117,7 @@ export const Platformbtn: React.FC<btnProps> = (props) => {
           >
             {props.name}
             <FontAwesomeIcon
-              icon={props.icon}
+              icon={props.icon as IconProp}
               className={`!my-0 text-[1em] ${props.icStyle}`}
             />
           </button>
@@ -156,11 +157,11 @@ interface bcProps {
 }
 
 export const Doublebtns: React.FC<bcProps> = (props) => {
-  let handleBack = () => {
-    props.actionOne && props.actionOne();
+  const handleBack = () => {
+    props.actionOne?.();
   };
 
-  let handleContinue = () => {
+  const handleContinue = () => {
     props.actionTwo();
   };
   return (

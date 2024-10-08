@@ -1,11 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import { inputProps } from "../../../utils/models/inputsmodel";
+import React, { ReactNode, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleInfo,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { InputsProps } from "@/types";
+
+export interface inputProps extends InputsProps {
+  type?:string,
+  name:string,
+  value?:string |number,
+  icon?:string,
+  currency?:string,
+  error?:string,
+  disabled?:boolean,
+  children?:ReactNode,
+  autoComplete?:string,
+  onChange?:(e:React.ChangeEvent<HTMLInputElement>)=>void,
+}
+
 
 const Textfield: React.FC<inputProps> = (props) => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -64,7 +76,6 @@ const Textfield: React.FC<inputProps> = (props) => {
           </p>
         )}
         {props.type === "password" && (
-        
           <p
             onClick={togglePasswordVisiblity}
             className="text-[.875em] font-[500] capitalize absolute right-5 top-[55%] text-main-600 cursor-pointer"
