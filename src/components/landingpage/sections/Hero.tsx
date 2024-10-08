@@ -14,12 +14,13 @@ const Hero = () => {
           </>
         }
         description="Simplify your hiring process, reduce time-to-hire, and make confident decisions with access to a diverse pool of qualified candidates"
-        variant="lg:w-[600px] -mt-10"
+        variant="lg:w-[700px]"
+        h1variant="text-[64px]"
       />
 
       <Button
         text="Get started"
-        variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
+        variant="bg-main-600 text-white rounded-lg w-[250px] h-[55px] mt-4"
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-5 mt-10">

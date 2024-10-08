@@ -137,10 +137,10 @@ const Navbar = () => {
               } mt-4 bg-white shadow-lg absolute top-0 w-full px-8 rounded-b-lg  right-0`}
           >
             <div className="flex flex-col justify-end mb-4 w-full h-full">
-              <span className="flex flex-col w-fit gap-4">
+              <span className="flex flex-col w-full gap-4">
                 {NavLinks.map((item, index) => (
-                  <Link href={item.link} key={index}>
-                    {item.name}
+                  <Link href={item.link} key={index} className="border-b border-gray-300 pb-2 w-full">
+                    <span className="block w-full">{item.name}</span>
                   </Link>
                 ))}
               </span>
