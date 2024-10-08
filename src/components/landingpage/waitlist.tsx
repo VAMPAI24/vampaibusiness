@@ -1,4 +1,4 @@
-import { Container, SubHeading, Button } from "@/components/landingpage";
+import { Button } from "@/components/landingpage";
 
 export const Agreement = () => {
   const items = [
@@ -10,23 +10,24 @@ export const Agreement = () => {
   return (
     <div className="w-full flex flex-col gap-[3em]">
       <div className="w-full flex flex-col gap-[1em]">
-        <p className="font-[300] text-[1.2em] text-main-901 ">Payment Terms</p>
-        <ul className="font-[300] text-[.875em] text-main-901 ">
+        <p className="font-[600] text-[1.2em] text-main-901 ">Payment Terms</p>
+        <ul className="font-[400] text-[.875em] text-main-901 ">
           By using our recruitment service, you agree to the following payment
-          terms:
+          terms: <br /> 
           {items.map((item, id) => (
             <li
-              className="font-[300] text-[.875em] text-main-901 "
+              className="font-[300] text-[.875em] text-main-901 mb-[.25em]"
               key={id.toString()}
             >
-              {item}
+              • {item}
             </li>
           ))}
         </ul>
 
-        <p className="font-[300] text-[.875em] text-main-901 mt-[2em]">
+        <p className="font-[300] text-[.875em] text-main-901 mt-[1em]">
           For any payment-related inquiries or assistance, please contact our
-          support team at support@vampai.com or call us at 1-800-123-4567.
+          support team at support@vampai.com or call us at{" "}
+          <strong> 1-800-123-4567. </strong>
         </p>
       </div>
 
