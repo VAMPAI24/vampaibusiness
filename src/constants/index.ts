@@ -8,6 +8,9 @@ import Backend from "@/public/pngs/Backend.png";
 import Frontend from "@/public/pngs/Frontend.png";
 import Hr from "@/public/pngs/Hr.png";
 import CustomerSuccess from "@/public/pngs/Customer-Success.png"
+import OfficeBox from "@/public/svgs/box.svg";
+import Unlock from "@/public/svgs/unlock.svg";
+import Support from "@/public/svgs/support.svg";
 
 export const NavLinks = [
   {
@@ -126,9 +129,42 @@ export const footerLinks = [
 ];
 
 export const footerSocial = [
-  { icon: Facebook, title: "instagram", link: "https://www.instagram.com/usevampai/?igsh=c3hqbDk0cG1qamY0" },
-  { icon: Twiter, title: "twitter", link: "https://x.com/usevampai?t=QzXQu3pN_Hv456kCOCulSg&s=09" },
-  { icon: Linkdein, title: "linkedin", link: "https://www.linkedin.com/company/usevampai/posts/?feedView=all" },
+  {
+    icon: Facebook,
+    title: "instagram",
+    link: "https://www.instagram.com/usevampai/?igsh=c3hqbDk0cG1qamY0",
+  },
+  {
+    icon: Twiter,
+    title: "twitter",
+    link: "https://x.com/usevampai?t=QzXQu3pN_Hv456kCOCulSg&s=09",
+  },
+  {
+    icon: Linkdein,
+    title: "linkedin",
+    link: "https://www.linkedin.com/company/usevampai/posts/?feedView=all",
+  },
+];
+
+export const waitlistData = [
+  {
+    imgURL: OfficeBox,
+    title: "Be the First to Hire Top Talent",
+    subtitle:
+      "Enjoy priority access to the platform and start connecting with the best candidates before your competitors.",
+  },
+  {
+    imgURL: Unlock,
+    title: "Unlock Exclusive Early Bird Discounts",
+    subtitle:
+      "Take advantage of special pricing and offers available only to waitlisted members.",
+  },
+  {
+    imgURL: Support,
+    title: "Enjoy Premium Support from Day One",
+    subtitle:
+      "Receive dedicated assistance to set up your recruitment process smoothly and efficiently.",
+  },
 ];
 
 
