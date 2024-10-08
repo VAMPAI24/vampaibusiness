@@ -1,13 +1,81 @@
-
-
 import Profile from "@/public/svgs/Profile.svg";
 import Work from "@/public/svgs/Work.svg";
 import Candidate from "@/public/svgs/Candidate.svg";
 import Facebook from "@/public/svgs/facebook.svg";
 import Twiter from "@/public/svgs/twitter.svg";
 import Linkdein from "@/public/svgs/linkedin.svg"
+import Backend from "@/public/pngs/Backend.png";
+import Frontend from "@/public/pngs/Frontend.png";
+import Hr from "@/public/pngs/Hr.png";
+import CustomerSuccess from "@/public/pngs/Customer-Success.png"
+
+export const NavLinks = [
+  {
+    name: "Products",
+    link: "/",
+    dropdown: true,
+    sub: [
+      {
+        name: "Craft your CV",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "Interview prep",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "Skill Asssesment",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "Career Path Recommendation",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "CV scoring",
+        link: "/",
+        coming:true,
+      },
+    ],
+  },
+  {
+    name: "Job board",
+    link: "/",
+  },
+  {
+    name: "Masterclasses",
+    link: "/",
+    dropdown: false,
+  },
+];
 
 
+
+
+export const HeroData = [
+  {
+    title: "Finance",
+    imgURL: Backend,
+  },
+  {
+    title: "Finance",
+    imgURL: Frontend,
+  },
+  {
+    title: "Finance",
+    imgURL: Hr,
+  },
+  {
+    title: "Finance",
+    imgURL: CustomerSuccess,
+  },
+
+  
+]
 
 export const RecruitmentData = [
   {
@@ -43,8 +111,8 @@ export const footerLinks = [
   {
     title: "PRODUCTS",
     links: [
-      { name: "for Talents", link: "/" },
-      { name: "for Business", link: "/" },
+      { name: "For Talents", link: "/" },
+      { name: "For Business", link: "/" },
     ],
   },
   {
@@ -62,3 +130,8 @@ export const footerSocial = [
   { icon: Twiter, title: "twitter", link: "https://x.com/usevampai?t=QzXQu3pN_Hv456kCOCulSg&s=09" },
   { icon: Linkdein, title: "linkedin", link: "https://www.linkedin.com/company/usevampai/posts/?feedView=all" },
 ];
+
+
+
+
+

@@ -5,7 +5,8 @@ declare interface SubHeadingProps {
 
 
 declare interface HeaderBoxProps {
-  title: string;
+  title: React.ReactNode; 
+  // titletwo: React.ReactNode; 
   description: string;
   variant: string;
 

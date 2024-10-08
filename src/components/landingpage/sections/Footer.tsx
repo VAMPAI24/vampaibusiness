@@ -10,12 +10,12 @@ const Footer = () => {
 
   return (
     <section className="bg-main-902">
-      <Container variant="py-36 px-6 text-white mt-28 lg:mt-16">
+      <Container variant="py-28 px-6 text-white mt-28 lg:mt-16">
         <div className="flex justify-between items-start gap-20 flex-wrap max-lg:flex-col">
           <div className="flex flex-1 justify-between lg:gap-5 gap-20 flex-wrap">
             {footerLinks.map((section, index) => (
               <div key={index}>
-                <h4 className="font-jakarta text-2xl leading-normal font-medium mb-2 text-white">
+                <h4 className="font-jakarta text-lg leading-normal font-medium mb-2 text-white">
                   {section.title}
                 </h4>
                 <ul>
@@ -24,7 +24,7 @@ const Footer = () => {
                       className="mt-3 font-jakarta text-base leading-normal text-white-400 hover:text-slate-gray"
                       key={link.name}
                     >
-                      <a href={link.link}>{link.name}</a>
+                      <a href={link.link} className="text-base font-jakarta font-normal">{link.name}</a>
                     </li>
                   ))}
                 </ul>
@@ -37,7 +37,7 @@ const Footer = () => {
               Stay up-to-date with{" "}
               <strong className="text-main-600 font-[400]">
                 Job search hacks
-              </strong>{" "}
+              </strong>
               ,{" "}
               <strong className="text-main-600 font-[400]">
                 Interview tips
@@ -95,7 +95,7 @@ const Footer = () => {
 
         <div>
           <p className="font-jakarta text-base font-normal mt-4">
-            &copy; {currentYear} 2024 VampAI, Inc. All rights reserved.
+            &copy; {currentYear} VampAI, Inc. All rights reserved.
           </p>
           <p className="font-jakarta mt-4 text-sm font-normal">
             We use cookies and similar technologies to enhance your interactions
