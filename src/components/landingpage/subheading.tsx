@@ -1,3 +1,4 @@
+import { SubHeadingProps } from "@/types";
 import React from "react";
 
 const SubHeading = ({ title, description }: SubHeadingProps) => {

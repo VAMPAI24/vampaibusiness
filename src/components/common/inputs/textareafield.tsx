@@ -1,6 +1,12 @@
 import React from "react";
-import { textAreaProps } from "@/utils/models/inputsmodel";
 import "./styles.scss";
+import { InputsProps } from "@/types";
+
+export interface textAreaProps extends InputsProps {
+  name: string;
+  value?: string | number;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
 
 const Textareafield: React.FC<textAreaProps> = ({
   value,

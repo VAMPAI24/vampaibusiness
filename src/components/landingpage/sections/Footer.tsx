@@ -75,9 +75,13 @@ const Footer = () => {
 
           <span className="flex w-fit gap-[20px] mt-10 lg:mt-0 cursor-pointer">
             {footerSocial.map((item, index) => (
-              <Link href={item.link} target="_blank" rel="noopener noreferrer">
+              <Link
+                key={index.toString()}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Image
-                  key={index}
                   alt="social-icon"
                   src={item.icon}
                   width={30}

@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import { Platformbtn } from "./buttons";
-import { success } from "@/assets/assets";
 // import Image, { StaticImageData } from "next/image";
-import Image from "next/image";
+// import Image from "next/image";
 
 interface successProps {
   title: string;
@@ -10,7 +9,7 @@ interface successProps {
   btnName?: string;
   btnTwoName?: string;
   // image?: StaticImageData;
-  image?: any;
+  image?: string;
   click?: () => void;
   clickTwo?: () => void;
   children?: ReactNode;
@@ -21,11 +20,11 @@ export const Success: React.FC<successProps> = (props) => {
   return (
     <div className="flex w-full max-w-[80%] md:max-w-[450px] mx-auto">
       <div className="flex flex-col items-center gap-[2em]  py-[50px]">
-        <Image
+        {/* <Image
           src={props.image ? props.image : success}
           className="w-[100px] md:w-[18em]"
           alt="success"
-        />
+        /> */}
         <span className="flex flex-col gap-[5px] items-center text-center">
           <p className="my-0 font-rubik font-[400] text-main-902 leading-[1.2em] text-[1.25em]">
             {props.title}

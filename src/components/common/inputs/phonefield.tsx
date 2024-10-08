@@ -1,5 +1,5 @@
 import React from 'react';
-import PhoneInput, { isValidPhoneNumber,getCountries, formatPhoneNumberIntl } from 'react-phone-number-input';
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import flags from 'react-phone-number-input/flags'
 import 'react-phone-number-input/style.css';
 import "./styles.scss"

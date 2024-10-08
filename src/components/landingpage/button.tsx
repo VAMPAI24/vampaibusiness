@@ -1,3 +1,4 @@
+import { ButtonProps } from "@/types";
 import React from "react";
 
 const Button = ({ text, imgIcon, variant }: ButtonProps) => {

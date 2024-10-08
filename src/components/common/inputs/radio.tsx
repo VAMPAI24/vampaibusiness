@@ -11,11 +11,11 @@ interface optionProps {
 export const Radiobox: React.FC<optionProps> = (props) => {
   const { id, title, subtitle, active, value, handleOption, addOns } = props;
 
-  let handleClick = () => {
+  const handleClick = () => {
     handleOption(value);
   };
 
-  let isSelected = active === value;
+  const isSelected = active === value;
   return (
     <div
       onClick={handleClick}
