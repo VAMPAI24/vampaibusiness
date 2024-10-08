@@ -9,7 +9,49 @@ import Frontend from "@/public/pngs/Frontend.png";
 import Hr from "@/public/pngs/Hr.png";
 import CustomerSuccess from "@/public/pngs/Customer-Success.png"
 
-
+export const NavLinks = [
+  {
+    name: "Products",
+    link: "/",
+    dropdown: true,
+    sub: [
+      {
+        name: "Craft your CV",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "Interview prep",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "Skill Asssesment",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "Career Path Recommendation",
+        link: "/",
+        coming:true,
+      },
+      {
+        name: "CV scoring",
+        link: "/",
+        coming:true,
+      },
+    ],
+  },
+  {
+    name: "Job board",
+    link: "/",
+  },
+  {
+    name: "Masterclasses",
+    link: "/",
+    dropdown: false,
+  },
+];
 
 
 
@@ -69,8 +111,8 @@ export const footerLinks = [
   {
     title: "PRODUCTS",
     links: [
-      { name: "for Talents", link: "/" },
-      { name: "for Business", link: "/" },
+      { name: "For Talents", link: "/" },
+      { name: "For Business", link: "/" },
     ],
   },
   {

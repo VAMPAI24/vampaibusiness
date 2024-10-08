@@ -48,7 +48,7 @@ const InterviewScheduling = () => {
       </div>
 
       <div className="relative mt-20 w-full max-w-[900px] mx-auto">
-        <div className="absolute inset-0 -top-16 lg:top-5 text-center flex flex-col items-center bg-sec-100 lg:py-28 py-36 px-8 sm:px-12">
+        <div className="absolute inset-0 -top-8 lg:top-5 text-center flex flex-col items-center bg-sec-100 lg:py-28 py-36 px-8 sm:px-12">
           <h3 className="text-3xl sm:text-4xl lg:text-5xl w-full max-w-[700px] -mt-20 mb-6">
             Discover your Next Exceptional Hire with Ease and Speed
           </h3>

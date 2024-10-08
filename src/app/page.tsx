@@ -4,14 +4,16 @@ import {
   JobPosting,
   Footer,
   Hero,
-  TrustedCompanies,
+  // TrustedCompanies,
+  Navbar,
 } from "@/components/landingpage/sections";
 
 export default function Home() {
   return (
     <main>
+      <Navbar />
       <Hero />
-      <TrustedCompanies />
+      {/* <TrustedCompanies /> */}
       <JobPosting />
       <Recruitment />
       <InterviewScheduling />
