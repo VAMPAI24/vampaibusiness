@@ -19,7 +19,7 @@ export default function Page() {
       <Mainmodal visible={open} close={closeModal}>
         <Agreement />
       </Mainmodal>
-      <section className="min-h-screen bg-sec-100">
+      <section className="min-h-screen bg-sec-100 pt-[5em]">
         <Container>
           <div className="w-full grid md:grid-cols-2">
             <div className="w-full hidden xl:flex flex-col gap-[6em]  col-span-1  ">
@@ -28,7 +28,7 @@ export default function Page() {
                   Unlock Exclusive Perks by Joining Our Waitlist
                 </h3>
 
-                <div className="w-[50%]  flex flex-col gap-[3em]">
+                <div className="w-[70%]  flex flex-col gap-[3em]">
                   {waitlistData.map((item, id) => (
                     <div
                       key={id.toString()}
