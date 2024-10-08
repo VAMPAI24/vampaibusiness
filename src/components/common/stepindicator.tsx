@@ -9,10 +9,9 @@ interface StepIndicatorProps {
 const StepIndicator: React.FC<StepIndicatorProps> = ({
   active,
   steps,
-  title,
 }) => {
-  const isLastChild = (index: number) => index === steps.length - 1;
-  const activeTitle = steps[active];
+  // const isLastChild = (index: number) => index === steps.length - 1;
+  // const activeTitle = steps[active];
 
   return (
     <div className="mx-auto w-full  h-fit flex flex-col items-center gap-[1em]">

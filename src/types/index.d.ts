@@ -33,3 +33,13 @@ declare type ButtonProps = {
   imgIcon?: React.ReactNode;
   variant?: string;
 };
+
+
+
+export interface InputsProps {
+  label?:string,
+  addOns?:string,
+  info?:string
+  placeholder?:string,
+  value?:string | number | File | Date | null| boolean, 
+}

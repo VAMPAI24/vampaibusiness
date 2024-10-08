@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import Select, { StylesConfig } from "react-select";
-import { selectProps } from "@/utils/models/inputsmodel";
 
 type OptionType = { readonly label: string; readonly value: string | number };
 
-const Selectfield: React.FC<selectProps> = (props) => {
+const Selectfield: React.FC<any> = (props) => {
   const [tip, setTip] = useState(false);
 
   const handleChange = (selectedOption: OptionType | unknown) => {
@@ -85,7 +85,7 @@ const Selectfield: React.FC<selectProps> = (props) => {
           options={props.options}
           value={{
             value: props.value,
-            label: props.options.filter((item) => item.value === props.value)[0]
+            label: props.options.filter((item:any) => item.value === props.value)[0]
               ?.label,
           }}
           // value={props.value}

@@ -93,10 +93,7 @@ $red-900: #66191d;
 $red-901: #430a0c;
 $red-902: #2e0507;
 
-
-
 //  scrolls
-
 
 .scrolling {
   scrollbar-width: thin;
@@ -138,12 +135,10 @@ $red-902: #2e0507;
 .hide-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
-
   &::-webkit-scrollbar {
     display: none;
   }
 }
-
 
 // date
 

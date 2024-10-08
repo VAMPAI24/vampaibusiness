@@ -13,7 +13,7 @@ const authSlice = createSlice({
       state.token = action.payload.token;
     },
     userLoggedIn: (
-      state: any,
+      state: Record<string, string>,
       action: PayloadAction<{
         accessToken: string;
         user: string;
