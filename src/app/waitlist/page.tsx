@@ -420,7 +420,7 @@ export default function Page() {
         <section className="-mt-16">
           <Container>
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="w-full hidden xl:flex flex-col gap-[4em] col-span-1">
+              <div className="w-full hidden md:flex flex-col gap-[4em] col-span-1">
                 <h3 className="w-full font-[700] text-[1.5em] md:text-[2em] leading-[1.2em] text-main-900">
                   Welcome to Faster and Smarter Hiring
                 </h3>
