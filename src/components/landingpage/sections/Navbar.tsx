@@ -80,10 +80,12 @@ import { useState } from "react";
 import { Button, Container } from "@/components/landingpage";
 import Image from "next/image";
 import Logo from "@/public/svgs/logo.svg";
+import LogoBlue from "@/public/svgs/logo-blue.svg";
 import { NavLinks } from "@/constants/index";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMultiply, faBars } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -101,7 +103,7 @@ const Navbar = () => {
           />
 
           {/* Desktop Navigation */}
-          <span className="hidden lg:flex w-fit gap-8 text-white">
+          <span className="hidden lgflex w-fit gap-8 text-white">
             {NavLinks.map((item, index) => (
               <Link href={item.link} key={index}>
                 {item.name}
@@ -111,7 +113,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Buttons */}
-        <div className="hidden lg:flex items-center justify-center -mt-4">
+        <div className="hidden lgflex items-center justify-center -mt-4">
           <Button text="Login" variant="text-white rounded-lg w-[150px] mt-4" />
           <Button
             text="For Talent"
@@ -133,8 +135,8 @@ const Navbar = () => {
         {toggle && (
           <div
             className={` ${
-                toggle ? "flex lg:hidden" : "hidden"
-              } mt-4 bg-white shadow-lg absolute top-0 w-full px-8 rounded-b-lg  right-0`}
+              toggle ? "flex lg:hidden" : "hidden"
+            } mt-4 bg-white shadow-lg absolute top-0 w-full px-8 rounded-b-lg  right-0`}
           >
             <div className="flex flex-col justify-end mb-4 w-full h-full">
               <span className="flex flex-col w-full gap-4">
@@ -163,3 +165,23 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+export const LogoNavbar = () => {
+  const router = useRouter();
+  return (
+    <Container variant="-mt-6">
+      <div className="flex items-center justify-between py-5 px-4 lg:px-8 rounded-xl ">
+        <div className="flex items-center gap-10 lg:gap-4 text-center">
+          <Image
+            src={LogoBlue}
+            alt="logo"
+            width={120}
+            height={50}
+            className="cursor-pointer"
+            onClick={() => router.push("/")}
+          />
+        </div>
+      </div>
+    </Container>
+  );
+};

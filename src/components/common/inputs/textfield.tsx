@@ -40,7 +40,7 @@ const Textfield: React.FC<inputProps> = (props) => {
         )}
 
         <input
-          className={`!bg-white font-jakarta-sans  relative w-full h-[45px] lg:h-[40px] ${
+          className={`!bg-white font-jakarta-sans  relative w-full h-[45px] lg:h-[55px] ${
             props.currency
               ? "pl-[30px] pt-[0px]"
               : "pl-[16px] pt-[10px] pb-[10px] "
