@@ -47,10 +47,13 @@ export default function Page() {
       });
 
       if (response.ok) {
+        console.log("jfjjf", response)
         setSuccess(true);
+        const successData = await response.json();
         openNotificationWithIcon({
           title: "Success",
-          message: "You have been successfully added to the waitlist.",
+          message: successData.message,
+          // message: "You have been successfully added to the waitlist.",
         });
       } else {
         const errorData = await response.json();
@@ -150,7 +153,7 @@ export default function Page() {
                   initialValues={initValue}
                   validationSchema={waitlistSchema}
                   onSubmit={async (values) => {
-                    console.log(values);  
+                    // console.log(values);  
                     await handleSubmitFn(values); 
                   }}
                 >
