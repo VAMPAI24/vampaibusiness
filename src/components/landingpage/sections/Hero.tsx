@@ -21,12 +21,12 @@ const Hero = () => {
 
         <Button
           text="Get started"
-          variant="bg-main-600 text-white rounded-lg w-fit md:w-[250px] h-[5em] mt-[2.5em]"
+          variant="bg-main-600 text-white rounded-lg w-[250px] h-[5em] mt-[2.5em]"
           clickFn={()=> router.push('/waitlist')}
         />
       </div>
 
-      <div className="mt-[5em] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-5">
+      <div className="mt-[5em] grid  place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-5">
         {HeroData.map((card, index) => (
           <div key={index} className="mt-2">
             <div className="border-t-2 border-t-main-100 mb-4">

@@ -15,10 +15,10 @@ const TrustedCompanies = () => {
   return (
     <Container variant="!mx-auto flex flex-col gap-[2em] !items-center">
       <div className="flex flex-col mx-auto items-center">
-        <h3 className="font-rubik text-[2em] font-[700] text-sec-901">
-          Brands that Trust Us
+        <h3 className="font-rubik text-2xl md:text-[2em] w-full text-center font-[700] text-sec-901">
+          Brands That Trust Us
         </h3>
-        <p className="font-jakarta font-normal txt-[18px]  text-sec-901">
+        <p className="font-jakarta text-center font-normal txt-[18px]  text-sec-901">
           Join a growing network of companies that rely on our platform to
           connect with top talent
         </p>

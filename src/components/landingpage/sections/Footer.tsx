@@ -10,7 +10,7 @@ const Footer = () => {
 
   return (
     <section className="bg-main-902">
-      <Container variant="py-28 px-6 text-white mt-28 lg:mt-16">
+      <Container variant="py-28 px-6 text-white mt-40 lg:mt-16">
         <div className="flex justify-between items-start gap-20 flex-wrap max-lg:flex-col">
           <div className="flex flex-1 justify-between lg:gap-5 gap-20 flex-wrap">
             {footerLinks.map((section, index) => (
