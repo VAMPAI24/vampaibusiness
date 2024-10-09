@@ -9,7 +9,6 @@ import Frontend from "@/public/pngs/Frontend.png";
 import Hr from "@/public/pngs/Hr.png";
 import CustomerSuccess from "@/public/pngs/Customer-Success.png"
 import OfficeBox from "@/public/svgs/box.svg";
-import Unlock from "@/public/svgs/unlock.svg";
 import Support from "@/public/svgs/support.svg";
 import global from "@/public/svgs/global.svg"
 

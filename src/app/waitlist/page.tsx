@@ -32,7 +32,7 @@ const initValue = {
 export default function Page() {
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState(false);
-  const { data, handleValue, handleInput } = useForm(initValue);
+  const { handleValue, handleInput } = useForm(initValue);
 
   const openCloseModalFn = () => setOpen(!open);
 
