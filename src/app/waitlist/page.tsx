@@ -60,10 +60,9 @@ export default function Page() {
         });
       }
     } catch (error) {
-      console.log(error);
       openNotificationWithIconErr({
-        title: "Network Error",
-        message: "Unable to connect, please check your network and try again.",
+        title: "Error",
+        message: error instanceof Error ? error.message : "An unexpected error occurred. Please try again."
       });
     }
   };
