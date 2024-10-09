@@ -170,7 +170,7 @@ export const waitlistData = [
 
 
 // company size
-export const companySize = ["1-10", "10-50", "51-100", "100+"];
+export const companySize = ["1-10", "10 - 50", "51 - 100", "100+"];
 
 // accoiunt manager
 export const accManagerMail = "temitayo@usevampai.com";
