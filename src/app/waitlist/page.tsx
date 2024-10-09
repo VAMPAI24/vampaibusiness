@@ -1,7 +1,7 @@
 "use client";
 
 import { Container, Button } from "@/components/landingpage";
-import { companySize, waitlistData } from "@/constants";
+import { accManagerMail, companySize, waitlistData } from "@/constants";
 import Image from "next/image";
 import InfoCircle from "@/public/svgs/info-circle.svg";
 import { Mainmodal } from "@/components/common/modal";
@@ -18,6 +18,7 @@ import {
 } from "@/lib/notifs";
 import RadioField from "@/components/common/inputs/radioField";
 import { LogoNavbar } from "@/components/landingpage/sections/Navbar";
+import { openMail } from "@/lib/utils";
 
 const initValue = {
   company: "",
@@ -34,7 +35,6 @@ export default function Page() {
 
   const openCloseModalFn = () => setOpen(!open);
 
- 
   const handleSubmitFn = async (): Promise<void> => {
     try {
       const response = await fetch("/api/waitlist", {
@@ -60,7 +60,7 @@ export default function Page() {
         });
       }
     } catch (error) {
-        console.log(error)
+      console.log(error);
       openNotificationWithIconErr({
         title: "Network Error",
         message: "Unable to connect, please check your network and try again.",
@@ -68,11 +68,14 @@ export default function Page() {
     }
   };
 
+  //   intitates mail
+  const initMail = () => openMail(accManagerMail);
+
   if (success) {
     return (
       <main className="bg-sec-100 min-h-screen max-h-screen  overflow-hidden">
         <LogoNavbar />
-        <section className="h-screen flex items-center justify-center" >
+        <section className="h-screen flex items-center justify-center">
           <Container variant="flex">
             <div className="w-full flex flex-col items-center justify-center">
               <div className="w-full md:w-[50%] 2xl:w-[30em] text-center flex flex-col gap-[1em] items-center mx-auto">
@@ -86,7 +89,10 @@ export default function Page() {
                 </p>
               </div>
 
-              <p className="text-[1em] inline text-center mt-[2em] italic text-main-800 cursor-pointer">
+              <p
+                onClick={initMail}
+                className="text-[1em] inline text-center mt-[2em] italic text-main-800 cursor-pointer"
+              >
                 <strong className="text-main-901 !no-underline">
                   {" "}
                   Contact Temitayo at:{" "}

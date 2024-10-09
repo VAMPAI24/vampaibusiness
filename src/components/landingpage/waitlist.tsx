@@ -1,4 +1,5 @@
 import { Button } from "@/components/landingpage";
+import { accManagerMail } from "@/constants";
 import { openMail } from "@/lib/utils";
 
 export const Agreement = () => {
@@ -9,7 +10,7 @@ export const Agreement = () => {
     "Late Fees: Payments not received by the due date will incur a 5% late fee for every 7 days past the deadline.",
   ];
 
-  const initMail = () => openMail("temitayo@usevamp.ai");
+  const initMail = () => openMail(accManagerMail);
   return (
     <div className="w-full flex flex-col gap-[3em]">
       <div className="w-full flex flex-col gap-[1em]">
