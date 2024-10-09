@@ -10,17 +10,6 @@ const Hero = () => {
   const router = useRouter()
   return (
     <Container>
-      {/* <HeaderBox
-        title={
-          <p className="w-full text-[3em]">
-            Hire <span className="text-main-500">Top Talents</span>
-            &nbsp; <br /> 10x faster with Vamp.
-          </p>
-        }
-        description="Simplify your hiring process, reduce time-to-hire, and make confident decisions with access to a diverse pool of qualified candidates"
-        variant="lg:w-[600px] -mt-10"
-      /> */}
-
       <div className="lg:w-[800px] 2xl:w-[80em] mx-auto flex flex-col text-center items-center gap-[1em]">
         <h1 className="font-rubik font-[800] text-[5em] leading-[1em] text-sec-901 mb-4">
           Hire <span className="text-main-500">Top Talents</span>
