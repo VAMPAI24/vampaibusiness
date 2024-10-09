@@ -16,7 +16,7 @@ const Recruitment = () => {
           variant="text-center"
         />
 
-        <div className="flex flex-col lg:flex-row gap-5 mt-8">
+        <div className="mx-auto flex flex-col lg:flex-row lg:justify-center gap-5 mt-8">
           {RecruitmentData.map((items, index) => (
             <RecruitmentCard key={index} {...items} />
           ))}

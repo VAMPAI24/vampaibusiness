@@ -5,8 +5,76 @@ import Facebook from "@/public/svgs/facebook.svg";
 import Twiter from "@/public/svgs/twitter.svg";
 import Linkdein from "@/public/svgs/linkedin.svg";
 import OfficeBox from "@/public/svgs/box.svg";
-import Unlock from "@/public/svgs/unlock.svg";
+import global from "@/public/svgs/global.svg";
 import Support from "@/public/svgs/support.svg";
+import Backend from "@/public/pngs/Backend.png";
+import Frontend from "@/public/pngs/Frontend.png";
+import Hr from "@/public/pngs/Hr.png";
+import CustomerSuccess from "@/public/pngs/Customer-Success.png";
+
+export const NavLinks = [
+  {
+    name: "Products",
+    link: "/",
+    dropdown: true,
+    sub: [
+      {
+        name: "Craft your CV",
+        link: "/",
+        coming: true,
+      },
+      {
+        name: "Interview prep",
+        link: "/",
+        coming: true,
+      },
+      {
+        name: "Skill Asssesment",
+        link: "/",
+        coming: true,
+      },
+      {
+        name: "Career Path Recommendation",
+        link: "/",
+        coming: true,
+      },
+      {
+        name: "CV scoring",
+        link: "/",
+        coming: true,
+      },
+    ],
+  },
+  {
+    name: "Job board",
+    link: "/",
+  },
+  {
+    name: "Masterclasses",
+    link: "/",
+    dropdown: false,
+  },
+];
+
+export const HeroData = [
+  {
+    title: "Finance",
+    imgURL: Backend,
+  },
+  {
+    title: "EdTech",
+    imgURL: Frontend,
+  },
+  {
+    title: "Finance",
+    imgURL: Hr,
+  },
+  {
+    title: "Finance",
+    imgURL: CustomerSuccess,
+  },
+];
+
 export const RecruitmentData = [
   {
     imgURL: Profile,
@@ -41,8 +109,8 @@ export const footerLinks = [
   {
     title: "PRODUCTS",
     links: [
-      { name: "for Talents", link: "/" },
-      { name: "for Business", link: "/" },
+      { name: "For Talents", link: "/" },
+      { name: "For Business", link: "/" },
     ],
   },
   {
@@ -75,21 +143,25 @@ export const footerSocial = [
 
 export const waitlistData = [
   {
-    imgURL: OfficeBox,
-    title: "Be the First to Hire Top Talent",
+    imgURL: global,
+    title: "Global Reach & Local Expertise",
     subtitle:
-      "Enjoy priority access to the platform and start connecting with the best candidates before your competitors.",
+      "Access top talent from around the world, matched to your needs, wherever you do business.",
   },
   {
-    imgURL: Unlock,
-    title: "Unlock Exclusive Early Bird Discounts",
+    imgURL: OfficeBox,
+    title: "60+ Years of Talent Expertise",
     subtitle:
-      "Take advantage of special pricing and offers available only to waitlisted members.",
+      "With over six decades of combined experience in diverse talent markets, we bring unmatched expertise to find the perfect fit for your business—every time.",
   },
   {
     imgURL: Support,
-    title: "Enjoy Premium Support from Day One",
+    title: "Cost Effective Solutions",
     subtitle:
-      "Receive dedicated assistance to set up your recruitment process smoothly and efficiently.",
+      "Quality hiring shouldn't come with financial stress, which is why we offer technology to help you save time and money on recruitment.",
   },
 ];
+
+// company size
+
+export const companySize = ["1-10", "10-50", "51-100", "100+"];
