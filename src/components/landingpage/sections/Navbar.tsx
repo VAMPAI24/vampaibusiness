@@ -64,7 +64,11 @@ const Navbar = () => {
             <div className="flex flex-col justify-end mb-4 w-full h-full">
               <span className="flex flex-col w-full gap-4">
                 {NavLinks.map((item, index) => (
-                  <Link href={item.link} key={index} className="border-b border-gray-300 pb-2 w-full">
+                  <Link
+                    href={item.link}
+                    key={index}
+                    className="border-b border-gray-300 pb-2 w-full"
+                  >
                     <span className="block w-full">{item.name}</span>
                   </Link>
                 ))}
@@ -92,11 +96,10 @@ export default Navbar;
 export const LogoNavbar = () => {
   const router = useRouter();
 
-  
   return (
     <Container variant="-mt-6">
-      <div className="flex items-center justify-between py-5 px-4 lg:px-8 rounded-xl ">
-        <div className="flex items-center gap-10 lg:gap-4 text-center">
+      <div className="flex items-center justify-between rounded-xl">
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 text-center">
           <Image
             src={LogoBlue}
             alt="logo"
