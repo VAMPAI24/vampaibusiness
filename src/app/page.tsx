@@ -7,6 +7,7 @@ import {
   TrustedCompanies,
   Navbar,
 } from "@/components/landingpage/sections";
+import { RecruitmentAAS } from "@/components/landingpage/sections/Recruitment";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TrustedCompanies />
+      <RecruitmentAAS/>
       <JobPosting />
       <Recruitment />
       <InterviewScheduling />
