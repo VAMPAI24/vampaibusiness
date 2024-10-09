@@ -49,14 +49,14 @@ const Footer = () => {
               <input
                 type="text"
                 placeholder="Email Address"
-                className="w-full border-b border-sec-100 text-main-600 outline-none bg-transparent placeholder-gray-500 relative"
+                className="w-full pb-[1em] border-b border-sec-100 text-main-600 outline-none bg-transparent placeholder-gray-500 relative"
               />
               <Image
                 src={EmailIcon}
                 alt="email-icon"
                 width={22}
                 height={22}
-                className="absolute right-1"
+                className="absolute right-1 bottom-[1em]"
               />
             </div>
           </span>

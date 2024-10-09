@@ -8,6 +8,11 @@ import Backend from "@/public/pngs/Backend.png";
 import Frontend from "@/public/pngs/Frontend.png";
 import Hr from "@/public/pngs/Hr.png";
 import CustomerSuccess from "@/public/pngs/Customer-Success.png"
+import OfficeBox from "@/public/svgs/box.svg";
+import Unlock from "@/public/svgs/unlock.svg";
+import Support from "@/public/svgs/support.svg";
+import global from "@/public/svgs/global.svg"
+
 
 export const NavLinks = [
   {
@@ -18,27 +23,27 @@ export const NavLinks = [
       {
         name: "Craft your CV",
         link: "/",
-        coming:true,
+        coming: true,
       },
       {
         name: "Interview prep",
         link: "/",
-        coming:true,
+        coming: true,
       },
       {
         name: "Skill Asssesment",
         link: "/",
-        coming:true,
+        coming: true,
       },
       {
         name: "Career Path Recommendation",
         link: "/",
-        coming:true,
+        coming: true,
       },
       {
         name: "CV scoring",
         link: "/",
-        coming:true,
+        coming: true,
       },
     ],
   },
@@ -53,16 +58,13 @@ export const NavLinks = [
   },
 ];
 
-
-
-
 export const HeroData = [
   {
     title: "Finance",
     imgURL: Backend,
   },
   {
-    title: "Finance",
+    title: "EdTech",
     imgURL: Frontend,
   },
   {
@@ -76,6 +78,7 @@ export const HeroData = [
 
   
 ]
+
 
 export const RecruitmentData = [
   {
@@ -126,12 +129,49 @@ export const footerLinks = [
 ];
 
 export const footerSocial = [
-  { icon: Facebook, title: "instagram", link: "https://www.instagram.com/usevampai/?igsh=c3hqbDk0cG1qamY0" },
-  { icon: Twiter, title: "twitter", link: "https://x.com/usevampai?t=QzXQu3pN_Hv456kCOCulSg&s=09" },
-  { icon: Linkdein, title: "linkedin", link: "https://www.linkedin.com/company/usevampai/posts/?feedView=all" },
+  {
+    icon: Facebook,
+    title: "instagram",
+    link: "https://www.instagram.com/usevampai/?igsh=c3hqbDk0cG1qamY0",
+  },
+  {
+    icon: Twiter,
+    title: "twitter",
+    link: "https://x.com/usevampai?t=QzXQu3pN_Hv456kCOCulSg&s=09",
+  },
+  {
+    icon: Linkdein,
+    title: "linkedin",
+    link: "https://www.linkedin.com/company/usevampai/posts/?feedView=all",
+  },
+];
+
+export const waitlistData = [
+  {
+    imgURL: global,
+    title: "Global Reach & Local Expertise",
+    subtitle:
+      "Access top talent from around the world, matched to your needs, wherever you do business.",
+  },
+  {
+    imgURL: OfficeBox,
+    title: "60+ Years of Talent Expertise",
+    subtitle:
+      "With over six decades of combined experience in diverse talent markets, we bring unmatched expertise to find the perfect fit for your business—every time.",
+  },
+  {
+    imgURL: Support,
+    title: "Cost Effective Solutions",
+    subtitle:
+      "Quality hiring shouldn't come with financial stress, which is why we offer technology to help you save time and money on recruitment.",
+  },
 ];
 
 
 
 
+// company size
+export const companySize = ["1-10", "10-50", "51-100", "100+"];
 
+// accoiunt manager
+export const accManagerMail = "temitayo@usevampai.com";
