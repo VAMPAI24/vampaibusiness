@@ -21,13 +21,14 @@ import { LogoNavbar } from "@/components/landingpage/sections/Navbar";
 import { openMail } from "@/lib/utils";
 
 const initValue = {
-  company: "",
-  size: "",
+  company_name: "",
+  company_size: "",
   industry: "",
-  name: "",
-  position: "",
-  email: "",
+  full_name: "",
+  role: "",
+  company_email: "",
 };
+
 export default function Page() {
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -35,14 +36,14 @@ export default function Page() {
 
   const openCloseModalFn = () => setOpen(!open);
 
-  const handleSubmitFn = async (): Promise<void> => {
+  const handleSubmitFn = async (values: { company_name: string; company_size: string; industry: string; full_name: string; role: string; company_email: string; }) => {
     try {
-      const response = await fetch("/api/waitlist", {
+      const response = await fetch("https://vampaibe.onrender.com/api/v2/employer/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: data,
+        body: JSON.stringify(values) 
       });
 
       if (response.ok) {
@@ -52,11 +53,10 @@ export default function Page() {
           message: "You have been successfully added to the waitlist.",
         });
       } else {
-        const errorData: { message?: string } = await response.json();
+        const errorData = await response.json();
         openNotificationWithIconErr({
           title: "Error",
-          message:
-            errorData.message || "Something went wrong, please try again.",
+          message: errorData.message || "Something went wrong, please try again.",
         });
       }
     } catch (error) {
@@ -68,12 +68,12 @@ export default function Page() {
     }
   };
 
-  //   intitates mail
+  // Initiates mail
   const initMail = () => openMail(accManagerMail);
 
   if (success) {
     return (
-      <main className="bg-sec-100 min-h-screen max-h-screen  overflow-hidden">
+      <main className="bg-sec-100 min-h-screen max-h-screen overflow-hidden">
         <LogoNavbar />
         <section className="h-screen flex items-center justify-center">
           <Container variant="flex">
@@ -107,7 +107,7 @@ export default function Page() {
         </section>
       </main>
     );
-  } else
+  } else {
     return (
       <main className="bg-sec-100 ">
         <LogoNavbar />
@@ -117,18 +117,15 @@ export default function Page() {
         <section className="min-h-screen pt-[3em]">
           <Container>
             <div className="w-full grid md:grid-cols-2">
-              <div className="w-full hidden xl:flex flex-col gap-[6em]  col-span-1  ">
+              <div className="w-full hidden xl:flex flex-col gap-[6em] col-span-1">
                 <div className="w-full flex flex-col gap-[4em]">
-                  <h3 className="w-[60%] font-[700]  text-[2em] leading-[1em] text-main-900  ">
+                  <h3 className="w-[60%] font-[700] text-[2em] leading-[1em] text-main-900">
                     Welcome to Faster and Smarter Hiring
                   </h3>
 
-                  <div className="w-[70%]  flex flex-col gap-[3em]">
+                  <div className="w-[70%] flex flex-col gap-[3em]">
                     {waitlistData.map((item, id) => (
-                      <div
-                        key={id.toString()}
-                        className="flex flex-col gap-[1em] "
-                      >
+                      <div key={id.toString()} className="flex flex-col gap-[1em] ">
                         <Image src={item.imgURL} alt={item.title} />
                         <div className=" mb-4">
                           <h3 className="font-rubik font-semibold text-[25px] text-sec-901">
@@ -143,19 +140,20 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              <div className="w-full bg-white col-span-1 flex flex-col gap-[3em] px-[3em]  py-[2.5em] rounded-[20px]  border-[.5px] border-sec-200 ">
+              <div className="w-full bg-white col-span-1 flex flex-col gap-[3em] px-[3em] py-[2.5em] rounded-[20px] border-[.5px] border-sec-200 ">
                 <Titlesubtitle
                   title="Join the Fast Lane to Smarter Hiring"
                   tclass="!text-[1.5em]"
                   subtitle="Sign up now to secure your spot and unlock early access benefits."
                 />
 
-                {/* <form className="w-full flex flex-col gap-[1.5em]"></form> */}
-
                 <Formik
                   initialValues={initValue}
                   validationSchema={waitlistSchema}
-                  onSubmit={handleSubmitFn}
+                  onSubmit={async (values) => {
+                    console.log(values);  
+                    await handleSubmitFn(values); 
+                  }}
                 >
                   {(formik) => {
                     const {
@@ -172,13 +170,13 @@ export default function Page() {
                         className="flex flex-col gap-[1em]"
                       >
                         <Textfield
-                          name="company"
+                          name="company_name"
                           label="Company name"
                           placeholder="e.g Google"
-                          value={values.company}
+                          value={values.company_name}
                           error={
-                            errors.company && touched.company
-                              ? errors.company
+                            errors.company_name && touched.company_name
+                              ? errors.company_name
                               : ""
                           }
                           onChange={(e) => {
@@ -196,10 +194,10 @@ export default function Page() {
                               <RadioField
                                 key={id.toString()}
                                 label={item}
-                                value={values.size === item}
+                                value={values.company_size === item}
                                 onSelect={() => {
-                                  setFieldValue("size", item);
-                                  handleValue("size", item);
+                                  setFieldValue("company_size", item);
+                                  handleValue("company_size", item);
                                 }}
                               />
                             ))}
@@ -223,23 +221,23 @@ export default function Page() {
                         />
 
                         <Textfield
-                          name="name"
-                          label="full name"
-                          placeholder="john doe"
-                          value={values.name}
-                          error={errors.name && touched.name ? errors.name : ""}
+                          name="full_name"
+                          label="Full Name"
+                          placeholder="John Doe"
+                          value={values.full_name}
+                          error={errors.full_name && touched.full_name ? errors.full_name : ""}
                           onChange={(e) => {
                             handleChange(e);
                             handleInput(e);
                           }}
                         />
                         <Textfield
-                          name="email"
+                          name="company_email"
                           label="Email Address"
                           placeholder="johndoe@gmail.com"
-                          value={values.email}
+                          value={values.company_email}
                           error={
-                            errors.email || touched.email ? errors.email : ""
+                            errors.company_email && touched.company_email ? errors.company_email : ""
                           }
                           onChange={(e) => {
                             handleChange(e);
@@ -248,13 +246,13 @@ export default function Page() {
                         />
 
                         <Textfield
-                          name="position"
-                          label="Position in company"
+                          name="role"
+                          label="Position in Company"
                           placeholder="e.g HR Manager"
-                          value={values.position}
+                          value={values.role}
                           error={
-                            errors.position && touched.position
-                              ? errors.position
+                            errors.role && touched.role
+                              ? errors.role
                               : ""
                           }
                           onChange={(e) => {
@@ -262,29 +260,26 @@ export default function Page() {
                             handleInput(e);
                           }}
                         />
-                        <span></span>
-                        <span>
-                          {/* {message && <AlertError body={message} />} */}
-                          {/* bottom */}
-                          <div className="w-full flex flex-col gap-[1.5em] mt-[2em] ">
-                            <Button
-                              text="Join the waitlist"
-                              variant="bg-main-600 text-white rounded-full w-full h-[4em]"
-                            />
-                            <div
-                              onClick={openCloseModalFn}
-                              className="w-full flex items-center gap-[1em] bg-main-100 rounded-[1em]  p-[1em] cursor-pointer"
-                            >
-                              <Image src={InfoCircle} alt="info" />
-                              <p className="text-[1em] text-main-900 font-[300]">
-                                By clicking continue, you agree to our{" "}
-                                <strong className="font-[300] text-main-800">
-                                  Agreement of payments
-                                </strong>
-                              </p>
-                            </div>
+                        
+                        <div className="w-full flex flex-col gap-[1.5em] mt-[2em] ">
+                          <Button
+                            text="Join the waitlist"
+                            variant="bg-main-600 text-white rounded-full w-full h-[4em]"
+                            type="submit" // Ensure the button is a submit button
+                          />
+                          <div
+                            onClick={openCloseModalFn}
+                            className="w-full flex items-center gap-[1em] bg-main-100 rounded-[1em] p-[1em] cursor-pointer"
+                          >
+                            <Image src={InfoCircle} alt="info" />
+                            <p className="text-[1em] text-main-900 font-[300]">
+                              By clicking continue, you agree to our{" "}
+                              <strong className="font-[300] text-main-800">
+                                Agreement of Payments
+                              </strong>
+                            </p>
                           </div>
-                        </span>
+                        </div>
                       </form>
                     );
                   }}
@@ -295,4 +290,5 @@ export default function Page() {
         </section>
       </main>
     );
+  }
 }

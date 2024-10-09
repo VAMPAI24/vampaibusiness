@@ -19,7 +19,7 @@ function isValidEmailDomain(value?: string): boolean | string {
   return true;
 }
 export const waitlistSchema = Yup.object().shape({
-  email: Yup.string()
+  company_email: Yup.string()
     .email("Invalid email format")
     .required("Email is required")
     .test(
@@ -33,11 +33,15 @@ export const waitlistSchema = Yup.object().shape({
         return validationResponse;
       }
     ),
-  name: Yup.string()
-    .required("name is required")
+    full_name: Yup.string()
+    .required("Fullname is required")
     .matches(/^[a-zA-Z]+ [a-zA-Z]+$/, 'should be in the form "john doe"'),
-  company: Yup.string().required("name is required"),
-  industry: Yup.string().required("name is required"),
-  position: Yup.string().required("name is required"),
-  size: Yup.string().required("name is required"),
+    company_name: Yup.string().required("Company name is required"),
+  industry: Yup.string().required("Industry is required"),
+  role: Yup.string().required("Role is required"),
+  company_size: Yup.string().required("Company size is required"),
 });
+
+
+
+

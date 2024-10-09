@@ -11,6 +11,7 @@ import CustomerSuccess from "@/public/pngs/Customer-Success.png"
 import OfficeBox from "@/public/svgs/box.svg";
 import Unlock from "@/public/svgs/unlock.svg";
 import Support from "@/public/svgs/support.svg";
+import global from "@/public/svgs/global.svg"
 
 
 export const NavLinks = [
@@ -165,6 +166,9 @@ export const waitlistData = [
       "Quality hiring shouldn't come with financial stress, which is why we offer technology to help you save time and money on recruitment.",
   },
 ];
+
+
+
 
 // company size
 export const companySize = ["1-10", "10-50", "51-100", "100+"];

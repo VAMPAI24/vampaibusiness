@@ -6,7 +6,6 @@ import { HeroData } from "@/constants";
 import { useRouter } from "next/navigation";
 
 const Hero = () => {
-
   const router = useRouter()
   return (
     <Container>

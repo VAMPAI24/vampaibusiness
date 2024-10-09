@@ -21,7 +21,7 @@ declare interface ContainerProps {
   variant?: string;
 }
 
-declare type ButtonProps = {
+declare interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   imgIcon?: React.ReactNode;
   variant?: string;
