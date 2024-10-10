@@ -22,7 +22,7 @@ declare interface ContainerProps {
 }
 
 declare interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  text: string;
+  text: React.ReactNode;
   imgIcon?: React.ReactNode;
   variant?: string;
   clickFn?: () => void;

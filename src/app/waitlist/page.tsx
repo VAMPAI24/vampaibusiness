@@ -325,6 +325,7 @@ import {
 import RadioField from "@/components/common/inputs/radioField";
 import { LogoNavbar } from "@/components/landingpage/sections/Navbar";
 import { openMail } from "@/lib/utils";
+import { SyncLoader } from "react-spinners";
 
 const initValue = {
   company_name: "",
@@ -337,6 +338,7 @@ const initValue = {
 
 export default function Page() {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false);
   const { handleValue, handleInput } = useForm(initValue);
 
@@ -344,6 +346,7 @@ export default function Page() {
 
   const handleSubmitFn = async (values: { company_name: string; company_size: string; industry: string; full_name: string; role: string; company_email: string; }) => {
     try {
+      setLoading(true)
       const response = await fetch("https://vampaibe.onrender.com/api/v2/employer/create", {
         method: "POST",
         headers: {
@@ -371,6 +374,8 @@ export default function Page() {
         title: "Error",
         message: error instanceof Error ? error.message : "An unexpected error occurred. Please try again."
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -539,7 +544,7 @@ export default function Page() {
 
                         <div className="w-full flex flex-col gap-[1.5em] mt-[2em]">
                           <Button
-                            text="Join the waitlist"
+                            text={loading ?<SyncLoader size="0.8rem" color="#ffffff" /> : "Join the waitlist"}
                             variant="bg-main-600 text-white rounded-full w-full h-[3.5em]"
                             type="submit"
                           />
