@@ -119,7 +119,7 @@ export default function Page() {
                 </strong>
                 <strong className="underline font-[300] ">
                   {" "}
-                  temitayo@usevamp.ai{" "}
+                  {accManagerMail}{" "}
                 </strong>
               </p>
             </div>
@@ -302,7 +302,8 @@ export default function Page() {
                               loading ? (
                                 <SyncLoader size="0.8rem" color="#ffffff" />
                               ) : (
-                                "Join the waitlist"
+                                // "Join the waitlist"
+                                "Sign up now"
                               )
                             }
                             variant="bg-main-600 text-white rounded-full w-full h-[3.5em]"

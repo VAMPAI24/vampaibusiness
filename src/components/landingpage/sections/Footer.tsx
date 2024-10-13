@@ -4,9 +4,14 @@ import { footerLinks, footerSocial } from "@/constants";
 import EmailIcon from "@/public/svgs/email-icon.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
   const currentYear: number = new Date().getFullYear();
+
+  const router = useRouter();
+
+  const toWaitlist = () => router.push("/waitlist");
 
   return (
     <section className="bg-main-902">
@@ -24,7 +29,12 @@ const Footer = () => {
                       className="mt-3 font-jakarta text-base leading-normal text-white-400 hover:text-slate-gray"
                       key={link.name}
                     >
-                      <a href={link.link} className="text-base font-jakarta font-normal">{link.name}</a>
+                      <a
+                        href={link.link}
+                        className="text-base font-jakarta font-normal"
+                      >
+                        {link.name}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -70,6 +80,7 @@ const Footer = () => {
             <Button
               text="Get Started For Free"
               variant="bg-main-600 text-white rounded-lg w-[200px]"
+              clickFn={toWaitlist}
             />
           </div>
 

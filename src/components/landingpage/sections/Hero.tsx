@@ -12,7 +12,7 @@ const Hero = () => {
       <div className="lg:w-[800px] 2xl:w-[80em] mx-auto flex flex-col text-center items-center gap-[1em]">
  
         <h1 className="font-rubik font-[800] text-[2em] md:text-[5em] leading-[1.2em] md:leading-[1em] text-sec-901 mb-4">
-          Hire <span className="text-main-500">Top Talents</span> <br />
+          Hire <span className="text-main-700">Top Talents</span> <br />
           10x faster with Vamp.
         </h1>
 
@@ -23,7 +23,7 @@ const Hero = () => {
 
         <Button
           text="Get started"
-          variant="bg-main-600 text-white rounded-lg w-[250px] h-[5em] mt-[2.5em]"
+          variant="bg-main-700 text-white rounded-lg w-[250px] h-[5em] mt-[2.5em]"
           clickFn={() => router.push("/waitlist")}
         />
       </div>
