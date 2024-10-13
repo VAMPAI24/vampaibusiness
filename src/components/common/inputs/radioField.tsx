@@ -1,12 +1,14 @@
 import React from "react";
 
+
 interface Props {
   value?: boolean;
   label: string | boolean;
+  error?: string;
   onSelect: () => void;
 }
 
-const RadioField: React.FC<Props> = ({ value = false, label, onSelect }) => {
+const RadioField: React.FC<Props> = ({ value = false, label, error, onSelect }) => {
   return (
     <div
       className={`px-[1em] py-[.65em] rounded-xl border flex space-x-3 cursor-pointer ${
@@ -14,6 +16,8 @@ const RadioField: React.FC<Props> = ({ value = false, label, onSelect }) => {
       } ${value ? "bg-white" : "bg-gray-10"}`}
       onClick={onSelect}
     >
+
+      
       <span
         className={`cursor-pointer px-[.4rem] flex items-center  rounded-full ${
           value ? `bg-main-700` : "bg-white border border-[#7A7978]"
