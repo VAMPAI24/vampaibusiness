@@ -4,11 +4,10 @@ import React from "react";
 interface Props {
   value?: boolean;
   label: string | boolean;
-  error?: string;
   onSelect: () => void;
 }
 
-const RadioField: React.FC<Props> = ({ value = false, label, error, onSelect }) => {
+const RadioField: React.FC<Props> = ({ value = false, label, onSelect }) => {
   return (
     <div
       className={`px-[1em] py-[.65em] rounded-xl border flex space-x-3 cursor-pointer ${
