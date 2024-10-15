@@ -174,3 +174,14 @@ export const companySize = ["1-10", "10 - 50", "51 - 100", "100+"];
 
 // accoiunt manager
 export const accManagerMail = "temitayo@usevampai.com";
+
+
+
+
+
+export const WaitlistAgreementData = [
+  "Pricing: The total cost for posting job ads and using our recruitment tools will be clearly stated in account invoice.",
+  "Payment Schedule: Full payment is due within 30 days of receiving the invoice and your selected services",
+  "Payment Methods: We accept payments via credit card, bank transfer, and PayPal.",
+  "Late Fees: Payments not received by the due date will incur a 5% late fee for every 7 days past the deadline.",
+];

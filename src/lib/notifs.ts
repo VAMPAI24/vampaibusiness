@@ -7,7 +7,9 @@ interface NotificationProps {
   type?: "success" | "error";
 }
 
-export const openNotificationWithIcon = ({ message, title = null,type = "success",}: NotificationProps) => {notification[type]({message: title,
+export const openNotificationWithIcon = ({ message, title = null,type = "success",}: NotificationProps) => {
+  notification[type](
+    {message: title,
     description: message,
     duration: 5,
     className: "text-white",
