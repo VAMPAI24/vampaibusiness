@@ -43,7 +43,7 @@ const Navbar = () => {
           />
           <Button
             text="For Talent"
-            variant="bg-main-600  text-white rounded-lg w-[150px] mt-4"
+            variant="bg-main-600 hidden lg:flex text-white rounded-lg w-[150px] mt-4"
             clickFn={() => openExternalLink("https://www.usevampai.com")}
           />
         </div>
@@ -77,16 +77,17 @@ const Navbar = () => {
                   </Link>
                 ))}
               </span>
-              <div className="flex items-start justify-center gap-4 mt-4">
+              <div className="flex items-start justify-start gap-4 mt-4">
                 <Button
                   text="Login"
-                  variant="text-black  hidden border rounded-lg w-[150px] mt-4"
+                  variant="text-black hidden border rounded-lg w-[150px] mt-4"
                 />
                 <Button
                   text="For Talent"
                   variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
                   clickFn={() => openExternalLink("https://www.usevampai.com")}
                 />
+               
               </div>
             </div>
           </div>
