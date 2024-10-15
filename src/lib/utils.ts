@@ -10,3 +10,9 @@ export const openMail = (mail: string) => {
     window.location.href = `mailto:${mail}`;
   }
 };
+
+export const openExternalLink = (url: string) => {
+  if (typeof window !== "undefined") {
+    window.open(url, "vampai", "noopener");
+  }
+};

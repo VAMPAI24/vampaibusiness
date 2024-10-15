@@ -7,6 +7,7 @@ import { NavLinks } from "@/constants/index";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMultiply, faBars } from "@fortawesome/free-solid-svg-icons";
+import { openExternalLink } from "@/lib/utils";
 
 
 const Navbar = () => {
@@ -35,11 +36,15 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Buttons */}
-        <div className="hidden lgflex items-center justify-center -mt-4">
-          <Button text="Login" variant="text-white rounded-lg w-[150px] mt-4" />
+        <div className="lg:flex items-center justify-center -mt-4">
+          <Button
+            text="Login"
+            variant=" hidden text-white rounded-lg w-[150px] mt-4"
+          />
           <Button
             text="For Talent"
-            variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
+            variant="bg-main-600  text-white rounded-lg w-[150px] mt-4"
+            clickFn={() => openExternalLink("https://www.usevampai.com")}
           />
         </div>
 
@@ -75,11 +80,12 @@ const Navbar = () => {
               <div className="flex items-start justify-center gap-4 mt-4">
                 <Button
                   text="Login"
-                  variant="text-black border rounded-lg w-[150px] mt-4"
+                  variant="text-black  hidden border rounded-lg w-[150px] mt-4"
                 />
                 <Button
                   text="For Talent"
                   variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
+                  clickFn={() => openExternalLink("https://www.usevampai.com")}
                 />
               </div>
             </div>
