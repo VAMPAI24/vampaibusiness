@@ -21,7 +21,9 @@ import waitlistSuccess from "@/public/svgs/waitlist-success.svg";
 import CustomModal from "@/components/shared/CustomModal";
 import WaitlistAgreement from "@/components/waitlist/WaitlistAgreement";
 import WaitlistNavbar from "@/components/waitlist/WaitlistNavbar";
-import Accountmanager from "@/public/svgs/account-manager.svg"
+import Accountmanager from "@/public/svgs/account-manager.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const initValue = {
   company_name: "",
@@ -35,7 +37,7 @@ const initValue = {
 export default function Page() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
   const [showThirdContent, setShowThirdContent] = useState(false); // New state for third content
   const { handleValue, handleInput } = useForm(initValue);
 
@@ -129,26 +131,34 @@ export default function Page() {
       <main>
         <WaitlistNavbar />
         <Container>
-        <div className="flex flex-col items-center text-center justify-center p-4 mt-16">
-          <Image
-            src={Accountmanager}
-            alt="account-manager"
-            width={400}
-            height={400}
-            className="w-full max-w-[300px] md:max-w-[400px]"
-          />
-          <div className="mt-10 w-full max-w-[90%] md:max-w-[600px]">
-            <h3 className="text-[#2A3147] font-semibold font-rubik text-[20px] md:text-[24px]">
-            An Account Manager Has Been Assigned to You
-            </h3>
-            <p className="font-jakarta text-sm md:text-base font-normal text-[#4D5366] mt-2">
-            Meet Temitayo Johnson-Laleye, your dedicated account manager. Temitayo is just an email away to make your hiring process smooth and efficient.
-            </p>
-            <p onClick={initMail} className="mt-4 text-[#2A3147] font-jakarta font-bold text-base">
-            Contact Temitayo at: <span className="text-main-600 cursor-pointer">{accManagerMail}</span>
-            </p>
+          <div className="flex flex-col items-center text-center justify-center p-4 mt-16">
+            <Image
+              src={Accountmanager}
+              alt="account-manager"
+              width={400}
+              height={400}
+              className="w-full max-w-[300px] md:max-w-[400px]"
+            />
+            <div className="mt-10 w-full max-w-[90%] md:max-w-[600px]">
+              <h3 className="text-[#2A3147] font-semibold font-rubik text-[20px] md:text-[24px]">
+                An Account Manager Has Been Assigned to You
+              </h3>
+              <p className="font-jakarta text-sm md:text-base font-normal text-[#4D5366] mt-2">
+                Meet Temitayo Johnson-Laleye, your dedicated account manager.
+                Temitayo is just an email away to make your hiring process
+                smooth and efficient.
+              </p>
+              <p
+                onClick={initMail}
+                className="mt-4 text-[#2A3147] font-jakarta font-bold text-base"
+              >
+                Contact Temitayo at:{" "}
+                <span className="text-main-600 cursor-pointer">
+                  {accManagerMail}
+                </span>
+              </p>
+            </div>
           </div>
-        </div>
         </Container>
       </main>
     );
@@ -242,10 +252,16 @@ export default function Page() {
                             />
                           ))}
 
-                          {touched.company_size && errors.company_size && (
-                            <p className="text-error text-[.75em]">
-                              {errors.company_size}
-                            </p>
+                          {errors.company_size && touched.company_size && (
+                            <div className="flex items-center gap-[5px] pl-[15px] rounded-b-[5px] w-full">
+                              <FontAwesomeIcon
+                                icon={faCircleInfo}
+                                className="!my-0 text-[1em] text-red-700"
+                              />
+                              <p className="font-[300] text-[.9em] leading-[1.4em] text-red-900">
+                                {errors.company_size}
+                              </p>
+                            </div>
                           )}
                         </div>
                       </div>
