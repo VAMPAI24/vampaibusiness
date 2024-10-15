@@ -3,13 +3,12 @@ import { useState } from "react";
 import { Button, Container } from "@/components/landingpage";
 import Image from "next/image";
 import Logo from "@/public/svgs/logo.svg";
-import LogoBlue from "@/public/svgs/logo-blue.svg";
 import { NavLinks } from "@/constants/index";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMultiply, faBars } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
 import { openExternalLink } from "@/lib/utils";
+
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -99,23 +98,4 @@ const Navbar = () => {
 
 export default Navbar;
 
-export const LogoNavbar = () => {
-  const router = useRouter();
 
-  return (
-    <Container variant="-mt-6">
-      <div className="flex items-center justify-between rounded-xl">
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 text-center">
-          <Image
-            src={LogoBlue}
-            alt="logo"
-            width={120}
-            height={50}
-            className="cursor-pointer"
-            onClick={() => router.push("/")}
-          />
-        </div>
-      </div>
-    </Container>
-  );
-};

@@ -2,14 +2,15 @@ import React, { ReactNode } from "react";
 import { Modal } from "antd";
 import "./style.scss";
 
-interface modalProps {
+interface ModalProps {
   closable?: boolean;
   visible: boolean;
   close: () => void;
   children: ReactNode;
   addOns?: string;
 }
-export const Mainmodal: React.FC<modalProps> = (props) => {
+
+export const MainModal: React.FC<ModalProps> = (props) => {
   return (
     <Modal
       closable={props.closable ? false : true}
@@ -18,15 +19,12 @@ export const Mainmodal: React.FC<modalProps> = (props) => {
       open={props.visible}
       onCancel={props.close}
       destroyOnClose
-      footer=""
-      className={`new-modal ${props.addOns} `}
+      footer={null}
+      className={`new-modal ${props.addOns}`}
       centered={true}
       okButtonProps={{ style: { display: "none" } }}
-      maskStyle={{
-        // background: 'rgba(76, 0, 0, 0.3)',
-        background: `hsla(225, 40%, 2%, 0.25)`,
-        backdropFilter: "blur(5px)",
-      }}
+      mask={true} 
+      maskClosable={false} 
     >
       {props.children}
     </Modal>

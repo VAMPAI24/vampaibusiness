@@ -35,3 +35,19 @@ export interface InputsProps {
   placeholder?: string;
   value?: string | number | File | Date | null | boolean;
 }
+
+
+
+
+
+
+
+export interface CustomModalProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  title?: string;
+  description?: string;
+  footer?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+}

@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { Button, Container } from "@/components/landingpage";
 import { footerLinks, footerSocial } from "@/constants";
