@@ -6,7 +6,7 @@ import coven from "@/public/pngs/brands/coven.png";
 import agile from "@/public/pngs/brands/agile.png";
 import shalom from "@/public/pngs/brands/shalom.png";
 import elec from "@/public/pngs/brands/firstelec.png";
-import heels from "@/public/pngs/brands/heels.png";
+import tuboh from "@/public/pngs/brands/tuboh.png"
 import realTec from "@/public/pngs/brands/realtec.png";
 import medics from "@/public/pngs/brands/medics.png";
 import Image from "next/image";
@@ -25,7 +25,7 @@ const TrustedCompanies = () => {
       </div>
 
       <div className="w-full 2xl:w-[80%] overflow-x-scroll md:overflow-x-none hide-scrollbar flex md:flex-wrap md:items-center md:justify-center gap-[1em]">
-        {[vesti, fez, coven, agile, shalom, elec, heels, realTec, medics].map(
+        {[vesti, fez, coven, agile, shalom, elec, tuboh, realTec, medics].map(
           (item, id) => (
             <div
               key={id.toString()}

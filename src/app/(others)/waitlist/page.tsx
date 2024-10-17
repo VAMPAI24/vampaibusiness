@@ -25,6 +25,7 @@ import Accountmanager from "@/public/svgs/account-manager.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
+
 const initValue = {
   company_name: "",
   company_size: "",
@@ -332,7 +333,7 @@ export default function Page() {
                             loading ? (
                               <SyncLoader size="0.8rem" color="#ffffff" />
                             ) : (
-                              "Join the waitlist"
+                              "Sign Up"
                             )
                           }
                           variant="bg-main-600 text-white rounded-full w-full h-[3.5em]"
@@ -367,6 +368,12 @@ export default function Page() {
       >
         <WaitlistAgreement handleModalButtonClick={handleModalButtonClick} />
       </CustomModal>
+
+{/* 
+      <MainModal visible={open} close={openCloseModalFn}>
+      <WaitlistAgreement handleModalButtonClick={handleModalButtonClick} />
+
+      </MainModal> */}
     </main>
   );
 }
