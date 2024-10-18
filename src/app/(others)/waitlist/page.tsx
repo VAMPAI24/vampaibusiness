@@ -17,7 +17,6 @@ import {
 import RadioField from "@/components/common/inputs/radioField";
 import { openMail } from "@/lib/utils";
 import { SyncLoader } from "react-spinners";
-import waitlistSuccess from "@/public/svgs/waitlist-success.svg";
 import CustomModal from "@/components/shared/CustomModal";
 import WaitlistAgreement from "@/components/waitlist/WaitlistAgreement";
 import WaitlistNavbar from "@/components/waitlist/WaitlistNavbar";
@@ -104,7 +103,7 @@ export default function Page() {
     return (
       <main>
         <WaitlistNavbar />
-        <div className="flex flex-col items-center text-center justify-center p-4">
+        {/* <div className="flex flex-col items-center text-center justify-center p-4">
           <Image
             src={waitlistSuccess}
             alt="waitlist"
@@ -122,7 +121,37 @@ export default function Page() {
               team!
             </p>
           </div>
-        </div>
+        </div> */}
+         <Container>
+          <div className="flex flex-col items-center text-center justify-center p-4 mt-16">
+            <Image
+              src={Accountmanager}
+              alt="account-manager"
+              width={400}
+              height={400}
+              className="w-full max-w-[300px] md:max-w-[400px]"
+            />
+            <div className="mt-10 w-full max-w-[90%] md:max-w-[600px]">
+              <h3 className="text-[#2A3147] font-semibold font-rubik text-[20px] md:text-[24px]">
+                An Account Manager Has Been Assigned to You
+              </h3>
+              <p className="font-jakarta text-sm md:text-base font-normal text-[#4D5366] mt-2">
+                Meet Temitayo Johnson-Laleye, your dedicated account manager.
+                Temitayo is just an email away to make your hiring process
+                smooth and efficient.
+              </p>
+              <p
+                onClick={initMail}
+                className="mt-4 text-[#2A3147] font-jakarta font-bold text-base"
+              >
+                Contact Temitayo at:{" "}
+                <span className="text-main-600 cursor-pointer">
+                  {accManagerMail}
+                </span>
+              </p>
+            </div>
+          </div>
+        </Container>
       </main>
     );
   }
