@@ -42,6 +42,7 @@ const config: Config = {
         transparent: "transparent",
         current: "currentColor",
         dark: "#080A12",
+        bankGradient: '#0179FE',
         main: {
           "100": "#E5EFFF",
           "200": "#B7D3FF",

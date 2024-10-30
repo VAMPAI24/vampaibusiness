@@ -1,5 +1,6 @@
 import React from "react";
 
+
 interface Props {
   value?: boolean;
   label: string | boolean;
@@ -14,6 +15,8 @@ const RadioField: React.FC<Props> = ({ value = false, label, onSelect }) => {
       } ${value ? "bg-white" : "bg-gray-10"}`}
       onClick={onSelect}
     >
+
+      
       <span
         className={`cursor-pointer px-[.4rem] flex items-center  rounded-full ${
           value ? `bg-main-700` : "bg-white border border-[#7A7978]"

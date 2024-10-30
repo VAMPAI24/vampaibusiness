@@ -1,3 +1,6 @@
+import { StaticImageData } from 'next/image';
+
+
 declare interface SubHeadingProps {
   title: string;
   description: string;
@@ -22,7 +25,7 @@ declare interface ContainerProps {
 }
 
 declare interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  text: string;
+  text: React.ReactNode;
   imgIcon?: React.ReactNode;
   variant?: string;
   clickFn?: () => void;
@@ -34,4 +37,54 @@ export interface InputsProps {
   info?: string;
   placeholder?: string;
   value?: string | number | File | Date | null | boolean;
+}
+
+
+
+
+
+
+
+export interface CustomModalProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  title?: string;
+  description?: string;
+  footer?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+}
+
+
+
+
+
+
+declare interface ImageSectionProps {
+  imageSrc: StaticImageData; 
+  altText?: string;          
+  containerWidth?: string;    
+  imageHeight?: number;      
+  imageWidth?: number;   
+  className?: string;
+  placeholder?: 'blur' | 'empty';     
+}
+
+
+
+
+
+
+export interface SignupBoxProps {
+  title: string;
+  description: string;
+  variant:  string;
+}
+
+
+
+
+
+export interface SignUpFormProps {
+  onSuccess: () => void; 
 }

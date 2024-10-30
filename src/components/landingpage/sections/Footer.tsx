@@ -1,16 +1,22 @@
+"use client"
 import React from "react";
 import { Button, Container } from "@/components/landingpage";
 import { footerLinks, footerSocial } from "@/constants";
 import EmailIcon from "@/public/svgs/email-icon.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
   const currentYear: number = new Date().getFullYear();
 
+  const router = useRouter();
+
+  const toWaitlist = () => router.push("/waitlist");
+
   return (
     <section className="bg-main-902">
-      <Container variant="py-28 px-6 text-white mt-28 lg:mt-16">
+      <Container variant="py-28 px-6 text-white mt-40 lg:mt-16">
         <div className="flex justify-between items-start gap-20 flex-wrap max-lg:flex-col">
           <div className="flex flex-1 justify-between lg:gap-5 gap-20 flex-wrap">
             {footerLinks.map((section, index) => (
@@ -24,7 +30,12 @@ const Footer = () => {
                       className="mt-3 font-jakarta text-base leading-normal text-white-400 hover:text-slate-gray"
                       key={link.name}
                     >
-                      <a href={link.link} className="text-base font-jakarta font-normal">{link.name}</a>
+                      <a
+                        href={link.link}
+                        className="text-base font-jakarta font-normal"
+                      >
+                        {link.name}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -70,6 +81,7 @@ const Footer = () => {
             <Button
               text="Get Started For Free"
               variant="bg-main-600 text-white rounded-lg w-[200px]"
+              clickFn={toWaitlist}
             />
           </div>
 

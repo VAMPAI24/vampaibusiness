@@ -1,5 +1,7 @@
 /* eslint-disable */
 import * as Yup from "yup";
+import { z } from "zod";
+
 
 function isValidEmailDomain(value?: string): boolean | string {
   if (value) {
@@ -41,6 +43,85 @@ export const waitlistSchema = Yup.object().shape({
   role: Yup.string().required("Role is required"),
   company_size: Yup.string().required("Company size is required"),
 });
+
+
+
+
+
+export const SignInSchema = z.object({
+  email: z.string()
+    .email("Please enter a valid email address") 
+    .min(5, "Email must be at least 5 characters long") 
+    .max(100, "Email cannot exceed 100 characters")
+    .refine((value) => {
+      const validationResponse = isValidEmailDomain(value);
+      return typeof validationResponse === "boolean" ? validationResponse : false;
+    }, {
+      message: "Please check your email address and try again", 
+      path: ["email"], 
+    }),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters long") 
+    .max(50, "Password cannot exceed 50 characters") 
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter") 
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter") 
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[\W_]/, "Password must contain at least one special character"), 
+});
+
+
+
+
+
+
+export const SignUpSchema = z.object({
+  company_name: z.string(),
+  email: z.string()
+    .email("Please enter a valid email address") 
+    .min(5, "Email must be at least 5 characters long") 
+    .max(100, "Email cannot exceed 100 characters")
+    .refine((value) => {
+      const validationResponse = isValidEmailDomain(value);
+      return typeof validationResponse === "boolean" ? validationResponse : false;
+    }, {
+      message: "Please check your email address and try again", 
+      path: ["email"], 
+    }),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters long") 
+    .max(50, "Password cannot exceed 50 characters") 
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter") 
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter") 
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[\W_]/, "Password must contain at least one special character"), 
+});
+
+
+
+export const ResetPasswordSchema = z.object({
+  email: z.string()
+    .min(1, "Email is required") 
+    .email("Please enter a valid email address") 
+    .max(100, "Email cannot exceed 100 characters"), 
+});
+
+
+
+export const SetNewPasswordSchema = z.object({
+    password: z.string()
+      .min(8, "Password must be at least 8 characters")
+      .max(32, "Password cannot exceed 32 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(/[\W_]/, "Password must contain at least one special character"),
+      
+    confirmpassword: z.string().min(8, "Confirm password must be at least 8 characters"),
+  })
+  .refine((data) => data.password === data.confirmpassword, {
+    message: "Passwords do not match",
+    path: ["confirmpassword"], 
+  });
 
 
 

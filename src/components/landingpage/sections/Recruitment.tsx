@@ -63,11 +63,12 @@ export const RecruitmentAAS = () => {
               clickFn={() => router.push("/waitlist")}
             />
           </div>
-          <div className="w-full col-span-1 grid grid-cols-2 gap-[1em]">
+
+          <div className="w-full col-span-1 grid grid-cols-1 sm:grid-cols-2 gap-[1em]">
             {benefits.map((item, id) => (
               <div
                 key={id.toString()}
-                className="w-full bg-white border-[1px] border-main-200 px-[30px] py-[25px] rounded-[15px] text-left max-h-[15em] h-[10em] col-span-1 flex flex-col items-start justify-between "
+                className="w-full bg-white border-[1px] border-main-200 px-[30px] py-[25px] rounded-[15px] text-left flex flex-col items-start justify-between"
               >
                 <p className="my-0 w-full font-[300] text-[2em] text-main-800">
                   {id < 10 ? 0 : ""}

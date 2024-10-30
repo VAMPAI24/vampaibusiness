@@ -3,14 +3,16 @@ import { useState } from "react";
 import { Button, Container } from "@/components/landingpage";
 import Image from "next/image";
 import Logo from "@/public/svgs/logo.svg";
-import LogoBlue from "@/public/svgs/logo-blue.svg";
 import { NavLinks } from "@/constants/index";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMultiply, faBars } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
+import { openExternalLink } from "@/lib/utils";
+import { useRouter  } from 'next/navigation'
+
 
 const Navbar = () => {
+  const router = useRouter()
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -36,11 +38,16 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Buttons */}
-        <div className="hidden lgflex items-center justify-center -mt-4">
-          <Button text="Login" variant="text-white rounded-lg w-[150px] mt-4" />
+        <div className="lg:flex items-center justify-center -mt-4 gap-4">
+          <Button
+            text="Login"
+            variant=" hidden lg:flex text-white border rounded-lg w-[150px] mt-4"
+            clickFn={() =>  router.push("/sign-in")}
+          />
           <Button
             text="For Talent"
-            variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
+            variant="bg-main-600 hidden lg:flex text-white rounded-lg w-[150px] mt-4"
+            clickFn={() => openExternalLink("https://www.usevampai.com")}
           />
         </div>
 
@@ -64,20 +71,27 @@ const Navbar = () => {
             <div className="flex flex-col justify-end mb-4 w-full h-full">
               <span className="flex flex-col w-full gap-4">
                 {NavLinks.map((item, index) => (
-                  <Link href={item.link} key={index} className="border-b border-gray-300 pb-2 w-full">
+                  <Link
+                    href={item.link}
+                    key={index}
+                    className="border-b border-gray-300 pb-2 w-full"
+                  >
                     <span className="block w-full">{item.name}</span>
                   </Link>
                 ))}
               </span>
-              <div className="flex items-start justify-center gap-4 mt-4">
+              <div className="flex items-start justify-start gap-4 mt-4">
                 <Button
                   text="Login"
                   variant="text-black border rounded-lg w-[150px] mt-4"
+                  clickFn={() =>  router.push("/sign-in")}
                 />
                 <Button
                   text="For Talent"
                   variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
+                  clickFn={() => openExternalLink("https://www.usevampai.com")}
                 />
+               
               </div>
             </div>
           </div>
@@ -89,24 +103,4 @@ const Navbar = () => {
 
 export default Navbar;
 
-export const LogoNavbar = () => {
-  const router = useRouter();
 
-  
-  return (
-    <Container variant="-mt-6">
-      <div className="flex items-center justify-between py-5 px-4 lg:px-8 rounded-xl ">
-        <div className="flex items-center gap-10 lg:gap-4 text-center">
-          <Image
-            src={LogoBlue}
-            alt="logo"
-            width={120}
-            height={50}
-            className="cursor-pointer"
-            onClick={() => router.push("/")}
-          />
-        </div>
-      </div>
-    </Container>
-  );
-};
