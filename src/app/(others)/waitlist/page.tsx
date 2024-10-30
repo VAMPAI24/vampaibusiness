@@ -103,25 +103,6 @@ export default function Page() {
     return (
       <main>
         <WaitlistNavbar />
-        {/* <div className="flex flex-col items-center text-center justify-center p-4">
-          <Image
-            src={waitlistSuccess}
-            alt="waitlist"
-            width={400}
-            height={400}
-            className="w-full max-w-[300px] md:max-w-[400px]"
-          />
-          <div className="mt-10 w-full max-w-[90%] md:max-w-[600px]">
-            <h3 className="text-[#2A3147] font-semibold font-rubik text-[20px] md:text-[24px]">
-              Congratulations! You&apos;re All Set!
-            </h3>
-            <p className="font-jakarta text-sm md:text-base font-normal text-[#4D5366] mt-2">
-              Welcome to the Vamp AI community. A confirmation email is on its
-              way to your inbox. We&apos;re excited to help you build your dream
-              team!
-            </p>
-          </div>
-        </div> */}
          <Container>
           <div className="flex flex-col items-center text-center justify-center p-4 mt-16">
             <Image
