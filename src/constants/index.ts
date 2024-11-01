@@ -59,7 +59,7 @@ export const NavLinks = [
 
 export const HeroData = [
   {
-    title: "Fintech",
+    title: "Finance",
     imgURL: Backend,
   },
   {
@@ -67,15 +67,13 @@ export const HeroData = [
     imgURL: Frontend,
   },
   {
-    title: "Healthtech",
+    title: "Finance",
     imgURL: Hr,
   },
   {
-    title: "Logistic",
+    title: "Finance",
     imgURL: CustomerSuccess,
   },
-
-  
 ]
 
 
