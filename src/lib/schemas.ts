@@ -124,5 +124,66 @@ export const SetNewPasswordSchema = z.object({
   });
 
 
+  export const ProfileSchema = z.object({
+    firstName: z
+      .string()
+      .min(1, { message: "First name is required" })
+      .max(50, { message: "First name must be 50 characters or less" }),
+  
+    lastName: z
+      .string()
+      .min(1, { message: "Last name is required" })
+      .max(50, { message: "Last name must be 50 characters or less" }),
+  
+    position: z
+      .string()
+      .min(1, { message: "Position is required" })
+      .max(100, { message: "Position must be 100 characters or less" }),
+  
+    email: z
+      .string()
+      .email({ message: "Invalid email address" }),
+  
+    phoneNumber: z
+      .string()
+      .min(10, { message: "Phone number must be at least 10 digits" })
+      .max(15, { message: "Phone number must be 15 digits or less" })
+      .regex(/^[0-9]+$/, { message: "Phone number must contain only numbers" }),
+  
+    companyName: z
+      .string()
+      .min(1, { message: "Company name is required" })
+      .max(100, { message: "Company name must be 100 characters or less" }),
+  
+      companyWebsite: z
+      .string()
+      .min(1, { message: "companyWebsite is required" })
+      .max(100, { message: "companyWebsite must be 100 characters or less" }),
+  
+      numberOfEmployees: z
+      .string()
+      .min(10, { message: "Company phone number must be at least 10 digits" })
+      .max(15, { message: "Company phone number must be 15 digits or less" })
+      .regex(/^[0-9]+$/, { message: "Company phone number must contain only numbers" }),
+  
+    industry: z
+      .string()
+      .min(1, { message: "Industry is required" })
+      .max(100, { message: "Industry must be 100 characters or less" }),
+  
+
+  
+    country: z
+      .string()
+      .min(1, { message: "Country is required" })
+      .max(100, { message: "Country must be 100 characters or less" }),
+  
+    companyAddress: z
+      .string()
+      .min(1, { message: "Company address is required" })
+      .max(200, { message: "Company address must be 200 characters or less" }),
+  });
+
+
 
 

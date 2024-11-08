@@ -70,7 +70,7 @@ const SignUp = () => {
                 </p>
               )} */}
 
-              <Button type="submit" className="w-full h-[50px] mt-6">
+              <Button onClick={() => router.push("/dashboard")} type="submit" className="w-full h-[50px] mt-6">
                 Submit
               </Button>
 
