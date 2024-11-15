@@ -69,7 +69,7 @@ export default function Page() {
         const successData = await response.json();
         openNotificationWithIcon({
           title: "Success",
-          message: successData.message,
+          message: successData?.message,
         });
       } else {
         const errorData = await response.json();

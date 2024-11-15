@@ -57,7 +57,7 @@
     "react-dom": "^18",
     "react-gauge-chart": "^0.5.1",
     "react-google-charts": "^4.0.1",
-    "react-hook-form": "^7.53.0",
+    "react-hook-form": "^7.53.2",
     "react-paystack": "^5.0.0",
     "react-phone-number-input": "^3.4.9",
     "react-redux": "^9.1.2",

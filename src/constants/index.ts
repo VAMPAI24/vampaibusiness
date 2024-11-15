@@ -320,3 +320,7 @@ export const Industries = [
 ];
 
 
+
+export const numberOfEmployees = ["1-10","11-50","51-100","100+"];
+
+

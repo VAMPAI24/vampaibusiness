@@ -100,7 +100,8 @@ export interface SubmitButtonProps {
   isLoading?: boolean;
   className?: string;
   loadingText?: string;
-  children: React.ReactNode
+  children: React.ReactNode;
+  clickFn?: () => void;
 }
 
 
@@ -111,4 +112,13 @@ export interface DashboardCardProp {
   title: string;
   description: string;
   imgSrc: StaticImageData,
+}
+
+
+
+
+export interface ToastNotificationProps {
+  title: string;
+  description: string;
+  type?: "success" | "error" | "info"; 
 }

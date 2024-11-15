@@ -41,7 +41,7 @@ const MobileNav = () => {
             alt="vamp-logo-large"
             width={100}
             height={100}
-            className=""
+           
           />
         </Link>
 
