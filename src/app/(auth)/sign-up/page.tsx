@@ -14,6 +14,11 @@ import { RootState } from "@/redux/app/store";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { useEmailVerificationMutation } from "@/redux/features/auth/authApi";
 
+type UserSignUpInfo = {
+  work_email: string;
+};
+
+
 const SignUp = () => {
   const router = useRouter();
   const [active, setActive] = useState(0);
@@ -24,7 +29,10 @@ const SignUp = () => {
     setActive((prevActive) => Math.min(prevActive + 1, steps.length - 1));
   };
 
-  const { userSignUpInfo } = useSelector((state: RootState) => state.auth);
+  const { userSignUpInfo } = useSelector(
+    (state: RootState) => state.auth as { userSignUpInfo: UserSignUpInfo | null }
+  );
+  
 
   const data = {
     otp: otp,
@@ -38,7 +46,7 @@ const SignUp = () => {
     work_email: string | undefined;
   }) => {
     try {
-      const response = await emailVerification(values).unwrap();
+      await emailVerification(values).unwrap();
       router.push("/dashboard");
     } catch (error) {
       console.log(error);

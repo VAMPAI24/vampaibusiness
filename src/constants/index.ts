@@ -23,6 +23,14 @@ import Arrow from "@/public/svgs/dashboard/arrow.svg"
 
 
 
+import DashboardMobile from "@/public/svgs/dashboard/dashboard-mobile.svg"
+import JobAdsMobile from "@/public/svgs/dashboard/job-ads-mobile.svg"
+import RecruitmnetMobile from "@/public/svgs/dashboard/recruitment-mobile.svg"
+import ScheduleInterviewMobile from "@/public/svgs/dashboard/schedule-interview-mobile.svg"
+
+
+
+
 
 export const NavLinks = [
   {
@@ -210,7 +218,7 @@ export const SidebarLinks = [
   },
   {
     imgURL:  JobAds,
-    route: "/job-ads",
+    route: "/jobads",
     label: "Job Ads",
   },
   {
@@ -220,6 +228,39 @@ export const SidebarLinks = [
   },
   {
     imgURL: ScheduleInterview,
+    route: "/scheduleinterview",
+    label: "Schedule Interview",
+  },
+  {
+    imgURL: Logout,
+    route: "/sign-in",
+    label: "Logout",
+  },
+];
+
+
+
+
+
+
+export const SidebarLinksMobile = [
+  {
+    imgURL: DashboardMobile,
+    route: "/dashboard",
+    label: "Dashboard",
+  },
+  {
+    imgURL:  JobAdsMobile,
+    route: "/jobads",
+    label: "Job Ads",
+  },
+  {
+    imgURL:  RecruitmnetMobile,
+    route: "/recruitment",
+    label: "Recruitmnet",
+  },
+  {
+    imgURL: ScheduleInterviewMobile,
     route: "/scheduleinterview",
     label: "Schedule Interview",
   },

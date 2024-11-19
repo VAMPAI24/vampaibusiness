@@ -6,14 +6,12 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ResetPasswordSchema } from "@/lib/schemas";
 import { useRouter } from "next/navigation";
 import CustomInput from "@/components/shared/inputs/CustomInput";
 import { useSendResetPasswordLinkMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "@/components/shared/SubmitButton";
-import ToastNotification from "@/components/shared/ToastNotification";
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -30,7 +28,7 @@ const ResetPassword = () => {
 
   const onSubmit = async (values: z.infer<typeof ResetPasswordSchema>) => {
     try {
-      const response = await sendResetPasswordLink(values).unwrap();
+      await sendResetPasswordLink(values).unwrap();
       // setCheckMail(true);
     } catch (error) {
       console.log(error);

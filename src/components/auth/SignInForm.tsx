@@ -1,9 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { SignInSchema } from "@/lib/schemas";
@@ -11,12 +10,12 @@ import { useRouter } from "next/navigation";
 import CustomInput from "../shared/inputs/CustomInput";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "../shared/SubmitButton";
-import { redirect } from "next/navigation";
+
 
 const SignInForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [login, { isSuccess, isLoading }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -27,16 +26,11 @@ const SignInForm = () => {
   });
 
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     // toast.success("Login Successfully!");
-  //     redirect("/dashboard");
-  //   }
-  // }, [isSuccess]);
+ 
 
   const onSubmit = async (values: z.infer<typeof SignInSchema>) => {
     try {
-      const response = await login(values).unwrap();
+      await login(values).unwrap();
       router.push("/dashboard");
     } catch (error) {
       console.log(error);

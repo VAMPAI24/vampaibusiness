@@ -51,7 +51,7 @@ const SetNewPassword = () => {
     };
 
     try {
-      const response = await ResetPassword(data).unwrap();
+      await ResetPassword(data).unwrap();
       setReset(true); 
     } catch (error) {
       console.error("Error resetting password:", error);

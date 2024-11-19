@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { SignUpSchema } from "@/lib/schemas";
@@ -29,7 +28,7 @@ const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
     try {
-      const response = await register(values).unwrap();
+      await register(values).unwrap();
       onSuccess();
     } catch (error) {
       console.log(error);

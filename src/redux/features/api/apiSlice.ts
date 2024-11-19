@@ -9,7 +9,7 @@ export const apiSlice = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       // Access the token from the Redux state, assuming it's stored in `token`
-      const token = (getState() as RootState).auth?.token || null;
+      const token = (getState() as RootState).auth?.token;
 
       // Log the token for debugging
       console.log("Current Token:", token);

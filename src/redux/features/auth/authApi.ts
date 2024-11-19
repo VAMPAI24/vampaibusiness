@@ -4,7 +4,15 @@ import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
 import { userRegistration, userLoggedIn } from "./authSlice";
 
-
+// Define the error type
+interface ApiError {
+  error: {
+    data: {
+      error: string;
+      message: string;
+    };
+  };
+}
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,28 +25,22 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-
           dispatch(
             userRegistration({
               userSignUpInfo: result?.data?.data,
             })
           );
-
-          // Navigate to the dashboard
-          // window.location.href = "/dashboard";
-
-          
-
           ToastNotification({
             title: result?.data?.message,
             description: "Signed Up Successfully",
             type: "success",
           });
-        } catch (error: any) {
-          console.log(error);
+        } catch (error) {
+          const apiError = error as ApiError; // Type assertion
+          console.log(apiError);
           ToastNotification({
-            title: error?.error?.data?.error || "Network Error" ,
-            description: error?.error?.data?.message || "Kindly Check your Network",
+            title: apiError?.error?.data?.error || "Network Error",
+            description: apiError?.error?.data?.message || "Kindly Check your Network",
             type: "error",
           });
         }
@@ -54,17 +56,17 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-
           ToastNotification({
             title: result?.data?.message,
-            description: "Email Verification Successfull",
+            description: "Email Verification Successful",
             type: "success",
           });
-        } catch (error: any) {
-          console.log(error);
+        } catch (error) {
+          const apiError = error as ApiError; // Type assertion
+          console.log(apiError);
           ToastNotification({
-            title: error?.error?.data?.error || "Network Error" ,
-            description: error?.error?.data?.message || "Kindly Check your Network",
+            title: apiError?.error?.data?.error || "Network Error",
+            description: apiError?.error?.data?.message || "Kindly Check your Network",
             type: "error",
           });
         }
@@ -83,19 +85,11 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-
-
           ToastNotification({
             title: result?.data?.message,
             description: "Signed In Successfully",
             type: "success",
           });
-
-
-
-       
-
-
           dispatch(
             userLoggedIn({
               accessToken: result?.data?.data?.tokens?.access_token,
@@ -103,11 +97,12 @@ export const authApi = apiSlice.injectEndpoints({
               userInfo: result?.data?.data?.user,
             })
           );
-        } catch (error: any) {
-          console.log(error);
+        } catch (error) {
+          const apiError = error as ApiError; // Type assertion
+          console.log(apiError);
           ToastNotification({
-            title: error?.error?.data?.error || "Network Error" ,
-            description: error?.error?.data?.message || "Kindly Check your Network",
+            title: apiError?.error?.data?.error || "Network Error",
+            description: apiError?.error?.data?.message || "Kindly Check your Network",
             type: "error",
           });
         }
@@ -116,96 +111,104 @@ export const authApi = apiSlice.injectEndpoints({
 
     sendResetPasswordLink: builder.mutation({
       query: (data) => ({
-        url: "/employer/auth/password-link",  
+        url: "/employer/auth/password-link",
         method: "POST",
-        body: data
+        body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-
-
-          // console.log(result)
           ToastNotification({
             title: "Reset Password Successful",
             description: result?.data?.message,
             type: "success",
           });
-
-
-        } catch (error: any) {
-          console.log(error);
+        } catch (error) {
+          const apiError = error as ApiError; // Type assertion
+          console.log(apiError);
           ToastNotification({
-            title: error?.error?.data?.error || "Network Error" ,
-            description: error?.error?.data?.message || "Kindly Check your Network",
+            title: apiError?.error?.data?.error || "Network Error",
+            description: apiError?.error?.data?.message || "Kindly Check your Network",
             type: "error",
           });
         }
       },
     }),
-
 
     ResetPassword: builder.mutation({
       query: (data) => ({
-        url: "/employer/auth/reset-password",  
+        url: "/employer/auth/reset-password",
         method: "PATCH",
-        body: data
+        body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-
-
-          // console.log(result)
           ToastNotification({
             title: "Reset Password Successful",
             description: result?.data?.message,
             type: "success",
           });
-
-
-        } catch (error: any) {
-          console.log(error);
+        } catch (error) {
+          const apiError = error as ApiError; // Type assertion
+          console.log(apiError);
           ToastNotification({
-            title: error?.error?.data?.error || "Network Error" ,
-            description: error?.error?.data?.message || "Kindly Check your Network",
+            title: apiError?.error?.data?.error || "Network Error",
+            description: apiError?.error?.data?.message || "Kindly Check your Network",
             type: "error",
           });
         }
       },
     }),
 
-
-
     updateProfile: builder.mutation({
       query: (data) => ({
-        url: "/employer/auth/update-profile",  
+        url: "/employer/auth/update-profile",
         method: "PATCH",
-        body: data
+        body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-
-
-          console.log(result)
           ToastNotification({
             title: result?.data?.message,
             description: "Signed In Successfully",
             type: "success",
           });
-
-
-        } catch (error: any) {
-          console.log(error);
+        } catch (error) {
+          const apiError = error as ApiError; // Type assertion
+          console.log(apiError);
           ToastNotification({
-            title: error?.error?.data?.error || "Network Error" ,
-            description: error?.error?.data?.message || "Kindly Check your Network",
+            title: apiError?.error?.data?.error || "Network Error",
+            description: apiError?.error?.data?.message || "Kindly Check your Network",
             type: "error",
           });
         }
       },
     }),
+
+
+    getSingleEmployer: builder.query({
+      query: () => ({
+        url: "/employer/auth/get-employer",
+        method: "GET",
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error) {
+          const apiError = error as ApiError; 
+          console.log(apiError);
+          ToastNotification({
+            title: apiError?.error?.data?.error || "Network Error",
+            description: apiError?.error?.data?.message || "Kindly Check your Network",
+            type: "error",
+          });
+        }
+      },
+    }),
+
+
 
 
 
@@ -218,12 +221,21 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           // dispatch(userLoggedOut());
         } catch (error) {
-          console.log(error);
+          const apiError = error as ApiError; // Type assertion
+          console.log(apiError);
         }
       },
     }),
   }),
 });
 
-export const { useRegisterMutation, useEmailVerificationMutation, useLoginMutation, useSendResetPasswordLinkMutation, useResetPasswordMutation, useUpdateProfileMutation, useLogOutQuery } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useEmailVerificationMutation,
+  useLoginMutation,
+  useSendResetPasswordLinkMutation,
+  useResetPasswordMutation,
+  useUpdateProfileMutation,
+  useGetSingleEmployerQuery,
+  useLogOutQuery,
+} = authApi;

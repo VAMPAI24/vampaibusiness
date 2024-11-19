@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ProfileBox } from "@/components/dashboard";
 import { Form } from "@/components/ui/form";
 import { z } from "zod";
@@ -12,20 +12,28 @@ import CustomFormField, {
 import SubmitButton from "@/components/shared/SubmitButton";
 import { Countries, Industries, numberOfEmployees } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
-import { useUpdateProfileMutation } from "@/redux/features/auth/authApi";
+import {
+  useGetSingleEmployerQuery,
+  useUpdateProfileMutation,
+} from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/app/store";
-import CustomInput from "@/components/shared/inputs/CustomInput";
+
+
+
 
 const Profile = () => {
   const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
+  const { data: userInfo, refetch } = useGetSingleEmployerQuery(token);
+  const [updateProfile, { isLoading: isUpdatingProfile }] = useUpdateProfileMutation();
 
-  const [updateProfile, { data, isLoading }] = useUpdateProfileMutation();
 
-  const { userInfo } = useSelector((state: RootState) => state.auth);
-
-  console.log("data", data);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(JSON.parse(storedToken)); 
+    }
+  }, []);
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
@@ -44,47 +52,51 @@ const Profile = () => {
     },
   });
 
-  const { setValue } = form;
+  const { setValue, control } = form;
 
   useEffect(() => {
     if (userInfo) {
-      setValue("first_name", userInfo.first_name || "");
-      setValue("last_name", userInfo.last_name || "");
-      setValue("Position_in_company", userInfo.Position_in_company || "");
-      setValue("work_email", userInfo.work_email || "");
-      setValue("phone_Number", userInfo.phone_Number || "");
-      setValue("country", userInfo.country || "");
-      setValue("company_name", userInfo.company_name || "");
-      setValue("No_Employees", userInfo.No_Employees || "");
-      setValue("industry", userInfo.industry || "");
-      setValue("company_bio", userInfo.company_bio || "");
+      setValue("first_name", userInfo?.data?.first_name || "");
+      setValue("last_name", userInfo?.data?.last_name || "");
+      setValue("Position_in_company", userInfo?.data?.Position_in_company || "");
+      setValue("work_email", userInfo?.data?.work_email || "");
+      setValue("phone_Number", userInfo?.data?.phone_Number || "");
+      setValue("country", userInfo?.data?.country || "");
+      setValue("company_name", userInfo?.data?.company_name || "");
+      setValue("company_website", userInfo?.data?.company_website || "");
+      setValue("No_Employees", userInfo?.data?.No_Employees || "");
+      setValue("industry", userInfo?.data?.industry || "");
+      setValue("company_bio", userInfo?.data?.company_bio || "");
     }
   }, [userInfo, setValue]);
 
-  const onSubmit = async function (values: z.infer<typeof ProfileSchema>) {
+
+
+
+  const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
+
     try {
-      console.log(values);
-      const response = await updateProfile(values).unwrap();
-      router.push("/dashboard");
+      await updateProfile(values).unwrap();
+      await refetch();
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 5000)
+      
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const [isLoading, setIsLoading] = useState(false);
-
   return (
     <section className="hide-scrollbar">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Personal Information Section */}
-          <div className="bg-white px-4 sm:px-6 lg:px-8 py-6  flex flex-col lg:flex-row gap-6 lg:gap-10">
+          <div className="bg-white px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 lg:gap-10">
             <ProfileBox
               title="Personal Information"
               description="Provide your basic details to help us personalize your experience"
             />
             <div>
-              {/* Form Fields for Personal Information */}
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row xl:flex-row w-full lg:w-[550px] mb-4">
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
@@ -103,8 +115,6 @@ const Profile = () => {
                   variant="h-[40px] w-full"
                 />
               </div>
-
-              {/* Additional Fields for Personal Information */}
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row xl:flex-row mb-4">
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
@@ -121,9 +131,9 @@ const Profile = () => {
                   label="Work Email Address"
                   placeholder="Enter your work email address"
                   variant="h-[40px] w-full"
+                  disabled={true}
                 />
               </div>
-
               <CustomFormField
                 fieldType={FormFieldType.PHONE_INPUT}
                 control={form.control}
@@ -135,57 +145,58 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Company Information Section */}
           <div className="bg-white px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 lg:gap-10">
             <ProfileBox
-              title="Company’s Information"
+              title="Company's Information"
               description="Enter key company details to build your professional profile"
             />
             <div>
-              {/* Company Name and Website Fields */}
-
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:w-[550px] mb-4">
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
                   control={form.control}
                   name="company_name"
-                  label="Company’s Name"
-                  placeholder="Enter your Company’s Name"
+                  label="Company's Name"
+                  placeholder="Enter your Company's Name"
                   variant="h-[40px] w-full"
+                  disabled={true}
+                  
                 />
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
                   control={form.control}
                   name="company_website"
-                  label="Company’s Website"
-                  placeholder="Enter your Company’s Website"
+                  label="Company's Website"
+                  placeholder="Enter your Company's Website"
                   variant="h-[40px] w-full"
+                  disabled={true}
                 />
               </div>
-
-              {/* Industry and Country Selection Fields */}
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row mb-4">
                 <CustomFormField
                   fieldType={FormFieldType.SELECT}
-                  control={form.control}
+                  control={control}
                   name="No_Employees"
                   label="Number of Employees"
                   placeholder="Enter the Number of Employees"
                   variant="h-[40px] w-full"
+                  defaultValue={userInfo?.data?.No_Employees || ""}
                 >
                   {numberOfEmployees.map((employ, index) => (
-                    <SelectItem key={employ + index} value={employ}>
+                    <SelectItem key={`${employ}-${index}`} value={employ}>
                       {employ}
                     </SelectItem>
                   ))}
                 </CustomFormField>
+
                 <CustomFormField
                   fieldType={FormFieldType.SELECT}
-                  control={form.control}
+                  control={control}
                   name="industry"
-                  label="Industry"
+                  label="industry"
                   placeholder="Enter your industry"
                   variant="h-[40px] w-full"
+                  defaultValue={userInfo?.data?.industry || ""}
                 >
                   {Industries.map((industry, index) => (
                     <SelectItem key={industry + index} value={industry}>
@@ -194,15 +205,15 @@ const Profile = () => {
                   ))}
                 </CustomFormField>
               </div>
-
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:w-[550px] mb-4">
                 <CustomFormField
                   fieldType={FormFieldType.SELECT}
-                  control={form.control}
+                  control={control}
                   name="country"
                   label="Country"
                   placeholder="Enter Country"
                   variant="h-[40px] w-full"
+                  defaultValue={userInfo?.data?.country || ""}
                 >
                   {Countries.map((country, index) => (
                     <SelectItem key={country + index} value={country}>
@@ -211,34 +222,21 @@ const Profile = () => {
                   ))}
                 </CustomFormField>
               </div>
-
               <CustomFormField
                 fieldType={FormFieldType.TEXTAREA}
                 control={form.control}
                 name="company_bio"
-                label="Company’s Bio"
+                label="Company's Bio"
                 placeholder="Enter your company  Bio"
                 variant="h-20 w-full"
               />
-
-
-              {/* image */}
-              {/* <CustomInput
-                control={form.control}
-                name="resume"
-                label="Upload Resume"
-                placeholder="Select your resume file"
-                type="file"
-                variant="h-[50px]"
-              /> */}
             </div>
           </div>
 
-          {/* Submit Button Section */}
           <div className="bg-white px-4 sm:px-6 lg:px-8 py-6 flex justify-end items-center">
             <SubmitButton
               className="w-full sm:w-[150px] h-11"
-              isLoading={isLoading}
+              isLoading={isUpdatingProfile}
             >
               Update Profile
             </SubmitButton>

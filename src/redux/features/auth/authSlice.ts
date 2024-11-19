@@ -16,15 +16,34 @@ type UserInfoProps = {
 };
 
 
-const initialState = {
-  token: "",
-  refreshToken: "",
-  userInfo: null as UserInfoProps | null, 
-  userSignUpInfo:  
+interface AuthState {
+  token: string;
+  refreshToken: string;
+  userInfo: UserInfoProps | null;
+  userSignUpInfo: string | null;
+}
+
+
+
+const initialState: AuthState = {
+  token: 
+    typeof window !== "undefined" && localStorage.getItem("token")
+      ? JSON.parse(localStorage.getItem("token") as string)
+      : "",
+  refreshToken: 
+    typeof window !== "undefined" && localStorage.getItem("refreshToken")
+      ? JSON.parse(localStorage.getItem("refreshToken") as string)
+      : "",
+  userInfo:
+    typeof window !== "undefined" && localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo") as string)
+      : null,
+  userSignUpInfo:
     typeof window !== "undefined" && localStorage.getItem("userSignUpInfo")
       ? JSON.parse(localStorage.getItem("userSignUpInfo") as string)
       : null,
 };
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -52,15 +71,17 @@ const authSlice = createSlice({
       localStorage.setItem("refreshToken", JSON.stringify(action.payload.refreshToken));
       localStorage.setItem("userInfo", JSON.stringify(action.payload.userInfo));
     },
-    userLogout: (state: any) => {
+    userLogout: (state: AuthState) => {
       state.userInfo = null;
-      state.token = null;
-      state.refreshToken = null;
+      state.token = "";
+      state.refreshToken = "";
       localStorage.removeItem("userInfo");
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
     },
   },
 });
 
-export const { userRegistration, userLoggedIn } = authSlice.actions;
+export const { userRegistration, userLoggedIn, userLogout } = authSlice.actions;
 
 export default authSlice.reducer;
