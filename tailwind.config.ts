@@ -9,17 +9,6 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    screens: {
-      sm: "640px",
-      md: "720px",
-      lg: "960px",
-      "lg-max": {
-        max: "960px",
-      },
-      xl: "1140px",
-      "2xl": "1400px",
-      "3xl": "1441px",
-    },
     extend: {
       fontFamily: {
         rubik: ["var(--font-rubik)"],
@@ -35,8 +24,7 @@ const config: Config = {
         "200%": "200% auto",
       },
       backgroundImage: {
-        "custom-gradient":
-          "linear-gradient(128deg, #EF4136 32.39%, #F7941D 93.22%)",
+        "custom-gradient": "linear-gradient(128deg, #EF4136 32.39%, #F7941D 93.22%)",
       },
       colors: {
         transparent: "transparent",
@@ -114,6 +102,7 @@ const config: Config = {
       },
       boxShadow: {
         "shadow-one": "0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+        creditCard: '8px 10px 16px 0px rgba(0, 0, 0, 0.05)'
       },
       animation: {
         fadeIn: "fadeIn 1s forwards",

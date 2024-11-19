@@ -3,30 +3,41 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { SignUpSchema } from "@/lib/schemas";
 import { useRouter } from "next/navigation";
 import { SignUpFormProps } from "@/types";
 import CustomInput from "../shared/inputs/CustomInput";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import SubmitButton from "../shared/SubmitButton";
 
 const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [register, { isLoading }] = useRegisterMutation();
+
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
       company_name: "",
-      email: "",
+      work_email: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    console.log(values);
-    onSuccess();
-  }
+  const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
+    try {
+      await register(values).unwrap();
+      onSuccess();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-10">
@@ -41,9 +52,9 @@ const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
 
         <CustomInput
           control={form.control}
-          name="email"
-          label="Company's Email Address"
-          placeholder="Enter your company's email"
+          name="work_email"
+          label="Work Email Address"
+          placeholder="Enter your Work Email Address"
           variant="h-[50px]"
           type="email"
         />
@@ -70,9 +81,11 @@ const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
           }
         />
 
-        <Button type="submit" className="w-full h-[50px]">
+      
+
+        <SubmitButton isLoading={isLoading} loadingText="Signing Up..." className="w-full h-[50px]">
           Submit
-        </Button>
+        </SubmitButton>
       </form>
       <p
         onClick={() => router.push("/sign-in")}

@@ -1,0 +1,1 @@
+export const BASE_URL = "https://vampaibe.onrender.com/api/v2";

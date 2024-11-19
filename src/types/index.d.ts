@@ -88,3 +88,37 @@ export interface SignupBoxProps {
 export interface SignUpFormProps {
   onSuccess: () => void; 
 }
+
+
+
+export interface ProfileBoxProps {
+  title: string;
+  description: string;
+}
+
+export interface SubmitButtonProps {
+  isLoading?: boolean;
+  className?: string;
+  loadingText?: string;
+  children: React.ReactNode;
+  clickFn?: () => void;
+}
+
+
+
+
+export interface DashboardCardProp {
+  imgIcon: StaticImageData,  
+  title: string;
+  description: string;
+  imgSrc: StaticImageData,
+}
+
+
+
+
+export interface ToastNotificationProps {
+  title: string;
+  description: string;
+  type?: "success" | "error" | "info"; 
+}

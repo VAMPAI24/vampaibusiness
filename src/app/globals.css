@@ -75,6 +75,9 @@
 }
 
 
+
+
+/* ========================================== TAILWIND STYLES */
 /* Hide scrollbar for IE, Edge and Firefox */
 .hide-scrollbar {
   scrollbar-width: none; /* IE and Edge */
@@ -101,4 +104,3 @@
   @apply text-red-400 !important;
 }
  
-

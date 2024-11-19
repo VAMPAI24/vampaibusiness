@@ -16,10 +16,10 @@ export default function RootLayout({
   const isSignUPPage = pathname === "/sign-up";
 
   return (
-    <main className="hide-scrollbar flex flex-col lg:flex-row min-h-screen w-full justify-center lg:justify-between items-center lg:items-stretch">
+    <main className="remove-scrollbar flex flex-col lg:flex-row min-h-screen w-full justify-center lg:justify-between items-center lg:items-stretch">
       {isSignUPPage ? (
         <>
-          <div className="hidden lg:flex h-screen w-[40%] sticky top-0 items-center justify-end bg-sky-1 relative">
+          <div className="hidden lg:flex h-screen w-[40%] sticky top-0 items-center justify-end bg-sky-1">
             <ImageSection
               imageSrc={SignUpImage}
               altText="sign-up-image"
