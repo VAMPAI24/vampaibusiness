@@ -22,7 +22,11 @@ const MobileNav = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(userLogout());
+    try {
+      setTimeout(() => dispatch(userLogout()), 1000);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (

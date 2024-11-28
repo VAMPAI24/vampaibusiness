@@ -6,9 +6,7 @@ import { z } from "zod";
 import { ProfileSchema } from "@/lib/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomFormField, {
-  FormFieldType,
-} from "@/components/shared/inputs/CustomFormField";
+import CustomFormField, { FormFieldType, } from "@/components/shared/inputs/CustomFormField";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { Countries, Industries, numberOfEmployees } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
@@ -96,7 +94,7 @@ const Profile = () => {
               title="Personal Information"
               description="Provide your basic details to help us personalize your experience"
             />
-            <div>
+            <div className="relative">
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row xl:flex-row w-full lg:w-[550px] mb-4">
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
@@ -150,7 +148,7 @@ const Profile = () => {
               title="Company's Information"
               description="Enter key company details to build your professional profile"
             />
-            <div>
+            <div className="relative">
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:w-[550px] mb-4">
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
@@ -169,7 +167,6 @@ const Profile = () => {
                   label="Company's Website"
                   placeholder="Enter your Company's Website"
                   variant="h-[40px] w-full"
-                  disabled={true}
                 />
               </div>
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row mb-4">

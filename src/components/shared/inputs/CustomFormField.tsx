@@ -32,6 +32,7 @@ export enum FormFieldType {
 }
 
 interface CustomProps {
+  type?: string;
   control: Control<any>;
   name: string;
   label?: string;
@@ -58,6 +59,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={props.placeholder}
               {...field}
+              type={props.type}
               readOnly={props.readOnly}
               disabled={props.disabled}
               className={`${props.variant} text-16 placeholder:text-16 rounded-[5px] border bg-[#F7FCFF] border-bankGradient text-gray-900 placeholder:text-gray-500`}

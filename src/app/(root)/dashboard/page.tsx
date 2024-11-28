@@ -9,12 +9,14 @@ import ArrowWhite from "@/public/svgs/dashboard/arrow-white.svg";
 import { DashboardCardData } from "@/constants";
 import { useRouter } from "next/navigation";
 
+
 const Dashboard = () => {
   const router = useRouter();
 
   return (
     <section className="lg:mt-16">
-  
+     
+
       <div className="mt-10 flex flex-col lg:flex-row gap-5">
         {DashboardCardData.map((cardItem, index) => (
           <DashboardCard key={index} {...cardItem} />
@@ -30,10 +32,12 @@ const Dashboard = () => {
           <Image src={Percentage} alt="profile" width={45} height={45} />
         </div>
 
-        <div className="flex justify-start items-start  gap-10 ">
+        <div className="flex justify-start items-start py-4  gap-10 ">
           <div className="text-white">
-            <h3 className="font-semibold text-[18px] mt-4">Complete your Profile</h3>
-            <p className="text-sm font-jakarta mt-2">
+            <h3 className="font-semibold text-[18px] mt-4">
+              Complete your Profile
+            </h3>
+            <p className="text-xs font-jakarta mt-2">
               Take the next step by completing your profile in one place.
               Providing detailed information will help you attract top talent
             </p>
@@ -42,14 +46,6 @@ const Dashboard = () => {
           <Image src={ArrowWhite} alt="arrow" />
         </div>
       </div>
-
-
-
-
-
-
-
-      
     </section>
   );
 };

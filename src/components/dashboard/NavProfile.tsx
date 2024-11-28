@@ -9,8 +9,6 @@ const NavProfile = () => {
   const [token, setToken] = useState<string | null>(null);
   const { data: userData, refetch } = useGetSingleEmployerQuery(token);
 
-  console.log("userData", userData?.data);
-
   useEffect(() => {
     refetch();
     const storedToken = localStorage.getItem("token");
@@ -24,13 +22,13 @@ const NavProfile = () => {
       <Avatar>
         <AvatarImage src="https://github.com/sh" />
         <AvatarFallback>
-          {userData?.data
+          {userData?.data?.first_name?.[0] && userData?.data?.last_name?.[0]
             ? `${userData.data.first_name[0]}${userData.data.last_name[0]}`.toUpperCase()
             : "NA"}
         </AvatarFallback>
       </Avatar>
 
-      <div className="hidden lg:block">
+      <div className="hidden md:block">
         <div className="flex gap-1">
           <p className="text-main-902 font-semibold font-jakarta text-m§d">
             {userData?.data?.first_name}
@@ -39,7 +37,7 @@ const NavProfile = () => {
             {userData?.data?.last_name}
           </p>
         </div>
-        <p className="text-main-900 font-jakarta text-md">
+        <p className="text-main-900 font-jakarta text-xs">
           {userData?.data?.work_email}
         </p>
       </div>
@@ -48,31 +46,6 @@ const NavProfile = () => {
         <Image src={ArrowDown} alt="arrow-down" width={20} height={20} />
       </div>
     </div>
-
-    // <div className="flex items-center justify-center gap-2">
-    //   <Avatar>
-    //     <AvatarImage src="https://github.com/sh" />
-    //     <AvatarFallback>CN</AvatarFallback>
-    //   </Avatar>
-
-    //   <div className="hidden lg:block">
-    //     <div className="flex gap-1">
-    //       <p className=" text-main-902 font-semibold font-jakarta text-md">
-    //         {userData?.data?.first_name}
-    //       </p>
-    //       <p className=" text-main-902 font-semibold font-jakarta text-md">
-    //         {userData?.data?.last_name}
-    //       </p>
-    //     </div>
-    //     <p className="text-main-900 font-jakarta text-md">
-    //       {userData?.data?.work_email}
-    //     </p>
-    //   </div>
-
-    //   <div>
-    //     <Image src={ArrowDown} alt="arrow-down" width={20} height={20} />
-    //   </div>
-    // </div>
   );
 };
 
