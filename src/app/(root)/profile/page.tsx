@@ -167,7 +167,6 @@ const Profile = () => {
                   label="Company's Website"
                   placeholder="Enter your Company's Website"
                   variant="h-[40px] w-full"
-                  disabled={true}
                 />
               </div>
               <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row mb-4">

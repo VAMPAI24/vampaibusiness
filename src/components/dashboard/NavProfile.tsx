@@ -9,8 +9,6 @@ const NavProfile = () => {
   const [token, setToken] = useState<string | null>(null);
   const { data: userData, refetch } = useGetSingleEmployerQuery(token);
 
-
-
   useEffect(() => {
     refetch();
     const storedToken = localStorage.getItem("token");
@@ -24,7 +22,7 @@ const NavProfile = () => {
       <Avatar>
         <AvatarImage src="https://github.com/sh" />
         <AvatarFallback>
-          {userData?.data
+          {userData?.data?.first_name?.[0] && userData?.data?.last_name?.[0]
             ? `${userData.data.first_name[0]}${userData.data.last_name[0]}`.toUpperCase()
             : "NA"}
         </AvatarFallback>

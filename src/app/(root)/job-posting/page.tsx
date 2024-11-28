@@ -63,8 +63,7 @@ import ToastNotification from "@/components/shared/ToastNotification";
 import JobOverview from "@/components/jobboard/JobOverview";
 
 const JobPosting = () => {
-  const [currentView, setCurrentView] = useState("overview");
-  // const [currentView, setCurrentView] = useState("jobAds");
+  const [currentView, setCurrentView] = useState("jobAds");
   const [currentTab, setCurrentTab] = useState("details");
 
   const methods = useForm<
