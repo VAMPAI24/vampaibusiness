@@ -28,13 +28,14 @@ import PicsCollection from "@/public/svgs/Jobs/pics-collection.svg";
 import { JobOverviewProps } from "@/types";
 import { recipes } from "@/constants";
 import OverviewSkelton from "../common/skeltons/OverviewSkelton";
+import Cookies from "js-cookie";
 
 const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = Cookies.get("token"); 
     if (storedToken) {
-      setToken(JSON.parse(storedToken));
+      setToken(storedToken);
     }
   }, []);
 

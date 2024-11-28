@@ -15,6 +15,7 @@ import {
   useUpdateProfileMutation,
 } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 
 
@@ -27,9 +28,9 @@ const Profile = () => {
 
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = Cookies.get("token"); 
     if (storedToken) {
-      setToken(JSON.parse(storedToken)); 
+      setToken(storedToken);
     }
   }, []);
 

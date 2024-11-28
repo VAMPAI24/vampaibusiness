@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ArrowDown from "@/public/svgs/dashboard/arrow-down.svg";
 import Image from "next/image";
 import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
+import Cookies from "js-cookie";
 
 const NavProfile = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -11,11 +12,13 @@ const NavProfile = () => {
 
   useEffect(() => {
     refetch();
-    const storedToken = localStorage.getItem("token");
+    const storedToken = Cookies.get("token"); 
     if (storedToken) {
-      setToken(JSON.parse(storedToken));
+      setToken(storedToken);
     }
   }, [refetch]);
+
+ 
 
   return (
     <div className="flex items-center justify-center gap-2">

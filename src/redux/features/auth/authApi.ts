@@ -3,6 +3,7 @@
 import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
 import { userRegistration, userLoggedIn } from "./authSlice";
+import Cookies from "js-cookie";
 
 // Define the error type
 interface ApiError {
