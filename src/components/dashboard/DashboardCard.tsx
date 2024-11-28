@@ -13,7 +13,7 @@ const DashboardCard = ({
   description,
 }: DashboardCardProp) => {
   return (
-    <Card className="w-full lg:w-[331px] h-full  bg-[#F8F9FF] border border-[#CFE1FF]">
+    <Card className="w-full lg:w-[331px] h-fit bg-[#F8F9FF] border border-[#CFE1FF] shadow">
       <div className=" flex mt-5 px-4">
         <div>
           <Image

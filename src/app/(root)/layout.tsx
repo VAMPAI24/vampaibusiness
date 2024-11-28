@@ -22,7 +22,7 @@ export default function RootLayout({
             <NavProfile />
           </div>
 
-          <div className="flex-1 overflow-auto no-scrollbar px-8 py-6 bg-[#F9FAFB]">
+          <div className="flex-1 overflow-auto no-scrollbar px-8 py-6 bg-[#F9FAFB] relative">
             {children}
           </div>
         </div>

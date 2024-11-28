@@ -3,34 +3,28 @@ import Work from "@/public/svgs/Work.svg";
 import Candidate from "@/public/svgs/Candidate.svg";
 import Facebook from "@/public/svgs/facebook.svg";
 import Twiter from "@/public/svgs/twitter.svg";
-import Linkdein from "@/public/svgs/linkedin.svg"
+import Linkdein from "@/public/svgs/linkedin.svg";
 import Backend from "@/public/pngs/Backend.png";
 import Frontend from "@/public/pngs/Frontend.png";
 import Hr from "@/public/pngs/Hr.png";
-import CustomerSuccess from "@/public/pngs/Customer-Success.png"
+import CustomerSuccess from "@/public/pngs/Customer-Success.png";
 import OfficeBox from "@/public/svgs/box.svg";
 import Support from "@/public/svgs/support.svg";
-import global from "@/public/svgs/global.svg"
-import Dashboard from "@/public/svgs/dashboard/dashboard.svg"
-import JobAds from "@/public/svgs/dashboard/job-ads.svg"
-import Recruitmnet from "@/public/svgs/dashboard/recruitment.svg"
-import ScheduleInterview from "@/public/svgs/dashboard/schedule-interview.svg"
-import Logout from "@/public/svgs/dashboard/logout.svg"
-import Job from "@/public/svgs/dashboard/jobs.svg"
-import Interview from "@/public/svgs/dashboard/interview.svg"
-import Application from "@/public/svgs/dashboard/application.svg"
-import Arrow from "@/public/svgs/dashboard/arrow.svg"
+import global from "@/public/svgs/global.svg";
+import Dashboard from "@/public/svgs/dashboard/dashboard.svg";
+import JobAds from "@/public/svgs/dashboard/job-ads.svg";
+import Recruitmnet from "@/public/svgs/dashboard/recruitment.svg";
+import ScheduleInterview from "@/public/svgs/dashboard/schedule-interview.svg";
+import Logout from "@/public/svgs/dashboard/logout.svg";
+import Job from "@/public/svgs/dashboard/jobs.svg";
+import Interview from "@/public/svgs/dashboard/interview.svg";
+import Application from "@/public/svgs/dashboard/application.svg";
+import Arrow from "@/public/svgs/dashboard/arrow.svg";
 
-
-
-import DashboardMobile from "@/public/svgs/dashboard/dashboard-mobile.svg"
-import JobAdsMobile from "@/public/svgs/dashboard/job-ads-mobile.svg"
-import RecruitmnetMobile from "@/public/svgs/dashboard/recruitment-mobile.svg"
-import ScheduleInterviewMobile from "@/public/svgs/dashboard/schedule-interview-mobile.svg"
-
-
-
-
+import DashboardMobile from "@/public/svgs/dashboard/dashboard-mobile.svg";
+import JobAdsMobile from "@/public/svgs/dashboard/job-ads-mobile.svg";
+import RecruitmnetMobile from "@/public/svgs/dashboard/recruitment-mobile.svg";
+import ScheduleInterviewMobile from "@/public/svgs/dashboard/schedule-interview-mobile.svg";
 
 export const NavLinks = [
   {
@@ -93,8 +87,7 @@ export const HeroData = [
     title: "Finance",
     imgURL: CustomerSuccess,
   },
-]
-
+];
 
 export const RecruitmentData = [
   {
@@ -183,18 +176,11 @@ export const waitlistData = [
   },
 ];
 
-
-
-
 // company size
 export const companySize = ["1-10", "10 - 50", "51 - 100", "100+"];
 
 // accoiunt manager
 export const accManagerMail = "temitayo@usevampai.com";
-
-
-
-
 
 export const WaitlistAgreementData = [
   "Pricing: The total cost for posting job ads and using our recruitment tools will be clearly stated in account invoice.",
@@ -203,13 +189,7 @@ export const WaitlistAgreementData = [
   "Late Fees: Payments not received by the due date will incur a 5% late fee for every 7 days past the deadline.",
 ];
 
-
-
-
-
-
-
-// Dashboard 
+// Dashboard
 export const SidebarLinks = [
   {
     imgURL: Dashboard,
@@ -217,12 +197,12 @@ export const SidebarLinks = [
     label: "Dashboard",
   },
   {
-    imgURL:  JobAds,
-    route: "/jobads",
-    label: "Job Ads",
+    imgURL: JobAds,
+    route: "/job-posting",
+    label: "Job Posting",
   },
   {
-    imgURL:  Recruitmnet,
+    imgURL: Recruitmnet,
     route: "/recruitment",
     label: "Recruitmnet",
   },
@@ -238,11 +218,6 @@ export const SidebarLinks = [
   },
 ];
 
-
-
-
-
-
 export const SidebarLinksMobile = [
   {
     imgURL: DashboardMobile,
@@ -250,12 +225,12 @@ export const SidebarLinksMobile = [
     label: "Dashboard",
   },
   {
-    imgURL:  JobAdsMobile,
-    route: "/jobads",
-    label: "Job Ads",
+    imgURL: JobAdsMobile,
+    route: "/job-posting",
+    label: "Job Posting",
   },
   {
-    imgURL:  RecruitmnetMobile,
+    imgURL: RecruitmnetMobile,
     route: "/recruitment",
     label: "Recruitmnet",
   },
@@ -271,60 +246,226 @@ export const SidebarLinksMobile = [
   },
 ];
 
-
-
-
-
-
 export const DashboardCardData = [
-  { 
+  {
     imgIcon: Job,
     title: "Post a Job",
-    description: "Quickly create a job listing to attract top talent and grow your team.",
+    description:
+      "Quickly create a job listing to attract top talent and grow your team.",
     imgSrc: Arrow,
   },
-  {  
+  {
     imgIcon: Interview,
     title: "Schedule Interview",
-    description: "Schedule interviews with top candidates to streamline hiring.",
+    description:
+      "Schedule interviews with top candidates to streamline hiring.",
     imgSrc: Arrow,
   },
   {
     imgIcon: Application,
     title: "View Application",
-    description: "Review candidate applications in one place to find the perfect fit.",
+    description:
+      "Review candidate applications in one place to find the perfect fit.",
     imgSrc: Arrow,
   },
-]
-
-
-
-export const Countries = [
-  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
-  "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-  "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
-  "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica",
-  "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
-  "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini (formerly Swaziland)", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
-  "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
-  "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
-  "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea (North)", "Korea (South)", "Kosovo",
-  "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
-  "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius",
-  "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia",
-  "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman",
-  "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
-  "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
-  "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia",
-  "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan",
-  "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
-  "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela",
-  "Vietnam", "Yemen", "Zambia", "Zimbabwe"
 ];
 
-
-
-
+export const Countries = [
+  "Afghanistan",
+  "Albania",
+  "Algeria",
+  "Andorra",
+  "Angola",
+  "Antigua and Barbuda",
+  "Argentina",
+  "Armenia",
+  "Australia",
+  "Austria",
+  "Azerbaijan",
+  "Bahamas",
+  "Bahrain",
+  "Bangladesh",
+  "Barbados",
+  "Belarus",
+  "Belgium",
+  "Belize",
+  "Benin",
+  "Bhutan",
+  "Bolivia",
+  "Bosnia and Herzegovina",
+  "Botswana",
+  "Brazil",
+  "Brunei",
+  "Bulgaria",
+  "Burkina Faso",
+  "Burundi",
+  "Cabo Verde",
+  "Cambodia",
+  "Cameroon",
+  "Canada",
+  "Central African Republic",
+  "Chad",
+  "Chile",
+  "China",
+  "Colombia",
+  "Comoros",
+  "Congo (Congo-Brazzaville)",
+  "Costa Rica",
+  "Croatia",
+  "Cuba",
+  "Cyprus",
+  "Czechia (Czech Republic)",
+  "Denmark",
+  "Djibouti",
+  "Dominica",
+  "Dominican Republic",
+  "Ecuador",
+  "Egypt",
+  "El Salvador",
+  "Equatorial Guinea",
+  "Eritrea",
+  "Estonia",
+  "Eswatini (formerly Swaziland)",
+  "Ethiopia",
+  "Fiji",
+  "Finland",
+  "France",
+  "Gabon",
+  "Gambia",
+  "Georgia",
+  "Germany",
+  "Ghana",
+  "Greece",
+  "Grenada",
+  "Guatemala",
+  "Guinea",
+  "Guinea-Bissau",
+  "Guyana",
+  "Haiti",
+  "Honduras",
+  "Hungary",
+  "Iceland",
+  "India",
+  "Indonesia",
+  "Iran",
+  "Iraq",
+  "Ireland",
+  "Israel",
+  "Italy",
+  "Jamaica",
+  "Japan",
+  "Jordan",
+  "Kazakhstan",
+  "Kenya",
+  "Kiribati",
+  "Korea (North)",
+  "Korea (South)",
+  "Kosovo",
+  "Kuwait",
+  "Kyrgyzstan",
+  "Laos",
+  "Latvia",
+  "Lebanon",
+  "Lesotho",
+  "Liberia",
+  "Libya",
+  "Liechtenstein",
+  "Lithuania",
+  "Luxembourg",
+  "Madagascar",
+  "Malawi",
+  "Malaysia",
+  "Maldives",
+  "Mali",
+  "Malta",
+  "Marshall Islands",
+  "Mauritania",
+  "Mauritius",
+  "Mexico",
+  "Micronesia",
+  "Moldova",
+  "Monaco",
+  "Mongolia",
+  "Montenegro",
+  "Morocco",
+  "Mozambique",
+  "Myanmar (formerly Burma)",
+  "Namibia",
+  "Nauru",
+  "Nepal",
+  "Netherlands",
+  "New Zealand",
+  "Nicaragua",
+  "Niger",
+  "Nigeria",
+  "North Macedonia",
+  "Norway",
+  "Oman",
+  "Pakistan",
+  "Palau",
+  "Palestine State",
+  "Panama",
+  "Papua New Guinea",
+  "Paraguay",
+  "Peru",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Qatar",
+  "Romania",
+  "Russia",
+  "Rwanda",
+  "Saint Kitts and Nevis",
+  "Saint Lucia",
+  "Saint Vincent and the Grenadines",
+  "Samoa",
+  "San Marino",
+  "Sao Tome and Principe",
+  "Saudi Arabia",
+  "Senegal",
+  "Serbia",
+  "Seychelles",
+  "Sierra Leone",
+  "Singapore",
+  "Slovakia",
+  "Slovenia",
+  "Solomon Islands",
+  "Somalia",
+  "South Africa",
+  "South Sudan",
+  "Spain",
+  "Sri Lanka",
+  "Sudan",
+  "Suriname",
+  "Sweden",
+  "Switzerland",
+  "Syria",
+  "Taiwan",
+  "Tajikistan",
+  "Tanzania",
+  "Thailand",
+  "Timor-Leste",
+  "Togo",
+  "Tonga",
+  "Trinidad and Tobago",
+  "Tunisia",
+  "Turkey",
+  "Turkmenistan",
+  "Tuvalu",
+  "Uganda",
+  "Ukraine",
+  "United Arab Emirates",
+  "United Kingdom",
+  "United States of America",
+  "Uruguay",
+  "Uzbekistan",
+  "Vanuatu",
+  "Venezuela",
+  "Vietnam",
+  "Yemen",
+  "Zambia",
+  "Zimbabwe",
+];
 
 export const Industries = [
   "Technology and IT",
@@ -357,11 +498,112 @@ export const Industries = [
   "Mining and Metals",
   "Public Relations",
   "Sports and Recreation",
-  "others"
+  "others",
 ];
 
+export const numberOfEmployees = ["1-10", "11-50", "51-100", "100+"];
 
+export const ExperienceLevel = [
+  "Entry-Level",
+  "Mid-Level",
+  "Senior-Level",
+  "Excutive/C-Level",
+];
 
-export const numberOfEmployees = ["1-10","11-50","51-100","100+"];
+export const WorkPattern = ["OnSite", "Remote", "Hybrid"];
 
+export const EmploymentType = [
+  "Full-Time",
+  "Part-Time",
+  "Contract",
+  "Temporary",
+  "Others",
+];
 
+export const SalaryRange = ["NGN", "USD", "GBP"];
+
+export const sections = [
+  {
+    title: "About the Company",
+    content:
+      "NovaTech is a forward-thinking technology company committed to innovating solutions that empower businesses and improve lives. With a focus on cutting-edge software development, data analytics, and digital transformation, we help companies of all sizes enhance efficiency, security, and customer engagement.",
+  },
+
+  {
+    title: "Job Description",
+    content:
+      "We are seeking a dynamic and experienced Product Manager to join our innovative team. In this role, you will be responsible for leading the entire product lifecycle from conception to launch and beyond. The ideal candidate will have a strong mix of strategic thinking, technical expertise, and a passion for delivering exceptional user experiences. You will work closely with cross-functional teams including engineering, design, marketing, and sales to ensure successful product delivery and alignment with company goals.",
+  },
+  {
+    title: "Responsibilities",
+    items: [
+      "Lead the development and execution of product strategies and roadmaps, aligned with business objectives and market demands.",
+      "Manage the end-to-end product lifecycle, from ideation and research to design, development, launch, and iteration.",
+      "Collaborate closely with engineering, design, and marketing teams to ensure seamless product development and launch.",
+      "Prioritize and manage the product backlog, ensuring clarity of requirements for the development team.",
+      "Define and monitor key product metrics, using data-driven insights to inform decisions and measure success.",
+    ],
+  },
+  {
+    title: "Qualifications",
+    items: [
+      "Bachelor’s degree in business, engineering, or a related field (MBA preferred).",
+      "5+ years of experience in product management, ideally in the tech or digital product space.",
+      "Proven track record of successfully launching products and managing their growth in a competitive market.",
+      "Strong understanding of agile development methodologies and experience working with cross-functional teams.",
+      "Excellent communication, collaboration, and stakeholder management skills.",
+      "Strong analytical and problem-solving abilities, with a focus on data-driven decision-making.",
+      "",
+    ],
+  },
+  {
+    title: "What We Offer:",
+    items: [
+      "Bachelor’s degree in business, engineering, or a related field (MBA preferred).",
+      "5+ years of experience in product management, ideally in the tech or digital product space.",
+      "Proven track record of successfully launching products and managing their growth in a competitive market.",
+      "Strong understanding of agile development methodologies and experience working with cross-functional teams.",
+      "Excellent communication, collaboration, and stakeholder management skills.",
+      "Strong analytical and problem-solving abilities, with a focus on data-driven decision-making.",
+    ],
+  },
+];
+
+export const recipes = [
+  {
+    id: "1",
+    title: "Veggie Carbonara",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+  {
+    id: "2",
+    title: "Veg Stir-Fry",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+  {
+    id: "3",
+    title: "Veg Alfredo",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+  {
+    id: "4",
+    title: "Mushroom Risotto",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+  {
+    id: "5",
+    title: "Veg Lentil Soup",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+  {
+    id: "6",
+    title: "Grilled Mushrooms",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+];

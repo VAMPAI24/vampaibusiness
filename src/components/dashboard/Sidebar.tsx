@@ -6,7 +6,7 @@ import Image from "next/image";
 import VampLogoSmall from "@/public/pngs/dashboard/v-logo-white.png";
 import VampLogo from "@/public/svgs/auth/vamp-white.svg";
 import { SidebarLinks } from "@/constants";
-import { usePathname } from "next/navigation";
+import { usePathname} from "next/navigation";
 import { useDispatch } from "react-redux";
 import { userLogout } from "@/redux/features/auth/authSlice";
 
@@ -14,9 +14,18 @@ const Sidebar = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
+
+
+
   const handleLogout = () => {
-    dispatch(userLogout());
+    try {
+      setTimeout(() => dispatch(userLogout()), 1000);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
+
+ 
 
   return (
     <section className="sticky left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 2xl:w-[355px]">

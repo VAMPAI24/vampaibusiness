@@ -22,16 +22,20 @@ const CustomModal = ({
     <Dialog open={isOpen} onOpenChange={onClose} modal={true}>
       <DialogContent className={cn(`sm:max-w-lg`, className)}>
         <DialogHeader>
-          {!!title && <DialogTitle>{title}</DialogTitle>}
+          {title ? (
+            <DialogTitle>{title}</DialogTitle>
+          ) : (
+            <DialogTitle className="sr-only">Modal</DialogTitle>
+          )}
 
-          {!!description && (
+          {description && (
             <DialogDescription>{description}</DialogDescription>
           )}
         </DialogHeader>
 
         {children}
 
-        {!!footer && (
+        {footer && (
           <DialogFooter className="sm:justify-start">{footer}</DialogFooter>
         )}
       </DialogContent>
@@ -40,3 +44,4 @@ const CustomModal = ({
 };
 
 export default CustomModal;
+

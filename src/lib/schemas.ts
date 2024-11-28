@@ -185,3 +185,107 @@ export const ProfileSchema = z.object({
     .min(1, { message: "company bio is required" })
     .max(200, { message: "company_bio must be 200 characters or less" }),
 });
+
+
+
+
+
+export const jobTitleSchema = z.object({
+  job_title: z.string().min(1, "Job title is required"),
+});
+
+export const jobDetailsSchema = z.object({
+  job_title: z.string().min(1, "Job title is required"),
+  experienceLevel: z.string().min(1, "Experience level is required"),
+  workPattern: z.string().min(1, "Work pattern is required"),
+  employmentType: z.string().min(1, "Employment type is required"),
+  currency_code: z.string().optional(),
+  salary_min: z
+    .string() 
+    .optional(),  
+  salary_max: z
+    .string() 
+    .optional(), 
+    applicationDeadline: z
+    .string()
+    .min(1, "Application deadline is required")
+    .regex(
+      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+      "Application deadline must be in the format DD/MM/YYYY"
+    ),
+});
+
+export const jobSpecificationSchema = z.object({
+  job_title: z.string().min(1, "Job title is required"),
+  experienceLevel: z.string().min(1, "Experience level is required"),
+  workPattern: z.string().min(1, "Work pattern is required"),
+  employmentType: z.string().min(1, "Employment type is required"),
+  currency_code: z.string().optional(),
+  salary_min: z
+    .string() 
+    .optional(),  
+    salary_max: z
+    .string() 
+    .optional(), 
+    applicationDeadline: z
+    .string()
+    .min(1, "Application deadline is required")
+    .regex(
+      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+      "Application deadline must be in the format DD/MM/YYYY"
+    ),
+    jobDescription: z
+    .string()
+    .min(10, "Job Description must be at least 10 characters long")
+    .max(5000, "Job Description cannot exceed 5000 characters"),
+    requiredSkills: z
+    .string()
+    .min(10, "Required Skills must be at least 10 characters long")
+    .max(5000, "Required Skills cannot exceed 5000 characters"),
+});
+
+export const benefitDetailsSchema = z.object({
+  job_title: z.string().min(1, "Job title is required"),
+  experienceLevel: z.string().min(1, "Experience level is required"),
+  workPattern: z.string().min(1, "Work pattern is required"),
+  employmentType: z.string().min(1, "Employment type is required"),
+  currency_code: z.string().optional(),
+  salary_min: z
+    .string() 
+    .optional(),  
+    salary_max: z
+    .string() 
+    .optional(), 
+
+    applicationDeadline: z
+    .string()
+    .min(1, "Application deadline is required")
+    .regex(
+      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+      "Application deadline must be in the format DD/MM/YYYY"
+    ),
+
+    jobDescription: z
+    .string()
+    .min(10, "Job Description must be at least 10 characters long")
+    .max(5000, "Job Description cannot exceed 5000 characters"),
+    requiredSkills: z
+    .string()
+    .min(10, "Required Skills must be at least 10 characters long")
+    .max(5000, "Required Skills cannot exceed 5000 characters"),
+    benefits: z
+    .string()
+    .optional(),
+});
+
+
+
+
+export interface PreviewCardProps {
+  imgUrl: string; 
+  text: string;   
+}
+
+
+
+

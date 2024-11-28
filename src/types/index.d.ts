@@ -122,3 +122,37 @@ export interface ToastNotificationProps {
   description: string;
   type?: "success" | "error" | "info"; 
 }
+
+
+
+ export interface JobboxProps {
+  title?:string;
+  description?: string
+}
+
+
+
+
+export interface  JobpointerProps  {
+  title: string;
+  descOne: string;
+  descTwo: string;
+  descThree: string;
+}
+
+
+
+
+export interface PreviewCardProps {
+  imgUrl: string;
+  text?: string;
+}
+
+
+
+
+export interface JobOverviewProps {
+  setCurrentView: (view: string) => void; 
+}
+
+
