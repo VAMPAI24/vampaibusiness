@@ -14,6 +14,7 @@ import { Eye, EyeOff } from "lucide-react";
 import CustomInput from "@/components/shared/inputs/CustomInput";
 import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "@/components/shared/SubmitButton";
+import Cookies from "js-cookie";
 
 
 const SetNewPassword = () => {
@@ -37,9 +38,9 @@ const SetNewPassword = () => {
 
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = Cookies.get("token"); 
     if (storedToken) {
-      setToken(JSON.parse(storedToken)); 
+      setToken(storedToken);
     }
   }, []);
 

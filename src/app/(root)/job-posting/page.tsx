@@ -61,6 +61,7 @@ import {
 } from "@/redux/features/job-posting/jobpostingApi";
 import ToastNotification from "@/components/shared/ToastNotification";
 import JobOverview from "@/components/jobboard/JobOverview";
+import Cookies from "js-cookie";
 
 const JobPosting = () => {
   const [currentView, setCurrentView] = useState("jobAds");
@@ -116,11 +117,12 @@ const JobPosting = () => {
 
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = Cookies.get("token"); 
     if (storedToken) {
-      setToken(JSON.parse(storedToken));
+      setToken(storedToken);
     }
   }, []);
+
 
   const { data: userInfo } = useGetSingleEmployerQuery(token);
   const [postActiveJob, { isLoading: postLoading }] =
