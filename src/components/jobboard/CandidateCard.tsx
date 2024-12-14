@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { CandidateCardProps } from "@/types";
 import {
@@ -16,20 +16,22 @@ const CandidateCard = ({
   refetchFn,
   clickFn,
 }: CandidateCardProps) => {
- 
+  const [more, setMore] = useState(false);
+  const candidateMessage = message || "";
+  const checkMessage = candidateMessage.length > 500;
 
   //  shorlist candidate
   const [shortlistCandidate, { isLoading }] = useShortlistCandidateMutation();
 
   const handleShortlist = async () => {
-
     try {
-      await shortlistCandidate({ id: candidateId, status: 'Shortlisted' }).unwrap();
-      refetchFn?.(); 
-     
+      await shortlistCandidate({
+        id: candidateId,
+        status: "Shortlisted",
+      }).unwrap();
+      refetchFn?.();
     } catch (error) {
       console.error(error);
-      
     }
   };
 
@@ -38,38 +40,36 @@ const CandidateCard = ({
     useRejectCandidateMutation();
   const handleReject = async () => {
     try {
-      await rejectCandidate({id:candidateId}).unwrap();
-      
+      await rejectCandidate({ id: candidateId }).unwrap();
     } catch (error) {
       console.error(error);
-      
     }
   };
 
   return (
     <div
-     
       key={id}
       className="w-full lg:w-[90%]  border border-main-200 rounded-xl bg-[#F9FAFB] cursor-pointer shadow-sm"
     >
-      <div  className="p-6" onClick={clickFn}>
-        <div className="flex items-start justify-between">
-          <div className="flex  flex-col items-start">
-            <div className=" flex gap-2">
-              <h2 className="text-lg font-semibold text-gray-800 capitalize">
-                {applicant_first_name}
-              </h2>
-              <h2 className="text-lg font-semibold text-gray-800 capitalize">
-                {applicant_last_name}
-              </h2>
+      <div className="p-6 flex items-start justify-between" onClick={clickFn}>
+        <div className="">
+          <div className="flex items-start justify-between">
+            <div className="flex  flex-col items-start">
+              <div className=" flex gap-2">
+                <h2 className="text-lg font-semibold text-gray-800 capitalize">
+                  {applicant_first_name}
+                </h2>
+                <h2 className="text-lg font-semibold text-gray-800 capitalize">
+                  {applicant_last_name}
+                </h2>
+              </div>
+
+              <p className="text-sm text-gray-800">{applicant_email}</p>
             </div>
-
-            <p className="text-sm text-gray-800">{applicant_email}</p>
           </div>
-        </div>
 
-        {/* Skills Section */}
-        {/* <div className="mt-6">
+          {/* Skills Section */}
+          {/* <div className="mt-6">
         <h3 className="text-md font-bold font-jakarta text-vamp-900">
           Top skills:
         </h3>
@@ -85,11 +85,29 @@ const CandidateCard = ({
         </div>
       </div> */}
 
-        <div className="mt-4 mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
-          <p className="text-blue-600 text-sm">
-            <strong>Message:</strong> {message}
-          </p>
+          <div className="mt-4 mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
+            <p className="text-blue-600 text-sm">
+              <strong>Message to you:</strong>
+            </p>
+
+            <div className="text-[0.875em] text-main-902 font-light md:max-w-[70%]">
+              {candidateMessage.substring(
+                0,
+                more ? candidateMessage.length : 500
+              )}
+              {checkMessage && !more && "..."}
+              {checkMessage && (
+                <strong
+                  onClick={() => setMore(!more)}
+                  className="font-medium text-main-600 cursor-pointer"
+                >
+                  {more ? " See Less" : " Show More"}
+                </strong>
+              )}
+            </div>
+          </div>
         </div>
+        <p className="text-[.75em] font-[400] text-main-700 ">See Profile</p>
       </div>
 
       {/* Buttons */}

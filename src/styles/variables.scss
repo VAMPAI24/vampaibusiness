@@ -269,3 +269,24 @@ $red-902: #2e0507;
 .react-date-picker__button .react-date-picker__button__icon {
   stroke: $neutral-900 !important;
 }
+
+
+.div-listed {
+  ol,
+  ul {
+    margin-top: 1em;
+    list-style-type: disc;
+    padding-left: 20px;
+
+    li {
+      margin-bottom: 5px;
+      padding-left: 10px;
+    }
+  }
+  p {
+    margin-bottom: 1em;
+  }
+  strong {
+    font-weight: 600;
+  }
+}
