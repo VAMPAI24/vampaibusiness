@@ -17,8 +17,7 @@ const CandidateCard = ({
   clickFn,
 }: CandidateCardProps) => {
   const [more, setMore] = useState(false);
-  const candidateMessage = message || "";
-  const checkMessage = candidateMessage.length > 500;
+  const checkMessage = message?.length > 350;
 
   //  shorlist candidate
   const [shortlistCandidate, { isLoading }] = useShortlistCandidateMutation();
@@ -85,27 +84,29 @@ const CandidateCard = ({
         </div>
       </div> */}
 
-          <div className="mt-4 mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
+         {message && <div className="mt-4 mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
             <p className="text-blue-600 text-sm">
               <strong>Message to you:</strong>
             </p>
 
             <div className="text-[0.875em] text-main-902 font-light md:max-w-[70%]">
-              {candidateMessage.substring(
-                0,
-                more ? candidateMessage.length : 500
-              )}
-              {checkMessage && !more && "..."}
-              {checkMessage && (
-                <strong
-                  onClick={() => setMore(!more)}
-                  className="font-medium text-main-600 cursor-pointer"
-                >
-                  {more ? " See Less" : " Show More"}
-                </strong>
-              )}
+              <p>
+                {message?.substring(
+                  0,
+                  more ? message.length : 350
+                )}
+                {/* {checkMessage && !more && "..."} */}
+                {checkMessage && (
+                  <strong
+                    onClick={() => setMore(!more)}
+                    className="font-medium text-main-600 cursor-pointer"
+                  >
+                    {more ? " See Less" : " ...Show More"}
+                  </strong>
+                )}
+              </p>
             </div>
-          </div>
+          </div>}
         </div>
         <p className="text-[.75em] font-[400] text-main-700 ">See Profile</p>
       </div>
