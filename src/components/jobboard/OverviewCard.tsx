@@ -6,11 +6,12 @@ export interface OverviewCardProps {
   title: string;
   count: number;
   icon: React.ReactElement<LucideIcon>;
+  className?: string;
 }
 
-const OverviewCard = ({ title, count, icon }: OverviewCardProps) => {
+const OverviewCard = ({ title, count, icon, className }: OverviewCardProps) => {
   return (
-    <Card className="bg-white py-2 w-full lg:w-[300px] lg:h-[90px] border border-[#E5EFFF]">
+    <Card className={`bg-white py-2 w-full lg:w-[250px] lg:h-[90px] border border-[#E5EFFF] ${className}`}>
       <CardContent>
         <h3 className="font-rubik text-main-901 font-light text-sm mb-2 mt-2">{title}</h3>
         <div className='flex items-center justify-start gap-2'>

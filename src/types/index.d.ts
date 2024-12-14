@@ -156,3 +156,68 @@ export interface JobOverviewProps {
 }
 
 
+
+export interface EventModalContentProps {
+  onClose: () => void; 
+}
+
+
+
+
+
+export interface PreviewCardProps {
+  imgUrl: string; 
+  text: string;   
+}
+
+
+
+
+
+
+export interface CandidateCardProps {
+  id: string;
+  candidateId: string;
+  applicant_first_name: string;
+  applicant_last_name: string;
+  applicant_email: string;
+  message: string;
+  clickFn?: () => void;
+  refetchFn?: () => void;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+export interface CandidateProps {
+  candidateId: string;
+  id: number;
+  applicantName: string;
+  applicantEmail: string;
+  overallScore: string;
+  insights: string;
+  experience: string;
+  image: string;
+  percentage: string;
+  skills: string[];
+  strengths: string[];
+  weaknesses: string[];
+  clickFn?: () => void;
+  refetchFn?: () => void;
+}
+
+
+
+
+
+
+

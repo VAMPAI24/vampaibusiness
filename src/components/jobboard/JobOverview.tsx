@@ -29,8 +29,10 @@ import { JobOverviewProps } from "@/types";
 import { recipes } from "@/constants";
 import OverviewSkelton from "../common/skeltons/OverviewSkelton";
 import Cookies from "js-cookie";
+import { useRouter } from 'next/navigation';
 
 const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
+  const router = useRouter(); 
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
     const storedToken = Cookies.get("token"); 
@@ -46,6 +48,14 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
   // Draft Jobs
   const { data: draftJobs, isLoading: draftJobsLoader } =
     useGetDraftJobsQuery(token);
+
+
+
+
+
+    const handleNavigation = (id: string) => {
+      router.push(`/job-posting/${id}`);
+    };
 
 
 
@@ -136,7 +146,8 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
               activeJobs?.data?.jobs.map((recipe: any) => (
                 <Card
                   key={recipe.id}
-                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px]"
+                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px] cursor-pointer"
+                  onClick={() => handleNavigation(recipe.id)}
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
                     <Badge className="px-2 rounded-lg">Active</Badge>
@@ -153,7 +164,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
                             key={desc.jobDescription}
                             className="text-main-901 font-jakarta text-xs break-words"
                           >
-                            {desc.jobDescription.slice(0, 200)}
+                            {desc.jobDescription.slice(0, 150)}
                           </p>
                         ))}
                     </div>
@@ -246,7 +257,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
                             key={desc.jobDescription}
                             className="text-main-901 font-jakarta text-xs break-words"
                           >
-                            {desc.jobDescription.slice(0, 200)}
+                            {desc.jobDescription.slice(0, 150)}
                           </p>
                         ))}
                     </div>

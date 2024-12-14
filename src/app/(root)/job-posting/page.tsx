@@ -27,9 +27,7 @@ import Jobpointer from "@/components/jobboard/Jobpointer";
 import {
   EmploymentType,
   ExperienceLevel,
-
   SalaryRange,
-
   WorkPattern,
 } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
@@ -47,12 +45,10 @@ import Years from "@/public/svgs/Jobs/years.svg";
 import Amount from "@/public/svgs/Jobs/amount.svg";
 import JobDescription from "@/components/jobboard/JobDescription";
 
-
 import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
 import {
   useBenefitDetailReWriteAIMutation,
   useBenefitDetailWriteAIMutation,
-  
   useJobDescriptionAIMutation,
   useJobDescriptionAIRewiteMutation,
   usePostActiveJobMutation,
@@ -63,8 +59,15 @@ import ToastNotification from "@/components/shared/ToastNotification";
 import JobOverview from "@/components/jobboard/JobOverview";
 import Cookies from "js-cookie";
 
+
+// cdk editor
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+
 const JobPosting = () => {
-  const [currentView, setCurrentView] = useState("jobAds");
+  // const [currentView, setCurrentView] = useState("jobAds");
+  const [currentView, setCurrentView] = useState("overview");
   const [currentTab, setCurrentTab] = useState("details");
 
   const methods = useForm<
@@ -108,7 +111,7 @@ const JobPosting = () => {
     setCurrentTab(tabOrder[nextIndex]);
   };
 
-  // Required skill picker Controller 
+  // Required skill picker Controller
   const currentSkills = watch("requiredSkills");
   const handleOptionClick = (skill: string) => {
     const updatedSkills = currentSkills ? `${currentSkills}, ${skill}` : skill;
@@ -117,12 +120,11 @@ const JobPosting = () => {
 
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
-    const storedToken = Cookies.get("token"); 
+    const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
-
 
   const { data: userInfo } = useGetSingleEmployerQuery(token);
   const [postActiveJob, { isLoading: postLoading }] =
@@ -182,10 +184,9 @@ const JobPosting = () => {
 
         // Try submitting the job to the API
         try {
-          
           await postActiveJob(payload).unwrap();
-          
-          setCurrentView("overview"); 
+
+          setCurrentView("overview");
         } catch (error) {
           console.error("Error submitting job:", error);
         }
@@ -247,9 +248,8 @@ const JobPosting = () => {
 
         // Try submitting the job to the API
         try {
-          
           await saveJobToDraft(payload).unwrap();
-          
+
           setCurrentView("overview");
         } catch (error) {
           console.error("Error submitting job:", error);
@@ -318,31 +318,26 @@ const JobPosting = () => {
   };
 
   // Handle Required Skill
- 
 
   const [requiredSkill, { data: skillData, isLoading: loadingSkill }] =
     useRequiredSkillMutation();
 
-
-    /**  useCallback is used to memoize the fetchSkill function so that it doesn't get recreated on every render unless its dependencies (jobTitle and requiredSkill) change.
+  /**  useCallback is used to memoize the fetchSkill function so that it doesn't get recreated on every render unless its dependencies (jobTitle and requiredSkill) change.
    If jobTitle or requiredSkill changes, the function will be redefined, ensuring that the most recent values are used when calling fetchSkill. **/
 
-    const fetchSkill = useCallback(async () => {
-      const payload = { job_title: jobTitle };
-    
-      try {
-        await requiredSkill(payload).unwrap();
-      } catch (error) {
-        console.error("Error fetching skills:", error);
-      }
-    }, [jobTitle, requiredSkill]); 
-    
+  const fetchSkill = useCallback(async () => {
+    const payload = { job_title: jobTitle };
 
+    try {
+      await requiredSkill(payload).unwrap();
+    } catch (error) {
+      console.error("Error fetching skills:", error);
+    }
+  }, [jobTitle, requiredSkill]);
 
-    useEffect(() => {
-      fetchSkill();
-    }, [fetchSkill]);
-
+  useEffect(() => {
+    fetchSkill();
+  }, [fetchSkill]);
 
   const skills = Array.isArray(skillData?.data) ? skillData.data : [];
 
@@ -403,6 +398,24 @@ const JobPosting = () => {
   };
 
 
+
+
+
+  // ckd
+
+  // const [editorData, setEditorData] = useState(""); // State to hold raw editor content
+  // // const [plainText, setPlainText] = useState(""); // State to hold plain text content
+
+  // const handleEditorChange = (event: any, editor: { getData: () => any }) => {
+  //   const data = editor.getData();
+  //   console.log("Editor content (HTML):", data);
+
+  //   // Remove HTML tags (specifically <p> here, but can be extended)
+  //   const textContent = data.replace(/<\/?p>/g, ""); // Remove <p> and </p> tags
+  //   setEditorData(data); // Save raw HTML content
+  //   // setPlainText(textContent); // Save plain text content
+  // };
+
   const renderView = () => {
     switch (currentView) {
       case "jobAds":
@@ -443,7 +456,7 @@ const JobPosting = () => {
               </div>
               <Jobbox
                 title="No Job ad has been created"
-                description="Click the button below to create your first job ad"
+                description="Click the button below to create your first job post"
                 variant="text-center"
                 titleVariant="text-[15px] lg:text-[22px]"
                 descriptionVariant="text-[12px] lg:text-sm"
@@ -735,6 +748,17 @@ const JobPosting = () => {
                           variant="h-40 w-full"
                         />
 
+                        {/* <h1>CKEditor 5 in React</h1>
+                        <CKEditor
+                          editor={ClassicEditor}
+                          config={{
+
+                            toolbar: ["undo", "redo", "|", "bold", "italic"],
+                            initialData: "",
+                          }}
+                          onChange={handleEditorChange} // Handle content changes
+                        /> */}
+
                         <CustomFormField
                           fieldType={FormFieldType.TEXTAREA}
                           control={methods.control}
@@ -885,7 +909,7 @@ const JobPosting = () => {
               <div className="flex gap-5">
                 <PreviewCard
                   imgUrl={Company}
-                  text={formData.employmentType || "Not Specified"}
+                  text={userInfo?.data?.company_name || "Not Specified"}
                 />
                 <PreviewCard
                   imgUrl={Location}
@@ -918,22 +942,17 @@ const JobPosting = () => {
               </div>
 
               <div className="mt-4">
-              <JobDescription
+                <JobDescription
                   title="Qualifications"
                   description={formData.requiredSkills || "Not Specified"}
                 />
-                
-                
               </div>
 
-
               <div className="mt-4">
-              <JobDescription
+                <JobDescription
                   title="What We Offer"
                   description={formData.benefits || "Not Specified"}
                 />
-                
-                
               </div>
             </div>
             <div className="flex gap-5 justify-end mt-4">
@@ -956,9 +975,7 @@ const JobPosting = () => {
         );
 
       case "overview":
-        return (
-          <JobOverview  setCurrentView={setCurrentView} />
-        );
+        return <JobOverview setCurrentView={setCurrentView} />;
 
       default:
         return <div>Invalid View</div>;

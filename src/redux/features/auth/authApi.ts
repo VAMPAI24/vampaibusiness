@@ -8,6 +8,8 @@ import Cookies from "js-cookie";
 // Define the error type
 interface ApiError {
   error: {
+    status: string;
+    error: string;
     data: {
       error: string;
       message: string;
@@ -40,8 +42,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError; 
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -66,8 +68,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -102,8 +104,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError; 
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -128,8 +130,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -154,8 +156,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -180,8 +182,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -201,8 +203,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError; 
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }

@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
-import { AnyARecord } from "dns";
-
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +15,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          
+
           ToastNotification({
             title: result?.data?.message,
             description: "Job Created Successfully",
@@ -42,7 +40,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          
+
           ToastNotification({
             title: result?.data?.message,
             description: "Job Save To Draft Successfully",
@@ -58,8 +56,6 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-
-
     jobDescriptionAI: builder.mutation({
       query: (data) => ({
         url: "/employer/job-description",
@@ -69,7 +65,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          
+
           // ToastNotification({
           //   title: result?.data?.message,
           //   description: "Job Save To Draft Successfully",
@@ -85,7 +81,6 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-
     jobDescriptionAIRewite: builder.mutation({
       query: (data) => ({
         url: "/employer/job-description",
@@ -95,7 +90,6 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          
         } catch (error: any) {
           ToastNotification({
             title: error.error.data.error,
@@ -105,7 +99,6 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
-
 
     requiredSkill: builder.mutation({
       query: (data) => ({
@@ -116,18 +109,15 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          
-         
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error,
-            description: error.error.data.message,
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
             type: "error",
           });
         }
       },
     }),
-
 
     benefitDetailWriteAI: builder.mutation({
       query: (data) => ({
@@ -138,21 +128,15 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          
-         
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error,
-            description: error.error.data.message,
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
             type: "error",
           });
         }
       },
     }),
-
-
-
-
 
     benefitDetailReWriteAI: builder.mutation({
       query: (data) => ({
@@ -163,19 +147,15 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          
-         
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error,
-            description: error.error.data.message,
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
             type: "error",
           });
         }
       },
     }),
-
-
 
     getActiveJobs: builder.query({
       query: () => ({
@@ -186,17 +166,14 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
         } catch (error: any) {
-       
-         
           ToastNotification({
-            title: error.error.data.error,
-            description: error.error.data.message,
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
             type: "error",
           });
         }
       },
     }),
-
 
     getDraftJobs: builder.query({
       query: () => ({
@@ -207,11 +184,198 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
         } catch (error: any) {
-       
-         
           ToastNotification({
-            title: error.error.data.error,
-            description: error.error.data.message,
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    getByJobsId: builder.query({
+      query: (id: string) => ({
+        url: `/employer/jobs/${id}`,
+        method: "GET",
+        params: { Id: id },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error?.data?.error || "Error",
+            description: error?.data?.message || "An unexpected error occurred",
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    getShortlistedCandidate: builder.query({
+      query: ({ id, status }) => ({
+        url: `/employer/get-status/${id}?status=${status}`,
+        method: "GET",
+        // params: { status },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    getJobApplications: builder.query({
+      query: (jobId: string) => ({
+        url: `/employer/get-job-applications`,
+        method: "GET",
+        params: { job_id: jobId },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    getApplicationDetails: builder.query({
+      query: (applicationId) => ({
+        url: `/employer/get-application`,
+        method: "GET",
+        params: { application_id: applicationId },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error?.error?.data?.error || "Error",
+            description: error?.error?.data?.message || "Something went wrong",
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    rankApplicants: builder.query({
+      query: (jobId: string) => ({
+        url: "/employer/rank-applicants",
+        method: "GET",
+        params: { job_id: jobId },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    employerCreateEvent: builder.mutation({
+      query: (data) => ({
+        url: "/employer/create-an-event",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          ToastNotification({
+            title: result?.data?.message,
+            description: "Event Created Successfully",
+            type: "success",
+          });
+        } catch (error: any) {
+          ToastNotification({
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    getAllEvent: builder.query({
+      query: ({ max_result }: { max_result: number }) => ({
+        url: "/employer/get-all-event",
+        method: "GET",
+        params: { max_result },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    shortlistCandidate: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `employer/status/${id}?status=${status}`,
+        method: "PATCH",
+      }),
+
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          ToastNotification({
+            title: result?.data?.message,
+            description: "Candidate Shorlisted",
+            type: "success",
+          });
+        } catch (error: any) {
+          ToastNotification({
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+    rejectCandidate: builder.mutation({
+      query: ({ id }) => ({
+        url: `employer/status/${id}?status=Rejected`,
+        method: "PATCH",
+      }),
+
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          ToastNotification({
+            title: result?.data?.message,
+            description: "Candidate Rejected",
+            type: "error",
+          });
+        } catch (error: any) {
+          ToastNotification({
+            title: error.error.data.error || error?.error?.error,
+            description: error.error.data.message || error?.error?.status,
             type: "error",
           });
         }
@@ -219,6 +383,7 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 
 
+    
   }),
 });
 
@@ -231,6 +396,14 @@ export const {
   useBenefitDetailWriteAIMutation,
   useBenefitDetailReWriteAIMutation,
   useGetActiveJobsQuery,
-  useGetDraftJobsQuery
-
+  useGetDraftJobsQuery,
+  useGetByJobsIdQuery,
+  useGetShortlistedCandidateQuery,
+  useGetJobApplicationsQuery,
+  useGetApplicationDetailsQuery,
+  useRankApplicantsQuery,
+  useEmployerCreateEventMutation,
+  useGetAllEventQuery,
+  useShortlistCandidateMutation,
+  useRejectCandidateMutation,
 } = authApi;
