@@ -20,6 +20,15 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -29,6 +38,7 @@ export enum FormFieldType {
   DATE_PICKER = "datePicker",
   SELECT = "select",
   RADIO = "radio",
+  DATE = "date",
 }
 
 interface CustomProps {
@@ -143,6 +153,43 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
               {props.label}
             </label>
           </div>
+        </FormControl>
+      );
+
+    case FormFieldType.DATE:
+      return (
+        <FormControl>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={`w-full pl-3 text-left font-normal ${
+                  !field.value && "text-gray-500"
+                } ${props.variant}`}
+                disabled={props.disabled}
+              >
+                {field.value ? (
+                  format(field.value, props.dateFormat || "PPP")
+                ) : (
+                  <span>{props.placeholder || "Pick a date"}</span>
+                )}
+                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={field.value}
+                onSelect={field.onChange}
+                disabled={(date) => {
+                  const today = new Date(); 
+                  today.setHours(0, 0, 0, 0); 
+                  return date < today; 
+                }}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
         </FormControl>
       );
 

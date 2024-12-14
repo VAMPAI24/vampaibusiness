@@ -281,10 +281,45 @@ export const benefitDetailsSchema = z.object({
 
 
 
-export interface PreviewCardProps {
-  imgUrl: string; 
-  text: string;   
-}
+
+
+
+// export const EventFormSchema = z.object({
+//   summary: z.string().min(1, "Event Title is required"),
+//   date: z.preprocess(
+//     (value) => (value instanceof Date ? value.toISOString().split("T")[0] : value),
+//     z.string().min(1, "Date is required")
+//   ),
+ 
+//   time: z.string().min(1, "Time is required"),
+//   duration: z.string().min(1, "Duration is required"),
+//   event_type: z.string().min(1, "Event Type is required"),
+//   guest_interviewer: z.string().min(1, "Guest/Interviewer is required"),
+//   description: z.string().min(1, "Notes Title is required"),
+// });
+
+
+
+export const EventFormSchema = z.object({
+  summary: z.string().min(1, "Event Title is required"),
+  start: z.object({
+    date_time: z.preprocess(
+      (value) => (value instanceof Date ? value.toISOString() : value),
+      z.string().min(1, "Start date and time are required")
+    ),
+  }),
+  duration: z.string().min(1, "Duration is required"),
+  attendees: z.string().min(1, "Attendees is required"),
+  description: z.string().min(1, "Description is required"),
+});
+
+
+
+
+
+
+
+
 
 
 
