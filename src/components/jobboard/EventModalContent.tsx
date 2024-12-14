@@ -1,5 +1,3 @@
-
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -16,7 +14,7 @@ import { Durations } from "@/constants";
 import { EventModalContentProps } from "@/types";
 import { useEmployerCreateEventMutation } from "@/redux/features/job-posting/jobpostingApi";
 
-const EventModalContent = ({ onClose }: EventModalContentProps) => {
+const EventModalContent = ({ onClose, email }: EventModalContentProps) => {
   const form = useForm<z.infer<typeof EventFormSchema>>({
     resolver: zodResolver(EventFormSchema),
     defaultValues: {
@@ -32,7 +30,6 @@ const EventModalContent = ({ onClose }: EventModalContentProps) => {
 
   const { control } = form;
 
-
   const [createEvent, { isLoading }] = useEmployerCreateEventMutation();
 
   const onSubmit = async (data: any) => {
@@ -44,19 +41,18 @@ const EventModalContent = ({ onClose }: EventModalContentProps) => {
       },
       duration: data.duration,
       // attendees:  data.attendees.split(",")
-      attendees: [...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
+      attendees: [email, ...data.attendees.split(",")]
+        .map((item) => item.trim())
+        .filter(Boolean),
       // attendees: [data.candidateemail, ...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
     };
 
-
     try {
       await createEvent(payload).unwrap();
-      onClose()
+      onClose();
     } catch (error) {
       console.error(error);
     }
-
-  
   };
 
   return (
@@ -120,8 +116,6 @@ const EventModalContent = ({ onClose }: EventModalContentProps) => {
               variant="h-[40px] w-full"
             />
 
-          
-
             <div className="flex justify-end gap-2">
               <SubmitButton
                 clickFn={onClose}
@@ -130,7 +124,10 @@ const EventModalContent = ({ onClose }: EventModalContentProps) => {
                 Cancel
               </SubmitButton>
 
-              <SubmitButton isLoading={isLoading}   className="w-full lg:w-40 mt-4 rounded">
+              <SubmitButton
+                isLoading={isLoading}
+                className="w-full lg:w-40 mt-4 rounded"
+              >
                 Schedule
               </SubmitButton>
             </div>
@@ -142,6 +139,3 @@ const EventModalContent = ({ onClose }: EventModalContentProps) => {
 };
 
 export default EventModalContent;
-
-
-
