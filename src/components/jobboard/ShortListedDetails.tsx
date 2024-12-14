@@ -665,7 +665,10 @@ const ShortListedDetails = ({
         className={"w-[95%] md:max-w-lg"}
         // className={"w-[95%] h-[95%] lg:h-[90%] md:max-w-lg"}
       >
-        <EventModalContent onClose={openCloseModalFn} />
+        <EventModalContent
+          email={data?.data.applicant_email ?? ""}
+          onClose={openCloseModalFn}
+        />
       </CustomModal>
 
       {/* Share Event Modal  */}
