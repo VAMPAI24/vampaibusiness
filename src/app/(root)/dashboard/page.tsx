@@ -9,17 +9,19 @@ import ArrowWhite from "@/public/svgs/dashboard/arrow-white.svg";
 import { DashboardCardData } from "@/constants";
 import { useRouter } from "next/navigation";
 
-
 const Dashboard = () => {
   const router = useRouter();
 
   return (
     <section className="lg:mt-16">
-     
-
       <div className="mt-10 flex flex-col lg:flex-row gap-5">
         {DashboardCardData.map((cardItem, index) => (
-          <DashboardCard key={index} {...cardItem} />
+          <div
+            key={index.toString()}
+            onClick={() => router.push(cardItem.route)}
+          >
+            <DashboardCard {...cardItem} />
+          </div>
         ))}
       </div>
 
