@@ -505,7 +505,7 @@ const ShortListedDetails = ({
               </TabsContent>
 
               <TabsContent value="message">
-                <div className="text-center mt-10">
+                <div className="text-center mt-10 bg-main-100 text-main-900 px-[1em] py-[.5em] rounded-[.25em] ">
                   <h1>Coming soon</h1>
                 </div>
               </TabsContent>
@@ -583,7 +583,7 @@ const ShortListedDetails = ({
               </TabsContent>
 
               <TabsContent value="evaluation">
-                <div className="text-center mt-10">
+                <div className="text-center mt-10 bg-main-100 text-main-900 px-[1em] py-[.5em] rounded-[.25em] ">
                   <h1>Coming soon</h1>
                 </div>
               </TabsContent>

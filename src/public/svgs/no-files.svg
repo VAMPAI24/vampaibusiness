@@ -1,0 +1,36 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Empty State / No Files">
+<g id="Group 590">
+<circle id="Ellipse 110" cx="79.9984" cy="77.0323" r="64.8101" fill="url(#paint0_linear_6938_115392)"/>
+<g id="Group 23">
+<rect id="Rectangle 34" x="55.4811" y="46.4219" width="63.1984" height="87.7756" rx="8" transform="rotate(2.5 55.4811 46.4219)" fill="#F3F5F6"/>
+<rect id="Rectangle 23" x="20.773" y="42.9475" width="63.1984" height="87.7756" rx="8" transform="rotate(-7.5 20.773 42.9475)" fill="#FAFAFA"/>
+<path id="Rectangle 24" d="M21.8173 50.8791C21.2406 46.4986 24.3241 42.48 28.7046 41.9033L75.4992 35.7427C79.8797 35.166 83.8983 38.2495 84.475 42.63L86.0659 54.7141L23.4082 62.9632L21.8173 50.8791Z" fill="#F3F5F6"/>
+<rect id="Rectangle 25" x="96.63" y="37.8923" width="1.63327" height="7.77756" rx="0.816634" transform="rotate(82.5 96.63 37.8923)" fill="#C8D2DF" stroke="#C8D2DF"/>
+<rect id="Rectangle 26" x="73.5743" y="23.221" width="1.63327" height="7.77756" rx="0.816634" transform="rotate(-7.5 73.5743 23.221)" fill="#C8D2DF" stroke="#C8D2DF"/>
+<rect id="Rectangle 27" x="88.5324" y="25.8866" width="1.63327" height="7.77756" rx="0.816634" transform="rotate(37.5 88.5324 25.8866)" fill="#C8D2DF" stroke="#C8D2DF"/>
+<rect id="Rectangle 28" x="29.9625" y="65.6423" width="50.9098" height="3.51102" rx="1.75551" transform="rotate(-7.5 29.9625 65.6423)" fill="#C8D2DF"/>
+<rect id="Rectangle 30" x="32.2529" y="83.0466" width="50.9098" height="3.51102" rx="1.75551" transform="rotate(-7.5 32.2529 83.0466)" fill="#C8D2DF"/>
+<rect id="Rectangle 32" x="34.5434" y="100.452" width="50.9098" height="3.51102" rx="1.75551" transform="rotate(-7.5 34.5434 100.452)" fill="#C8D2DF"/>
+<rect id="Rectangle 29" x="30.8741" y="72.6045" width="18.4329" height="3.51102" rx="1.75551" transform="rotate(-7.5 30.8741 72.6045)" fill="#E1E6ED"/>
+<rect id="Rectangle 31" x="33.1691" y="90.0088" width="18.4329" height="3.51102" rx="1.75551" transform="rotate(-7.5 33.1691 90.0088)" fill="#E1E6ED"/>
+<rect id="Rectangle 33" x="35.4595" y="107.414" width="18.4329" height="3.51102" rx="1.75551" transform="rotate(-7.5 35.4595 107.414)" fill="#E1E6ED"/>
+</g>
+</g>
+<g id="Group 26882">
+<path id="Vector" d="M115.855 135.992C114.884 135.992 113.913 135.607 113.136 134.742L96.9166 118.685L96.3339 119.069C91.0894 122.915 84.9709 124.934 78.7552 124.934C71.277 124.934 63.7987 121.954 58.2629 116.761C52.4357 111.281 49.2308 103.877 49.2308 95.8005C49.2308 79.7433 62.4391 66.6667 78.6581 66.6667C89.7297 66.6667 99.4417 72.4358 104.686 82.2432C109.834 91.9545 109.154 103.3 102.841 112.435L102.452 113.012L118.769 129.165C120.42 130.8 120.031 132.434 119.74 133.299C118.963 134.838 117.409 135.992 115.855 135.992ZM78.6581 74.6473C66.8095 74.6473 57.2917 84.1663 57.2917 95.8005C57.2917 109.069 68.2663 117.05 78.9494 117.05C85.4565 117.05 91.3808 114.165 95.5569 108.973C100.704 102.627 101.578 94.0698 97.9849 86.6662C94.2944 79.2625 86.9133 74.6473 78.6581 74.6473Z" fill="#AAB7C6"/>
+<circle id="Ellipse 191" cx="78.1162" cy="95.5522" r="21.6641" fill="#FAFAFA"/>
+<g id="Group 26883">
+<path id="Oval" d="M62.8653 90.0641C62.8653 92.5642 65.0478 94.5908 67.7402 94.5908C70.4325 94.5908 72.615 92.5642 72.615 90.0641" stroke="#AAB7C6" stroke-width="2.5" stroke-linecap="round"/>
+<path id="Oval_2" d="M83.063 90.0641C83.063 92.5642 85.2456 94.5908 87.9379 94.5908C90.6303 94.5908 92.8128 92.5642 92.8128 90.0641" stroke="#AAB7C6" stroke-width="2.5" stroke-linecap="round"/>
+<path id="Line" d="M72.615 102.948H82.713" stroke="#AAB7C6" stroke-width="2.5" stroke-linecap="round"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_6938_115392" x1="79.9984" y1="12.2222" x2="79.9984" y2="141.842" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E1E6ED"/>
+<stop offset="1" stop-color="#E1E6ED" stop-opacity="0.63"/>
+</linearGradient>
+</defs>
+</svg>

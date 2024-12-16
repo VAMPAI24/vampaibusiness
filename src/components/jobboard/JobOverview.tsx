@@ -29,13 +29,13 @@ import { JobOverviewProps } from "@/types";
 import { recipes } from "@/constants";
 import OverviewSkelton from "../common/skeltons/OverviewSkelton";
 import Cookies from "js-cookie";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
-  const router = useRouter(); 
+  const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {
-    const storedToken = Cookies.get("token"); 
+    const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
@@ -49,16 +49,9 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
   const { data: draftJobs, isLoading: draftJobsLoader } =
     useGetDraftJobsQuery(token);
 
-
-
-
-
-    const handleNavigation = (id: string) => {
-      router.push(`/job-posting/${id}`);
-    };
-
-
-
+  const handleNavigation = (id: string) => {
+    router.push(`/job-posting/${id}`);
+  };
 
   return (
     <div className="">
@@ -133,8 +126,11 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
         <TabsContent value="active">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
             {activeJobsLoader ? (
-              [1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => (
-                <div key={index} className="w-[300px] h-full">
+              Array.from({ length: 3 }).map((_, id) => (
+                <div
+                  key={id.toString()}
+                  className="w-[300px] h-full opacity-[.5]"
+                >
                   <OverviewSkelton />
                 </div>
               ))
@@ -164,7 +160,8 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
                             key={desc.jobDescription}
                             className="text-main-901 font-jakarta text-xs break-words"
                           >
-                            {desc.jobDescription.slice(0, 150)}
+                            {desc.jobDescription?.substring(0, 150)}
+                            {desc.jobDescription?.length > 150 ? "..." : ""}
                           </p>
                         ))}
                     </div>

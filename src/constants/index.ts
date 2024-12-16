@@ -258,6 +258,7 @@ export const DashboardCardData = [
     description:
       "Quickly create a job listing to attract top talent and grow your team.",
     imgSrc: Arrow,
+    route: "/job-posting",
   },
   {
     imgIcon: Interview,
@@ -265,6 +266,7 @@ export const DashboardCardData = [
     description:
       "Schedule interviews with top candidates to streamline hiring.",
     imgSrc: Arrow,
+    route: "/job-posting",
   },
   {
     imgIcon: Application,
@@ -272,6 +274,7 @@ export const DashboardCardData = [
     description:
       "Review candidate applications in one place to find the perfect fit.",
     imgSrc: Arrow,
+    route: "/job-posting",
   },
 ];
 
