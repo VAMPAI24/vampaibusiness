@@ -13,8 +13,13 @@ import { EventFormSchema } from "@/lib/schemas";
 import { Durations } from "@/constants";
 import { EventModalContentProps } from "@/types";
 import { useEmployerCreateEventMutation } from "@/redux/features/job-posting/jobpostingApi";
+import { Tipinfo } from "../common/alerts";
 
-const EventModalContent = ({ onClose, email }: EventModalContentProps) => {
+const EventModalContent = ({
+  onClose,
+  email,
+  name,
+}: EventModalContentProps) => {
   const form = useForm<z.infer<typeof EventFormSchema>>({
     resolver: zodResolver(EventFormSchema),
     defaultValues: {
@@ -58,7 +63,8 @@ const EventModalContent = ({ onClose, email }: EventModalContentProps) => {
   return (
     <div className="px-4 max-w-2xl mx-auto overflow-y-auto lg:h-full h-screen hide-scrollbar">
       <h2 className="text-main-901 font-semibold font-rubik text-lg sm:text-xl md:text-2xl">
-        Provide key details to craft a customized interview
+        {/* Provide key details to craft a customized interview */}
+        Schedule a call with {name}
       </h2>
 
       <div className="rounded-md mt-2">
@@ -106,15 +112,39 @@ const EventModalContent = ({ onClose, email }: EventModalContentProps) => {
                 </SelectItem>
               ))}
             </CustomFormField>
+            <div className="w-full flex items-start flex-col gap-[1em]">
+              <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={control}
+                name="attendees"
+                label="Attendees"
+                placeholder="e.g email 1, email 2, email 3 ..."
+                variant="h-[40px] w-full"
+              />
 
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={control}
-              name="attendees"
-              label="Attendees"
-              placeholder="Enter attendee email"
-              variant="h-[40px] w-full"
-            />
+              <div className="w-full flex flex-wrap gap-[.5em] ">
+                {form
+                  .getValues("attendees")
+                  ?.split(",")
+                  .map((item: string) => item.trim())
+                  .filter(Boolean)
+                  .map((item: string, id: number) => (
+                    <p
+                      className="px-[1em] py-[.25em] text-[.875em] text-main-900 rounded-full border-[.5px] border-sec-500"
+                      key={id.toString()}
+                    >
+                      {item}
+                    </p>
+                  ))}
+              </div>
+
+              <div className="w-full flex items-start">
+                <Tipinfo
+                  body="Add attendees email address separated by commas e.g email 1, email 2 e.t.c"
+                  noCenter={true}
+                />
+              </div>
+            </div>
 
             <div className="flex justify-end gap-2">
               <SubmitButton

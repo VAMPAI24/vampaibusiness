@@ -666,6 +666,11 @@ const ShortListedDetails = ({
         // className={"w-[95%] h-[95%] lg:h-[90%] md:max-w-lg"}
       >
         <EventModalContent
+          name={
+            data?.data.applicant_first_name +
+            " " +
+            data?.data.applicant_last_name
+          }
           email={data?.data.applicant_email ?? ""}
           onClose={openCloseModalFn}
         />

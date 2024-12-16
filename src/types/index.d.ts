@@ -119,6 +119,7 @@ export interface JobOverviewProps {
 export interface EventModalContentProps {
   onClose: () => void;
   email?: string;
+  name?: string;
 }
 
 export interface PreviewCardProps {
