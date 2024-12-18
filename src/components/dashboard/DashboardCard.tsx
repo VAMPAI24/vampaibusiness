@@ -11,9 +11,10 @@ const DashboardCard = ({
   imgIcon,
   title,
   description,
+  clickFn
 }: DashboardCardProp) => {
   return (
-    <Card className="w-full lg:w-[331px] h-fit bg-[#F8F9FF] border border-[#CFE1FF] shadow">
+    <Card onClick={clickFn}  className="w-full lg:w-[331px] h-fit bg-[#F8F9FF] border border-[#CFE1FF] cursor-pointer shadow">
       <div className=" flex mt-5 px-4">
         <div>
           <Image

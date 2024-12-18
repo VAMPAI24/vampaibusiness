@@ -266,7 +266,7 @@ export const DashboardCardData = [
     description:
       "Schedule interviews with top candidates to streamline hiring.",
     imgSrc: Arrow,
-    route: "/job-posting",
+    route: "/scheduleinterview",
   },
   {
     imgIcon: Application,
@@ -518,7 +518,7 @@ export const ExperienceLevel = [
   "Excutive/C-Level",
 ];
 
-export const WorkPattern = ["OnSite", "Remote", "Hybrid"];
+export const WorkPattern = ["On Site", "Remote", "Hybrid"];
 
 export const EmploymentType = [
   "Full-Time",

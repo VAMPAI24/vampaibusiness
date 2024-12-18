@@ -87,6 +87,7 @@ export interface DashboardCardProp {
   title: string;
   description: string;
   imgSrc: StaticImageData;
+  clickFn: () => void;
 }
 
 export interface ToastNotificationProps {
@@ -125,6 +126,7 @@ export interface EventModalContentProps {
 export interface PreviewCardProps {
   imgUrl: string;
   text: string;
+  onEdit?: () => void; 
 }
 
 export interface CandidateCardProps {

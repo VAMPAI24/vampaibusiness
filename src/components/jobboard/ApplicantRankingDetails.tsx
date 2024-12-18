@@ -6,6 +6,7 @@ import { experiences } from "@/constants";
 import Bluearrow from "@/public/svgs/Jobs/blue-arrow.svg";
 import { useGetApplicationDetailsQuery } from "@/redux/features/job-posting/jobpostingApi";
 import Link from "next/link";
+import PdfImage from "@/public/svgs/Jobs/pdf.svg";
 
 // interface
 export interface ApplicantRankingDetailsProps {
@@ -226,7 +227,8 @@ const ApplicantRankingDetails = ({
             {/* PDF Icon */}
             <div className="flex-shrink-0 w-10 h-10">
               <Image
-                src={data?.data?.cv_file} // Replace with a proper icon if available
+                // src={data?.data?.cv_file} // Replace with a proper icon if available
+                src={PdfImage} // Replace with a proper icon if available
                 alt="PDF Icon"
                 width={40}
                 height={40}
@@ -239,7 +241,9 @@ const ApplicantRankingDetails = ({
               <p className="text-sm font-medium text-gray-800">
                 <a
                   href={data?.data?.cv_file} // File URL
-                  download={pdfName} // Makes the file downloadable with this name
+                  download={pdfName}
+                  target="_blank" 
+                  rel="noopener noreferrer"  // Makes the file downloadable with this name
                   className="text-blue-600 hover:underline"
                 >
                   {pdfName}

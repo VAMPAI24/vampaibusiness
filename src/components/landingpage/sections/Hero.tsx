@@ -23,7 +23,7 @@ const Hero = () => {
         <Button
           text="Get started"
           variant="bg-main-700 text-white rounded-lg w-[250px] h-[5em] mt-[2.5em]"
-          clickFn={() => router.push("/waitlist")}
+          clickFn={() => router.push("/sign-up")}
         />
       </div>
 

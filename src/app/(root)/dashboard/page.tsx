@@ -1,27 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import DashboardCard from "@/components/dashboard/DashboardCard";
 import Profile from "@/public/svgs/dashboard/profile.svg";
-import Percentage from "@/public/svgs/dashboard/percentage.svg";
 import ArrowWhite from "@/public/svgs/dashboard/arrow-white.svg";
 import { DashboardCardData } from "@/constants";
 import { useRouter } from "next/navigation";
+import { useGetProfilePercentageCountQuery } from "@/redux/features/job-posting/jobpostingApi";
+import Cookies from "js-cookie";
+import { CircularProgress } from "@/components/common/CircularProgress";
 
 const Dashboard = () => {
   const router = useRouter();
+
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
+  const { data: percentageCount } =
+    useGetProfilePercentageCountQuery(token);
+  console.log("percentageCount", percentageCount?.data?.percentageCompletion);
 
   return (
     <section className="lg:mt-16">
       <div className="mt-10 flex flex-col lg:flex-row gap-5">
         {DashboardCardData.map((cardItem, index) => (
-          <div
+          <DashboardCard
             key={index.toString()}
-            onClick={() => router.push(cardItem.route)}
-          >
-            <DashboardCard {...cardItem} />
-          </div>
+            {...cardItem}
+            clickFn={() => router.push(cardItem.route)}
+          />
         ))}
       </div>
 
@@ -31,7 +44,13 @@ const Dashboard = () => {
       >
         <div className="flex justify-between">
           <Image src={Profile} alt="profile" width={35} height={30} />
-          <Image src={Percentage} alt="profile" width={45} height={45} />
+          {/* <Image src={Percentage} alt="profile" width={45} height={45} /> */}
+
+          <CircularProgress
+            value={percentageCount?.data?.percentageCompletion}
+            size={80}
+            strokeWidth={10}
+          />
         </div>
 
         <div className="flex justify-start items-start py-4  gap-10 ">
