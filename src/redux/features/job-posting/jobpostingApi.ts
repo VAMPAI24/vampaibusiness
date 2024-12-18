@@ -111,8 +111,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -130,8 +130,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -149,8 +149,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -167,8 +167,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -185,8 +185,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -204,8 +204,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error?.data?.error || "Error",
-            description: error?.data?.message || "An unexpected error occurred",
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -223,8 +223,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -242,8 +242,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -261,8 +261,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error?.error?.data?.error || "Error",
-            description: error?.error?.data?.message || "Something went wrong",
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -280,8 +280,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -305,8 +305,8 @@ export const authApi = apiSlice.injectEndpoints({
           });
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -324,8 +324,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -349,8 +349,8 @@ export const authApi = apiSlice.injectEndpoints({
           });
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
@@ -374,13 +374,41 @@ export const authApi = apiSlice.injectEndpoints({
           });
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error || error?.error?.error,
-            description: error.error.data.message || error?.error?.status,
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
             type: "error",
           });
         }
       },
     }),
+
+
+
+
+    getProfilePercentageCount: builder.query({
+      query: () => ({
+        url: "/employer/auth/get-employer",
+        method: "GET",
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+
+
+
+
+
+  
 
 
     
@@ -406,4 +434,5 @@ export const {
   useGetAllEventQuery,
   useShortlistCandidateMutation,
   useRejectCandidateMutation,
+  useGetProfilePercentageCountQuery
 } = authApi;

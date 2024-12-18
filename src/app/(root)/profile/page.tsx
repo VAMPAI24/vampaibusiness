@@ -6,7 +6,9 @@ import { z } from "zod";
 import { ProfileSchema } from "@/lib/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomFormField, { FormFieldType, } from "@/components/shared/inputs/CustomFormField";
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/shared/inputs/CustomFormField";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { Countries, Industries, numberOfEmployees } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
@@ -16,23 +18,38 @@ import {
 } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-
-
-
+import Image from 'next/image'
 
 const Profile = () => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   const { data: userInfo, refetch } = useGetSingleEmployerQuery(token);
-  const [updateProfile, { isLoading: isUpdatingProfile }] = useUpdateProfileMutation();
+  const [updateProfile, { isLoading: isUpdatingProfile }] =
+    useUpdateProfileMutation();
+
+
+
+
+    console.log("userInfo", userInfo)
+
+
+
+ 
 
 
   useEffect(() => {
-    const storedToken = Cookies.get("token"); 
+    const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
+
+
+
+ 
+
+
+  // const [imageFile, setImageFile] = useState();
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
@@ -48,6 +65,7 @@ const Profile = () => {
       No_Employees: "",
       industry: "",
       company_bio: "",
+      company_logo: null
     },
   });
 
@@ -57,7 +75,10 @@ const Profile = () => {
     if (userInfo) {
       setValue("first_name", userInfo?.data?.first_name || "");
       setValue("last_name", userInfo?.data?.last_name || "");
-      setValue("Position_in_company", userInfo?.data?.Position_in_company || "");
+      setValue(
+        "Position_in_company",
+        userInfo?.data?.Position_in_company || ""
+      );
       setValue("work_email", userInfo?.data?.work_email || "");
       setValue("phone_Number", userInfo?.data?.phone_Number || "");
       setValue("country", userInfo?.data?.country || "");
@@ -66,21 +87,46 @@ const Profile = () => {
       setValue("No_Employees", userInfo?.data?.No_Employees || "");
       setValue("industry", userInfo?.data?.industry || "");
       setValue("company_bio", userInfo?.data?.company_bio || "");
+      // setFilePath(userInfo?.data?.company_logo || null);
     }
   }, [userInfo, setValue]);
 
 
 
 
-  const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
+  // image on profile page 
+  const [image, setImage] = useState<string | null>(null);
 
+
+
+  console.log(image)
+
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    // setImageFile(file)
+   
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); 
+      setImage(imageUrl); 
+    }
+  };
+
+
+  const handleClick = () => {
+    document.getElementById("fileInput")?.click(); 
+  };
+
+
+
+
+  const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
     try {
       await updateProfile(values).unwrap();
       await refetch();
       setTimeout(() => {
         router.push("/dashboard");
-      }, 5000)
-      
+      }, 5000);
     } catch (error) {
       console.log(error);
     }
@@ -90,6 +136,61 @@ const Profile = () => {
     <section className="hide-scrollbar">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+       
+
+            <div className="bg-white rounded-md p-4  flex items-center justify-between w-full">
+              <div
+                className="flex items-center space-x-4 cursor-pointer"
+                onClick={handleClick}
+              >
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
+
+                {/* Logo Placeholder or Uploaded Image */}
+                <div className="h-14 w-14 bg-blue-50 flex items-center justify-center rounded-md overflow-hidden">
+                  {image ? (
+                    // Display uploaded image
+                    <Image
+                      src={image}
+                      alt="Uploaded Logo"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    // Default "V" placeholder
+                    <span className="text-lg font-semibold text-blue-800">
+                      V
+                    </span>
+                  )}
+                </div>
+
+                {/* Description */}
+                <div>
+                  <h1 className="text-lg font-semibold text-gray-900">
+                    Company&apos;s Logo
+                  </h1>
+                  <p className="text-sm text-gray-500">
+                    Upload your company logo to help build brand recognition
+                  </p>
+                </div>
+              </div>
+
+              {/* Edit Link */}
+              <a
+                href="#"
+                onClick={handleClick}
+                className="text-sm text-blue-500 font-medium hover:underline cursor-pointer"
+              >
+                Edit
+              </a>
+            </div>
+         
+
           <div className="bg-white px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 lg:gap-10">
             <ProfileBox
               title="Personal Information"
@@ -159,7 +260,6 @@ const Profile = () => {
                   placeholder="Enter your Company's Name"
                   variant="h-[40px] w-full"
                   disabled={true}
-                  
                 />
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
@@ -246,3 +346,7 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
+
+

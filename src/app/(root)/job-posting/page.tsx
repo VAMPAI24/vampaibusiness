@@ -59,11 +59,9 @@ import ToastNotification from "@/components/shared/ToastNotification";
 import JobOverview from "@/components/jobboard/JobOverview";
 import Cookies from "js-cookie";
 
-
 // cdk editor
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 
 const JobPosting = () => {
   // const [currentView, setCurrentView] = useState("jobAds");
@@ -397,10 +395,6 @@ const JobPosting = () => {
     }
   };
 
-
-
-
-
   // ckd
 
   // const [editorData, setEditorData] = useState(""); // State to hold raw editor content
@@ -664,13 +658,23 @@ const JobPosting = () => {
                         </div>
 
                         <CustomFormField
+                          fieldType={FormFieldType.DATE}
+                          control={control}
+                          name="applicationDeadline"
+                          label="Application Deadline"
+                          placeholder="Select a date"
+                          variant="w-full h-[40px] border border-main-500 text-sm shadow-sm rounded"
+                          dateFormat="PPP"
+                        />
+
+                        {/* <CustomFormField
                           fieldType={FormFieldType.INPUT}
                           control={methods.control}
                           name="applicationDeadline"
                           label="Application Deadline"
                           placeholder="DD/MM/YYYY"
                           variant="h-[40px] w-full"
-                        />
+                        /> */}
 
                         <div className="flex justify-end items-center mt-6">
                           <SubmitButton className="w-full sm:w-[120px] h-11">
@@ -698,21 +702,23 @@ const JobPosting = () => {
                     <div className="mt-4 mb-4">
                       <Tabs defaultValue="account" className="">
                         <TabsList className="flex  items-center justify-end w-full gap-4  lg:mr-11">
-                          <TabsTrigger
-                            value="hh"
-                            className="flex items-center justify-center w-full md:w-auto py-2 px-4 rounded-full bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
-                            onClick={handleWriteWithAIDescription}
-                            disabled={loadingDesAI}
-                          >
-                            {loadingDesAI ? (
-                              <span>Loading...</span>
-                            ) : (
-                              <>
-                                <Sun size={16} className="mr-2" />
-                                Write with AI
-                              </>
-                            )}
-                          </TabsTrigger>
+                          {!showRewrite && (
+                            <TabsTrigger
+                              value="hh"
+                              className="flex items-center justify-center w-full md:w-auto py-2 px-4 rounded-full bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
+                              onClick={handleWriteWithAIDescription}
+                              disabled={loadingDesAI}
+                            >
+                              {loadingDesAI ? (
+                                <span>Loading...</span>
+                              ) : (
+                                <>
+                                  <Sun size={16} className="mr-2" />
+                                  Write with AI
+                                </>
+                              )}
+                            </TabsTrigger>
+                          )}
 
                           {showRewrite && (
                             <TabsTrigger
@@ -768,7 +774,7 @@ const JobPosting = () => {
                           variant="h-40 w-full"
                         />
 
-                        <div className="flex flex-wrap gap-5 bg-[#F7FCFF] border border-[#D4EBFc] rounded-lg py-10 px-4">
+                        <div className="flex flex-wrap gap-2 bg-[#F7FCFF] border border-[#D4EBFc] rounded-lg py-10 px-4">
                           <div className="w-full mb-2">
                             <p>
                               Here are suggested skills based on the job title.
@@ -782,7 +788,7 @@ const JobPosting = () => {
                             skills.map((skill: string) => (
                               <p
                                 key={skill}
-                                className="border hover:bg-main-600 hover:text-white border-bankGradient rounded-full px-2 py-1 cursor-pointer"
+                                className="border text-sm hover:bg-main-600 hover:text-white border-bankGradient rounded-full px-2 py-1 cursor-pointer"
                                 onClick={() => handleOptionClick(skill)}
                               >
                                 {skill}
@@ -820,21 +826,24 @@ const JobPosting = () => {
                     <div className="mt-4 mb-4">
                       <Tabs defaultValue="account" className="">
                         <TabsList className="flex  items-center justify-end w-full gap-4  lg:mr-11">
-                          <TabsTrigger
-                            value="hh"
-                            className="flex items-center justify-center w-full md:w-auto py-2 px-4 rounded-full bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
-                            onClick={handleWriteWithAIBenefit}
-                            disabled={loadingBenefitAI}
-                          >
-                            {loadingBenefitAI ? (
-                              <span>Loading...</span>
-                            ) : (
-                              <>
-                                <Sun size={16} className="mr-2" />
-                                Write with AI
-                              </>
-                            )}
-                          </TabsTrigger>
+                          {!showBenefitRewrite && (
+                            <TabsTrigger
+                              value="hh"
+                              className="flex items-center justify-center w-full md:w-auto py-2 px-4 rounded-full bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
+                              onClick={handleWriteWithAIBenefit}
+                              disabled={loadingBenefitAI}
+                            >
+                              {loadingBenefitAI ? (
+                                <span>Loading...</span>
+                              ) : (
+                                <>
+                                  <Sun size={16} className="mr-2" />
+                                  Write with AI
+                                </>
+                              )}
+                            </TabsTrigger>
+                          )}
+
                           {showBenefitRewrite && (
                             <TabsTrigger
                               value="jjjjj"
@@ -905,6 +914,8 @@ const JobPosting = () => {
               <Jobbox
                 title={formData.job_title || "Untitled"}
                 variant="mb-4 text-[26px] capitalize"
+                onEdit={() => setCurrentView("currentTab")}
+                // <Pencil />
               />
               <div className="flex gap-5">
                 <PreviewCard
@@ -924,6 +935,7 @@ const JobPosting = () => {
                   text={`${formData.salary_min || "N/A"} - ${
                     formData.salary_max || "N/A"
                   } ${formData.currency_code || ""}`}
+                  onEdit={() => setCurrentView("editJob")}
                 />
               </div>
               <hr className="mt-4" />
@@ -932,12 +944,14 @@ const JobPosting = () => {
                 <JobDescription
                   title="About the company"
                   description={userInfo?.data?.company_bio || "Not Specified"}
+                  onEdit={() => setCurrentView("editJob")}
                 />
               </div>
               <div className="mt-4">
                 <JobDescription
                   title="Job Description"
                   description={formData.jobDescription || "Not Specified"}
+                  onEdit={() => setCurrentView("editJob")}
                 />
               </div>
 
@@ -945,6 +959,7 @@ const JobPosting = () => {
                 <JobDescription
                   title="Qualifications"
                   description={formData.requiredSkills || "Not Specified"}
+                  onEdit={() => setCurrentView("editJob")}
                 />
               </div>
 
@@ -952,6 +967,7 @@ const JobPosting = () => {
                 <JobDescription
                   title="What We Offer"
                   description={formData.benefits || "Not Specified"}
+                  onEdit={() => setCurrentView("editJob")}
                 />
               </div>
             </div>
