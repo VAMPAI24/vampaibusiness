@@ -209,7 +209,7 @@ export const SidebarLinks = [
   {
     imgURL: Recruitmnet,
     route: "/recruitment",
-    label: "Recruitmnet",
+    label: "Recruitment",
   },
   {
     imgURL: ScheduleInterview,
@@ -237,7 +237,7 @@ export const SidebarLinksMobile = [
   {
     imgURL: RecruitmnetMobile,
     route: "/recruitment",
-    label: "Recruitmnet",
+    label: "Recruitment",
   },
   {
     imgURL: ScheduleInterviewMobile,
@@ -515,7 +515,7 @@ export const ExperienceLevel = [
   "Entry-Level",
   "Mid-Level",
   "Senior-Level",
-  "Excutive/C-Level",
+  "Executive/C-Level",
 ];
 
 export const WorkPattern = ["On Site", "Remote", "Hybrid"];

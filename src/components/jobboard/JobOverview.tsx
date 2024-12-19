@@ -34,24 +34,30 @@ import { useRouter } from "next/navigation";
 const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
+
+
+  // Active JoB
+  const { data: activeJobs, isLoading: activeJobsLoader, refetch: activeRefetch  } =
+    useGetActiveJobsQuery(token);
+
+  // Draft Jobs
+  const { data: draftJobs, isLoading: draftJobsLoader, refetch: draftRefectch  } =
+    useGetDraftJobsQuery(token);
+
+  const handleNavigation = (id: string) => {
+    router.push(`/job-posting/${id}`);
+  };
+
   useEffect(() => {
+    activeRefetch();
+    draftRefectch()
     const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
 
-  // Active JoB
-  const { data: activeJobs, isLoading: activeJobsLoader } =
-    useGetActiveJobsQuery(token);
-
-  // Draft Jobs
-  const { data: draftJobs, isLoading: draftJobsLoader } =
-    useGetDraftJobsQuery(token);
-
-  const handleNavigation = (id: string) => {
-    router.push(`/job-posting/${id}`);
-  };
+  
 
   return (
     <div className="">
