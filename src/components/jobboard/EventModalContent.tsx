@@ -61,15 +61,18 @@ const EventModalContent = ({
   };
 
   return (
-    <div className="px-4 max-w-2xl mx-auto overflow-y-auto lg:h-full h-screen hide-scrollbar">
+    <div className="w-full px-4 max-w-2xl mx-auto overflow-y-auto lg:h-full h-screen hide-scrollbar">
       <h2 className="text-main-901 font-semibold font-rubik text-lg sm:text-xl md:text-2xl">
         {/* Provide key details to craft a customized interview */}
         Schedule a call with {name}
       </h2>
 
-      <div className="rounded-md mt-2">
+      <div className="w-full rounded-md mt-2">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-2"
+          >
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={control}
@@ -112,25 +115,26 @@ const EventModalContent = ({
                 </SelectItem>
               ))}
             </CustomFormField>
-            <div className="w-full flex items-start flex-col gap-[1em]">
+
+            <div className="!w-full flex items-start flex-col gap-[1em]">
               <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={control}
                 name="attendees"
                 label="Attendees"
                 placeholder="e.g email 1, email 2, email 3 ..."
-                variant="h-[40px] w-full"
+                variant="h-[40px] !w-full"
               />
 
               <div className="w-full flex flex-wrap gap-[.5em] ">
                 {form
-                  .getValues("attendees")
+                  .watch("attendees")
                   ?.split(",")
                   .map((item: string) => item.trim())
                   .filter(Boolean)
                   .map((item: string, id: number) => (
                     <p
-                      className="px-[1em] py-[.25em] text-[.875em] text-main-900 rounded-full border-[.5px] border-sec-500"
+                      className="px-[.75em] py-[.25em] text-[.75em] text-main-900 rounded-full border-[.5px] border-sec-500"
                       key={id.toString()}
                     >
                       {item}
