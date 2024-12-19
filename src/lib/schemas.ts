@@ -196,6 +196,7 @@ export const jobDetailsSchema = z.object({
   currency_code: z.string().min(1, "Currency type is required"),
   salary_min: z.string().optional(),
   salary_max: z.string().optional(),
+  rate: z.string().optional(),
   // applicationDeadline: z
   // .union([z.string(), z.date()])
   applicationDeadline: z.preprocess(
@@ -221,6 +222,7 @@ export const jobSpecificationSchema = z.object({
   currency_code: z.string().min(1, "Currency type is required"),
   salary_min: z.string().optional(),
   salary_max: z.string().optional(),
+  rate: z.string().optional(),
   applicationDeadline: z.preprocess(
     (value) => (value instanceof Date ? value.toISOString() : value),
 
@@ -252,6 +254,7 @@ export const benefitDetailsSchema = z.object({
   currency_code: z.string().min(1, "Currency type is required"),
   salary_min: z.string().optional(),
   salary_max: z.string().optional(),
+  rate: z.string().optional(),
   applicationDeadline: z.preprocess(
     (value) => (value instanceof Date ? value.toISOString() : value),
 

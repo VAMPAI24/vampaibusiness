@@ -93,6 +93,7 @@ const JobPosting = () => {
       currency_code: "",
       salary_min: "",
       salary_max: "",
+      rate: "",
       applicationDeadline: "",
       jobDescription: "",
       requiredSkills: "",
@@ -166,6 +167,7 @@ const JobPosting = () => {
                   currency_code: values.currency_code || "",
                   salary_min: values.salary_min || "",
                   salary_max: values.salary_max || "",
+                  rate: values.rate || "",
                 },
               ],
               applicationDeadline: values.applicationDeadline,
@@ -230,6 +232,7 @@ const JobPosting = () => {
                   currency_code: values.currency_code || "",
                   salary_min: values.salary_min || "",
                   salary_max: values.salary_max || "",
+                  rate: values.rate || "",
                 },
               ],
               applicationDeadline: values.applicationDeadline,
@@ -655,6 +658,27 @@ const JobPosting = () => {
                               type="number"
                             />
                           </div>
+
+                          <CustomFormField
+                            fieldType={FormFieldType.SELECT}
+                            control={control}
+                            name="rate"
+                            label="Salary Rate"
+                            placeholder="Select Rate"
+                            variant="h-[40px] w-full sm:w-40"
+                            defaultValue=""
+                          >
+                            {["Yearly",  "Quarterly",  "Monthly",].map(
+                              (rate, index) => (
+                                <SelectItem
+                                  key={`${rate}-${index}`}
+                                  value={rate}
+                                >
+                                  {rate}
+                                </SelectItem>
+                              )
+                            )}
+                          </CustomFormField>
                         </div>
 
                         <CustomFormField
@@ -901,6 +925,7 @@ const JobPosting = () => {
           currency_code: string;
           salary_min: string;
           salary_max: string;
+          rate: string;
           applicationDeadline: string;
           jobDescription: string;
           requiredSkills: string;
@@ -932,9 +957,7 @@ const JobPosting = () => {
                 />
                 <PreviewCard
                   imgUrl={Amount}
-                  text={`${formData.salary_min || "N/A"} - ${
-                    formData.salary_max || "N/A"
-                  } ${formData.currency_code || ""}`}
+                  text={`${formData.salary_min || "N/A"} - ${formData.salary_max || "N/A"} ${formData.currency_code || ""}  ${formData.rate || ""}`}
                   onEdit={() => setCurrentView("editJob")}
                 />
               </div>
