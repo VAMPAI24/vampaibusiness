@@ -2,10 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import CustomSheet from "../shared/CustomSheet";
-import { experiences } from "@/constants";
 import Bluearrow from "@/public/svgs/Jobs/blue-arrow.svg";
 import { useGetApplicationDetailsQuery } from "@/redux/features/job-posting/jobpostingApi";
-import Link from "next/link";
 import PdfImage from "@/public/svgs/Jobs/pdf.svg";
 import { openExternalLink } from "@/lib/utils";
 import moment from "moment";
