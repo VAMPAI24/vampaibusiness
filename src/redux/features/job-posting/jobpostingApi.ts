@@ -342,8 +342,11 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
 
+          console.log(result)
+
           ToastNotification({
-            title: result?.data?.message,
+            // title: result?.data?.message,
+            title: "Shortlist",
             description: "Candidate Shorlisted",
             type: "success",
           });
@@ -368,7 +371,8 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
 
           ToastNotification({
-            title: result?.data?.message,
+            // title: result?.data?.message,
+            title: "Reject",
             description: "Candidate Rejected",
             type: "error",
           });

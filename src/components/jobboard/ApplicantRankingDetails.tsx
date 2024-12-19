@@ -7,6 +7,14 @@ import Bluearrow from "@/public/svgs/Jobs/blue-arrow.svg";
 import { useGetApplicationDetailsQuery } from "@/redux/features/job-posting/jobpostingApi";
 import Link from "next/link";
 import PdfImage from "@/public/svgs/Jobs/pdf.svg";
+import { openExternalLink } from "@/lib/utils";
+import moment from "moment";
+import { TitleRoundedList } from "../ui";
+
+const boxClass =
+  "w-full bg-white  h-fit px-[2em]  py-[1.5em] rounded-[10px] border-[.5px] border-sec-200 ";
+
+const headerClass = "text-[1.5em] text-main-900 font-[400] font-rubik ";
 
 // interface
 export interface ApplicantRankingDetailsProps {
@@ -34,22 +42,13 @@ const ApplicantRankingDetails = ({
   onClose,
   candidate,
 }: ApplicantRankingDetailsProps) => {
-  
-  const { data } = useGetApplicationDetailsQuery(candidate?.id );
-
-
-
+  const { data } = useGetApplicationDetailsQuery(candidate?.id);
 
   // Pdf name
   const pdfUrl = data?.data?.cv_file;
   const pdfName = pdfUrl ? pdfUrl.split("/").pop() : "";
 
-
-
-
-    if (!candidate) return null;
-
-
+  if (!candidate) return null;
 
   return (
     <CustomSheet
@@ -59,29 +58,34 @@ const ApplicantRankingDetails = ({
     >
       <div className="flex-1 px-8 overflow-auto h-screen hide-scrollbar">
         <div className="flex items-center gap-3 mb-4 mt-10">
-          <Image
+          {/* <Image
             src={data?.data?.profile?.profile_picture}
             alt="nnnnnnn"
             width={50}
             height={50}
             className="rounded-full"
-          />
-          <div className="flex gap-4">
-            <h2 className="text-sec-901 font-rubik text-lg sm:text-[24px] capitalize">
-              {data?.data.applicant_first_name}
-            </h2>
+          /> */}
 
-            <h2 className="text-sec-901 font-rubik text-lg sm:text-[24px] capitalize">
-              {data?.data.applicant_last_name}
-            </h2>
+          <div className="w-[6em] h-[6em] rounded-full overflow-hidden bg-main-100">
+            <img
+              src={data?.data?.profile?.profile_picture}
+              className="w-full h-full object-cover"
+              alt="User Avatar"
+            />
           </div>
+          <h2 className="text-[1.5em] 2xl:text-[2em]  font-[600] text-main-901 capitalize">
+            {data?.first_name} {data?.last_name}
+          </h2>
         </div>
         <hr className="border-[#D2E4FF]" />
         <div className="mt-6 border border-[#D2E4FF] rounded-md p-4">
           <p className="text-lg font-semibold mb-2">About</p>
-          <div dangerouslySetInnerHTML={{
-            __html: data?.data?.profile?.about_me,
-          }} className="text-gray-700"></div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: data?.data?.profile?.about_me,
+            }}
+            className="text-gray-700"
+          ></div>
         </div>
         <div className="border border-blue-200 rounded-md p-4 mt-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
@@ -129,50 +133,74 @@ const ApplicantRankingDetails = ({
           </div>
         </div>
         {/* work experience  */}
-        <div className="p-6 bg-white border border-blue-100 rounded-lg shadow-sm max-w-4xl mx-auto mt-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Work experience
-          </h2>
-          <div className="space-y-6">
-            {data?.data?.profile?.work_experience.map(
-              (experience: any, index: any) => (
-                <div
-                  key={index}
-                  className="relative flex items-start space-x-4"
-                >
-                  {/* Left Indicator */}
-                  <div className="w-12 flex items-center justify-center">
-                    <div className="bg-gray-200 border-2 border-blue-200 w-20 h-12 rounded-lg flex items-center justify-center">
-                      {/* Placeholder for avatar/icon */}
-                    </div>
-                    {index < experiences.length - 1 && (
-                      <div className="absolute top-10 left-6 h-full w-[1px] bg-gray-300"></div>
-                    )}
-                  </div>
+        <div className={boxClass}>
+          <div className="w-full flex flex-col gap-[1em]">
+            <h5 className={headerClass}>Work Experience</h5>
 
-                  {/* Content */}
-                  <div className="flex justify-between rounded-lg p-4">
-                    <div>
-                      <h3 className="text-md font-semibold text-gray-800">
-                        {experience?.job_role}
-                      </h3>
-                      <p className="text-sm text-gray-600 mt-1 w-[50%]">
-                        {experience.job_description}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col items-start text-sm text-gray-500 mt-3">
-                      <div>
-                        <span>{experience.start_date}</span> -{" "}
-                        <span>{experience.end_date}</span>
+            <div className="w-full flex flex-col gap relative">
+              {(data?.data?.profile?.work_experience ?? [])?.map(
+                (item: any, id: number) => (
+                  <div
+                    key={id.toString()}
+                    className="h-full flex items-start gap-4 relative"
+                  >
+                    {/* Circle */}
+                    <div className="relatve  h-full min-h-[5em]">
+                      <div className="w-[1.5em] h-[1.5em] bg-main-100 p-[.25em]">
+                        <div className="w-full h-full bg-main-600"></div>
                       </div>
+                      {/* Vertical Line */}
+                      {id !==
+                        data?.data?.profile?.work_experience.length - 1 && (
+                        <div className="absolute left-[.75em] left1/2 transform -translate-x-1/2 w-[2px] h-full bg-gray-300"></div>
+                      )}
+                    </div>
 
-                      <span>{experience.company_name}</span>
+                    {/* Content */}
+                    <div className="w-full flex  items-start justify-between gap-[1em] cursor-pointer capitalize mb-[1em]">
+                      <span className="flex flex-col gap-[.25em]">
+                        <h2 className="text-[1em]  font-[400] text-main-901">
+                          {item.job_role}
+                        </h2>
+                        <span
+                          className="max-w-[80%] text-[.85em]  font-[200] text-main-901 mb-[1em] div-listed"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              item?.job_description ||
+                              item?.jobDescription ||
+                              "",
+                          }}
+                        ></span>
+
+                        {(item?.skills as unknown as string[])?.length > 0 && (
+                          <div className="w-full mt-[.5em]">
+                            <TitleRoundedList
+                              headerClass={headerClass + " !text-[.875em]"}
+                              data={
+                                (item?.skills as unknown as string[]) || [""]
+                              }
+                              title="Relevant Skills"
+                              addOn="!bg-sec-200 !px-[1em] !py-[.5em]  "
+                            />
+                          </div>
+                        )}
+                      </span>
+                      <span className="flex flex-col items-end justify-end gap-[.25em]">
+                        <h2 className="text-[.875em]  font-[300] text-neutral-700 whitespace-nowrap">
+                          {moment(item.start_date).format("YYYY")} -{" "}
+                          {item.present
+                            ? "Present"
+                            : moment(item.end_date).format("YYYY")}
+                        </h2>
+                        <p className="text-[.85em]  font-[500] text-main-901 whitespace-nowrap mb-[1em]">
+                          {item.company_name}
+                        </p>
+                      </span>
                     </div>
                   </div>
-                </div>
-              )
-            )}
+                )
+              )}
+            </div>
           </div>
         </div>
 
@@ -183,12 +211,15 @@ const ApplicantRankingDetails = ({
 
           {/* Grid Layout */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data?.data?.profile?.projects.map((project:any, index: any) => (
-              <Link key={project.link.toString()} href={project.link}>
-               <div
+            {data?.data?.profile?.projects.map((project: any, index: any) => (
+              <div
                 key={index}
+                onClick={() =>
+                  project.link
+                    ? openExternalLink(project?.link || "")
+                    : () => {}
+                }
                 className="flex flex-col justify-between border border-gray-200 rounded-lg p-4 shadow-sm bg-white relative"
-                
               >
                 {/* Content */}
 
@@ -205,12 +236,10 @@ const ApplicantRankingDetails = ({
                     {project.title}
                   </h3>
                   <p className="text-sm text-gray-600 mt-2">
-                    {project.description.slice(0, 200)}
+                    {project.description}
                   </p>
                 </div>
               </div>
-              </Link>
-             
             ))}
           </div>
         </div>
@@ -242,8 +271,8 @@ const ApplicantRankingDetails = ({
                 <a
                   href={data?.data?.cv_file} // File URL
                   download={pdfName}
-                  target="_blank" 
-                  rel="noopener noreferrer"  // Makes the file downloadable with this name
+                  target="_blank"
+                  rel="noopener noreferrer" // Makes the file downloadable with this name
                   className="text-blue-600 hover:underline"
                 >
                   {pdfName}

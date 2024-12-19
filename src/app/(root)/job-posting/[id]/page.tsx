@@ -286,9 +286,9 @@ const JobPostingDetails = () => {
                         </h1>
                       </div>
 
-                      <div className="min-h-screen flex items-center justify-center">
+                      <div className="w-full min-h-screen flex items-start">
                         {candidateData?.data?.jobApplicant?.length > 0 ? (
-                          <div className="grid grid-cols-1 gap-6">
+                          <div className="grid grid-cols-1 gap-[12em]">
                             {(candidateData?.data?.jobApplicant ?? [])?.map(
                               (candidate: any, index: any) => (
                                 <CandidateCard
@@ -304,11 +304,13 @@ const JobPostingDetails = () => {
                             )}
                           </div>
                         ) : (
-                          <div className="w-fit mx-auto empty-box">
-                            <Empty
-                              title="No Candidates"
-                              subtitle="No candidate has applied for this job."
-                            />
+                          <div className="w-full flex items-center justify-center">
+                            <div className="w-fit mx-auto empty-box">
+                              <Empty
+                                title="No Candidates"
+                                subtitle="No candidate has applied for this job."
+                              />
+                            </div>
                           </div>
                         )}
                       </div>
@@ -340,7 +342,7 @@ const JobPostingDetails = () => {
                         </h1>
                       </div>
 
-                      <div className="min-h-screen flex items-center justify-center">
+                      <div className="w-full min-h-screen flex items-start">
                         {rankedCandidate?.data.length > 0 ? (
                           <div className="flex flex-col gap-6 w-full max-w-7xl">
                             {(rankedCandidate?.data ?? [])?.map(
@@ -358,11 +360,13 @@ const JobPostingDetails = () => {
                             )}
                           </div>
                         ) : (
-                          <div className="w-fit mx-auto empty-box">
-                            <Empty
-                              title="No Candidates"
-                              subtitle="No candidate has applied for this job."
-                            />
+                          <div className="w-full flex items-center justify-center">
+                            <div className="w-fit mx-auto empty-box">
+                              <Empty
+                                title="No Candidates"
+                                subtitle="No candidate has applied for this job."
+                              />
+                            </div>
                           </div>
                         )}
                       </div>

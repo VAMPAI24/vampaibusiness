@@ -26,6 +26,8 @@ import {
 import Link from "next/link";
 import Bluearrow from "@/public/svgs/Jobs/blue-arrow.svg";
 import moment from "moment";
+import { openExternalLink } from "@/lib/utils";
+import { TitleRoundedList } from "../ui";
 
 const boxClass =
   "w-full bg-white  h-fit px-[2em]  py-[1.5em] rounded-[10px] border-[.5px] border-sec-200 ";
@@ -165,22 +167,23 @@ const ShortListedDetails = ({
                 {/* Overview  */}
                 <div className="flex-1 px-8 overflow-auto h-screen hide-scrollbar">
                   <div className="flex items-center gap-3 mb-4 mt-10">
-                    <Image
+                    {/* <Image
                       src={data?.data?.profile?.profile_picture}
                       alt="nnnnnnn"
                       width={50}
                       height={50}
                       className="rounded-full"
-                    />
-                    <div className="flex gap-4">
-                      <h2 className="text-sec-901 font-rubik text-lg sm:text-[24px] capitalize">
-                        {data?.data.applicant_first_name}
-                      </h2>
-
-                      <h2 className="text-sec-901 font-rubik text-lg sm:text-[24px] capitalize">
-                        {data?.data.applicant_last_name}
-                      </h2>
+                    /> */}
+                    <div className="w-[6em] h-[6em] rounded-full overflow-hidden bg-main-100">
+                      <img
+                        src={data?.data?.profile?.profile_picture}
+                        className="w-full h-full object-cover"
+                        alt="User Avatar"
+                      />
                     </div>
+                    <h2 className="text-[1.5em] 2xl:text-[2em]  font-[600] text-main-901 capitalize">
+                      {data?.first_name} {data?.last_name}
+                    </h2>
                   </div>
                   <hr className="border-[#D2E4FF]" />
                   <div className="mt-6 border border-[#D2E4FF] rounded-md p-4">
@@ -327,6 +330,23 @@ const ShortListedDetails = ({
                                         "",
                                     }}
                                   ></span>
+                                  {(item?.skills as unknown as string[])
+                                    ?.length > 0 && (
+                                    <div className="w-full mt-[.5em]">
+                                      <TitleRoundedList
+                                        headerClass={
+                                          headerClass + " !text-[.875em]"
+                                        }
+                                        data={
+                                          (item?.skills as unknown as string[]) || [
+                                            "",
+                                          ]
+                                        }
+                                        title="Relevant Skills"
+                                        addOn="!bg-sec-200 !px-[1em] !py-[.5em]  "
+                                      />
+                                    </div>
+                                  )}
                                 </span>
                                 <span className="flex flex-col items-end justify-end gap-[.25em]">
                                   <h2 className="text-[.875em]  font-[300] text-neutral-700 whitespace-nowrap">
@@ -358,34 +378,34 @@ const ShortListedDetails = ({
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                       {data?.data?.profile?.projects.map(
                         (project: any, index: any) => (
-                          <Link
-                            key={project.link.toString()}
-                            href={project.link}
+                          <div
+                            key={index}
+                            onClick={() =>
+                              project.link
+                                ? openExternalLink(project?.link || "")
+                                : () => {}
+                            }
+                            className="flex flex-col justify-between border border-gray-200 rounded-lg p-4 shadow-sm bg-white relative"
                           >
-                            <div
-                              key={index}
-                              className="flex flex-col justify-between border border-gray-200 rounded-lg p-4 shadow-sm bg-white relative"
-                            >
-                              {/* Content */}
+                            {/* Content */}
 
-                              <div className="flex justify-end mb-8">
-                                <Image
-                                  src={Bluearrow}
-                                  alt="blue-arrow"
-                                  width={25}
-                                  height={25}
-                                />
-                              </div>
-                              <div className="h-40">
-                                <h3 className="text-lg font-semibold text-gray-800">
-                                  {project.title}
-                                </h3>
-                                <p className="text-sm text-gray-600 mt-2">
-                                  {project.description}
-                                </p>
-                              </div>
+                            <div className="flex justify-end mb-8">
+                              <Image
+                                src={Bluearrow}
+                                alt="blue-arrow"
+                                width={25}
+                                height={25}
+                              />
                             </div>
-                          </Link>
+                            <div className="h-40">
+                              <h3 className="text-lg font-semibold text-gray-800">
+                                {project.title}
+                              </h3>
+                              <p className="text-sm text-gray-600 mt-2">
+                                {project.description}
+                              </p>
+                            </div>
+                          </div>
                         )
                       )}
                     </div>
