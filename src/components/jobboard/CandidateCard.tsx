@@ -108,6 +108,16 @@ const CandidateCard = ({
         >
           Shortlist Candidate
         </SubmitButton>
+
+        {/* //Detelet  */}
+
+         <SubmitButton
+          isLoading={isLoading}
+          clickFn={handleShortlist}
+          className="rounded-full px-4"
+        >
+          Shortlist Candidate
+        </SubmitButton>
         <SubmitButton
           isLoading={isRejecting}
           clickFn={handleReject}
