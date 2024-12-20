@@ -958,7 +958,10 @@ const JobPosting = () => {
                 <PreviewCard
                   imgUrl={Amount}
                   text={`${formData.salary_min || "N/A"} - ${formData.salary_max || "N/A"} ${formData.currency_code || ""}  ${formData.rate || ""}`}
-                  onEdit={() => setCurrentView("editJob")}
+                  onEdit={() => {
+                    setCurrentTab("details");
+                    setCurrentView("editJob")
+                  }}
                 />
               </div>
               <hr className="mt-4" />
@@ -967,14 +970,18 @@ const JobPosting = () => {
                 <JobDescription
                   title="About the company"
                   description={userInfo?.data?.company_bio || "Not Specified"}
-                  onEdit={() => setCurrentView("editJob")}
                 />
               </div>
               <div className="mt-4">
                 <JobDescription
                   title="Job Description"
                   description={formData.jobDescription || "Not Specified"}
-                  onEdit={() => setCurrentView("editJob")}
+                  onEdit={() => {
+                    setCurrentTab("details");
+                    setCurrentTab("jjjjjjjjj")
+                    setCurrentView("editJob")
+                    setCurrentTab("specification")
+                  }}
                 />
               </div>
 

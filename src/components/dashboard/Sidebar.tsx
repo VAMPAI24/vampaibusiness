@@ -77,7 +77,7 @@ const Sidebar = () => {
                 className={cn(
                   "text-16 font-semibold text-white hidden lg:flex",
                   { "!text-main-900": isActive },
-                  { "text-red-500": isLastItem && !isActive }
+                  { "text-red-800 font-bold text-lg": isLastItem && !isActive }
                 )}
               >
                 {item.label}
