@@ -175,10 +175,12 @@ const ShortListedDetails = ({
                       className="rounded-full"
                     /> */}
                     <div className="w-[6em] h-[6em] rounded-full overflow-hidden bg-main-100">
-                      <img
+                      <Image
                         src={data?.data?.profile?.profile_picture}
-                        className="w-full h-full object-cover"
                         alt="User Avatar"
+                        width={50}
+                        height={50}
+                        className="rounded-full"
                       />
                     </div>
                     <h2 className="text-[1.5em] 2xl:text-[2em]  font-[600] text-main-901 capitalize">

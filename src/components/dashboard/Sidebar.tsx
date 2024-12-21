@@ -6,16 +6,13 @@ import Image from "next/image";
 import VampLogoSmall from "@/public/pngs/dashboard/v-logo-white.png";
 import VampLogo from "@/public/svgs/auth/vamp-white.svg";
 import { SidebarLinks } from "@/constants";
-import { usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { userLogout } from "@/redux/features/auth/authSlice";
 
 const Sidebar = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
-
-
-
 
   const handleLogout = () => {
     try {
@@ -24,8 +21,6 @@ const Sidebar = () => {
       console.error("Logout error:", error);
     }
   };
-
- 
 
   return (
     <section className="sticky left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 2xl:w-[355px]">
@@ -59,10 +54,13 @@ const Sidebar = () => {
             <Link
               key={item.label}
               href={item.route}
-              onClick={isLastItem ? handleLogout : undefined} 
+              onClick={isLastItem ? handleLogout : undefined}
               className={cn(
                 "flex gap-3 items-center py-1 p-2 lg:p-4 rounded-md justify-center lg:justify-start",
-                { "bg-white": isActive }
+                {
+                  "bg-red-200 rounded-full mt-[14em]": isLastItem,
+                  "bg-white": isActive && !isLastItem,
+                }
               )}
             >
               <div className="relative w-6 h-6">
@@ -70,14 +68,17 @@ const Sidebar = () => {
                   src={item.imgURL}
                   alt={item.label}
                   fill
-                  className={cn({ "brightness-0 invert-10": isActive })}
+                  className={cn(
+                    { "brightness-0 invert-10": isActive && !isLastItem },
+                    { "text-main-900": isLastItem }
+                  )}
                 />
               </div>
               <p
                 className={cn(
-                  "text-16 font-semibold text-white hidden lg:flex",
-                  { "!text-main-900": isActive },
-                  { "text-red-500": isLastItem && !isActive }
+                  "text-16 font-semibold hidden lg:flex",
+                  { "!text-main-900": isActive && !isLastItem },
+                  { "text-red-900 ": isLastItem }
                 )}
               >
                 {item.label}
@@ -86,8 +87,6 @@ const Sidebar = () => {
           );
         })}
       </nav>
-
-
     </section>
   );
 };

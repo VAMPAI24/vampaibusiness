@@ -138,7 +138,7 @@ export const ProfileSchema = z.object({
     .min(1, { message: "Last name is required" })
     .max(50, { message: "Last name must be 50 characters or less" }),
 
-  Position_in_company: z
+    position_in_company: z
     .string()
     .min(1, { message: "Position in company is required" })
     .max(100, {
@@ -162,7 +162,7 @@ export const ProfileSchema = z.object({
     .min(1, { message: "Company website is required" })
     .max(100, { message: "Company website must be 100 characters or less" }),
 
-  No_Employees: z
+  no_employees: z
     .union([z.enum(["1-10", "11-50", "51-100", "100+"]), z.literal("")])
     .optional()
     .or(z.undefined()),
@@ -181,7 +181,7 @@ export const ProfileSchema = z.object({
     .string()
     .min(1, { message: "company bio is required" })
     .max(200, { message: "company_bio must be 200 characters or less" }),
-  company_logo: z.null().optional(),
+    file: z.null().optional(),
 });
 
 export const jobTitleSchema = z.object({

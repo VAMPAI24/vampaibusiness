@@ -26,7 +26,7 @@ const JobDescription = ({title, description, onEdit}: JobDescriptionProps) => {
 
       </div>
      
-      <p className='mt-2 text-main-902 font-jakarta text-xs'>{description}</p>
+      <p className='mt-2 text-main-902 font-jakarta break-words text-xs'>{description}</p>
     </div>
   )
 }

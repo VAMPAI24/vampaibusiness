@@ -47,7 +47,7 @@ const RankedCandidatesCard = ({
 
   return (
     <div className="bg-[#F9FAFB] border border-main-200 rounded-lg  w-full cursor-pointer">
-      <div className="p-6 flex items-start justify-between" onClick={clickFn}>
+      <div className="p-6 flex items-start justify-between">
         <div>
           <div className="flex items-center justify-between gap-4 mb-4">
             <div className="ml-4 lg:ml-0">
@@ -64,7 +64,7 @@ const RankedCandidatesCard = ({
               </p>
             </div>
 
-            <p className="text-[.75em] font-[400] text-main-700 ">See Profile</p>
+            <p onClick={clickFn} className="text-[.75em] font-[400] text-main-700 ">See Profile</p>
           </div>
 
           {/* <div className="mb-4">

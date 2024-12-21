@@ -30,7 +30,6 @@ import Zoom from "@/public/svgs/Jobs/zoom.svg";
 import Onsite from "@/public/svgs/Jobs/onsite.svg";
 import Teams from "@/public/svgs/Jobs/teams.svg";
 
-
 export const NavLinks = [
   {
     name: "Products",
@@ -207,15 +206,16 @@ export const SidebarLinks = [
     label: "Job Posting",
   },
   {
-    imgURL: Recruitmnet,
-    route: "/recruitment",
-    label: "Recruitment",
-  },
-  {
     imgURL: ScheduleInterview,
     route: "/scheduleinterview",
     label: "Schedule Interview",
   },
+  {
+    imgURL: Recruitmnet,
+    route: "/recruitment",
+    label: "Recruitment",
+  },
+
   {
     imgURL: Logout,
     route: "/sign-in",
@@ -235,15 +235,16 @@ export const SidebarLinksMobile = [
     label: "Job Posting",
   },
   {
-    imgURL: RecruitmnetMobile,
-    route: "/recruitment",
-    label: "Recruitment",
-  },
-  {
     imgURL: ScheduleInterviewMobile,
     route: "/scheduleinterview",
     label: "Schedule Interview",
   },
+  {
+    imgURL: RecruitmnetMobile,
+    route: "/recruitment",
+    label: "Recruitment",
+  },
+
   {
     imgURL: Logout,
     route: "/sign-in",
@@ -616,8 +617,6 @@ export const recipes = [
   },
 ];
 
-
-
 export const interviews = [
   {
     title: "Product Manager",
@@ -699,12 +698,7 @@ export const Times = [
   "23:30",
 ];
 
-export const Durations = [
-  "15",
-  "30",
-  "45",
-  "60",
-];
+export const Durations = ["15", "30", "45", "60"];
 
 export const EventType = [
   {
@@ -726,9 +720,6 @@ export const EventType = [
   },
 ];
 
-
-
-
 export const teamMembers = [
   {
     name: "John Paul",
@@ -743,32 +734,6 @@ export const teamMembers = [
     initials: "KP",
   },
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export const candidatesShorlist = [
   {
@@ -790,8 +755,6 @@ export const candidatesShorlist = [
       "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
   },
 ];
-
-
 
 export const Interviewed = [
   {
@@ -855,38 +818,29 @@ export const Hired = [
   },
 ];
 
-
-
-
-
 export const experiences = [
   {
-    title: 'Senior UX Designer',
+    title: "Senior UX Designer",
     description:
-      'Wondering what questions you might encounter in your upcoming interview. Know what to expect...',
-    date: '2023 - Present',
-    company: 'Google Inc',
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+    date: "2023 - Present",
+    company: "Google Inc",
   },
   {
-    title: 'Senior UX Designer',
+    title: "Senior UX Designer",
     description:
-      'Wondering what questions you might encounter in your upcoming interview. Know what to expect...',
-    date: '2023 - Present',
-    company: 'Google Inc',
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+    date: "2023 - Present",
+    company: "Google Inc",
   },
   {
-    title: 'Senior UX Designer',
+    title: "Senior UX Designer",
     description:
-      'Wondering what questions you might encounter in your upcoming interview. Know what to expect...',
-    date: '2023 - Present',
-    company: 'Google Inc',
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+    date: "2023 - Present",
+    company: "Google Inc",
   },
 ];
-
-
-
-
-
 
 export const projects = [
   {

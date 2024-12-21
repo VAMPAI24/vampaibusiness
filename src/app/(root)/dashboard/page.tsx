@@ -24,7 +24,7 @@ const Dashboard = () => {
 
   const { data: percentageCount } =
     useGetProfilePercentageCountQuery(token);
-  console.log("percentageCount", percentageCount?.data?.percentageCompletion);
+
 
   return (
     <section className="lg:mt-16">

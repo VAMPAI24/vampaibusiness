@@ -58,6 +58,7 @@ interface CustomProps {
   variant?: string;
   defaultValue?: string;
   readOnly?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
@@ -73,6 +74,10 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
               readOnly={props.readOnly}
               disabled={props.disabled}
               className={`${props.variant} text-16 placeholder:text-16 rounded-[5px] border bg-[#F7FCFF] border-bankGradient text-gray-900 placeholder:text-gray-500`}
+              onChange={(e) => {
+                field.onChange(e); 
+                props.onChange?.(e); 
+              }}
             />
           </FormControl>
         </div>
