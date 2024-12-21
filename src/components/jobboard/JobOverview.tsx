@@ -5,9 +5,8 @@ import Jobbox from "./Jobbox";
 import OverviewCard from "./OverviewCard";
 import {
   CalendarPlus,
-  CalendarMinus,
   StickyNote,
-  NotebookPen,
+
   CirclePlus,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -55,7 +54,7 @@ useEffect(() => {
   if (storedToken) {
     setToken(storedToken);
   }
-}, []);
+}, [activeRefetch, draftRefectch]);
 
   
 
@@ -153,7 +152,8 @@ useEffect(() => {
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
                     <Badge className="px-2 rounded-lg">Active</Badge>
-                    <Image src={Colum} alt="card-img" />
+                    {/* column */}
+                    {/* <Image src={Colum} alt="card-img" /> */}
                   </CardHeader>
                   <CardContent>
                     <h2 className="mb-2 text-main-901 font-rubik text-base capitalize">
@@ -181,7 +181,7 @@ useEffect(() => {
                         </span>
                       </p>
                     </div>
-                    <Image src={PicsCollection} alt="card-img" />
+                    {/* <Image src={PicsCollection} alt="card-img" /> */}
                   </CardFooter>
                 </Card>
               ))
@@ -241,13 +241,15 @@ useEffect(() => {
               draftJobs?.data?.jobs.map((recipe: any) => (
                 <Card
                   key={recipe.id}
-                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px]"
+                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px] cursor-pointer"
+                  // onClick={() => handleNavigation(recipe.id)}
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
                     <Badge className="px-2 rounded-lg bg-[#E99F0B]">
                       Draft
                     </Badge>
-                    <Image src={Colum} alt="card-img" />
+                    {/* colum */}
+                    {/* <Image src={Colum} alt="card-img" /> */}
                   </CardHeader>
                   <CardContent>
                     <h2 className="mb-2 text-main-901 font-rubik text-base capitalize">
@@ -274,7 +276,7 @@ useEffect(() => {
                         </span>
                       </p>
                     </div>
-                    <Image src={PicsCollection} alt="card-img" />
+                    {/* <Image src={PicsCollection} alt="card-img" /> */}
                   </CardFooter>
                 </Card>
               ))

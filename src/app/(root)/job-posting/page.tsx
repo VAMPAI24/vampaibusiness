@@ -398,6 +398,25 @@ const JobPosting = () => {
     }
   };
 
+
+
+
+  // formater for comma to show after typing amount
+  const formatCurrency = (value: string) => {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  
+  const handleCurrencyChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setValue: (value: string) => void
+  ) => {
+    // Remove non-numeric characters
+    const numericValue = e.target.value.replace(/[^0-9]/g, "");
+    const formattedValue = formatCurrency(numericValue);
+    setValue(formattedValue);
+  };
+
   // ckd
 
   // const [editorData, setEditorData] = useState(""); // State to hold raw editor content
@@ -624,7 +643,7 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="currency_code"
-                            label="Salary Range"
+                            label="Salary Currency"
                             placeholder="Currency"
                             variant="h-[40px] w-full sm:w-40"
                             defaultValue=""
@@ -646,6 +665,35 @@ const JobPosting = () => {
                               label="Min"
                               placeholder="Enter your Minimum Currency"
                               variant="h-[40px] w-full"
+                              type="text"
+                              onChange={(e) =>
+                                handleCurrencyChange(e, (value) =>
+                                  methods.setValue("salary_min", value)
+                                )
+                              }
+                            />
+                            <CustomFormField
+                              fieldType={FormFieldType.INPUT}
+                              control={methods.control}
+                              name="salary_max"
+                              label="Max"
+                              placeholder="Enter your Maximum Currency"
+                              variant="h-[40px] w-full"
+                              type="text"
+                              onChange={(e) =>
+                                handleCurrencyChange(e, (value) =>
+                                  methods.setValue("salary_max", value)
+                                )
+                              }
+                            />
+                            {/* old without comma  */}
+                            {/* <CustomFormField
+                              fieldType={FormFieldType.INPUT}
+                              control={methods.control}
+                              name="salary_min"
+                              label="Min"
+                              placeholder="Enter your Minimum Currency"
+                              variant="h-[40px] w-full"
                               type="number"
                             />
                             <CustomFormField
@@ -656,7 +704,7 @@ const JobPosting = () => {
                               placeholder="Enter your Maximum Currency"
                               variant="h-[40px] w-full"
                               type="number"
-                            />
+                            /> */}
                           </div>
 
                           <CustomFormField
@@ -668,7 +716,7 @@ const JobPosting = () => {
                             variant="h-[40px] w-full sm:w-40"
                             defaultValue=""
                           >
-                            {["Yearly",  "Quarterly",  "Monthly",].map(
+                            {["Yearly", "Quarterly", "Monthly"].map(
                               (rate, index) => (
                                 <SelectItem
                                   key={`${rate}-${index}`}
@@ -939,7 +987,7 @@ const JobPosting = () => {
               <Jobbox
                 title={formData.job_title || "Untitled"}
                 variant="mb-4 text-[26px] capitalize"
-                onEdit={() => setCurrentView("currentTab")}
+                onEdit={() => setCurrentView("createJob")}
                 // <Pencil />
               />
               <div className="flex gap-5">
@@ -957,10 +1005,12 @@ const JobPosting = () => {
                 />
                 <PreviewCard
                   imgUrl={Amount}
-                  text={`${formData.salary_min || "N/A"} - ${formData.salary_max || "N/A"} ${formData.currency_code || ""}  ${formData.rate || ""}`}
+                  text={`${formData.salary_min || "N/A"} - ${
+                    formData.salary_max || "N/A"
+                  } ${formData.currency_code || ""}  ${formData.rate || ""}`}
                   onEdit={() => {
                     setCurrentTab("details");
-                    setCurrentView("editJob")
+                    setCurrentView("editJob");
                   }}
                 />
               </div>
@@ -977,10 +1027,8 @@ const JobPosting = () => {
                   title="Job Description"
                   description={formData.jobDescription || "Not Specified"}
                   onEdit={() => {
-                    setCurrentTab("details");
-                    setCurrentTab("jjjjjjjjj")
-                    setCurrentView("editJob")
-                    setCurrentTab("specification")
+                    setCurrentTab("specification");
+                    setCurrentView("editJob");
                   }}
                 />
               </div>
@@ -989,7 +1037,10 @@ const JobPosting = () => {
                 <JobDescription
                   title="Qualifications"
                   description={formData.requiredSkills || "Not Specified"}
-                  onEdit={() => setCurrentView("editJob")}
+                  onEdit={() => {
+                    setCurrentTab("specification");
+                    setCurrentView("editJob");
+                  }}
                 />
               </div>
 
@@ -997,7 +1048,10 @@ const JobPosting = () => {
                 <JobDescription
                   title="What We Offer"
                   description={formData.benefits || "Not Specified"}
-                  onEdit={() => setCurrentView("editJob")}
+                  onEdit={() => {
+                    setCurrentTab("benefit");
+                    setCurrentView("editJob");
+                  }}
                 />
               </div>
             </div>

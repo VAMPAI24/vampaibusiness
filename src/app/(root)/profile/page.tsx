@@ -29,14 +29,6 @@ const Profile = () => {
 
 
 
-
-    console.log("userInfo", userInfo)
-
-
-
- 
-
-
   useEffect(() => {
     const storedToken = Cookies.get("token");
     if (storedToken) {
@@ -44,28 +36,21 @@ const Profile = () => {
     }
   }, []);
 
-
-
- 
-
-
-  // const [imageFile, setImageFile] = useState();
-
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
       first_name: "",
       last_name: "",
-      Position_in_company: "",
+      position_in_company: "",
       work_email: "",
       phone_Number: "",
       country: "",
       company_name: "",
       company_website: "",
-      No_Employees: "",
+      no_employees: "",
       industry: "",
       company_bio: "",
-      company_logo: null
+      file: null
     },
   });
 
@@ -76,7 +61,7 @@ const Profile = () => {
       setValue("first_name", userInfo?.data?.first_name || "");
       setValue("last_name", userInfo?.data?.last_name || "");
       setValue(
-        "Position_in_company",
+        "position_in_company",
         userInfo?.data?.Position_in_company || ""
       );
       setValue("work_email", userInfo?.data?.work_email || "");
@@ -84,45 +69,52 @@ const Profile = () => {
       setValue("country", userInfo?.data?.country || "");
       setValue("company_name", userInfo?.data?.company_name || "");
       setValue("company_website", userInfo?.data?.company_website || "");
-      setValue("No_Employees", userInfo?.data?.No_Employees || "");
+      setValue("no_employees", userInfo?.data?.No_Employees || "");
       setValue("industry", userInfo?.data?.industry || "");
       setValue("company_bio", userInfo?.data?.company_bio || "");
-      // setFilePath(userInfo?.data?.company_logo || null);
+      if (userInfo?.data?.company_logo) {
+        setImage(userInfo.data.company_logo);
+      }
     }
   }, [userInfo, setValue]);
 
 
 
-
-  // image on profile page 
   const [image, setImage] = useState<string | null>(null);
-
-
-
-  console.log(image)
-
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    // setImageFile(file)
-   
     if (file) {
-      const imageUrl = URL.createObjectURL(file); 
-      setImage(imageUrl); 
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      setImageFile(file);
     }
   };
 
-
   const handleClick = () => {
-    document.getElementById("fileInput")?.click(); 
+    document.getElementById("fileInput")?.click();
   };
-
-
-
 
   const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
     try {
-      await updateProfile(values).unwrap();
+      const formData = new FormData();
+      formData.append("first_name", values.first_name);
+      formData.append("last_name", values.last_name);
+      formData.append("position_in_company", values.position_in_company);
+      formData.append("work_email", values.work_email);
+      formData.append("phone_Number", values.phone_Number);
+      formData.append("country", values.country);
+      formData.append("company_name", values.company_name);
+      formData.append("company_website", values.company_website);
+      formData.append("no_employees", values.no_employees || "");
+      formData.append("industry", values.industry);
+      formData.append("company_bio", values.company_bio);
+      if (imageFile) {
+        formData.append("file", imageFile);
+      }
+     
+      await updateProfile(formData).unwrap();
       await refetch();
       setTimeout(() => {
         router.push("/dashboard");
@@ -136,60 +128,50 @@ const Profile = () => {
     <section className="hide-scrollbar">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-       
-
-            <div className="bg-white rounded-md p-4  flex items-center justify-between w-full">
-              <div
-                className="flex items-center space-x-4 cursor-pointer"
-                onClick={handleClick}
-              >
-                {/* Hidden File Input */}
-                <input
-                  type="file"
-                  id="fileInput"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handleImageChange}
-                />
-
-                {/* Logo Placeholder or Uploaded Image */}
-                <div className="h-14 w-14 bg-blue-50 flex items-center justify-center rounded-md overflow-hidden">
-                  {image ? (
-                    // Display uploaded image
-                    <Image
-                      src={image}
-                      alt="Uploaded Logo"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    // Default "V" placeholder
-                    <span className="text-lg font-semibold text-blue-800">
-                      V
-                    </span>
-                  )}
-                </div>
-
-                {/* Description */}
-                <div>
-                  <h1 className="text-lg font-semibold text-gray-900">
-                    Company&apos;s Logo
-                  </h1>
-                  <p className="text-sm text-gray-500">
-                    Upload your company logo to help build brand recognition
-                  </p>
-                </div>
+          <div className="bg-white rounded-md p-4 flex items-center justify-between w-full">
+            <div
+              className="flex items-center space-x-4 cursor-pointer"
+              onClick={handleClick}
+            >
+              <input
+                type="file"
+                id="fileInput"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
+              <div className="h-14 w-14 bg-blue-50 flex items-center justify-center rounded-md overflow-hidden">
+                {image ? (
+                  <Image
+                    src={image}
+                    alt="Uploaded Logo"
+                    width={50}
+                    height={50}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-lg font-semibold text-blue-800">
+                    V
+                  </span>
+                )}
               </div>
-
-              {/* Edit Link */}
-              <a
-                href="#"
-                onClick={handleClick}
-                className="text-sm text-blue-500 font-medium hover:underline cursor-pointer"
-              >
-                Edit
-              </a>
+              <div>
+                <h1 className="text-[#001633] font-rubik text-lg font-medium">
+                  Company&apos;s Logo
+                </h1>
+                <p className=" text-main-901 text-[14px] font-jakarta'">
+                  Upload your company logo to help build brand recognition
+                </p>
+              </div>
             </div>
-         
+            <a
+              href="#"
+              onClick={handleClick}
+              className="text-sm text-blue-500 font-medium hover:underline cursor-pointer"
+            >
+              Edit
+            </a>
+          </div>
 
           <div className="bg-white px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 lg:gap-10">
             <ProfileBox
@@ -219,7 +201,7 @@ const Profile = () => {
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
                   control={form.control}
-                  name="Position_in_company"
+                  name="position_in_company"
                   label="Position in Company"
                   placeholder="Enter Position in Company"
                   variant="h-[40px] w-full"
@@ -274,11 +256,11 @@ const Profile = () => {
                 <CustomFormField
                   fieldType={FormFieldType.SELECT}
                   control={control}
-                  name="No_Employees"
+                  name="no_employees"
                   label="Number of Employees"
                   placeholder="Enter the Number of Employees"
                   variant="h-[40px] w-full"
-                  defaultValue={userInfo?.data?.No_Employees || ""}
+                  defaultValue={userInfo?.data?.no_employees || ""}
                 >
                   {numberOfEmployees.map((employ, index) => (
                     <SelectItem key={`${employ}-${index}`} value={employ}>
@@ -291,7 +273,7 @@ const Profile = () => {
                   fieldType={FormFieldType.SELECT}
                   control={control}
                   name="industry"
-                  label="industry"
+                  label="Industry"
                   placeholder="Enter your industry"
                   variant="h-[40px] w-full"
                   defaultValue={userInfo?.data?.industry || ""}
@@ -346,6 +328,10 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
+
+
 
 
 
