@@ -42,7 +42,7 @@ const NavProfile = () => {
             {userData?.data?.last_name}
           </p>
         </div>
-        <p className="text-main-900 font-jakarta text-xs">
+        <p className="text-main-900 font-jakarta font-semibold text-xs">
           {userData?.data?.work_email}
         </p>
       </div>

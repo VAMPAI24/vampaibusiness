@@ -2,10 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Users,
- 
-} from "lucide-react";
+import { Users } from "lucide-react";
 import OverviewCard from "@/components/jobboard/OverviewCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Jobbox from "@/components/jobboard/Jobbox";
@@ -18,10 +15,7 @@ import JobDescription from "@/components/jobboard/JobDescription";
 import Image from "next/image";
 import ShorlistedImg from "@/public/svgs/Jobs/shortlistedImg.svg";
 import ShorlistedColun from "@/public/svgs/Jobs/shortlistedcolumn.svg";
-import {
-  Evaluation,
-  Offer,
-} from "@/constants";
+import { Evaluation, Offer } from "@/constants";
 import {
   useGetByJobsIdQuery,
   useGetJobApplicationsQuery,
@@ -38,6 +32,7 @@ import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
 import ApplicantRankingDetails from "@/components/jobboard/ApplicantRankingDetails";
 import { BallsLoader } from "@/components/ui/BallsLoader";
 import { Empty } from "@/components/ui/empty";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
@@ -73,16 +68,11 @@ const JobPostingDetails = () => {
     { skip: tab !== "Shortlisted" }
   );
 
-
-
-
-
   // shortlisted tab rejected
   const { data: rejectedData } = useGetShortlistedCandidateQuery(
     { id, status: "Rejected" },
     { skip: tab !== "Shortlisted" }
   );
-
 
   // shortlisted tab interviewed
   // const { data: interviewedData, isLoading: loadingInterviewed } =
@@ -104,9 +94,6 @@ const JobPostingDetails = () => {
     refetch: candidateRefetch,
   } = useGetJobApplicationsQuery(id, { skip: tab !== "applications_0" });
 
-
-
-
   // Application tab Ranked Candidate
 
   const {
@@ -124,15 +111,11 @@ const JobPostingDetails = () => {
     setOpenApplicationDrawer(true);
   };
 
-
-
-  
+ 
 
   if (loadingJobDetails) {
     return <JobDetailsSkeleton />;
   }
-
-
 
   return (
     <div className="w-full">
@@ -502,8 +485,6 @@ const JobPostingDetails = () => {
                   <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
                     {shortlistedData?.data?.result?.length} Candidates
                   </span>
-
-
                 </div>
 
                 {/* Candidate Cards */}
@@ -512,16 +493,18 @@ const JobPostingDetails = () => {
                     shortlistedData.data.result.map((candidate: any) => (
                       <div
                         key={candidate.id} // Use unique key for each candidate
-                        className="flex items-start bg-white p-4 rounded-md shadow-sm border hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                        className="flex  gap-2 items-start bg-white p-4 rounded-md shadow-sm border hover:shadow-md transition-shadow duration-200 cursor-pointer"
                         onClick={() => handleShortListedCardClick(candidate)}
                       >
-                        <Image
-                          src={candidate?.profile_picture}
-                          alt="card-image"
-                          width={50}
-                          height={50}
-                          className="w-12 h-12 rounded-full object-cover mr-4"
-                        />
+                        <Avatar>
+                          <AvatarImage src={candidate?.profile_picture} />
+                          <AvatarFallback>
+                            {candidate.applicant_first_name?.[0] &&
+                            candidate.applicant_last_name?.[0]
+                              ? `${candidate.applicant_first_name?.[0]}${candidate.applicant_last_name?.[0]}`.toUpperCase()
+                              : "NA"}
+                          </AvatarFallback>
+                        </Avatar>
 
                         {/* Candidate Information */}
                         <div className="flex-1">
@@ -554,14 +537,12 @@ const JobPostingDetails = () => {
                 </div>
               </div>
 
-
-
               {/* Rejected Candidate  */}
               <div className=" w-full sm:w-[375px] h-full bg-[#F2F6FB]  p-4 rounded-lg">
                 {/* Header */}
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-red-500 rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">
-                  Rejected
+                    Rejected
                   </h1>
                   <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
                     {rejectedData?.data?.result?.length} Candidates
@@ -574,16 +555,18 @@ const JobPostingDetails = () => {
                     rejectedData?.data?.result?.map((candidate: any) => (
                       <div
                         key={candidate.id} // Use unique key for each candidate
-                        className="flex items-start bg-white p-4 rounded-md shadow-sm border hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                        className="flex  gap-2 items-start bg-white p-4 rounded-md shadow-sm border hover:shadow-md transition-shadow duration-200 cursor-pointer"
                         onClick={() => handleShortListedCardClick(candidate)}
                       >
-                        <Image
-                          src={candidate?.profile_picture}
-                          alt="card-image"
-                          width={50}
-                          height={50}
-                          className="w-12 h-12 rounded-full object-cover mr-4"
-                        />
+                        <Avatar>
+                          <AvatarImage src={candidate?.profile_picture} />
+                          <AvatarFallback>
+                            {candidate.applicant_first_name?.[0] &&
+                            candidate.applicant_last_name?.[0]
+                              ? `${candidate.applicant_first_name?.[0]}${candidate.applicant_last_name?.[0]}`.toUpperCase()
+                              : "NA"}
+                          </AvatarFallback>
+                        </Avatar>
 
                         {/* Candidate Information */}
                         <div className="flex-1">
@@ -621,7 +604,7 @@ const JobPostingDetails = () => {
                 {/* Header */}
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-purple-500 rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">
-                  Assessment
+                    Assessment
                   </h1>
                   <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
                     {Evaluation.length} Candidates

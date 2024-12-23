@@ -8,9 +8,10 @@ import PdfImage from "@/public/svgs/Jobs/pdf.svg";
 import { openExternalLink } from "@/lib/utils";
 import moment from "moment";
 import { TitleRoundedList } from "../ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const boxClass =
-  "w-full bg-white  h-fit px-[2em]  py-[1.5em] rounded-[10px] border-[.5px] border-sec-200 ";
+  "w-full bg-white  h-fit px-[2em]  py-[1.5em] rounded-[10px] border border-blue-200 mt-10";
 
 const headerClass = "text-[1.5em] text-main-900 font-[400] font-rubik ";
 
@@ -42,6 +43,10 @@ const ApplicantRankingDetails = ({
 }: ApplicantRankingDetailsProps) => {
   const { data } = useGetApplicationDetailsQuery(candidate?.id);
 
+
+
+
+ 
   // Pdf name
   const pdfUrl = data?.data?.cv_file;
   const pdfName = pdfUrl ? pdfUrl.split("/").pop() : "";
@@ -56,25 +61,19 @@ const ApplicantRankingDetails = ({
     >
       <div className="flex-1 px-8 overflow-auto h-screen hide-scrollbar">
         <div className="flex items-center gap-3 mb-4 mt-10">
-          {/* <Image
-            src={data?.data?.profile?.profile_picture}
-            alt="nnnnnnn"
-            width={50}
-            height={50}
-            className="rounded-full"
-          /> */}
-
-          <div className="w-[6em] h-[6em] rounded-full overflow-hidden bg-main-100">
-            <Image
-              src={data?.data?.profile?.profile_picture}
-              alt="User Avatar"
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
+          <div className="rounded-full overflow-hidden bg-main-100">
+            <Avatar className="w-20 h-20">
+              <AvatarImage src={data?.data?.profile?.profile_picture} />
+              <AvatarFallback>
+                {data?.data?.applicant_first_name?.[0] &&
+                data?.data?.applicant_last_name?.[0]
+                  ? `${data?.data?.applicant_first_name[0]}${data?.data?.applicant_last_name[0]}`.toUpperCase()
+                  : "NA"}
+              </AvatarFallback>
+            </Avatar>
           </div>
           <h2 className="text-[1.5em] 2xl:text-[2em]  font-[600] text-main-901 capitalize">
-            {data?.first_name} {data?.last_name}
+            {data?.data?.applicant_first_name} {data?.data?.applicant_last_name}
           </h2>
         </div>
         <hr className="border-[#D2E4FF]" />
@@ -117,7 +116,7 @@ const ApplicantRankingDetails = ({
             ))}
           </div>
         </div>
-        <div className="border border-blue-200 rounded-md p-4 mt-6">
+        <div className="border border-blue-200 rounded-md p-4 mt-6 mb-4">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Top skills
           </h3>
@@ -205,7 +204,7 @@ const ApplicantRankingDetails = ({
         </div>
 
         {/* projects */}
-        <div className="border border-gray-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6">
+        <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6">
           {/* Header */}
           <h2 className="text-xl font-semibold text-gray-900 mb-6">Projects</h2>
 
@@ -245,19 +244,19 @@ const ApplicantRankingDetails = ({
         </div>
 
         {/* attached document */}
-        <div className="border border-gray-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6 mb-10">
+        <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6 mb-10">
           {/* Header */}
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Attached Document
           </h2>
 
           {/* Document Card */}
-          <div className="flex items-center border border-gray-200 rounded-lg p-4 shadow-sm bg-white">
+          <div className="flex items-center border border-blue-200 rounded-lg p-4 shadow-sm bg-white">
             {/* PDF Icon */}
             <div className="flex-shrink-0 w-10 h-10">
               <Image
                 // src={data?.data?.cv_file} // Replace with a proper icon if available
-                src={PdfImage} // Replace with a proper icon if available
+                src={PdfImage} 
                 alt="PDF Icon"
                 width={40}
                 height={40}
