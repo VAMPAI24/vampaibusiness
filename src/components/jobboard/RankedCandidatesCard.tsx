@@ -7,6 +7,7 @@ import {
 } from "@/redux/features/job-posting/jobpostingApi";
 
 import { formatAndTransformString } from "@/lib/utils";
+import ScoreGauge from "../common/ScoreGauge";
 const RankedCandidatesCard = ({
   candidateId,
   applicantName,
@@ -45,6 +46,9 @@ const RankedCandidatesCard = ({
     }
   };
 
+
+
+
   return (
     <div className="bg-[#F9FAFB] border border-main-200 rounded-lg  w-full cursor-pointer">
       <div className="p-6 flex items-start justify-between">
@@ -57,11 +61,14 @@ const RankedCandidatesCard = ({
               <p className="text-sm text-gray-600">{applicantEmail}</p>
             </div>
             <div className="ml-auto flex items-center">
-              <p className="border-2 p-2 rounded-full border-main-600">
+              {/* <p className="border-2 p-2 rounded-full border-main-600">
                 {overallScore && !isNaN(Number(overallScore))
                   ? `${(Number(overallScore) * 100).toFixed(2)}%`
                   : "N/A"}
-              </p>
+              </p> */}
+
+            <ScoreGauge overallScore={overallScore ? Number(overallScore) : null} />
+        
             </div>
 
             <p onClick={clickFn} className="text-[.75em] font-[400] text-main-700 ">See Profile</p>
