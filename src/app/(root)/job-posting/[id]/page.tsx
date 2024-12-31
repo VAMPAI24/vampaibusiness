@@ -251,7 +251,7 @@ const JobPostingDetails = () => {
                 <>
                   {loadCandidates ? (
                     <div className="w-full  flex items-center justify-center">
-                      <div className="w-fit flex flex-col items-center gap-[.5em]">
+                      <div className="w-fit mt-10 lg:mt-0 flex flex-col items-center gap-[.5em]">
                         <BallsLoader />
                         <p className="text-[.875em] text-main-900 text-center">
                           Loading Candidates...

@@ -31,17 +31,18 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
+  const [tabToFetch, setTabToFetch] = useState("active")
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
 
 
 // Active JoB
 const { data: activeJobs, isLoading: activeJobsLoader, refetch: activeRefetch } =
-  useGetActiveJobsQuery(token, { pollingInterval: 1000 }); 
+  useGetActiveJobsQuery(token, {skip: tabToFetch !== "active"}); 
 
 // Draft Jobs
 const { data: draftJobs, isLoading: draftJobsLoader, refetch: draftRefectch } =
-  useGetDraftJobsQuery(token, { pollingInterval: 1000 }); 
+  useGetDraftJobsQuery(token, { skip: tabToFetch !== "Drafts" }); 
 
 const handleNavigation = (id: string) => {
   router.push(`/job-posting/${id}`);
@@ -49,12 +50,14 @@ const handleNavigation = (id: string) => {
 
 useEffect(() => {
   activeRefetch();
-  draftRefectch();
+  if (tabToFetch === "Drafts" && draftRefectch) {
+    draftRefectch();
+  }
   const storedToken = Cookies.get("token");
   if (storedToken) {
     setToken(storedToken);
   }
-}, [activeRefetch, draftRefectch]);
+}, [activeRefetch, tabToFetch, draftRefectch]);
 
   
 
@@ -111,6 +114,7 @@ useEffect(() => {
           <TabsTrigger
             value="active"
             className="rounded relative pb-3 transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
+            onClick={() => setTabToFetch("active")}
           >
             Active
           </TabsTrigger>
@@ -123,6 +127,7 @@ useEffect(() => {
           <TabsTrigger
             value="Drafts"
             className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
+            onClick={() => setTabToFetch("Drafts")}
           >
             Drafts
           </TabsTrigger>

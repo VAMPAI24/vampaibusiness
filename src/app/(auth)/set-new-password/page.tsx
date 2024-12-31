@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Logo from "@/public/svgs/auth/vamp-logo.svg";
 import TextBox from "@/components/auth/TextBox";
-import React, { useState, useEffect } from "react";
+import React, { Suspense, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,7 +14,9 @@ import { Eye, EyeOff } from "lucide-react";
 import CustomInput from "@/components/shared/inputs/CustomInput";
 import { useResetPasswordMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "@/components/shared/SubmitButton";
-import Cookies from "js-cookie";
+import { useSearchParams } from "next/navigation";
+
+
 
 
 const SetNewPassword = () => {
@@ -23,7 +25,9 @@ const SetNewPassword = () => {
   const [showPasswordTwo, setShowPasswordTwo] = useState<boolean>(false);
   const [reset, setReset] = useState<boolean>(false);
   const [ResetPassword, { isLoading }] = useResetPasswordMutation();
-  const [token, setToken] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+ 
 
   const form = useForm<z.infer<typeof SetNewPasswordSchema>>({
     resolver: zodResolver(SetNewPasswordSchema),
@@ -34,15 +38,6 @@ const SetNewPassword = () => {
   });
 
  
-
-
-
-  useEffect(() => {
-    const storedToken = Cookies.get("token"); 
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
 
   const onSubmit = async (values: z.infer<typeof SetNewPasswordSchema>) => {
     const data = {
@@ -180,4 +175,13 @@ const SetNewPassword = () => {
   }
 };
 
-export default SetNewPassword;
+
+
+const SetNewPasswordPageWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <SetNewPassword />
+  </Suspense>
+);
+
+export default SetNewPasswordPageWithSuspense;
+

@@ -22,8 +22,7 @@ const Dashboard = () => {
     }
   }, []);
 
-  const { data: percentageCount } =
-    useGetProfilePercentageCountQuery(token);
+  const { data: percentageCount } = useGetProfilePercentageCountQuery(token);
 
 
   return (
@@ -44,10 +43,11 @@ const Dashboard = () => {
       >
         <div className="flex justify-between">
           <Image src={Profile} alt="profile" width={35} height={30} />
-          {/* <Image src={Percentage} alt="profile" width={45} height={45} /> */}
+          
 
           <CircularProgress
             value={percentageCount?.data?.percentageCompletion}
+           
             size={80}
             strokeWidth={10}
           />
