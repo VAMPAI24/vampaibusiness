@@ -125,7 +125,9 @@ const JobPosting = () => {
     }
   }, []);
 
-  const { data: userInfo } = useGetSingleEmployerQuery(token);
+  const { data: userInfo } = useGetSingleEmployerQuery(token, { skip: currentView !== "jobPreview" });
+
+
   const [postActiveJob, { isLoading: postLoading }] =
     usePostActiveJobMutation();
   const [saveJobToDraft, { isLoading: draftLoading }] =
@@ -319,14 +321,16 @@ const JobPosting = () => {
   };
 
   // Handle Required Skill
-
   const [requiredSkill, { data: skillData, isLoading: loadingSkill }] =
     useRequiredSkillMutation();
 
-  /**  useCallback is used to memoize the fetchSkill function so that it doesn't get recreated on every render unless its dependencies (jobTitle and requiredSkill) change.
-   If jobTitle or requiredSkill changes, the function will be redefined, ensuring that the most recent values are used when calling fetchSkill. **/
-
+  /**
+   * Memoized function to fetch skills based on jobTitle.
+   * It only gets recreated if jobTitle or requiredSkill changes.
+   **/
   const fetchSkill = useCallback(async () => {
+    if (!jobTitle) return; 
+
     const payload = { job_title: jobTitle };
 
     try {
@@ -337,8 +341,10 @@ const JobPosting = () => {
   }, [jobTitle, requiredSkill]);
 
   useEffect(() => {
-    fetchSkill();
-  }, [fetchSkill]);
+    if (currentTab === "specification" && jobTitle) {
+      fetchSkill(); 
+    }
+  }, [currentTab, jobTitle, fetchSkill]);
 
   const skills = Array.isArray(skillData?.data) ? skillData.data : [];
 
@@ -398,15 +404,11 @@ const JobPosting = () => {
     }
   };
 
-
-
-
   // formater for comma to show after typing amount
   const formatCurrency = (value: string) => {
     return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  
   const handleCurrencyChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setValue: (value: string) => void

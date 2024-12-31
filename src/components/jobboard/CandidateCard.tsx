@@ -48,7 +48,7 @@ const CandidateCard = ({
   return (
     <div
       key={id}
-      className="w-full lg:w-[90%] border border-main-200 rounded-xl bg-[#F9FAFB] cursor-pointer shadow-sm"
+      className="w-full  border border-main-200 rounded-xl bg-[#F9FAFB] cursor-pointer shadow-sm"
     >
       <div className="p-6 flex w-full items-start justify-between">
         <div className="w-full">
@@ -95,8 +95,7 @@ const CandidateCard = ({
           )}
         </div>
 
-        {/* Profile Link */}
-        {/* <p className="text-sm text-main-700 self-center">See Profile</p> */}
+      
       </div>
 
       {/* Buttons */}
