@@ -8,9 +8,11 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMultiply, faBars } from "@fortawesome/free-solid-svg-icons";
 import { openExternalLink } from "@/lib/utils";
+import { useRouter  } from 'next/navigation'
 
 
 const Navbar = () => {
+  const router = useRouter()
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -36,15 +38,16 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Buttons */}
-        <div className="lg:flex items-center justify-center -mt-4">
+        <div className="lg:flex items-center justify-center -mt-4 gap-4">
           <Button
             text="Login"
-            variant=" hidden text-white rounded-lg w-[150px] mt-4"
+            variant=" hidden lg:flex text-white border rounded-lg w-[150px] mt-4"
+            clickFn={() =>  router.push("/sign-in")}
           />
           <Button
             text="For Talent"
             variant="bg-main-600 hidden lg:flex text-white rounded-lg w-[150px] mt-4"
-            clickFn={() => openExternalLink("https://www.usevampai.com")}
+            clickFn={() => openExternalLink("https://talent.usevampai.com")}
           />
         </div>
 
@@ -80,7 +83,8 @@ const Navbar = () => {
               <div className="flex items-start justify-start gap-4 mt-4">
                 <Button
                   text="Login"
-                  variant="text-black hidden border rounded-lg w-[150px] mt-4"
+                  variant="text-black border rounded-lg w-[150px] mt-4"
+                  clickFn={() =>  router.push("/sign-in")}
                 />
                 <Button
                   text="For Talent"
