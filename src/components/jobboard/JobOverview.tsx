@@ -49,7 +49,9 @@ const handleNavigation = (id: string) => {
 };
 
 useEffect(() => {
-  activeRefetch();
+  if (tabToFetch === "active" && activeRefetch) {
+    activeRefetch();
+  }
   if (tabToFetch === "Drafts" && draftRefectch) {
     draftRefectch();
   }
