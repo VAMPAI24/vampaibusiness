@@ -55,6 +55,7 @@ const EventModalContent = ({
     try {
       await createEvent(payload).unwrap();
       onClose();
+      window.location.href = "/scheduleinterview";
     } catch (error) {
       console.error(error);
     }
@@ -116,14 +117,14 @@ const EventModalContent = ({
               ))}
             </CustomFormField>
 
-            <div className="!w-full flex items-start flex-col gap-[1em]">
+           
               <CustomFormField
                 fieldType={FormFieldType.INPUT}
                 control={control}
                 name="attendees"
                 label="Attendees"
                 placeholder="e.g email 1, email 2, email 3 ..."
-                variant="h-[40px] !w-full"
+                variant="h-[40px] w-full"
               />
 
               <div className="w-full flex flex-wrap gap-[.5em] ">
@@ -148,7 +149,7 @@ const EventModalContent = ({
                   noCenter={true}
                 />
               </div>
-            </div>
+            
 
             <div className="flex justify-end gap-2">
               <SubmitButton

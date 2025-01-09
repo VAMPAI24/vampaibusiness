@@ -2,14 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  User,
-  Users,
-  UserCheck,
-  CalendarDays,
-  Handshake,
-  LampDesk,
-} from "lucide-react";
+import { Users } from "lucide-react";
 import OverviewCard from "@/components/jobboard/OverviewCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Jobbox from "@/components/jobboard/Jobbox";
@@ -22,13 +15,7 @@ import JobDescription from "@/components/jobboard/JobDescription";
 import Image from "next/image";
 import ShorlistedImg from "@/public/svgs/Jobs/shortlistedImg.svg";
 import ShorlistedColun from "@/public/svgs/Jobs/shortlistedcolumn.svg";
-import {
-  // Interviewed,
-  // candidatesShorlist,
-  Evaluation,
-  Offer,
-  // Hired,
-} from "@/constants";
+import { Evaluation, Offer } from "@/constants";
 import {
   useGetByJobsIdQuery,
   useGetJobApplicationsQuery,
@@ -45,6 +32,7 @@ import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
 import ApplicantRankingDetails from "@/components/jobboard/ApplicantRankingDetails";
 import { BallsLoader } from "@/components/ui/BallsLoader";
 import { Empty } from "@/components/ui/empty";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
@@ -80,6 +68,12 @@ const JobPostingDetails = () => {
     { skip: tab !== "Shortlisted" }
   );
 
+  // shortlisted tab rejected
+  const { data: rejectedData } = useGetShortlistedCandidateQuery(
+    { id, status: "Rejected" },
+    { skip: tab !== "Shortlisted" }
+  );
+
   // shortlisted tab interviewed
   // const { data: interviewedData, isLoading: loadingInterviewed } =
   //   useGetShortlistedCandidateQuery({id, status:"Interviewed"}, {skip: tab !=="Shortlisted"});
@@ -93,12 +87,14 @@ const JobPostingDetails = () => {
     setIsOpen(true);
   };
 
-  // Application tab all Candidate
+  // Application tab All Candidate
   const {
     data: candidateData,
     isLoading: loadCandidates,
     refetch: candidateRefetch,
   } = useGetJobApplicationsQuery(id, { skip: tab !== "applications_0" });
+
+  // Application tab Ranked Candidate
 
   const {
     data: rankedCandidate,
@@ -115,23 +111,11 @@ const JobPostingDetails = () => {
     setOpenApplicationDrawer(true);
   };
 
-  // const isLoading =
-  //   loadingJobDetails ||
-  //   loadingShortlisted ||
-  //   loadingApplied ||
-  //   loadingInterviewed ||
-  //   loadinranked;
-
-  // const handleShortListedCardClick = (candidate: any) => {
-  //   setSelectedCandidate(candidate);
-  //   setIsOpen(true);
-  // };
+ 
 
   if (loadingJobDetails) {
     return <JobDetailsSkeleton />;
   }
-
-  // console.log("candidateData", candidateData);
 
   return (
     <div className="w-full">
@@ -266,8 +250,8 @@ const JobPostingDetails = () => {
               <TabsContent value="all">
                 <>
                   {loadCandidates ? (
-                    <div className="w-full min-h-screen h-screen max-h-screen flex items-center justify-center">
-                      <div className="w-fit flex flex-col items-center gap-[.5em]">
+                    <div className="w-full  flex items-center justify-center">
+                      <div className="w-fit mt-10 lg:mt-0 flex flex-col items-center gap-[.5em]">
                         <BallsLoader />
                         <p className="text-[.875em] text-main-900 text-center">
                           Loading Candidates...
@@ -322,7 +306,7 @@ const JobPostingDetails = () => {
               <TabsContent value="Ranked">
                 <>
                   {loadRanked ? (
-                    <div className="w-full min-h-screen h-screen max-h-screen flex items-center justify-center">
+                    <div className="w-full flex items-center justify-center">
                       <div className="w-fit flex flex-col items-center gap-[.5em]">
                         <BallsLoader />
                         <p className="text-[.875em] text-main-900 text-center">
@@ -389,17 +373,24 @@ const JobPostingDetails = () => {
           <div className="mt-5 p-4">
             <div className="flex flex-nowrap gap-5 mb-5 overflow-x-auto hide-scrollbar">
               <OverviewCard
+                title="Shortlisted Candidate"
+                count={shortlistedData?.data?.count}
+                icon={<Users className="text-main-901" size={20} />}
+                className="flex-shrink-0 hover:bg-main-600 hover:text-white"
+              />
+              <OverviewCard
+                title="Rejected Candidate"
+                count={rejectedData?.data?.count}
+                icon={<Users className="text-main-901" size={20} />}
+                className="flex-shrink-0 hover:bg-main-600 hover:text-white"
+              />
+              {/* <OverviewCard
                 title="Total Candidate"
                 count={14}
                 icon={<User className="text-main-901" size={20} />}
                 className="flex-shrink-0 hover:bg-main-600 hover:text-white"
               />
-              <OverviewCard
-                title="Shortlisted Candidate"
-                count={3}
-                icon={<Users className="text-main-901" size={20} />}
-                className="flex-shrink-0 hover:bg-main-600 hover:text-white"
-              />
+              
               <OverviewCard
                 title="Interviewed Candidate"
                 count={5}
@@ -423,7 +414,7 @@ const JobPostingDetails = () => {
                 count={5}
                 icon={<LampDesk className="text-main-901" size={20} />}
                 className="flex-shrink-0 hover:bg-main-600 hover:text-white"
-              />
+              /> */}
             </div>
 
             {/* Applied Candidate Sections */}
@@ -490,31 +481,34 @@ const JobPostingDetails = () => {
                   <h1 className="text-white font-semibold  text-lg">
                     Shortlisted
                   </h1>
-                  <span className="bg-white text-gray-700 font-medium px-3 rounded text-sm">
-                    {shortlistedData?.data?.application?.length} Candidates
+
+                  <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
+                    {shortlistedData?.data?.result?.length} Candidates
                   </span>
                 </div>
 
                 {/* Candidate Cards */}
                 <div className="space-y-4">
-                  {shortlistedData?.data?.application?.length > 0 ? (
-                    shortlistedData.data.application.map((candidate: any) => (
+                  {shortlistedData?.data?.result?.length > 0 ? (
+                    shortlistedData.data.result.map((candidate: any) => (
                       <div
                         key={candidate.id} // Use unique key for each candidate
-                        className="flex items-start bg-white p-4 rounded-md shadow-sm border hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                        className="flex  gap-2 items-start bg-white p-4 rounded-md shadow-sm border hover:shadow-md transition-shadow duration-200 cursor-pointer"
                         onClick={() => handleShortListedCardClick(candidate)}
                       >
-                        <Image
-                          src={ShorlistedImg}
-                          alt="card-image"
-                          width={50}
-                          height={50}
-                          className="w-12 h-12 rounded-full object-cover mr-4"
-                        />
+                        <Avatar>
+                          <AvatarImage src={candidate?.profile_picture} />
+                          <AvatarFallback>
+                            {candidate.applicant_first_name?.[0] &&
+                            candidate.applicant_last_name?.[0]
+                              ? `${candidate.applicant_first_name?.[0]}${candidate.applicant_last_name?.[0]}`.toUpperCase()
+                              : "NA"}
+                          </AvatarFallback>
+                        </Avatar>
 
                         {/* Candidate Information */}
                         <div className="flex-1">
-                          <div className="flex gap-2">
+                          <div className="flex flex-col lg:flex-row lg:gap-2 break-words">
                             <h2 className="text-gray-900 font-semibold text-lg">
                               {candidate.applicant_first_name}{" "}
                               {/* First name */}
@@ -543,14 +537,76 @@ const JobPostingDetails = () => {
                 </div>
               </div>
 
-              {/* three  evalution */}
+              {/* Rejected Candidate  */}
+              <div className=" w-full sm:w-[375px] h-full bg-[#F2F6FB]  p-4 rounded-lg">
+                {/* Header */}
+                <div className="flex gap-2 lg:gap-20 items-center justify-between bg-red-500 rounded-md px-6 py-2 mb-4">
+                  <h1 className="text-white font-semibold  text-lg">
+                    Rejected
+                  </h1>
+                  <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
+                    {rejectedData?.data?.result?.length} Candidates
+                  </span>
+                </div>
+
+                {/* Candidate Cards */}
+                <div className="space-y-4">
+                  {rejectedData?.data?.result?.length > 0 ? (
+                    rejectedData?.data?.result?.map((candidate: any) => (
+                      <div
+                        key={candidate.id} // Use unique key for each candidate
+                        className="flex  gap-2 items-start bg-white p-4 rounded-md shadow-sm border hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                        onClick={() => handleShortListedCardClick(candidate)}
+                      >
+                        <Avatar>
+                          <AvatarImage src={candidate?.profile_picture} />
+                          <AvatarFallback>
+                            {candidate.applicant_first_name?.[0] &&
+                            candidate.applicant_last_name?.[0]
+                              ? `${candidate.applicant_first_name?.[0]}${candidate.applicant_last_name?.[0]}`.toUpperCase()
+                              : "NA"}
+                          </AvatarFallback>
+                        </Avatar>
+
+                        {/* Candidate Information */}
+                        <div className="flex-1">
+                          <div className="flex flex-col lg:flex-row lg:gap-2 ">
+                            <h2 className="text-gray-900 font-semibold text-lg">
+                              {candidate.applicant_first_name}{" "}
+                              {/* First name */}
+                            </h2>
+                            <h2 className="text-gray-900 font-semibold text-lg">
+                              {candidate.applicant_last_name} {/* Last name */}
+                            </h2>
+                          </div>
+
+                          <p className="text-gray-500 text-sm">
+                            {candidate.role || "Role not specified"}{" "}
+                            {/* Candidate's role */}
+                          </p>
+                          <p className="text-gray-700 text-sm mt-1 line-clamp-3">
+                            {candidate.description || "No description provided"}{" "}
+                            {/* Candidate's description */}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-center text-lg mt-8">
+                      No candidates found :(
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* three  Assessment */}
               <div className=" w-full sm:w-[375px] h-full  bg-[#F2F6FB] p-4 rounded-lg">
                 {/* Header */}
-                <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#FF6347] rounded-md px-6 py-2 mb-4">
+                <div className="flex gap-2 lg:gap-20 items-center justify-between bg-purple-500 rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">
-                    Evaluation
+                    Assessment
                   </h1>
-                  <span className="bg-white text-gray-700 font-medium px-3 rounded text-sm">
+                  <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
                     {Evaluation.length} Candidates
                   </span>
                 </div>
@@ -603,7 +659,7 @@ const JobPostingDetails = () => {
                 {/* Header */}
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#0061F9] rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">Offer</h1>
-                  <span className="bg-white text-gray-700 font-medium px-3  rounded text-sm">
+                  <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3  rounded text-sm">
                     {Evaluation.length} Candidates
                   </span>
                 </div>
@@ -656,7 +712,7 @@ const JobPostingDetails = () => {
                 {/* Header */}
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#057A55] rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">Hired</h1>
-                  <span className="bg-white text-gray-700 font-medium px-3  rounded text-sm">
+                  <span className="bg-white whitespace-nowrap text-gray-700 font-medium px-3  rounded text-sm">
                     {Offer.length} Candidates
                   </span>
                 </div>

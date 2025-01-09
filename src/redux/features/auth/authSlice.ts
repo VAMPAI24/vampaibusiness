@@ -165,6 +165,8 @@ const authSlice = createSlice({
         expires: getExpirationDate(),
       });
     },
+
+   
     // User logged out (clear cookies)
     userLogout: (state: AuthState) => {
       state.userInfo = null;

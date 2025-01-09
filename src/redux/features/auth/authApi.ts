@@ -121,11 +121,14 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
+        
           ToastNotification({
             title: "Reset Password Successful",
             description: result?.data?.message,
             type: "success",
           });
+
+
         } catch (error) {
           const apiError = error as ApiError;
           console.log(apiError);
@@ -152,6 +155,10 @@ export const authApi = apiSlice.injectEndpoints({
             description: result?.data?.message,
             type: "success",
           });
+
+          
+
+         
         } catch (error) {
           const apiError = error as ApiError;
           console.log(apiError);

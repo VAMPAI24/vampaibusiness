@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import CustomSheet from "../shared/CustomSheet";
-import ShorlistedImg from "@/public/svgs/Jobs/shortlistedImg.svg";
 import { CalendarDays, CalendarPlus2, UserPlus } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import SubmitButton from "@/components/shared/SubmitButton";
@@ -28,9 +27,11 @@ import Bluearrow from "@/public/svgs/Jobs/blue-arrow.svg";
 import moment from "moment";
 import { openExternalLink } from "@/lib/utils";
 import { TitleRoundedList } from "../ui";
+import PdfImage from "@/public/svgs/Jobs/pdf.svg";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const boxClass =
-  "w-full bg-white  h-fit px-[2em]  py-[1.5em] rounded-[10px] border-[.5px] border-sec-200 ";
+  "w-full bg-white  h-fit px-[2em]  py-[1.5em] rounded-[10px] border border-blue-200 ";
 
 const headerClass = "text-[1.5em] text-main-900 font-[400] font-rubik ";
 
@@ -87,7 +88,7 @@ const ShortListedDetails = ({
   const shareOpenCloseModalFn = () => setShareOpen(!shareOpen);
 
   // Fetch Event Data
-  const { data: eventData } = useGetAllEventQuery({ max_result: 20 });
+  const { data: eventData } = useGetAllEventQuery({ max_result: 200 });
 
   if (!candidate) return null;
 
@@ -103,16 +104,25 @@ const ShortListedDetails = ({
           <div className="relative w-full lg:mb-6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-3">
-                <Image
-                  src={ShorlistedImg}
-                  alt={candidate.name}
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
-                <h2 className="text-sec-901 font-rubik text-lg sm:text-[24px]">
-                  {candidate.name}
-                </h2>
+                <Avatar className="w-20 h-20">
+                  <AvatarImage src={data?.data?.profile?.profile_picture} />
+                  <AvatarFallback>
+                    {data?.data?.applicant_first_name?.[0] &&
+                    data?.data?.applicant_last_name?.[0]
+                      ? `${data?.data?.applicant_first_name[0]}${data?.data?.applicant_last_name[0]}`.toUpperCase()
+                      : "NA"}
+                  </AvatarFallback>
+                </Avatar>
+
+                <div className="flex gap-2">
+                  <h2 className="text-sec-901 font-rubik text-lg sm:text-[24px]">
+                    {data?.data?.applicant_first_name}
+                  </h2>
+
+                  <h2 className="text-sec-901 font-rubik text-lg sm:text-[24px]">
+                    {data?.data?.applicant_last_name}
+                  </h2>
+                </div>
               </div>
               <div className="flex justify-center mt-4 sm:mt-0 gap-4">
                 <button
@@ -167,22 +177,22 @@ const ShortListedDetails = ({
                 {/* Overview  */}
                 <div className="flex-1 px-8 overflow-auto h-screen hide-scrollbar">
                   <div className="flex items-center gap-3 mb-4 mt-10">
-                    {/* <Image
-                      src={data?.data?.profile?.profile_picture}
-                      alt="nnnnnnn"
-                      width={50}
-                      height={50}
-                      className="rounded-full"
-                    /> */}
-                    <div className="w-[6em] h-[6em] rounded-full overflow-hidden bg-main-100">
-                      <Image
-                        src={data?.data?.profile?.profile_picture}
-                        className="w-full h-full object-cover"
-                        alt="User Avatar"
-                      />
+                    <div className="rounded-full overflow-hidden bg-main-100">
+                      <Avatar className="w-20 h-20">
+                        <AvatarImage
+                          src={data?.data?.profile?.profile_picture}
+                        />
+                        <AvatarFallback>
+                          {data?.data?.applicant_first_name?.[0] &&
+                          data?.data?.applicant_last_name?.[0]
+                            ? `${data?.data?.applicant_first_name[0]}${data?.data?.applicant_last_name[0]}`.toUpperCase()
+                            : "NA"}
+                        </AvatarFallback>
+                      </Avatar>
                     </div>
-                    <h2 className="text-[1.5em] 2xl:text-[2em]  font-[600] text-main-901 capitalize">
-                      {data?.first_name} {data?.last_name}
+                    <h2 className="text-[1.5em] 2xl:text-[2em] text-main-901 capitalize">
+                      {data?.data?.applicant_first_name}{" "}
+                      {data?.data?.applicant_last_name}
                     </h2>
                   </div>
                   <hr className="border-[#D2E4FF]" />
@@ -229,8 +239,8 @@ const ShortListedDetails = ({
                       )}
                     </div>
                   </div>
-                  <div className="border border-blue-200 rounded-md p-4 mt-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  <div className="border border-blue-200 rounded-md p-4 mt-6 mb-6">
+                    <h3 className="text-lg font-semibold text-gray-900">
                       Top skills
                     </h3>
                     <div className="flex flex-wrap gap-4">
@@ -246,50 +256,6 @@ const ShortListedDetails = ({
                       )}
                     </div>
                   </div>
-                  {/* work experience  */}
-                  {/* <div className="p-6 bg-white border border-blue-100 rounded-lg shadow-sm max-w-4xl mx-auto mt-6">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                      Work experience
-                    </h2>
-                    <div className="space-y-6">
-                      {data?.data?.profile?.work_experience.map(
-                        (experience: any, index: any) => (
-                          <div
-                            key={index}
-                            className="relative flex items-start space-x-4"
-                          >
-                            <div className="w-12 flex items-center justify-center">
-                              <div className="bg-gray-200 border-2 border-blue-200 w-20 h-12 rounded-lg flex items-center justify-center">
-                              </div>
-                              {index < experience.length - 1 && (
-                                <div className="absolute top-10 left-6 h-full w-[1px] bg-gray-300"></div>
-                              )}
-                            </div>
-
-                            <div className="flex justify-between rounded-lg p-4">
-                              <div>
-                                <h3 className="text-md font-semibold text-gray-800">
-                                  {experience?.job_role}
-                                </h3>
-                                <p className="text-sm text-gray-600 mt-1 w-[50%]">
-                                  {experience.job_description}
-                                </p>
-                              </div>
-
-                              <div className="flex flex-col items-start text-sm text-gray-500 mt-3">
-                                <div>
-                                  <span>{experience.start_date}</span> -{" "}
-                                  <span>{experience.end_date}</span>
-                                </div>
-
-                                <span>{experience.company_name}</span>
-                              </div>
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div> */}
 
                   <div className={boxClass}>
                     <div className="w-full flex flex-col gap-[1em]">
@@ -368,7 +334,7 @@ const ShortListedDetails = ({
                   </div>
 
                   {/* projects */}
-                  <div className="border border-gray-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6">
+                  <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6">
                     {/* Header */}
                     <h2 className="text-xl font-semibold text-gray-900 mb-6">
                       Projects
@@ -412,7 +378,7 @@ const ShortListedDetails = ({
                   </div>
 
                   {/* attached document */}
-                  <div className="border border-gray-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6 mb-10">
+                  <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6 mb-10">
                     {/* Header */}
                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
                       Attached Document
@@ -423,7 +389,8 @@ const ShortListedDetails = ({
                       {/* PDF Icon */}
                       <div className="flex-shrink-0 w-10 h-10">
                         <Image
-                          src={data?.data?.cv_file} // Replace with a proper icon if available
+                          // src={data?.data?.cv_file}
+                          src={PdfImage}
                           alt="PDF Icon"
                           width={40}
                           height={40}
@@ -435,8 +402,10 @@ const ShortListedDetails = ({
                       <div className="ml-4">
                         <p className="text-sm font-medium text-gray-800">
                           <a
-                            href={data?.data?.cv_file} // File URL
-                            download={pdfName} // Makes the file downloadable with this name
+                            href={data?.data?.cv_file}
+                            download={pdfName}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-blue-600 hover:underline"
                           >
                             {pdfName}
@@ -446,82 +415,6 @@ const ShortListedDetails = ({
                     </div>
                   </div>
                 </div>
-                {/* <div className="mt-6 border border-[#D2E4FF] rounded-md p-4">
-                  <p className="text-lg font-semibold mb-2">About</p>
-                  <p className="text-gray-700">{candidate.description}</p>
-                </div>
-
-                <div className="mt-6">
-                  <div className="border border-blue-200 rounded-md p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                      Desired Role
-                    </h3>
-                    <div className="flex flex-wrap gap-4">
-                      {["UI Designer", "UX Designer", "UX Researcher"].map(
-                        (role, index) => (
-                          <span
-                            key={index}
-                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
-                          >
-                            {role}
-                          </span>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <div className="border border-blue-200 rounded-md p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                      Industries
-                    </h3>
-                    <div className="flex flex-wrap gap-4">
-                      {["UI Designer", "UX Designer", "UX Researcher"].map(
-                        (role, index) => (
-                          <span
-                            key={index}
-                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
-                          >
-                            {role}
-                          </span>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <div className="border border-blue-200 rounded-md p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                      Top skills
-                    </h3>
-                    <div className="flex flex-wrap gap-4">
-                      {[
-                        "Genre One",
-                        "Genre Two",
-                        "Genre Three",
-                        "Genre Three",
-                        "Genre Three",
-                        "Genre Three",
-                        "Long Genre Four",
-                        "Long Genre Five",
-                        "Long Genre Five",
-                        "Long Genre Five",
-                        "Long Genre Four",
-                        "Long Genre Five",
-                        "Genre Two",
-                      ].map((skill, index) => (
-                        <span
-                          key={index}
-                          className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div> */}
               </TabsContent>
 
               <TabsContent value="message">

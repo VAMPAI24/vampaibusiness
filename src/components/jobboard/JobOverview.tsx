@@ -5,9 +5,8 @@ import Jobbox from "./Jobbox";
 import OverviewCard from "./OverviewCard";
 import {
   CalendarPlus,
-  CalendarMinus,
   StickyNote,
-  NotebookPen,
+
   CirclePlus,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -32,57 +31,62 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
+  const [tabToFetch, setTabToFetch] = useState("active")
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
 
 
-  // Active JoB
-  const { data: activeJobs, isLoading: activeJobsLoader, refetch: activeRefetch  } =
-    useGetActiveJobsQuery(token);
+// Active JoB
+const { data: activeJobs, isLoading: activeJobsLoader, refetch: activeRefetch } =
+  useGetActiveJobsQuery(token, {skip: tabToFetch !== "active"}); 
 
-  // Draft Jobs
-  const { data: draftJobs, isLoading: draftJobsLoader, refetch: draftRefectch  } =
-    useGetDraftJobsQuery(token);
+// Draft Jobs
+const { data: draftJobs, isLoading: draftJobsLoader, refetch: draftRefectch } =
+  useGetDraftJobsQuery(token, { skip: tabToFetch !== "Drafts" }); 
 
-  const handleNavigation = (id: string) => {
-    router.push(`/job-posting/${id}`);
-  };
+const handleNavigation = (id: string) => {
+  router.push(`/job-posting/${id}`);
+};
 
-  useEffect(() => {
+useEffect(() => {
+  if (tabToFetch === "active" && activeRefetch) {
     activeRefetch();
-    draftRefectch()
-    const storedToken = Cookies.get("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, [activeRefetch, draftRefectch]);
+  }
+  if (tabToFetch === "Drafts" && draftRefectch) {
+    draftRefectch();
+  }
+  const storedToken = Cookies.get("token");
+  if (storedToken) {
+    setToken(storedToken);
+  }
+}, [activeRefetch, tabToFetch, draftRefectch]);
 
   
 
   return (
     <div className="">
       <Jobbox title="Overview" variant="mb-4 text-[20px]" />
-      <div className="flex flex-col md:flex-row justify-between gap-5 mb-5">
+      <div className="flex flex-col md:flex-row gap-5 mb-5">
         <OverviewCard
           title="Active Job Posts"
           count={activeJobs?.data?.count}
           icon={<CalendarPlus className="text-main-901" size={20} />}
         />
-        <OverviewCard
+        {/* <OverviewCard
           title="Inactive Job Posts"
           count={3}
           icon={<CalendarMinus className="text-main-901" size={20} />}
-        />
+        /> */}
         <OverviewCard
           title="Jobs in Draft"
           count={draftJobs?.data?.count}
           icon={<StickyNote className="text-main-901" size={20} />}
         />
-        <OverviewCard
+        {/* <OverviewCard
           title="Total Applicants"
           count={100}
           icon={<NotebookPen className="text-main-901" size={20} />}
-        />
+        /> */}
       </div>
 
       <div className="flex flex-row justify-between items-center gap-4 md:gap-0 mt-10">
@@ -112,18 +116,20 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
           <TabsTrigger
             value="active"
             className="rounded relative pb-3 transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
+            onClick={() => setTabToFetch("active")}
           >
             Active
           </TabsTrigger>
           <TabsTrigger
             value="inactive"
-            className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
+            className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500 hidden"
           >
             Inactive
           </TabsTrigger>
           <TabsTrigger
             value="Drafts"
             className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
+            onClick={() => setTabToFetch("Drafts")}
           >
             Drafts
           </TabsTrigger>
@@ -153,7 +159,8 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
                     <Badge className="px-2 rounded-lg">Active</Badge>
-                    <Image src={Colum} alt="card-img" />
+                    {/* column */}
+                    {/* <Image src={Colum} alt="card-img" /> */}
                   </CardHeader>
                   <CardContent>
                     <h2 className="mb-2 text-main-901 font-rubik text-base capitalize">
@@ -181,7 +188,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
                         </span>
                       </p>
                     </div>
-                    <Image src={PicsCollection} alt="card-img" />
+                    {/* <Image src={PicsCollection} alt="card-img" /> */}
                   </CardFooter>
                 </Card>
               ))
@@ -241,13 +248,15 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
               draftJobs?.data?.jobs.map((recipe: any) => (
                 <Card
                   key={recipe.id}
-                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px]"
+                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px] cursor-pointer"
+                  // onClick={() => handleNavigation(recipe.id)}
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
                     <Badge className="px-2 rounded-lg bg-[#E99F0B]">
                       Draft
                     </Badge>
-                    <Image src={Colum} alt="card-img" />
+                    {/* colum */}
+                    {/* <Image src={Colum} alt="card-img" /> */}
                   </CardHeader>
                   <CardContent>
                     <h2 className="mb-2 text-main-901 font-rubik text-base capitalize">
@@ -274,7 +283,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
                         </span>
                       </p>
                     </div>
-                    <Image src={PicsCollection} alt="card-img" />
+                    {/* <Image src={PicsCollection} alt="card-img" /> */}
                   </CardFooter>
                 </Card>
               ))
