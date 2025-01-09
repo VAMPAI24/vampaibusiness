@@ -1,8 +1,16 @@
 import { StaticImageData } from "next/image";
 
 declare interface SubHeadingProps {
+  header: string;
   title: string;
   description: string;
+}
+
+
+
+declare interface headingProps {
+  title: string;
+  desc: string;
 }
 
 declare interface HeaderBoxProps {

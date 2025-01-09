@@ -1,23 +1,27 @@
 import {
   InterviewScheduling,
-  Recruitment,
   JobPosting,
   Footer,
-  Hero,
-  TrustedCompanies,
   Navbar,
+  Candidate,
+  Hiring,
+  Faq,
+  Hero
 } from "@/components/landingpage/sections";
-import { RecruitmentAAS } from "@/components/landingpage/sections/Recruitment";
+
 
 export default function Home() {
   return (
     <main>
       <Navbar />
       <Hero />
-      <TrustedCompanies />
-      <RecruitmentAAS/>
+    
+
       <JobPosting />
-      <Recruitment />
+      <Candidate />
+      <Hiring />
+      <Faq />
+    
       <InterviewScheduling />
       <Footer />
     </main>

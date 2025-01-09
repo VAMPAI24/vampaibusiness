@@ -175,7 +175,7 @@ const ShortListedDetails = ({
                       className="rounded-full"
                     /> */}
                     <div className="w-[6em] h-[6em] rounded-full overflow-hidden bg-main-100">
-                      <img
+                      <Image
                         src={data?.data?.profile?.profile_picture}
                         className="w-full h-full object-cover"
                         alt="User Avatar"

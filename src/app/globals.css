@@ -103,4 +103,23 @@
 .shad-error {
   @apply text-red-400 !important;
 }
+
+
+/* scroller  */
+.auto-scroll {
+  animation: scroll 5s linear infinite;
+}
+
+.reverse-scroll {
+  animation-direction: reverse;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
  

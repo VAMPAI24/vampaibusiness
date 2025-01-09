@@ -55,7 +55,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
     if (storedToken) {
       setToken(storedToken);
     }
-  }, []);
+  }, [activeRefetch, draftRefectch]);
 
   
 

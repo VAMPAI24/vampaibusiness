@@ -1,6 +1,3 @@
-import Profile from "@/public/svgs/Profile.svg";
-import Work from "@/public/svgs/Work.svg";
-import Candidate from "@/public/svgs/Candidate.svg";
 import Facebook from "@/public/svgs/facebook.svg";
 import Twiter from "@/public/svgs/twitter.svg";
 import Linkdein from "@/public/svgs/linkedin.svg";
@@ -29,6 +26,17 @@ import GoogleMeet from "@/public/svgs/Jobs/google-meet.svg";
 import Zoom from "@/public/svgs/Jobs/zoom.svg";
 import Onsite from "@/public/svgs/Jobs/onsite.svg";
 import Teams from "@/public/svgs/Jobs/teams.svg";
+import Janet from "@/public/svgs/landing-page/janet.svg"
+import Henry from "@/public/svgs/landing-page/henry.svg"
+import Anna from "@/public/svgs/landing-page/anna.svg"
+import Lawson from "@/public/svgs/landing-page/lawson.svg"
+import Harrison from "@/public/svgs/landing-page/harrison.svg"
+import BVesti from "@/public/svgs/landing-page/brand-vesti.svg"
+import BFez from "@/public/svgs/landing-page/brand-fez.svg"
+import BCovenLabs from "@/public/svgs/landing-page/brand-covenlabs.svg"
+import BAgile from "@/public/svgs/landing-page/brand-agile.svg"
+import BShalom from "@/public/svgs/landing-page/brand-shalom.svg"
+
 
 
 export const NavLinks = [
@@ -94,26 +102,49 @@ export const HeroData = [
   },
 ];
 
-export const RecruitmentData = [
+
+
+
+
+export const CandidateCardData = [
   {
-    imgURL: Profile,
-    title: "Create Your Employer Profile",
-    subtitle:
-      "Craft a personalized profile that showcases your company’s unique culture",
+    imgURL: Janet,
+    name: "Janet Lawson",
+    role: "Product Manager ",
+    yearsExp: "5 years of experience",
+    skills: ["Product Roadmap Planning", "Data Analysis", "Market Research", "Business Acumen", "Leadership"],
   },
   {
-    imgURL: Work,
-    title: "Post Your Work",
-    subtitle:
-      "Easily create and customize job listings that stand out with AI suggestions ",
+    imgURL: Henry,
+    name: "Henry Harrison",
+    role: "Software Engineer ",
+    yearsExp: "5 years of experience",
+    skills: ["Programming", "Problem-Solving", "Debugging", "Version Control", "Collaboration"],
   },
   {
-    imgURL: Candidate,
-    title: "Get Matched with Top Candidate",
-    subtitle:
-      "Our AI instantly connects you with the most qualified candidates ",
+    imgURL: Anna,
+    name: "Anna Finn",
+    role: "Marketing Manager",
+    yearsExp: "5 years of experience",
+    skills: ["Campaign Management", "Content Strategy", "SEO/SEM", "Analytical Thinking", "Communication"],
   },
-];
+  {
+    imgURL: Lawson,
+    name: "Janet Lawson",
+    role: "Product Manager ",
+    yearsExp: "5 years of experience",
+    skills: ["Product Roadmap Planning", "Data Analysis", "Market Research", "Business Acumen", "Leadership"],
+  },
+  {
+    imgURL: Harrison,
+    name: "Henry Harrison",
+    role: "Software Engineer" ,
+    yearsExp: "5 year experience",
+    skills: ["Programming", "Problem-Solving", "Debugging", "Version Control", "Collaboration"],
+  },
+ 
+]
+
 
 export const footerLinks = [
   {
@@ -920,3 +951,33 @@ export const projects = [
       "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
   },
 ];
+
+
+
+
+
+
+// landinpage hero carousel 
+export const BrandCarouselImage = [
+  {
+    id: 1,
+    imgUrl: BVesti,
+  },
+  {
+    id: 2,
+    imgUrl: BFez, 
+  },
+  {
+    id: 3,
+    imgUrl: BCovenLabs,
+  },
+  {
+    id: 4,
+    imgUrl: BAgile,
+  },
+
+  {
+    id: 5,
+    imgUrl: BShalom,
+  },
+]
