@@ -18,7 +18,7 @@ const Hero = () => {
     <Container>
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-5">
         {/* Text Content */}
-        <div className="w-full lg:w-1/2 text-center lg:text-left px-4 -mt-36">
+        <div className="w-full lg:w-1/2 text-center lg:text-left px-4 lg:-mt-36">
           <h1 className="font-rubik font-semibold text-[2.5em] md:text-[4em] lg:text-[5em] lg:w-[600px] leading-[1.3em] md:leading-[1.2em] lg:leading-[1em] text-sec-901 mb-4">
             Hire <span className="text-main-700">Top Talents</span> <br />
             10x faster with Vamp.
