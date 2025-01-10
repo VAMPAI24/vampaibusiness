@@ -1,12 +1,8 @@
-import React from 'react'
-import Image from 'next/image'
+import React from "react";
+import Image from "next/image";
 
-const brandcarousel = ({imgUrl}: { imgUrl: string}) => {
-  return (
-    <div>
-      <Image src={imgUrl} alt='brands-images' width={500} height={500} />
-    </div>
-  )
-}
+const brandcarousel = ({ imgUrl }: { imgUrl: string }) => {
+  return <Image src={imgUrl} alt="brands-images" className="h-[2.5em]" />;
+};
 
-export default brandcarousel
+export default brandcarousel;
