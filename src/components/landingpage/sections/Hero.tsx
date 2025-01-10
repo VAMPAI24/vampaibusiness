@@ -1,18 +1,41 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Container, Button, BrandCarousel } from "@/components/landingpage";
 import { useRouter } from "next/navigation";
 import { BrandCarouselImage } from "@/constants";
-import Tola from "@/public/svgs/landing-page/tola.svg";
-import Olaoluwa from "@/public/svgs/landing-page/olaoluwa.svg";
-import Abigail from "@/public/svgs/landing-page/Abigail.svg";
-import Anne from "@/public/svgs/landing-page/anne.svg";
-import Feranmi from "@/public/svgs/landing-page/feranmi.svg";
-import Tolu from "@/public/svgs/landing-page/tola.svg";
 import PersonCard from "@/components/landingpage/PersonCard";
+import { heroProfilesL, heroProfilesR } from "@/lib/data";
+import { gsap } from "gsap";
 
 const Hero = () => {
   const router = useRouter();
+
+  const leftColumnRef = useRef<HTMLDivElement>(null);
+  const rightColumnRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Animate the first column
+    if (leftColumnRef.current) {
+      gsap.to(leftColumnRef.current, {
+        y: `-${leftColumnRef.current.scrollHeight / 2}px`,
+        duration: 100,
+        ease: "linear",
+        repeat: -1,
+        yoyo: true,
+      });
+    }
+
+    // Animate the second column in reverse
+    if (rightColumnRef.current) {
+      gsap.to(rightColumnRef.current, {
+        y: `-${rightColumnRef.current.scrollHeight / 2}px`,
+        duration: 150,
+        ease: "linear",
+        repeat: -1,
+        yoyo: true,
+      });
+    }
+  }, []);
 
   return (
     <Container>
@@ -45,7 +68,7 @@ const Hero = () => {
 
           <div className="mt-10 font-jakarta  text-[18px] text-main-901">
             <p className="font-jakarta text-[18px] text-main-901">Trusted by</p>
-            <div className="flex gap-5 mt-5">
+            <div className="flex items-center gap-5 mt-5">
               {BrandCarouselImage.map((brands, index) => (
                 <BrandCarousel key={index} {...brands} />
               ))}
@@ -53,49 +76,43 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="w-full flex gap-6 h-[700px] lg:h-[850px] lg:w-1/2 px-4 py-10 bg-slate-50 rounded-lg overflow-hidden">
+        <div className="w-full flex gap-6 h-[700px] lg:h-[850px] lg:w-1/2 px4 py-10 bgslate-50 rounded-lg overflow-hidden">
           {/* First Column with Auto Scroll */}
-          <div className="flex flex-col h-full gap-4 overflow-hidden auto-scroll">
-            <PersonCard
-              src={Tola}
-              name="Tola Kunle"
-              role="Art Director"
-              alt="Tola"
-            />
-            <PersonCard
-              src={Olaoluwa}
-              name="Olaoluwa Yomi"
-              role="Backend Developer"
-              alt="Olaoluwa"
-            />
-            <PersonCard
-              src={Abigail}
-              name="Abigail Chika"
-              role="Customer Success"
-              alt="Abigail"
-            />
+          <div
+            ref={leftColumnRef}
+            className="flex flex-col h-full gap-4 overflowhidden autoscroll"
+          >
+            {Array(20)
+              .fill(heroProfilesL)
+              .flat()
+              .map((profile, index) => (
+                <PersonCard
+                  key={index.toString()}
+                  src={profile.image}
+                  name={profile.name}
+                  role={profile.role}
+                  alt={profile.name}
+                />
+              ))}
           </div>
 
           {/* Second Column with Auto Scroll */}
-          <div className="flex flex-col h-full gap-4 overflow-hidden auto-scroll reverse-scroll">
-            <PersonCard
-              src={Anne}
-              name="Anne Katie"
-              role="Graphics Designer"
-              alt="Anne"
-            />
-            <PersonCard
-              src={Feranmi}
-              name="Feranmi Tobi"
-              role="HR Manager"
-              alt="Feranmi"
-            />
-            <PersonCard
-              src={Tolu}
-              name="Tolu Oluwafemi"
-              role="QA Tester"
-              alt="Tolu"
-            />
+          <div
+            ref={rightColumnRef}
+            className="flex flex-col h-full gap-4  mt-[-5em]"
+          >
+            {Array(50)
+              .fill(heroProfilesR)
+              .flat()
+              .map((profile, index) => (
+                <PersonCard
+                  key={index.toString()}
+                  src={profile.image}
+                  name={profile.name}
+                  role={profile.role}
+                  alt={profile.name}
+                />
+              ))}
           </div>
         </div>
       </div>
