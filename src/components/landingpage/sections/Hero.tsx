@@ -42,7 +42,7 @@ const Hero = () => {
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-5">
         {/* Text Content */}
         <div className="w-full lg:w-1/2 text-center lg:text-left px-4 lg:-mt-36">
-          <h1 className="font-rubik font-semibold text-[2.5em] md:text-[4em] lg:text-[5em] lg:w-[600px] leading-[1.3em] md:leading-[1.2em] lg:leading-[1em] text-sec-901 mb-4">
+          <h1 className="font-rubik font-semibold text-[2.5em] md:text-[4em] lg:text-[4.75em] lg:w-[600px] leading-[1.3em] md:leading-[1.2em] lg:leading-[1em] text-sec-901 mb-4">
             Hire <span className="text-main-700">Top Talents</span> <br />
             10x faster with Vamp.
           </h1>
@@ -76,7 +76,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="w-full flex gap-6 h-[700px] lg:h-[850px] lg:w-1/2 px4 py-10 bgslate-50 rounded-lg overflow-hidden">
+        <div className="w-full flex justify-end gap-6 h-[700px] lg:h-[850px] lg:w-1/2 px4 py-10 bgslate-50 rounded-lg overflow-hidden">
           {/* First Column with Auto Scroll */}
           <div
             ref={leftColumnRef}
