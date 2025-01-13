@@ -7,7 +7,7 @@ const Candidate = () => {
     <Container>
       <Heading
         title="Your Ideal Candidate is Waiting"
-        desc="Discover top talent, pre-vetted and ready to join your team."
+        desc="Great hires don’t happen by chance, they happen with Vamp"
       />
 
 
