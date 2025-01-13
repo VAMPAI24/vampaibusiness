@@ -3,12 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../landingpage/button";
 import Jobbox from "./Jobbox";
 import OverviewCard from "./OverviewCard";
-import {
-  CalendarPlus,
-  StickyNote,
-
-  CirclePlus,
-} from "lucide-react";
+import { CalendarPlus, StickyNote, CirclePlus } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -31,37 +26,58 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
-  const [tabToFetch, setTabToFetch] = useState("active")
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
+  const [tabToFetch, setTabToFetch] = useState("active");
+
+  // Active JoB
+  // const { data: activeJobs, isLoading: activeJobsLoader, refetch: activeRefetch } =
+  //   useGetActiveJobsQuery(token, {skip: tabToFetch !== "active"});
+
+  // // Draft Jobs
+  // const { data: draftJobs, isLoading: draftJobsLoader, refetch: draftRefetch } =
+  //   useGetDraftJobsQuery(token, { skip: tabToFetch !== "Drafts" });
+
+  const {
+    data: activeJobs,
+    isLoading: activeJobsLoader,
+    refetch: activeRefetch,
+  } = useGetActiveJobsQuery(token);
+
+  // Draft Jobs
+  const {
+    data: draftJobs,
+    isLoading: draftJobsLoader,
+    refetch: draftRefetch,
+  } = useGetDraftJobsQuery(token);
+
+  const handleNavigation = (id: string) => {
+    router.push(`/job-posting/${id}`);
+  };
+
+  useEffect(() => {
+    const intervalId = setTimeout(() => {
+      if (tabToFetch === "active") {
+        activeRefetch();
+      } else if (tabToFetch === "Drafts") {
+        draftRefetch();
+      }
+    }, 1000); 
+
+    return () => clearInterval(intervalId);
+  }, [tabToFetch, activeRefetch, draftRefetch]);
 
 
-// Active JoB
-const { data: activeJobs, isLoading: activeJobsLoader, refetch: activeRefetch } =
-  useGetActiveJobsQuery(token, {skip: tabToFetch !== "active"}); 
 
-// Draft Jobs
-const { data: draftJobs, isLoading: draftJobsLoader, refetch: draftRefectch } =
-  useGetDraftJobsQuery(token, { skip: tabToFetch !== "Drafts" }); 
 
-const handleNavigation = (id: string) => {
-  router.push(`/job-posting/${id}`);
-};
 
-useEffect(() => {
-  if (tabToFetch === "active" && activeRefetch) {
-    activeRefetch();
-  }
-  if (tabToFetch === "Drafts" && draftRefectch) {
-    draftRefectch();
-  }
-  const storedToken = Cookies.get("token");
-  if (storedToken) {
-    setToken(storedToken);
-  }
-}, [activeRefetch, tabToFetch, draftRefectch]);
-
-  
+  useEffect(() => {
+    // Fetch token from cookies
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   return (
     <div className="">

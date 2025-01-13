@@ -125,7 +125,11 @@ const JobPosting = () => {
     }
   }, []);
 
-  const { data: userInfo } = useGetSingleEmployerQuery(token, { skip: currentView !== "jobPreview" });
+  const { data: userInfo } = useGetSingleEmployerQuery(token, {
+    skip: currentView !== "jobPreview",
+  });
+
+  // Post job to active and draft control
 
 
   const [postActiveJob, { isLoading: postLoading }] =
@@ -178,7 +182,9 @@ const JobPosting = () => {
           job_specifications: [
             {
               jobDescription: values.jobDescription,
-              requiredSkills: values.requiredSkills,
+              requiredSkills: Array.isArray(values.requiredSkills)
+                ? values.requiredSkills
+                : [values.requiredSkills],
             },
           ],
           benefits: values.benefits,
@@ -243,7 +249,9 @@ const JobPosting = () => {
           job_specifications: [
             {
               jobDescription: values.jobDescription,
-              requiredSkills: values.requiredSkills,
+              requiredSkills: Array.isArray(values.requiredSkills)
+                ? values.requiredSkills
+                : [values.requiredSkills],
             },
           ],
           benefits: values.benefits,
@@ -262,6 +270,11 @@ const JobPosting = () => {
       }
     }
   };
+
+
+
+
+
 
   // write with AI Job Description
   const jobTitle = watch("job_title");
@@ -329,7 +342,7 @@ const JobPosting = () => {
    * It only gets recreated if jobTitle or requiredSkill changes.
    **/
   const fetchSkill = useCallback(async () => {
-    if (!jobTitle) return; 
+    if (!jobTitle) return;
 
     const payload = { job_title: jobTitle };
 
@@ -342,7 +355,7 @@ const JobPosting = () => {
 
   useEffect(() => {
     if (currentTab === "specification" && jobTitle) {
-      fetchSkill(); 
+      fetchSkill();
     }
   }, [currentTab, jobTitle, fetchSkill]);
 
