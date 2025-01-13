@@ -101,7 +101,11 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
             <input
               type="tel"
               value={field.value}
-              onChange={field.onChange}
+              onChange={(e) => {
+                const onlyNums = e.target.value.replace(/\D/g, "");
+                field.onChange(onlyNums); 
+              }}
+          
               placeholder={props.placeholder}
               className="w-full h-11 rounded-[5px] px-3 text-16 placeholder:text-16 border bg-[#F7FCFF] border-bankGradient text-gray-900 placeholder:text-gray-500"
             />

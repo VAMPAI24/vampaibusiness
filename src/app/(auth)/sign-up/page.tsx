@@ -21,7 +21,7 @@ type UserSignUpInfo = {
 
 const SignUp = () => {
   const router = useRouter();
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const [otp, setOtp] = useState("");
 
   const steps = ["Create Account", "Verify Account"];
@@ -47,7 +47,7 @@ const SignUp = () => {
   }) => {
     try {
       await emailVerification(values).unwrap();
-      router.push("/dashboard");
+      router.push("/sign-in");
     } catch (error) {
       console.log(error);
     }
