@@ -21,7 +21,7 @@ type UserSignUpInfo = {
 
 const SignUp = () => {
   const router = useRouter();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
   const [otp, setOtp] = useState("");
 
   const steps = ["Create Account", "Verify Account"];
@@ -75,7 +75,7 @@ const SignUp = () => {
 
 
   const RenderSteps = () => {
-    const router = useRouter();
+   
 
     switch (active) {
       case 0:
@@ -128,7 +128,7 @@ const SignUp = () => {
                 onClick={() => handleResendOtp(resendOtpData)}
                 className="text-center cursor-pointer mt-4 font-jakarta text-base"
               >
-                Didn't get the link?&nbsp;
+                Didn&apos;t get the link?&nbsp;
                 <span className="text-main-600">Resend</span>
               </p>
             </div>
