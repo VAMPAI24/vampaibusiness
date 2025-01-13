@@ -12,7 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/app/store";
 import SubmitButton from "@/components/shared/SubmitButton";
-import { useEmailVerificationMutation } from "@/redux/features/auth/authApi";
+import { useEmailVerificationMutation, useResendOtpMutation } from "@/redux/features/auth/authApi";
 
 type UserSignUpInfo = {
   work_email: string;
@@ -21,7 +21,7 @@ type UserSignUpInfo = {
 
 const SignUp = () => {
   const router = useRouter();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
   const [otp, setOtp] = useState("");
 
   const steps = ["Create Account", "Verify Account"];
@@ -33,7 +33,7 @@ const SignUp = () => {
     (state: RootState) => state.auth as { userSignUpInfo: UserSignUpInfo | null }
   );
   
-
+  // OTP Verification
   const data = {
     otp: otp,
     work_email: userSignUpInfo?.work_email,
@@ -53,8 +53,29 @@ const SignUp = () => {
     }
   };
 
+
+
+  // Resend OTP
+  const resendOtpData = {
+    work_email: userSignUpInfo?.work_email,
+  };
+
+
+  const [resendOtp ] = useResendOtpMutation();
+
+  const handleResendOtp = async (values: {
+    work_email: string | undefined;
+  }) => {
+    try {
+      await resendOtp(values).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const RenderSteps = () => {
-    const router = useRouter();
+   
 
     switch (active) {
       case 0:
@@ -92,11 +113,7 @@ const SignUp = () => {
                 </InputOTPGroup>
               </InputOTP>
 
-              {/* {error && (
-                <p className="shad-error text-14-regular mt-4 flex justify-center">
-                  {error}
-                </p>
-              )} */}
+            
 
               <SubmitButton
                 clickFn={() => onSubmit(data)}
@@ -108,11 +125,11 @@ const SignUp = () => {
               </SubmitButton>
 
               <p
-                onClick={() => router.push("/sign-in")}
+                onClick={() => handleResendOtp(resendOtpData)}
                 className="text-center cursor-pointer mt-4 font-jakarta text-base"
               >
-                Do have an account?&nbsp;
-                <span className="text-main-600">Login</span>
+                Didn&apos;t get the link?&nbsp;
+                <span className="text-main-600">Resend</span>
               </p>
             </div>
           </div>

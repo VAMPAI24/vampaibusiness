@@ -49,6 +49,31 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    resendOtp: builder.mutation({ 
+      query: (data) => ({
+        url: "/employer/auth/resend-otp",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          ToastNotification({
+            title: result?.data?.message,
+            description: "OTP Resent Successfully",
+            type: "success",
+          });
+        } catch (error) {
+          const apiError = error as ApiError; 
+          console.log(apiError);
+          ToastNotification({
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
 
     emailVerification: builder.mutation({
       query: (data) => ({
@@ -222,6 +247,7 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
   useRegisterMutation,
+  useResendOtpMutation,
   useEmailVerificationMutation,
   useLoginMutation,
   useSendResetPasswordLinkMutation,
