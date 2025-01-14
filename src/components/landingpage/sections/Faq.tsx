@@ -17,7 +17,7 @@ const Faq = () => {
         </div>
         <Accordion type="single" collapsible className="w-full">
           {FaqItems.map((faq, id) => (
-            <AccordionItem value="item-1" key={id.toString()} >
+            <AccordionItem value={id.toString()} key={id.toString()} >
               <AccordionTrigger className="text-lg font-semibold text-sec-901 flex-1">
                 <div className="flex gap-5 lg:gap-10">
                   <span className="text-lg font-medium text-neutral-500">
