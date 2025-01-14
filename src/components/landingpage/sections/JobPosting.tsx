@@ -18,8 +18,8 @@ const JobPosting = () => {
           <div className="lg:w-4/6 lg:mt-10">
             <SubHeading
               header="stop Searching, Start Hiring"
-              title="AI Powered Job Applicant Matching"
-              description="Our AI-driven system identifies relevant and engaged candidates based on your job descriptions, ensuring a perfect match for your needs."
+              title="AI-Powered Talent Ranking"
+              description="You don't need to sift through piles of applications! Our AI-driven system evaluates every application and delivers a ranked list of top candidates tailored to your job requirements. Spend less time searching and more time hiring the best."
             />
             <Button
               text="Learn More"
@@ -45,9 +45,9 @@ const JobPosting = () => {
           </div>
           <div className="lg:w-4/6 lg:mt-10">
             <SubHeading
-              header="know more, faster"
-              title="Effortless Candidate Insights"
-              description="Get detailed profiles with skills, experience, and engagement levels highlighted, making it easy to identify top talents in moments"
+              header="MAKE SMARTER DECISIONS, FASTER"
+              title="Candidate Insights at a Glance"
+              description="Know your candidates like never before. Vamp delivers real, actionable insights into their skills, experiences, and unique strengths. It’s the hiring edge you’ve been waiting for."
             />
             <Button
               text="Learn More"

@@ -48,9 +48,9 @@ const Hero = () => {
           </h1>
 
           <p className="font-jakarta text-sec-901 font-light leading-[1.5em] text-[16px] md:text-[18px] lg:text-[18px]  lg:w-[500px]  mx-auto lg:mx-0">
-            Simplify your hiring process, reduce time-to-hire, and make
-            confident decisions with access to a diverse pool of qualified
-            candidates.
+            Finding great talent shouldn’t feel like finding needles in
+            haystacks. Vamp makes it ridiculously easy to connect with
+            candidates who are ready to make an impact
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-6">
@@ -67,7 +67,7 @@ const Hero = () => {
           </div>
 
           <div className="mt-10 font-jakarta  text-[18px] text-main-901">
-            <p className="font-jakarta text-[18px] text-main-901">Trusted by</p>
+            <p className="font-jakarta text-[18px] text-main-901">Smart Hiring Trusted by Innovative Companies</p>
             <div className="flex items-center gap-5 mt-5">
               {BrandCarouselImage.map((brands, index) => (
                 <BrandCarousel key={index} {...brands} />
@@ -99,7 +99,7 @@ const Hero = () => {
           {/* Second Column with Auto Scroll */}
           <div
             ref={rightColumnRef}
-            className="flex flex-col h-full gap-4  mt-[-5em]"
+            className="flex flex-col h-full gap-4 overflowhidden   mt-[-5em]"
           >
             {Array(50)
               .fill(heroProfilesR)
