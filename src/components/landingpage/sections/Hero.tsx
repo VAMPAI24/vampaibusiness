@@ -80,7 +80,7 @@ const Hero = () => {
           {/* First Column with Auto Scroll */}
           <div
             ref={leftColumnRef}
-            className="flex flex-col h-full gap-4 overflow-hidden autoscroll"
+            className="flex flex-col h-full gap-4 overflowhidden autoscroll"
           >
             {Array(20)
               .fill(heroProfilesL)
@@ -99,7 +99,7 @@ const Hero = () => {
           {/* Second Column with Auto Scroll */}
           <div
             ref={rightColumnRef}
-            className="flex flex-col h-full gap-4 overflow-hidden   mt-[-5em]"
+            className="flex flex-col h-full gap-4 overflowhidden   mt-[-5em]"
           >
             {Array(50)
               .fill(heroProfilesR)
