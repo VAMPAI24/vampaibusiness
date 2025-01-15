@@ -11,11 +11,14 @@ const DashboardCard = ({
   imgIcon,
   title,
   description,
-  clickFn
+  clickFn,
 }: DashboardCardProp) => {
   return (
-    <Card onClick={clickFn}  className="w-full h-full bg-[#F8F9FF] border border-[#CFE1FF] cursor-pointer shadow">
-      <div className=" flex items-start justify-start mt-5 px-4 2xl:py-4">
+    <Card
+      onClick={clickFn}
+      className="w-full h-full bg-[#F8F9FF] border border-[#CFE1FF] cursor-pointer hadow"
+    >
+      <div className=" flex items-start justify-start px-[1em] py-[.75em] ">
         <div>
           <Image
             src={imgIcon}
@@ -23,15 +26,14 @@ const DashboardCard = ({
             width={50}
             height={50}
             className="mt-[10px] lg:w-28"
-
           />
         </div>
 
-        <CardContent>
-          <CardTitle className="font-rubik text-[#283157] font-semibold text-[18px]">
+        <CardContent className="">
+          <CardTitle className="font-rubik text-[#283157] font-[600] text-[18px]">
             {title}
           </CardTitle>
-          <CardDescription className="mt-2 text-[#283157] font-normal font-jakarta">
+          <CardDescription className="mt-2 text-[#283157] font-[400] font-jakarta">
             {description}
           </CardDescription>
         </CardContent>

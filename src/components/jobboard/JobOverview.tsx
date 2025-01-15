@@ -18,25 +18,15 @@ import {
   useGetDraftJobsQuery,
 } from "@/redux/features/job-posting/jobpostingApi";
 import Colum from "@/public/svgs/Jobs/column.svg";
-import PicsCollection from "@/public/svgs/Jobs/pics-collection.svg";
 import { JobOverviewProps } from "@/types";
-import { recipes } from "@/constants";
 import OverviewSkelton from "../common/skeltons/OverviewSkelton";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
+const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   const [tabToFetch, setTabToFetch] = useState("active");
-
-  // Active JoB
-  // const { data: activeJobs, isLoading: activeJobsLoader, refetch: activeRefetch } =
-  //   useGetActiveJobsQuery(token, {skip: tabToFetch !== "active"});
-
-  // // Draft Jobs
-  // const { data: draftJobs, isLoading: draftJobsLoader, refetch: draftRefetch } =
-  //   useGetDraftJobsQuery(token, { skip: tabToFetch !== "Drafts" });
 
   const {
     data: activeJobs,
@@ -62,14 +52,10 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
       } else if (tabToFetch === "Drafts") {
         draftRefetch();
       }
-    }, 1000); 
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, [tabToFetch, activeRefetch, draftRefetch]);
-
-
-
-
 
   useEffect(() => {
     // Fetch token from cookies
@@ -88,21 +74,12 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
           count={activeJobs?.data?.count}
           icon={<CalendarPlus className="text-main-901" size={20} />}
         />
-        {/* <OverviewCard
-          title="Inactive Job Posts"
-          count={3}
-          icon={<CalendarMinus className="text-main-901" size={20} />}
-        /> */}
+
         <OverviewCard
           title="Jobs in Draft"
           count={draftJobs?.data?.count}
           icon={<StickyNote className="text-main-901" size={20} />}
         />
-        {/* <OverviewCard
-          title="Total Applicants"
-          count={100}
-          icon={<NotebookPen className="text-main-901" size={20} />}
-        /> */}
       </div>
 
       <div className="flex flex-row justify-between items-center gap-4 md:gap-0 mt-10">
@@ -152,12 +129,12 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
         </TabsList>
         <hr className="" />
         <TabsContent value="active">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
             {activeJobsLoader ? (
-              Array.from({ length: 3 }).map((_, id) => (
+              Array.from({ length: 6 }).map((_, index) => (
                 <div
-                  key={id.toString()}
-                  className="w-[300px] h-full opacity-[.5]"
+                  key={index.toString()}
+                  className="w-full col-span-1 h-full"
                 >
                   <OverviewSkelton />
                 </div>
@@ -170,7 +147,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
               activeJobs?.data?.jobs.map((recipe: any) => (
                 <Card
                   key={recipe.id}
-                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px] cursor-pointer"
+                  className="flex flex-col justify-between px-2 py-2 col-span-1 w-full w[300px] h-[200px] cursor-pointer"
                   onClick={() => handleNavigation(recipe.id)}
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
@@ -211,48 +188,15 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
             )}
           </div>
         </TabsContent>
-        <TabsContent value="inactive">
-          {/* Inactive Jobs */}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
-            {recipes.map((recipe: any) => (
-              <Card
-                key={recipe.id}
-                className="flex flex-col justify-between px-2 py-2 w-[300px]"
-              >
-                <CardHeader className="flex flex-row gap-10 justify-between items-start">
-                  <Badge className="px-2 rounded-lg bg-[#4D5366]">
-                    Inactive
-                  </Badge>
-                  <Image src={Colum} alt="card-img" />
-                </CardHeader>
-                <CardContent>
-                  <h2 className="mb-2 text-main-901 font-rubik text-base">
-                    {recipe.title}
-                  </h2>
-                  <p className="text-main-901 font-jakarta text-xs">
-                    {recipe.description}
-                  </p>
-                </CardContent>
-                <CardFooter className="flex gap-10 justify-between">
-                  <div className="flex gap-10 flex-row">
-                    <p className="text-sm text-gray-500">
-                      Edited: <span className="text-xs">30 October 2024</span>
-                    </p>
-                  </div>
-                  <Image src={PicsCollection} alt="card-img" />
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
         <TabsContent value="Drafts">
-          {/* Drafts */}
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
             {draftJobsLoader ? (
-              [1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
-                <div key={index} className="w-[300px] h-full">
+              Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index.toString()}
+                  className="w-full col-span-1 h-full"
+                >
                   <OverviewSkelton />
                 </div>
               ))
@@ -264,15 +208,18 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
               draftJobs?.data?.jobs.map((recipe: any) => (
                 <Card
                   key={recipe.id}
-                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px] cursor-pointer"
-                  // onClick={() => handleNavigation(recipe.id)}
+                  className="flex flex-col justify-between px-2 py-2 w-full col-span-1 h-[200px] cursor-pointer"
+                  onClick={() => {
+                    setCurrentView("jobPreview");
+                    setDraftId(recipe.id);
+                  }}
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
                     <Badge className="px-2 rounded-lg bg-[#E99F0B]">
                       Draft
                     </Badge>
                     {/* colum */}
-                    {/* <Image src={Colum} alt="card-img" /> */}
+                    <Image src={Colum} alt="card-img" />
                   </CardHeader>
                   <CardContent>
                     <h2 className="mb-2 text-main-901 font-rubik text-base capitalize">

@@ -138,7 +138,7 @@ export const ProfileSchema = z.object({
     .min(1, { message: "Last name is required" })
     .max(50, { message: "Last name must be 50 characters or less" }),
 
-    position_in_company: z
+  position_in_company: z
     .string()
     .min(1, { message: "Position in company is required" })
     .max(100, {
@@ -181,7 +181,7 @@ export const ProfileSchema = z.object({
     .string()
     .min(1, { message: "company bio is required" })
     .max(200, { message: "company_bio must be 200 characters or less" }),
-    file: z.null().optional(),
+  file: z.null().optional(),
 });
 
 export const jobTitleSchema = z.object({
@@ -208,9 +208,6 @@ export const jobDetailsSchema = z.object({
       .refine((date) => !isNaN(Date.parse(date as string)), {
         message: "Application deadline must be a valid date",
       })
-      .refine((date) => new Date(date as string) >= new Date(), {
-        message: "Application deadline cannot be in the past",
-      })
   ),
 });
 
@@ -232,18 +229,17 @@ export const jobSpecificationSchema = z.object({
       .refine((date) => !isNaN(Date.parse(date as string)), {
         message: "Application deadline must be a valid date",
       })
-      .refine((date) => new Date(date as string) >= new Date(), {
-        message: "Application deadline cannot be in the past",
-      })
   ),
   jobDescription: z
     .string()
     .min(10, "Job Description must be at least 10 characters long")
     .max(5000, "Job Description cannot exceed 5000 characters"),
   requiredSkills: z
-    .string()
-    .min(10, "Required Skills must be at least 10 characters long")
-    .max(5000, "Required Skills cannot exceed 5000 characters"),
+    .union([
+      z.string(),
+      z.array(z.string()).nonempty("Array of skills cannot be empty"),
+    ])
+    .transform((value) => (Array.isArray(value) ? value.join(", ") : value)),
 });
 
 export const benefitDetailsSchema = z.object({
@@ -264,35 +260,26 @@ export const benefitDetailsSchema = z.object({
       .refine((date) => !isNaN(Date.parse(date as string)), {
         message: "Application deadline must be a valid date",
       })
-      .refine((date) => new Date(date as string) >= new Date(), {
-        message: "Application deadline cannot be in the past",
-      })
   ),
 
   jobDescription: z
     .string()
     .min(10, "Job Description must be at least 10 characters long")
     .max(5000, "Job Description cannot exceed 5000 characters"),
+  // requiredSkills: z
+  //   .string()
+  //   .min(10, "Required Skills must be at least 10 characters long")
+  //   .max(5000, "Required Skills cannot exceed 5000 characters"),
   requiredSkills: z
-    .string()
-    .min(10, "Required Skills must be at least 10 characters long")
-    .max(5000, "Required Skills cannot exceed 5000 characters"),
+    .union([
+      z.string(),
+      z.array(z.string()).nonempty("Array of skills cannot be empty"),
+    ])
+    .transform((value) => (Array.isArray(value) ? value.join(", ") : value)),
   benefits: z.string().optional(),
 });
 
-// export const EventFormSchema = z.object({
-//   summary: z.string().min(1, "Event Title is required"),
-//   date: z.preprocess(
-//     (value) => (value instanceof Date ? value.toISOString().split("T")[0] : value),
-//     z.string().min(1, "Date is required")
-//   ),
 
-//   time: z.string().min(1, "Time is required"),
-//   duration: z.string().min(1, "Duration is required"),
-//   event_type: z.string().min(1, "Event Type is required"),
-//   guest_interviewer: z.string().min(1, "Guest/Interviewer is required"),
-//   description: z.string().min(1, "Notes Title is required"),
-// });
 
 export const EventFormSchema = z.object({
   summary: z.string().min(1, "Event Title is required"),

@@ -100,6 +100,11 @@ const EventModalContent = ({
               placeholder="Select a date"
               variant="w-full h-[40px] border border-main-500 text-sm shadow-sm rounded"
               dateFormat="PPP"
+              disabledDates={(date: Date) => {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                return date < today;
+              }}
             />
 
             <CustomFormField
