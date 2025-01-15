@@ -1,5 +1,6 @@
 "use client";
 
+import { getPathName } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 const PathnameDisplay = () => {
   const pathname = usePathname();
@@ -12,7 +13,9 @@ const PathnameDisplay = () => {
     
   return (
     <p className="hidden lg:flex capitalize text-[#001633] font-medium font-rubik text-[24px]">
-      {formattedPathname}
+      {/* {formattedPathname}
+       */}
+       {getPathName(pathname)}
     </p>
   );
 };

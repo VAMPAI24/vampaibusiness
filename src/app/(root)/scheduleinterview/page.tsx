@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useGetAllEventQuery } from "@/redux/features/job-posting/jobpostingApi";
 import { BallsLoader } from "@/components/ui/BallsLoader";
+import { Empty } from "@/components/common/empty";
 
 const ScheduleInterview = () => {
   // Fetch Event Data
@@ -24,12 +25,11 @@ const ScheduleInterview = () => {
         </div>
       ) : isEmpty ? (
         <div className="w-full flex flex-col items-center text-center gap-[.5em]">
-          <p className="text-[1.25em] text-gray-700 font-semibold">
-            No Events Available
-          </p>
-          <p className="text-sm text-gray-500">
-            There are no scheduled interviews at this time.
-          </p>
+         
+          <Empty
+            title="No Events Available"
+            subtitle="There are no scheduled interviews at this time."
+          />
         </div>
       ) : (
         <div className="w-full flex flex-col gap-[1em]">

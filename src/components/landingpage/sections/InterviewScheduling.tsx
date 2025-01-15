@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 const InterviewScheduling = () => {
   const router = useRouter();
 
-  const toJobPosting = () => router.push("/job-posting");
+  // const toJobPosting = () => router.push("/job-posting");
+  const toJobPosting = () => router.push("/jobs/create-job");
 
   return (
     <Container variant="lg:py-28">

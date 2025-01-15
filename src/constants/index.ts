@@ -26,17 +26,16 @@ import GoogleMeet from "@/public/svgs/Jobs/google-meet.svg";
 import Zoom from "@/public/svgs/Jobs/zoom.svg";
 import Onsite from "@/public/svgs/Jobs/onsite.svg";
 import Teams from "@/public/svgs/Jobs/teams.svg";
-import Janet from "@/public/svgs/landing-page/janet.svg"
-import Henry from "@/public/svgs/landing-page/henry.svg"
-import Anna from "@/public/svgs/landing-page/anna.svg"
-import Lawson from "@/public/svgs/landing-page/lawson.svg"
-import Harrison from "@/public/svgs/landing-page/harrison.svg"
-import BVesti from "@/public/svgs/landing-page/brand-vesti.svg"
-import BFez from "@/public/svgs/landing-page/brand-fez.svg"
-import BCovenLabs from "@/public/svgs/landing-page/brand-covenlabs.svg"
-import BAgile from "@/public/svgs/landing-page/brand-agile.svg"
-import BShalom from "@/public/svgs/landing-page/brand-shalom.svg"
-
+import Janet from "@/public/svgs/landing-page/janet.svg";
+import Henry from "@/public/svgs/landing-page/henry.svg";
+import Anna from "@/public/svgs/landing-page/anna.svg";
+import Lawson from "@/public/svgs/landing-page/lawson.svg";
+import Harrison from "@/public/svgs/landing-page/harrison.svg";
+import BVesti from "@/public/svgs/landing-page/brand-vesti.svg";
+import BFez from "@/public/svgs/landing-page/brand-fez.svg";
+import BCovenLabs from "@/public/svgs/landing-page/brand-covenlabs.svg";
+import BAgile from "@/public/svgs/landing-page/brand-agile.svg";
+import BShalom from "@/public/svgs/landing-page/brand-shalom.svg";
 
 export const NavLinks = [
   {
@@ -101,49 +100,73 @@ export const HeroData = [
   },
 ];
 
-
-
-
-
 export const CandidateCardData = [
   {
     imgURL: Janet,
     name: "Janet Lawson",
     role: "Product Manager ",
     yearsExp: "5 years of experience",
-    skills: ["Product Roadmap Planning", "Data Analysis", "Market Research", "Business Acumen", "Leadership"],
+    skills: [
+      "Product Roadmap Planning",
+      "Data Analysis",
+      "Market Research",
+      "Business Acumen",
+      "Leadership",
+    ],
   },
   {
     imgURL: Henry,
     name: "Henry Harrison",
     role: "Software Engineer ",
     yearsExp: "5 years of experience",
-    skills: ["Programming", "Problem-Solving", "Debugging", "Version Control", "Collaboration"],
+    skills: [
+      "Programming",
+      "Problem-Solving",
+      "Debugging",
+      "Version Control",
+      "Collaboration",
+    ],
   },
   {
     imgURL: Anna,
     name: "Anna Finn",
     role: "Marketing Manager",
     yearsExp: "5 years of experience",
-    skills: ["Campaign Management", "Content Strategy", "SEO/SEM", "Analytical Thinking", "Communication"],
+    skills: [
+      "Campaign Management",
+      "Content Strategy",
+      "SEO/SEM",
+      "Analytical Thinking",
+      "Communication",
+    ],
   },
   {
     imgURL: Lawson,
     name: "Janet Lawson",
     role: "Product Manager ",
     yearsExp: "5 years of experience",
-    skills: ["Product Roadmap Planning", "Data Analysis", "Market Research", "Business Acumen", "Leadership"],
+    skills: [
+      "Product Roadmap Planning",
+      "Data Analysis",
+      "Market Research",
+      "Business Acumen",
+      "Leadership",
+    ],
   },
   {
     imgURL: Harrison,
     name: "Henry Harrison",
-    role: "Software Engineer" ,
+    role: "Software Engineer",
     yearsExp: "5 year experience",
-    skills: ["Programming", "Problem-Solving", "Debugging", "Version Control", "Collaboration"],
+    skills: [
+      "Programming",
+      "Problem-Solving",
+      "Debugging",
+      "Version Control",
+      "Collaboration",
+    ],
   },
- 
-]
-
+];
 
 export const footerLinks = [
   {
@@ -231,10 +254,15 @@ export const SidebarLinks = [
     route: "/dashboard",
     label: "Dashboard",
   },
+  // {
+  //   imgURL: JobAds,
+  //   route: "/job-posting",
+  //   label: "Job Posting",
+  // },
   {
     imgURL: JobAds,
-    route: "/job-posting",
-    label: "Job Posting",
+    route: "/jobs",
+    label: "All Jobs",
   },
   {
     imgURL: ScheduleInterview,
@@ -260,10 +288,15 @@ export const SidebarLinksMobile = [
     route: "/dashboard",
     label: "Dashboard",
   },
+  // {
+  //   imgURL: JobAdsMobile,
+  //   route: "/job-posting",
+  //   label: "Job Posting",
+  // },
   {
     imgURL: JobAdsMobile,
-    route: "/job-posting",
-    label: "Job Posting",
+    route: "/jobs",
+    label: "All Jobs",
   },
   {
     imgURL: ScheduleInterviewMobile,
@@ -290,7 +323,8 @@ export const DashboardCardData = [
     description:
       "Quickly create a job listing to attract top talent and grow your team.",
     imgSrc: Arrow,
-    route: "/job-posting",
+    // route: "/job-posting",
+    route: "/jobs",
   },
   {
     imgIcon: Interview,
@@ -306,7 +340,8 @@ export const DashboardCardData = [
     description:
       "Review candidate applications in one place to find the perfect fit.",
     imgSrc: Arrow,
-    route: "/job-posting",
+    // route: "/job-posting",
+    route: "/jobs",
   },
 ];
 
@@ -906,12 +941,7 @@ export const projects = [
   },
 ];
 
-
-
-
-
-
-// landinpage hero carousel 
+// landinpage hero carousel
 export const BrandCarouselImage = [
   {
     id: 1,
@@ -919,7 +949,7 @@ export const BrandCarouselImage = [
   },
   {
     id: 2,
-    imgUrl: BFez, 
+    imgUrl: BFez,
   },
   {
     id: 3,
@@ -934,4 +964,4 @@ export const BrandCarouselImage = [
     id: 5,
     imgUrl: BShalom,
   },
-]
+];

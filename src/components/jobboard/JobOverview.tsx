@@ -42,17 +42,24 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
     data: activeJobs,
     isLoading: activeJobsLoader,
     refetch: activeRefetch,
-  } = useGetActiveJobsQuery(token);
+  } = useGetActiveJobsQuery("");
 
   // Draft Jobs
   const {
     data: draftJobs,
     isLoading: draftJobsLoader,
     refetch: draftRefetch,
-  } = useGetDraftJobsQuery(token);
+  } = useGetDraftJobsQuery("");
 
   const handleNavigation = (id: string) => {
-    router.push(`/job-posting/${id}`);
+    // router.push(`/job-posting/${id}`);
+    router.push(`/jobs/${id}`);
+  };
+
+
+  const initCreateJob = () => {
+    // router.push(`/job-posting`);
+    router.push(`/jobs/create-job`);
   };
 
   useEffect(() => {
@@ -123,7 +130,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
               }}
             />
           }
-          clickFn={() => setCurrentView("createJob")}
+          clickFn={initCreateJob}
         />
       </div>
 
@@ -152,12 +159,12 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
         </TabsList>
         <hr className="" />
         <TabsContent value="active">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1em] mt-10">
             {activeJobsLoader ? (
-              Array.from({ length: 3 }).map((_, id) => (
+              Array.from({ length: 6 }).map((_, id) => (
                 <div
                   key={id.toString()}
-                  className="w-[300px] h-full opacity-[.5]"
+                  className="w-full col-span-1  h-full opacity-[.5]"
                 >
                   <OverviewSkelton />
                 </div>
@@ -170,7 +177,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
               activeJobs?.data?.jobs.map((recipe: any) => (
                 <Card
                   key={recipe.id}
-                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px] cursor-pointer"
+                  className="w-full col-span-1 flex flex-col justify-between px-2 py-2 w[300px] h-[200px] cursor-pointer"
                   onClick={() => handleNavigation(recipe.id)}
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
@@ -214,7 +221,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
         <TabsContent value="inactive">
           {/* Inactive Jobs */}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center mt-10">
             {recipes.map((recipe: any) => (
               <Card
                 key={recipe.id}
@@ -249,7 +256,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
         <TabsContent value="Drafts">
           {/* Drafts */}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-6 mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1em] place-items-center lg:gap-6 mt-10">
             {draftJobsLoader ? (
               [1, 2, 3, 4, 5, 6, 7, 8, 9].map((index) => (
                 <div key={index} className="w-[300px] h-full">
@@ -264,7 +271,7 @@ const JobOverview = ({ setCurrentView }: JobOverviewProps) => {
               draftJobs?.data?.jobs.map((recipe: any) => (
                 <Card
                   key={recipe.id}
-                  className="flex flex-col justify-between px-2 py-2 w-[300px] h-[200px] cursor-pointer"
+                  className="w-full col-span-1  flex flex-col justify-between px-2 py-2 h-[200px] cursor-pointer"
                   // onClick={() => handleNavigation(recipe.id)}
                 >
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">

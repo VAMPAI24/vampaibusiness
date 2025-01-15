@@ -1,6 +1,5 @@
 // import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-
 // type UserInfoProps = {
 //   first_name: string;
 //   last_name: string;
@@ -15,7 +14,6 @@
 //   company_bio: string;
 // };
 
-
 // interface AuthState {
 //   token: string;
 //   refreshToken: string;
@@ -23,14 +21,12 @@
 //   userSignUpInfo: string | null;
 // }
 
-
-
 // const initialState: AuthState = {
-//   token: 
+//   token:
 //     typeof window !== "undefined" && localStorage.getItem("token")
 //       ? JSON.parse(localStorage.getItem("token") as string)
 //       : "",
-//   refreshToken: 
+//   refreshToken:
 //     typeof window !== "undefined" && localStorage.getItem("refreshToken")
 //       ? JSON.parse(localStorage.getItem("refreshToken") as string)
 //       : "",
@@ -43,7 +39,6 @@
 //       ? JSON.parse(localStorage.getItem("userSignUpInfo") as string)
 //       : null,
 // };
-
 
 // const authSlice = createSlice({
 //   name: "auth",
@@ -86,9 +81,9 @@
 
 // export default authSlice.reducer;
 
-
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+import { setSession } from "../api/cookies";
 
 // Define user info type
 type UserInfoProps = {
@@ -121,7 +116,9 @@ const getExpirationDate = () => {
 const initialState: AuthState = {
   token: Cookies.get("token") || "",
   refreshToken: Cookies.get("refreshToken") || "",
-  userInfo: Cookies.get("userInfo") ? JSON.parse(Cookies.get("userInfo") as string) : null,
+  userInfo: Cookies.get("userInfo")
+    ? JSON.parse(Cookies.get("userInfo") as string)
+    : null,
   userSignUpInfo: Cookies.get("userSignUpInfo") || null,
 };
 
@@ -154,6 +151,10 @@ const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken;
       state.userInfo = action.payload.userInfo;
 
+      // handle access tokens, refresh & timer
+      setSession(action.payload.accessToken);
+      setSession(action.payload.refreshToken, "refresh_tk_session");
+
       // Set expiration to 3 hours from now
       Cookies.set("token", action.payload.accessToken, {
         expires: getExpirationDate(),
@@ -166,7 +167,6 @@ const authSlice = createSlice({
       });
     },
 
-   
     // User logged out (clear cookies)
     userLogout: (state: AuthState) => {
       state.userInfo = null;
@@ -175,8 +175,12 @@ const authSlice = createSlice({
 
       // Remove cookies
       Cookies.remove("userInfo");
-      Cookies.remove("token");
-      Cookies.remove("refreshToken");
+      // Cookies.remove("token");
+      // Cookies.remove("refreshToken");
+
+      // remove the values above
+      Cookies.remove("__session");
+      Cookies.remove("refresh_tk_session");
     },
   },
 });

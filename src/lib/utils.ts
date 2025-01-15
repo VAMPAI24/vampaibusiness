@@ -41,3 +41,18 @@ export const formatAndTransformString = (input: string): string => {
 
   return formattedString.trim();
 };
+
+export const getPathName = (url: string): string => {
+  const parts = url.split("/").filter(Boolean); // Filter removes empty strings caused by leading/trailing slashes
+
+  // Ensure there are at least two parts to concatenate
+  if (parts.length >= 2) {
+    const secondLast = parts[parts.length - 2];
+    const last = parts[parts.length - 1];
+
+    return last.replace(/-/g, " ")
+  }
+
+  // If only one part, return it
+  return parts[0]?.replace(/-/g, " ") || "";
+};

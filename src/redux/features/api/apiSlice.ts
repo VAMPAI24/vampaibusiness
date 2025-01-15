@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../constants";
 import { RootState } from "@/redux/app/store";
-
+import { getSession } from "./cookies";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -12,11 +12,14 @@ export const apiSlice = createApi({
       const token = (getState() as RootState).auth?.token;
 
       // Log the token for debugging
-      console.log("Current Token:", token);
+      // console.log("Current Token:", token);
+
+      // gets token
+      const sessionTk = getSession();
 
       // Set the Authorization header if token exists
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+      if (sessionTk?.token) {
+        headers.set("Authorization", `Bearer ${sessionTk?.token}`);
       }
 
       return headers;
@@ -26,4 +29,3 @@ export const apiSlice = createApi({
   tagTypes: ["Users"],
   endpoints: () => ({}),
 });
-
