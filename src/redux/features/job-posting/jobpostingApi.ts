@@ -342,7 +342,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
 
-          console.log(result)
+          console.log(result);
 
           ToastNotification({
             // title: result?.data?.message,
@@ -386,9 +386,6 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
-
-
-
     getProfilePercentageCount: builder.query({
       query: () => ({
         url: "/employer/auth/get-employer",
@@ -407,15 +404,50 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
+    getJobsInDraft: builder.query({
+      query: (id) => ({
+        url: "/employer/jobs-draft-Id",
+        method: "GET",
+        params: { Id: id },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
 
-
-
-
-
-  
-
-
-    
+    updateJobInDraft: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/employer/jobs-draft/${id}`,
+        method: 'PATCH',
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          ToastNotification({
+            title: 'Success',
+            description: 'Job draft updated successfully.',
+            type: 'success',
+          });
+         
+        } catch (error: any) {
+          ToastNotification({
+            title: 'Error',
+            description:
+              error?.data?.error || error?.error || 'Something went wrong',
+            type: 'error',
+          });
+        }
+      },
+    }),
   }),
 });
 
@@ -438,5 +470,7 @@ export const {
   useGetAllEventQuery,
   useShortlistCandidateMutation,
   useRejectCandidateMutation,
-  useGetProfilePercentageCountQuery
+  useGetProfilePercentageCountQuery,
+  useGetJobsInDraftQuery,
+  useUpdateJobInDraftMutation
 } = authApi;

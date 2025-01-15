@@ -3,16 +3,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Jobbox from "@/components/jobboard/Jobbox";
-import { Button } from "@/components/landingpage";
 import {
   Briefcase,
-  CirclePlus,
   CalendarClock,
   Gift,
   Sun,
   Pencil,
 } from "lucide-react";
-import CreateJobs from "@/public/svgs/Jobs/create-jobs.svg";
 import AvaterJobs from "@/public/svgs/Jobs/avatar.svg";
 import CustomFormField, {
   FormFieldType,
@@ -49,25 +46,25 @@ import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
 import {
   useBenefitDetailReWriteAIMutation,
   useBenefitDetailWriteAIMutation,
+  useGetJobsInDraftQuery,
   useJobDescriptionAIMutation,
   useJobDescriptionAIRewiteMutation,
   usePostActiveJobMutation,
   useRequiredSkillMutation,
   useSaveJobToDraftMutation,
+  useUpdateJobInDraftMutation,
 } from "@/redux/features/job-posting/jobpostingApi";
 import ToastNotification from "@/components/shared/ToastNotification";
 import JobOverview from "@/components/jobboard/JobOverview";
 import Cookies from "js-cookie";
-
-// cdk editor
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import DratfEditSkeleton from "@/components/common/skeltons/DratfEditSkeleton";
 
 const JobPosting = () => {
   // const [currentView, setCurrentView] = useState("jobAds");
   const [currentView, setCurrentView] = useState("overview");
   const [currentTab, setCurrentTab] = useState("details");
 
+  //// Active job control
   const methods = useForm<
     z.infer<
       | typeof jobTitleSchema
@@ -130,8 +127,6 @@ const JobPosting = () => {
   });
 
   // Post job to active and draft control
-
-
   const [postActiveJob, { isLoading: postLoading }] =
     usePostActiveJobMutation();
   const [saveJobToDraft, { isLoading: draftLoading }] =
@@ -270,11 +265,6 @@ const JobPosting = () => {
       }
     }
   };
-
-
-
-
-
 
   // write with AI Job Description
   const jobTitle = watch("job_title");
@@ -432,27 +422,143 @@ const JobPosting = () => {
     setValue(formattedValue);
   };
 
-  // ckd
+  //  draft edit control
+  // 1. get the data
+  const [draftId, setDraftId] = useState("");
+  const { data: draftEditdata, isLoading: draftEditLoader } =
+    useGetJobsInDraftQuery(draftId);
 
-  // const [editorData, setEditorData] = useState(""); // State to hold raw editor content
-  // // const [plainText, setPlainText] = useState(""); // State to hold plain text content
+  console.log("draftEditdata", draftEditdata);
 
-  // const handleEditorChange = (event: any, editor: { getData: () => any }) => {
-  //   const data = editor.getData();
-  //   console.log("Editor content (HTML):", data);
+  // 2. Update the data
+  // Save Job To draft Handler
+  const [updateJobInDraft, { isLoading: updateDraftLoading }] =
+    useUpdateJobInDraftMutation();
 
-  //   // Remove HTML tags (specifically <p> here, but can be extended)
-  //   const textContent = data.replace(/<\/?p>/g, ""); // Remove <p> and </p> tags
-  //   setEditorData(data); // Save raw HTML content
-  //   // setPlainText(textContent); // Save plain text content
-  // };
+  const handleUpdateDraft = async (
+    values: z.infer<
+      | typeof jobTitleSchema
+      | typeof jobDetailsSchema
+      | typeof jobSpecificationSchema
+      | typeof benefitDetailsSchema
+    >
+  ) => {
+    console.log("hello");
+    if (currentView === "createJob") {
+      setCurrentView("editJob");
+    } else if (currentTab === "details") {
+      handleNextTab();
+    } else if (currentTab === "specification") {
+      handleNextTab();
+    } else if (currentTab === "benefit" && currentView !== "jobPreview") {
+      setCurrentView("jobPreview");
+    } else {
+      if (
+        "experienceLevel" in values &&
+        "workPattern" in values &&
+        "jobDescription" in values &&
+        "benefits" in values
+      ) {
+        const payload = {
+          job_title: values.job_title,
+          job_details: [
+            {
+              experienceLevel: values.experienceLevel,
+              workPattern: values.workPattern,
+              employmentType: values.employmentType,
+              salaryRange: [
+                {
+                  currency_code: values.currency_code || "",
+                  salary_min: values.salary_min || "",
+                  salary_max: values.salary_max || "",
+                  rate: values.rate || "",
+                },
+              ],
+              applicationDeadline: values.applicationDeadline,
+            },
+          ],
+          job_specifications: [
+            {
+              jobDescription: values.jobDescription,
+              requiredSkills: Array.isArray(values.requiredSkills)
+                ? values.requiredSkills
+                : [values.requiredSkills],
+            },
+          ],
+          benefits: values.benefits,
+        };
+
+        // Try submitting the job to the API
+        try {
+          await updateJobInDraft({ id: draftId, data: payload }).unwrap();
+          
+
+          setCurrentView("overview");
+        } catch (error) {
+          console.error("Error submitting job:", error);
+        }
+      } else {
+        console.error("Missing required fields:", values);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (draftEditdata?.data?.job_title) {
+      methods.setValue("job_title", draftEditdata?.data?.job_title);
+      methods.setValue(
+        "workPattern",
+        draftEditdata?.data?.job_details?.[0]?.workPattern
+      );
+      methods.setValue(
+        "employmentType",
+        draftEditdata?.data?.job_details?.[0]?.employmentType
+      );
+      methods.setValue(
+        "applicationDeadline",
+        draftEditdata?.data?.job_details?.[0]?.applicationDeadline
+      );
+      methods.setValue(
+        "experienceLevel",
+        draftEditdata?.data?.job_details?.[0]?.experienceLevel
+      );
+      methods.setValue(
+        "salary_min",
+        draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_min
+      );
+      methods.setValue(
+        "salary_max",
+        draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_max
+      );
+      methods.setValue(
+        "currency_code",
+        draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.currency_code
+      );
+      methods.setValue(
+        "rate",
+        draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.rate
+      );
+      methods.setValue(
+        "benefits",
+        draftEditdata?.data?.benefits
+      );
+      methods.setValue(
+        "jobDescription",
+        draftEditdata?.data?.job_specifications?.[0]?.jobDescription
+      );
+      methods.setValue(
+        "requiredSkills",
+        draftEditdata?.data?.job_specifications?.[0]?.requiredSkills
+      );
+    }
+  }, [draftEditdata, methods]);
 
   const renderView = () => {
     switch (currentView) {
       case "jobAds":
         return (
           <>
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 md:gap-0">
+            {/* <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 md:gap-0">
               <Jobbox
                 title="My Job Post"
                 description="Update or refine your job ad to attract top talent!"
@@ -476,7 +582,7 @@ const JobPosting = () => {
               />
             </div>
 
-            {/* Content Section */}
+            
             <div className="flex flex-col items-center justify-center gap-5 mt-28 lg:mt-32 px-4">
               <div className="w-full flex items-center justify-center">
                 <Image
@@ -497,7 +603,7 @@ const JobPosting = () => {
                 variant="bg-main-600 text-white rounded-lg p-4 w-full md:w-[200px] flex justify-center items-center gap-1"
                 clickFn={() => setCurrentView("createJob")}
               />
-            </div>
+            </div> */}
           </>
         );
 
@@ -997,100 +1103,189 @@ const JobPosting = () => {
 
         return (
           <div className="">
-            <Jobbox title="Preview" variant="mb-4 text-[20px]" />
-            <div className="bg-white rounded-md p-4">
-              <Jobbox
-                title={formData.job_title || "Untitled"}
-                variant="mb-4 text-[26px] capitalize"
-                onEdit={() => setCurrentView("createJob")}
-                // <Pencil />
-              />
-              <div className="flex gap-5">
-                <PreviewCard
-                  imgUrl={Company}
-                  text={userInfo?.data?.company_name || "Not Specified"}
-                />
-                <PreviewCard
-                  imgUrl={Location}
-                  text={formData.workPattern || "Not Specified"}
-                />
-                <PreviewCard
-                  imgUrl={Years}
-                  text={`${formData.experienceLevel || "N/A"} years`}
-                />
-                <PreviewCard
-                  imgUrl={Amount}
-                  text={`${formData.salary_min || "N/A"} - ${
-                    formData.salary_max || "N/A"
-                  } ${formData.currency_code || ""}  ${formData.rate || ""}`}
-                  onEdit={() => {
-                    setCurrentTab("details");
-                    setCurrentView("editJob");
-                  }}
-                />
+            <Jobbox title="Preview" variant="mb-2 text-[20px]" />
+            {draftEditLoader ? (
+              <div>
+                <DratfEditSkeleton />
               </div>
-              <hr className="mt-4" />
+            ) : (
+              // Actual content once data is loaded
+              <div className="bg-white rounded-md p-4">
+                <Jobbox
+                  title={
+                    formData.job_title ||
+                    draftEditdata?.data?.job_title ||
+                    "Untitled"
+                  }
+                  variant="mb-4 text-[26px] capitalize"
+                  onEdit={() => setCurrentView("createJob")}
+                />
+                <div className="flex flex-col lg:flex-row gap-5">
+                  <PreviewCard
+                    imgUrl={Company}
+                    text={userInfo?.data?.company_name || "Not Specified"}
+                  />
+                  <PreviewCard
+                    imgUrl={Location}
+                    text={
+                      formData.workPattern ||
+                      draftEditdata?.data?.job_details?.[0]?.workPattern ||
+                      "Not Specified"
+                    }
+                  />
+                  <PreviewCard
+                    imgUrl={Years}
+                    text={`${
+                      formData.experienceLevel ||
+                      draftEditdata?.data?.job_details?.[0]?.experienceLevel ||
+                      "N/A"
+                    } years`}
+                  />
 
-              <div className="mt-4">
-                <JobDescription
-                  title="About the company"
-                  description={userInfo?.data?.company_bio || "Not Specified"}
-                />
-              </div>
-              <div className="mt-4">
-                <JobDescription
-                  title="Job Description"
-                  description={formData.jobDescription || "Not Specified"}
-                  onEdit={() => {
-                    setCurrentTab("specification");
-                    setCurrentView("editJob");
-                  }}
-                />
-              </div>
+                  <PreviewCard
+                    imgUrl={Amount}
+                    text={`${
+                      formData.salary_min ||
+                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.salary_min ||
+                      "N/A"
+                    } - ${
+                      formData.salary_max ||
+                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.salary_max ||
+                      "N/A"
+                    } ${
+                      formData.currency_code ||
+                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.currency_code ||
+                      ""
+                    }  ${
+                      formData.rate ||
+                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.rate ||
+                      ""
+                    }`}
+                    onEdit={() => {
+                      setCurrentTab("details");
+                      setCurrentView("editJob");
+                    }}
+                  />
+                </div>
 
-              <div className="mt-4">
-                <JobDescription
-                  title="Qualifications"
-                  description={formData.requiredSkills || "Not Specified"}
-                  onEdit={() => {
-                    setCurrentTab("specification");
-                    setCurrentView("editJob");
-                  }}
-                />
-              </div>
+                <div className="mt-1">
+                  <PreviewCard
+                    imgUrl={Years}
+                    text={`${
+                      formData.employmentType ||
+                      draftEditdata?.data?.job_details?.[0]?.employmentType ||
+                      "N/A"
+                    }`}
+                  />
+                </div>
+                <hr className="mt-2" />
 
-              <div className="mt-4">
-                <JobDescription
-                  title="What We Offer"
-                  description={formData.benefits || "Not Specified"}
-                  onEdit={() => {
-                    setCurrentTab("benefit");
-                    setCurrentView("editJob");
-                  }}
-                />
+                <div className="mt-4">
+                  <JobDescription
+                    title="About the company"
+                    description={userInfo?.data?.company_bio || "Not Specified"}
+                  />
+                </div>
+                <div className="mt-4">
+                  <JobDescription
+                    title="Job Description"
+                    description={
+                      formData.jobDescription ||
+                      draftEditdata?.data?.job_specifications?.[0]
+                        ?.jobDescription ||
+                      "Not Specified"
+                    }
+                    onEdit={() => {
+                      setCurrentTab("specification");
+                      setCurrentView("editJob");
+                    }}
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <JobDescription
+                    title="Qualifications"
+                    description={
+                      formData.requiredSkills ||
+                      draftEditdata?.data?.job_specifications?.[0]?.requiredSkills?.join(
+                        ", "
+                      ) ||
+                      "Not Specified"
+                    }
+                    onEdit={() => {
+                      setCurrentTab("specification");
+                      setCurrentView("editJob");
+                    }}
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <JobDescription
+                    title="What We Offer"
+                    description={
+                      formData.benefits ||
+                      draftEditdata?.data?.benefits ||
+                      "Not Specified"
+                    }
+                    onEdit={() => {
+                      setCurrentTab("benefit");
+                      setCurrentView("editJob");
+                    }}
+                  />
+                </div>
               </div>
-            </div>
+            )}
             <div className="flex gap-5 justify-end mt-4">
-              <SubmitButton
-                className="w-full sm:w-[120px] h-11 bg-gray-500"
-                isLoading={draftLoading}
-                clickFn={methods.handleSubmit(handleSaveToDraft)}
-              >
-                Save To Draft
-              </SubmitButton>
-              <SubmitButton
-                className="w-full sm:w-[120px] h-11"
-                isLoading={postLoading}
-                clickFn={methods.handleSubmit(onSubmit)}
-              >
-                Post Job
-              </SubmitButton>
+              {draftId ? (
+                <div className="flex gap-5">
+                  <SubmitButton
+                    className="w-full sm:w-[120px] h-11 bg-gray-500"
+                    isLoading={updateDraftLoading}
+                    clickFn={methods.handleSubmit(handleUpdateDraft)}
+                  >
+                    Update Draft
+                  </SubmitButton>
+                  <SubmitButton
+                    className="w-full sm:w-[120px] h-11"
+                    isLoading={postLoading}
+                    clickFn={methods.handleSubmit(onSubmit)}
+                  >
+                    Post Job
+                  </SubmitButton>
+                </div>
+              ) : (
+                <div className="flex gap-5">
+                  <SubmitButton
+                    className="w-full sm:w-[120px] h-11 bg-gray-500"
+                    isLoading={draftLoading}
+                    clickFn={methods.handleSubmit(handleSaveToDraft)}
+                  >
+                    Save To Draft
+                  </SubmitButton>
+                  <SubmitButton
+                    className="w-full sm:w-[120px] h-11"
+                    isLoading={postLoading}
+                    clickFn={methods.handleSubmit(onSubmit)}
+                  >
+                    Post Job
+                  </SubmitButton>
+                </div>
+              )}
             </div>
           </div>
         );
 
       case "overview":
-        return <JobOverview setCurrentView={setCurrentView} />;
+        return (
+          <JobOverview
+            setCurrentView={setCurrentView}
+            setDraftId={setDraftId}
+          />
+        );
 
       default:
         return <div>Invalid View</div>;

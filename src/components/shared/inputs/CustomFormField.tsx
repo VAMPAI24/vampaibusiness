@@ -58,6 +58,7 @@ interface CustomProps {
   variant?: string;
   defaultValue?: string;
   readOnly?: boolean;
+  disabledDates?: (date: Date) => boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -175,7 +176,6 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
                 className={`w-full pl-3 text-left font-normal ${
                   !field.value && "text-gray-500"
                 } ${props.variant}`}
-                disabled={props.disabled}
               >
                 {field.value ? (
                   format(field.value, props.dateFormat || "PPP")
@@ -190,11 +190,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
-                disabled={(date) => {
-                  const today = new Date(); 
-                  today.setHours(0, 0, 0, 0); 
-                  return date < today; 
-                }}
+                disabled={props.disabled} 
                 initialFocus
               />
             </PopoverContent>
