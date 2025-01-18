@@ -19,7 +19,7 @@ const EventModalContent = ({
   onClose,
   email,
   name,
-  applicant_Id
+  applicant_Id,
 }: EventModalContentProps) => {
   const form = useForm<z.infer<typeof EventFormSchema>>({
     resolver: zodResolver(EventFormSchema),
@@ -35,7 +35,7 @@ const EventModalContent = ({
     },
   });
 
-  const { control } = form;
+  const { control, watch } = form;
 
   const [createEvent, { isLoading }] = useEmployerCreateEventMutation();
 
@@ -52,13 +52,9 @@ const EventModalContent = ({
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
         .filter(Boolean),
-        applicant_Id: applicant_Id
+      applicant_Id: applicant_Id,
       // attendees: [data.candidateemail, ...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
     };
-
-
-
-
 
     try {
       await createEvent(payload).unwrap();
@@ -68,6 +64,9 @@ const EventModalContent = ({
       console.error(error);
     }
   };
+
+  const meetingLink = watch("link");
+  const isSubmitDisabled = !meetingLink || !meetingLink.startsWith("https");
 
   return (
     <div className="w-full px-4 max-w-2xl mx-auto overflow-y-auto  hide-scrollbar overflow-hidden">
@@ -132,7 +131,6 @@ const EventModalContent = ({
               </CustomFormField>
             </div>
 
-
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={control}
@@ -185,6 +183,7 @@ const EventModalContent = ({
               <SubmitButton
                 isLoading={isLoading}
                 className="w-full lg:w-40 mt-4 rounded"
+                disabled={isSubmitDisabled}
               >
                 Schedule
               </SubmitButton>

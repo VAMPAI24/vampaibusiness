@@ -3,11 +3,11 @@ import { Button } from '../ui/button'
 import { SubmitButtonProps } from '@/types'
 import { PulseLoader } from 'react-spinners'
 
-const SubmitButton = ({ isLoading, loadingText, className, clickFn,  children }: SubmitButtonProps) => {
+const SubmitButton = ({ disabled, isLoading, loadingText, className, clickFn,  children }: SubmitButtonProps) => {
   return (
     <Button
     type="submit"
-    disabled={isLoading}
+    disabled={disabled || isLoading}
     className={className ?? " text-white"}
     onClick={clickFn}
   >
