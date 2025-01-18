@@ -127,23 +127,23 @@ const EventModalContent = ({
                 ))}
               </CustomFormField>
             </div>
-            
-            <div className="w-full flex flex-col gap-[.25em]" >
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={control}
-              name="link"
-              label="Meeting Link"
-              placeholder="Enter the Meeting Link"
-              variant="h-[40px] w-full"
-            />
-           {!form.watch("link")?.includes("https") && <p className="text-red-800 text-[.75em]  font-300">
-              {
-                !form.watch("link")?.includes("https") && {'Is this a valid link ?'}
-              }
-            </p>}
+
+            <div className="w-full flex flex-col gap-[.25em]">
+              <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={control}
+                name="link"
+                label="Meeting Link"
+                placeholder="Enter the Meeting Link"
+                variant="h-[40px] w-full"
+              />
+              {form.watch("link") &&
+                !form.watch("link")?.includes("https") && (
+                  <p className="text-red-800 text-[.75em]  font-300">
+                    Is this a valid link ?
+                  </p>
+                )}
             </div>
-            
 
             <CustomFormField
               fieldType={FormFieldType.INPUT}
