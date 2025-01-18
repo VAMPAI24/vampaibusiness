@@ -130,6 +130,7 @@ export interface EventModalContentProps {
   onClose: () => void;
   email?: string;
   name?: string;
+  applicant_Id?: string;
 }
 
 export interface PreviewCardProps {

@@ -64,6 +64,12 @@ const ShortListedDetails = ({
   // Overview api call
   const { data } = useGetApplicationDetailsQuery(candidate?.id);
 
+
+
+
+
+
+
   const pdfUrl = data?.data?.cv_file;
   const pdfName = pdfUrl ? pdfUrl.split("/").pop() : "";
 
@@ -74,6 +80,9 @@ const ShortListedDetails = ({
       first_name: "",
     },
   });
+
+
+
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -586,6 +595,7 @@ const ShortListedDetails = ({
           }
           email={data?.data.applicant_email ?? ""}
           onClose={openCloseModalFn}
+          applicant_Id={data.data?.profile?.id ?? ""}
         />
       </CustomModal>
 

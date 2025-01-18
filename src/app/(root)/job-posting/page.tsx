@@ -428,7 +428,6 @@ const JobPosting = () => {
   const { data: draftEditdata, isLoading: draftEditLoader } =
     useGetJobsInDraftQuery(draftId);
 
-  console.log("draftEditdata", draftEditdata);
 
   // 2. Update the data
   // Save Job To draft Handler
