@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { Button, Container } from "@/components/landingpage";
 import { footerLinks, footerSocial } from "@/constants";
@@ -45,15 +45,12 @@ const Footer = () => {
 
           <span className="max-w-full md:max-w-[60%] lg:max-w-[450px] flex flex-col gap-[20px]">
             <h3 className="font-rubik font-[400] text-white text-[1em] md:text-[2em] leading-[1.4em]">
-              Stay up-to-date with{" "}
-              <strong className="text-main-600 font-[400]">
-                Job search hacks
-              </strong>
+              Stay in the loop with{" "}
+              <strong className="text-main-600 font-[400]"> hiring tips,</strong>
               ,{" "}
               <strong className="text-main-600 font-[400]">
-                Interview tips
+                trends, and exclusive offers.
               </strong>
-              , and lots more.
             </h3>
 
             <div className="flex items-center w-full relative">

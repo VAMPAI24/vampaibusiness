@@ -19,8 +19,8 @@ const Hiring = () => {
           <div className="lg:w-4/6 lg:mt-10">
             <SubHeading
               header="Work together seamlessly"
-              title="Collaborative Hiring"
-              description="Share candidate profile and feedback with your team, making the hiring process more efficient and unified"
+              title="Hiring, But Make It a Team Sport"
+              description="Don’t just hire alone, get your team involved. Vamp lets you share profiles, exchange feedback, and make hiring decisions together without the endless back-and-forth emails."
             />
             <Button
               text="Learn More"
@@ -47,8 +47,8 @@ const Hiring = () => {
           <div className="lg:w-4/6 lg:mt-10">
             <SubHeading
               header="Showcase your brand"
-              title="Customizable Job Posts"
-              description="Attract the best candidates with tailored job descriptions that reflect your company culture and expectations"
+              title="Job Posts That Actually Attract Talent"
+              description="Stand out with customisable posts that highlight what makes your company amazing and pull in the candidates who belong on your team."
             />
             <Button
               text="Learn More"
