@@ -282,7 +282,7 @@ export const benefitDetailsSchema = z.object({
 
 
 export const EventFormSchema = z.object({
-  summary: z.string().min(1, "Event Title is required"),
+  title: z.string().min(1, "Event Title is required"),
   start: z.object({
     date_time: z.preprocess(
       (value) => (value instanceof Date ? value.toISOString() : value),
@@ -290,6 +290,8 @@ export const EventFormSchema = z.object({
     ),
   }),
   duration: z.string().min(1, "Duration is required"),
+  link: z.string().min(1, "Link is required"),
   attendees: z.string().min(1, "Attendees is required"),
   description: z.string().min(1, "Description is required"),
+  // applicant_Id: z.string().min(1, "applicant_Id is required"),
 });

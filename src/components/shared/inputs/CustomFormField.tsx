@@ -190,7 +190,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
-                disabled={props.disabled} 
+                disabled={props.disabledDates} 
                 initialFocus
               />
             </PopoverContent>
