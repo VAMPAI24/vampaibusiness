@@ -19,7 +19,7 @@ const EventModalContent = ({
   onClose,
   email,
   name,
-  applicant_Id
+  applicant_Id,
 }: EventModalContentProps) => {
   const form = useForm<z.infer<typeof EventFormSchema>>({
     resolver: zodResolver(EventFormSchema),
@@ -52,13 +52,9 @@ const EventModalContent = ({
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
         .filter(Boolean),
-        applicant_Id: applicant_Id
+      applicant_Id: applicant_Id,
       // attendees: [data.candidateemail, ...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
     };
-
-
-
-
 
     try {
       await createEvent(payload).unwrap();
@@ -131,8 +127,8 @@ const EventModalContent = ({
                 ))}
               </CustomFormField>
             </div>
-
-
+            
+            <div className="w-full flex flex-col gap-[.25em]" >
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={control}
@@ -141,6 +137,13 @@ const EventModalContent = ({
               placeholder="Enter the Meeting Link"
               variant="h-[40px] w-full"
             />
+           {!form.watch("link")?.includes("https") && <p className="text-red-800 text-[.75em]  font-300">
+              {
+                !form.watch("link")?.includes("https") && {'Is this a valid link ?'}
+              }
+            </p>}
+            </div>
+            
 
             <CustomFormField
               fieldType={FormFieldType.INPUT}
@@ -184,6 +187,7 @@ const EventModalContent = ({
 
               <SubmitButton
                 isLoading={isLoading}
+                disabled={isLoading || !form.watch("link")?.includes("https")}
                 className="w-full lg:w-40 mt-4 rounded"
               >
                 Schedule
