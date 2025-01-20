@@ -603,7 +603,8 @@ const ShortListedDetails = ({
       <CustomModal
         isOpen={shareOpen}
         onClose={shareOpenCloseModalFn}
-        className={"w-[95%] md:max-w-lg"}
+        className={"w-[95%] h-[80%] md:max-h-[60%] md:max-w-lg overflow-hidden"}
+        // className={"w-[95%] md:max-w-lg"}
       >
         <ShareModalContent />
       </CustomModal>

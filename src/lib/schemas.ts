@@ -295,3 +295,10 @@ export const EventFormSchema = z.object({
   description: z.string().min(1, "Description is required"),
   // applicant_Id: z.string().min(1, "applicant_Id is required"),
 });
+
+
+
+export const ShareInviteSchema = z.object({
+  search_terms: z.string().min(1, "Search terms is required"),
+
+});
