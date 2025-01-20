@@ -13,7 +13,7 @@ export const apiSlice = createApi({
       const token = (getState() as RootState).auth?.token;
 
       // Log the token for debugging
-      console.log("Current Token:", token);
+      // console.log("Current Token:", token);
 
       // Set the Authorization header if token exists
       if (token) {
