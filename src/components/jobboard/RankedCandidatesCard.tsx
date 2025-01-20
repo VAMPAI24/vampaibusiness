@@ -8,6 +8,7 @@ import {
 
 import { formatAndTransformString } from "@/lib/utils";
 import ScoreGauge from "../common/ScoreGauge";
+import { Item } from "@radix-ui/react-accordion";
 const RankedCandidatesCard = ({
   candidateId,
   applicantName,
@@ -94,18 +95,44 @@ const RankedCandidatesCard = ({
           <div className="mb-4">
             <h3 className="font-medium text-gray-700 mb-2">Core Strength:</h3>
             <div className="flex flex-wrap gap-2">
-              <span className="px-6 py-1 bg-green-100 text-green-600 text-sm rounded-full">
-                {strengths}
-              </span>
+              {Array.isArray(strengths) ? (
+                <div>
+                  {(strengths ?? []).map((item, id) => (
+                    <span
+                      key={id.toString()}
+                      className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <span className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full">
+                  {strengths}
+                </span>
+              )}
             </div>
           </div>
 
           <div className="mb-4">
             <h3 className="font-medium text-gray-700 mb-2">Weakness:</h3>
             <div className="flex flex-wrap gap-2">
-              <span className="px-6 py-1 bg-red-100 text-red-600 text-sm rounded-full">
-                {weaknesses}
-              </span>
+              {Array.isArray(weaknesses) ? (
+                <div>
+                  {(weaknesses ?? []).map((item, id) => (
+                    <span
+                      key={id.toString()}
+                      className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <span className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full">
+                  {weaknesses}
+                </span>
+              )}
             </div>
           </div>
 

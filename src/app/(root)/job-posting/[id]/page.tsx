@@ -252,7 +252,7 @@ const JobPostingDetails = () => {
                 <>
                   {loadCandidates ? (
                     <div className="w-full  flex items-center justify-center">
-                      <div className="w-fit mt-10 lg:mt-0 flex flex-col items-center gap-[.5em]">
+                      <div className="w-fit h-[10em] mt-10 lg:mt-0 flex flex-col items-center justify-center gap-[.5em]">
                         <BallsLoader />
                         <p className="text-[.875em] text-main-900 text-center">
                           Loading Candidates...
@@ -273,7 +273,7 @@ const JobPostingDetails = () => {
 
                       <div className="w-full min-h-screen flex items-start">
                         {candidateData?.data?.jobApplicant?.length > 0 ? (
-                          <div className="grid grid-cols-1 gap-[12em]">
+                          <div className="grid grid-cols-1 gap-[1em]">
                             {(candidateData?.data?.jobApplicant ?? [])?.map(
                               (candidate: any, index: any) => (
                                 <CandidateCard
@@ -308,7 +308,7 @@ const JobPostingDetails = () => {
                 <>
                   {loadRanked ? (
                     <div className="w-full flex items-center justify-center">
-                      <div className="w-fit flex flex-col items-center gap-[.5em]">
+                      <div className="w-fit h-[10em] flex flex-col items-center justify-center gap-[.5em]">
                         <BallsLoader />
                         <p className="text-[.875em] text-main-900 text-center">
                           Ranking Candidates...
@@ -329,7 +329,7 @@ const JobPostingDetails = () => {
 
                       <div className="w-full min-h-screen flex items-start">
                         {rankedCandidate?.data.length > 0 ? (
-                          <div className="flex flex-col gap-6 w-full max-w-7xl">
+                          <div className="flex flex-col gap-[1em] w-full max-w-7xl">
                             {(rankedCandidate?.data ?? [])?.map(
                               (candidate: any) => (
                                 <RankedCandidatesCard
