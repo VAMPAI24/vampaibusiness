@@ -14,6 +14,7 @@ import { Durations } from "@/constants";
 import { EventModalContentProps } from "@/types";
 import { useEmployerCreateEventMutation } from "@/redux/features/job-posting/jobpostingApi";
 import { Tipinfo } from "../common/alerts";
+// import { useRouter } from "next/navigation";
 
 const EventModalContent = ({
   onClose,
@@ -21,6 +22,7 @@ const EventModalContent = ({
   name,
   applicant_Id,
 }: EventModalContentProps) => {
+  // const router = useRouter();
   const form = useForm<z.infer<typeof EventFormSchema>>({
     resolver: zodResolver(EventFormSchema),
     defaultValues: {
@@ -35,7 +37,10 @@ const EventModalContent = ({
     },
   });
 
-  const { control, watch } = form;
+
+
+  const { control } = form;
+
 
   const [createEvent, { isLoading }] = useEmployerCreateEventMutation();
 
@@ -52,21 +57,23 @@ const EventModalContent = ({
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
         .filter(Boolean),
-      applicant_Id: applicant_Id,
+        profile_Id: applicant_Id,
       // attendees: [data.candidateemail, ...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
     };
 
     try {
       await createEvent(payload).unwrap();
       onClose();
+      // router.push("/scheduleinterview"); 
       window.location.href = "/scheduleinterview";
     } catch (error) {
       console.error(error);
     }
   };
 
-  const meetingLink = watch("link");
-  const isSubmitDisabled = !meetingLink || !meetingLink.startsWith("https");
+
+
+ 
 
   return (
     <div className="w-full px-4 max-w-2xl mx-auto overflow-y-auto  hide-scrollbar overflow-hidden">
@@ -130,27 +137,23 @@ const EventModalContent = ({
                 ))}
               </CustomFormField>
             </div>
-            
-            <div className="w-full flex flex-col gap-[.25em]" >
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={control}
-              name="link"
-              label="Meeting Link"
-              placeholder="Enter the Meeting Link"
-              variant="h-[40px] w-full"
-            />
-           {!form.watch("link")?.includes("https") && <p className="text-red-800 text-[.75em]  font-300">
-              {
-                !form.watch("link")?.includes("https") && {'Is this a valid link ?'}
-              }
-            </p>}
 
-
-
-           
+            <div className="w-full flex flex-col gap-[.25em]">
+              <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={control}
+                name="link"
+                label="Meeting Link"
+                placeholder="Enter the Meeting Link"
+                variant="h-[40px] w-full"
+              />
+              {form.watch("link") &&
+                !form.watch("link")?.includes("https") && (
+                  <p className="text-red-800 text-[.75em]  font-300">
+                    Is this a valid link ?
+                  </p>
+                )}
             </div>
-            
 
             <CustomFormField
               fieldType={FormFieldType.INPUT}
@@ -196,7 +199,6 @@ const EventModalContent = ({
                 isLoading={isLoading}
                 disabled={isLoading || !form.watch("link")?.includes("https")}
                 className="w-full lg:w-40 mt-4 rounded"
-                // disabled={isSubmitDisabled}
               >
                 Schedule
               </SubmitButton>

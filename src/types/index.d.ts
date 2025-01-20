@@ -87,6 +87,7 @@ export interface SubmitButtonProps {
   disabled?: boolean;
   className?: string;
   loadingText?: string;
+  disabled?:boolean;
   children: React.ReactNode;
   clickFn?: () => void;
 }

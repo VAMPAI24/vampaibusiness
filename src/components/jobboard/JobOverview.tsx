@@ -26,8 +26,11 @@ import { useRouter } from "next/navigation";
 const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
-  const [tabToFetch, setTabToFetch] = useState("active");
+  // const [tabToFetch, setTabToFetch] = useState("active");
 
+
+
+ // Active Jobs
   const {
     data: activeJobs,
     isLoading: activeJobsLoader,
@@ -45,17 +48,30 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
     router.push(`/job-posting/${id}`);
   };
 
+  // useEffect(() => {
+  //   const intervalId = setTimeout(() => {
+  //     if (tabToFetch === "active") {
+  //       activeRefetch();
+  //     } else if (tabToFetch === "Drafts") {
+  //       draftRefetch();
+  //     }
+  //   }, 1000);
+
+  //   return () => clearInterval(intervalId);
+  // }, [tabToFetch, activeRefetch, draftRefetch]);
+
+
+
+
+
   useEffect(() => {
     const intervalId = setTimeout(() => {
-      if (tabToFetch === "active") {
-        activeRefetch();
-      } else if (tabToFetch === "Drafts") {
-        draftRefetch();
-      }
+      activeRefetch();
+      draftRefetch();
     }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, [tabToFetch, activeRefetch, draftRefetch]);
+    return () => clearTimeout(intervalId);
+  }, [activeRefetch, draftRefetch]);
 
   useEffect(() => {
     // Fetch token from cookies
@@ -109,7 +125,7 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
           <TabsTrigger
             value="active"
             className="rounded relative pb-3 transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
-            onClick={() => setTabToFetch("active")}
+            // onClick={() => setTabToFetch("active")}
           >
             Active
           </TabsTrigger>
@@ -122,7 +138,7 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
           <TabsTrigger
             value="Drafts"
             className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
-            onClick={() => setTabToFetch("Drafts")}
+            // onClick={() => setTabToFetch("Drafts")}
           >
             Drafts
           </TabsTrigger>

@@ -151,8 +151,6 @@ const ShareModalContent = () => {
     },
   });
 
-  const { watch, handleSubmit, reset } = form;
-  const searchTerms = watch("search_terms") || "";
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading } = useSearchTeamMemberQuery(searchQuery, {
