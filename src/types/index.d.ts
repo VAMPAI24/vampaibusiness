@@ -84,6 +84,7 @@ export interface ProfileBoxProps {
 
 export interface SubmitButtonProps {
   isLoading?: boolean;
+  disabled?: boolean;
   className?: string;
   loadingText?: string;
   disabled?:boolean;

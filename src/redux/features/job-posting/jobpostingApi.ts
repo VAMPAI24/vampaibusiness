@@ -259,6 +259,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
+          console.log("result", result)
         } catch (error: any) {
           ToastNotification({
             title: error?.error?.data?.error || error?.error?.error,
@@ -448,6 +449,26 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+
+    searchTeamMember: builder.query({
+      query: (search_terms) => ({
+        url: "/employer/search-team",
+        method: "GET",
+        params: { search_terms },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
   }),
 });
 
@@ -472,5 +493,6 @@ export const {
   useRejectCandidateMutation,
   useGetProfilePercentageCountQuery,
   useGetJobsInDraftQuery,
-  useUpdateJobInDraftMutation
+  useUpdateJobInDraftMutation,
+  useSearchTeamMemberQuery
 } = authApi;

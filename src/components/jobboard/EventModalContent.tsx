@@ -14,6 +14,7 @@ import { Durations } from "@/constants";
 import { EventModalContentProps } from "@/types";
 import { useEmployerCreateEventMutation } from "@/redux/features/job-posting/jobpostingApi";
 import { Tipinfo } from "../common/alerts";
+// import { useRouter } from "next/navigation";
 
 const EventModalContent = ({
   onClose,
@@ -21,6 +22,7 @@ const EventModalContent = ({
   name,
   applicant_Id,
 }: EventModalContentProps) => {
+  // const router = useRouter();
   const form = useForm<z.infer<typeof EventFormSchema>>({
     resolver: zodResolver(EventFormSchema),
     defaultValues: {
@@ -35,7 +37,10 @@ const EventModalContent = ({
     },
   });
 
+
+
   const { control } = form;
+
 
   const [createEvent, { isLoading }] = useEmployerCreateEventMutation();
 
@@ -52,18 +57,23 @@ const EventModalContent = ({
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
         .filter(Boolean),
-      applicant_Id: applicant_Id,
+        profile_Id: applicant_Id,
       // attendees: [data.candidateemail, ...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
     };
 
     try {
       await createEvent(payload).unwrap();
       onClose();
+      // router.push("/scheduleinterview"); 
       window.location.href = "/scheduleinterview";
     } catch (error) {
       console.error(error);
     }
   };
+
+
+
+ 
 
   return (
     <div className="w-full px-4 max-w-2xl mx-auto overflow-y-auto  hide-scrollbar overflow-hidden">

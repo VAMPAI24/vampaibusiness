@@ -23,7 +23,7 @@ const Sidebar = () => {
   };
 
   return (
-    <section className="sticky left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 2xl:w-[355px]">
+    <section className="left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 2xl:w-[355px] relative">
       <nav className="flex flex-col gap-4">
         <Link
           href="/dashboard"
@@ -58,7 +58,7 @@ const Sidebar = () => {
               className={cn(
                 "flex gap-3 items-center py-1 p-2 lg:p-4 rounded-md justify-center lg:justify-start",
                 {
-                  "bg-red-200 rounded-full mt-[14em]": isLastItem,
+                  "bg-red-200 rounded-full mt-36": isLastItem,
                   "bg-white": isActive && !isLastItem,
                 }
               )}

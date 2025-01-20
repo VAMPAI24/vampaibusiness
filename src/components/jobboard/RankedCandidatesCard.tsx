@@ -8,6 +8,7 @@ import {
 
 import { formatAndTransformString } from "@/lib/utils";
 import ScoreGauge from "../common/ScoreGauge";
+import { Item } from "@radix-ui/react-accordion";
 const RankedCandidatesCard = ({
   candidateId,
   applicantName,
@@ -46,9 +47,6 @@ const RankedCandidatesCard = ({
     }
   };
 
-
-
-
   return (
     <div className="bg-[#F9FAFB] border border-main-200 rounded-lg  w-full cursor-pointer">
       <div className="p-6 flex items-start justify-between">
@@ -67,11 +65,17 @@ const RankedCandidatesCard = ({
                   : "N/A"}
               </p> */}
 
-            <ScoreGauge overallScore={overallScore ? Number(overallScore) : null} />
-        
+              <ScoreGauge
+                overallScore={overallScore ? Number(overallScore) : null}
+              />
             </div>
 
-            <p onClick={clickFn} className="text-[.75em] font-[400] text-main-700 ">See Profile</p>
+            <p
+              onClick={clickFn}
+              className="text-[.75em] font-[400] text-main-700 "
+            >
+              See Profile
+            </p>
           </div>
 
           {/* <div className="mb-4">
@@ -91,28 +95,44 @@ const RankedCandidatesCard = ({
           <div className="mb-4">
             <h3 className="font-medium text-gray-700 mb-2">Core Strength:</h3>
             <div className="flex flex-wrap gap-2">
-              {strengths?.map((strength) => (
-                <span
-                  key={strength}
-                  className="px-3 py-1 bg-green-100 text-green-600 text-sm rounded-full"
-                >
-                  {strength}
+              {Array.isArray(strengths) ? (
+                <div>
+                  {(strengths ?? []).map((item, id) => (
+                    <span
+                      key={id.toString()}
+                      className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <span className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full">
+                  {strengths}
                 </span>
-              ))}
+              )}
             </div>
           </div>
 
           <div className="mb-4">
             <h3 className="font-medium text-gray-700 mb-2">Weakness:</h3>
             <div className="flex flex-wrap gap-2">
-              {weaknesses?.map((weakness) => (
-                <span
-                  key={weakness}
-                  className="px-3 py-1 bg-red-100 text-red-600 text-sm rounded-full"
-                >
-                  {weakness}
+              {Array.isArray(weaknesses) ? (
+                <div>
+                  {(weaknesses ?? []).map((item, id) => (
+                    <span
+                      key={id.toString()}
+                      className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <span className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full">
+                  {weaknesses}
                 </span>
-              ))}
+              )}
             </div>
           </div>
 
@@ -122,7 +142,7 @@ const RankedCandidatesCard = ({
             </p>
           </div> */}
 
-          <div className="mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
+          <div className=" bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
             <p className="text-blue-600 text-sm">
               <strong>AI Comment:</strong>
             </p>
@@ -138,7 +158,7 @@ const RankedCandidatesCard = ({
         {/* <p className="text-[.75em] font-[400] text-main-700 ">See Profile</p> */}
       </div>
 
-      <div className="mt-6 p-6 flex flex-col sm:flex-row justify-end gap-4">
+      <div className="p-6 flex flex-col sm:flex-row justify-end gap-4">
         <SubmitButton
           isLoading={isLoading}
           clickFn={handleShortlist}
