@@ -41,3 +41,12 @@ export const formatAndTransformString = (input: string): string => {
 
   return formattedString.trim();
 };
+
+// checks if local or staging
+export const isLocalOrStaging = () => {
+  if (typeof window !== "undefined") {
+    const { origin } = window?.location;
+    const regex = /(localhost|staging)/;
+    return regex.test(origin);
+  }
+};

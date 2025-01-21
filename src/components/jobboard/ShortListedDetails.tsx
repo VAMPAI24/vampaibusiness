@@ -64,7 +64,6 @@ const ShortListedDetails = ({
   // Overview api call
   const { data, isLoading } = useGetApplicationDetailsQuery(candidate?.id);
 
-
   const pdfUrl = data?.data?.cv_file;
   const pdfName = pdfUrl ? pdfUrl.split("/").pop() : "";
 
@@ -90,8 +89,6 @@ const ShortListedDetails = ({
 
   // Fetch Event Data
   const { data: eventData } = useGetAllEventQuery({ max_result: 200 });
-
- 
 
   if (!candidate) return null;
 
@@ -183,7 +180,6 @@ const ShortListedDetails = ({
                     <>loading...</>
                   ) : (
                     <>
-                   
                       {/* <div className="flex items-center gap-3 mb-4 mt-10">
                         <div className="rounded-full overflow-hidden bg-main-100">
                           <Avatar className="w-20 h-20">
@@ -386,6 +382,26 @@ const ShortListedDetails = ({
                           )}
                         </div>
                       </div>
+
+                      {data?.data?.profile?.profiling_video && (
+                        <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6">
+                          {/* Header */}
+                          <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                            Introduction
+                          </h2>
+                          <video width="100%" height="auto" controls>
+                            <source
+                              src={
+                                data?.data?.profile?.profiling_video as string
+                              }
+                              className="height"
+                              type="video/mp4"
+                            />
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      )}
+
                       {/* attached document */}
                       <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6 mb-10">
                         {/* Header */}

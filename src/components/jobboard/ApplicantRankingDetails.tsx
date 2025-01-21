@@ -43,10 +43,6 @@ const ApplicantRankingDetails = ({
 }: ApplicantRankingDetailsProps) => {
   const { data } = useGetApplicationDetailsQuery(candidate?.id);
 
-
-
-
- 
   // Pdf name
   const pdfUrl = data?.data?.cv_file;
   const pdfName = pdfUrl ? pdfUrl.split("/").pop() : "";
@@ -243,6 +239,23 @@ const ApplicantRankingDetails = ({
           </div>
         </div>
 
+        {data?.data?.profile?.profiling_video && (
+          <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6">
+            {/* Header */}
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              Introduction
+            </h2>
+            <video width="100%" height="auto" controls>
+              <source
+                src={data?.data?.profile?.profiling_video as string}
+                className="height"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
+
         {/* attached document */}
         <div className="border border-blue-200 rounded-lg p-6 max-w-6xl mx-auto bg-white mt-6 mb-10">
           {/* Header */}
@@ -256,7 +269,7 @@ const ApplicantRankingDetails = ({
             <div className="flex-shrink-0 w-10 h-10">
               <Image
                 // src={data?.data?.cv_file} // Replace with a proper icon if available
-                src={PdfImage} 
+                src={PdfImage}
                 alt="PDF Icon"
                 width={40}
                 height={40}
