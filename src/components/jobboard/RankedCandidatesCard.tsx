@@ -8,7 +8,7 @@ import {
 
 import { formatAndTransformString } from "@/lib/utils";
 import ScoreGauge from "../common/ScoreGauge";
-import { Item } from "@radix-ui/react-accordion";
+
 const RankedCandidatesCard = ({
   candidateId,
   applicantName,
