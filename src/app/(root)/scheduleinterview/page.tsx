@@ -1,17 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useGetAllEventQuery } from "@/redux/features/job-posting/jobpostingApi";
 import { BallsLoader } from "@/components/ui/BallsLoader";
 
 const ScheduleInterview = () => {
   // Fetch Event Data
-  const { data: eventData, isLoading: loadEvents } = useGetAllEventQuery({
-    max_result: 200,
-  });
+  const {
+    data: eventData,
+    isLoading: loadEvents,
+  } = useGetAllEventQuery(
+    {
+      max_result: 200,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
+  // console.log(eventData)
   const isEmpty = !eventData?.data || eventData.data.length === 0;
+
+  useEffect(() => {
+    // console.log(eventData);
+    // refetch();
+  }, []);
 
   return (
     <div className="w-full mx-auto flex items-center justify-center">

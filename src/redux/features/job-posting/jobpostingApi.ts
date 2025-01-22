@@ -343,7 +343,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
 
-          console.log(result);
+          // console.log(result);
 
           ToastNotification({
             // title: result?.data?.message,
