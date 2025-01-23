@@ -84,8 +84,8 @@ const ShortListedDetails = ({
   const openCloseModalFn = () => setOpen(!open);
 
   // share modal constrol
-  const [shareOpen, setShareOpen] = useState(false);
-  const shareOpenCloseModalFn = () => setShareOpen(!shareOpen);
+  // const [shareOpen, setShareOpen] = useState(false);
+  // const shareOpenCloseModalFn = () => setShareOpen(!shareOpen);
 
   // Fetch Event Data
   const { data: eventData } = useGetAllEventQuery({ max_result: 200 });
@@ -133,7 +133,7 @@ const ShortListedDetails = ({
                   Schedule
                 </button>
                 <button
-                  onClick={shareOpenCloseModalFn}
+                  // onClick={}
                   className="text-gray-600 flex text-sm gap-1 items-center hover:underline"
                 >
                   <UserPlus />
@@ -619,8 +619,8 @@ const ShortListedDetails = ({
 
       {/* Share Event Modal  */}
       <CustomModal
-        isOpen={shareOpen}
-        onClose={shareOpenCloseModalFn}
+        // isOpen={shareOpen}
+        // onClose={shareOpenCloseModalFn}
         className={"w-[95%] h-[80%] md:max-h-[60%] md:max-w-lg overflow-hidden"}
         // className={"w-[95%] md:max-w-lg"}
       >

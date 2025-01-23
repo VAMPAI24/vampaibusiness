@@ -37,10 +37,7 @@ const EventModalContent = ({
     },
   });
 
-
-
   const { control } = form;
-
 
   const [createEvent, { isLoading }] = useEmployerCreateEventMutation();
 
@@ -57,23 +54,19 @@ const EventModalContent = ({
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
         .filter(Boolean),
-        profile_Id: applicant_Id,
+      profile_Id: applicant_Id,
       // attendees: [data.candidateemail, ...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
     };
 
     try {
       await createEvent(payload).unwrap();
       onClose();
-      // router.push("/scheduleinterview"); 
+      // router.push("/scheduleinterview");
       window.location.href = "/scheduleinterview";
     } catch (error) {
       console.error(error);
     }
   };
-
-
-
- 
 
   return (
     <div className="w-full px-4 max-w-2xl mx-auto overflow-y-auto  hide-scrollbar overflow-hidden">
@@ -97,14 +90,21 @@ const EventModalContent = ({
               variant="h-[40px] w-full"
             />
 
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={control}
-              name="description"
-              label="Description"
-              placeholder="Enter the description"
-              variant="h-[40px] w-full"
-            />
+        
+              <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={control}
+                name="description"
+                label="Description"
+                placeholder="Enter the description"
+                variant="h-[40px] w-full"
+              />
+
+          
+
+
+
+           
 
             <div className="flex gap-3">
               <CustomFormField
@@ -138,6 +138,8 @@ const EventModalContent = ({
               </CustomFormField>
             </div>
 
+
+
             <div className="w-full flex flex-col gap-[.25em]">
               <CustomFormField
                 fieldType={FormFieldType.INPUT}
@@ -147,13 +149,13 @@ const EventModalContent = ({
                 placeholder="Enter the Meeting Link"
                 variant="h-[40px] w-full"
               />
-              {form.watch("link") &&
-                !form.watch("link")?.includes("https") && (
-                  <p className="text-red-800 text-[.75em]  font-300">
-                    Is this a valid link ?
-                  </p>
-                )}
+              {form.watch("link") && !form.watch("link")?.includes("https") && (
+                <p className="text-red-800 text-[.75em]  font-300">
+                  Is this a valid link ?
+                </p>
+              )}
             </div>
+
 
             <CustomFormField
               fieldType={FormFieldType.INPUT}
