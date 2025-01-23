@@ -34,6 +34,8 @@ import { BallsLoader } from "@/components/ui/BallsLoader";
 import { Empty } from "@/components/ui/empty";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Loader from "@/components/common/loader/Loader";
+import AllCandidate from "./_components/allcandidate";
+
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
@@ -249,7 +251,7 @@ const JobPostingDetails = () => {
               </TabsList>
 
               <TabsContent value="all">
-                <>
+                {/* <>
                   {loadCandidates ? (
                     <div className="w-full  flex items-center justify-center">
                       <div className="w-fit h-[10em] mt-10 lg:mt-0 flex flex-col items-center justify-center gap-[.5em]">
@@ -261,7 +263,7 @@ const JobPostingDetails = () => {
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      {/* Header */}
+                    
                       <div className="mt-10 !lg:mt-0 flex justify-between items-center">
                         <h1 className="text-xl font-semibold text-[#001633] flex items-center">
                           Candidates
@@ -301,7 +303,8 @@ const JobPostingDetails = () => {
                       </div>
                     </div>
                   )}
-                </>
+                </> */}
+                <AllCandidate id={id} />
               </TabsContent>
 
               <TabsContent value="Ranked">

@@ -502,6 +502,13 @@ const JobPosting = () => {
     }
   };
 
+
+
+
+
+
+
+  // setter to put the data from the api into the form so user can update draft
   useEffect(() => {
     if (draftEditdata?.data?.job_title) {
       methods.setValue("job_title", draftEditdata?.data?.job_title);
