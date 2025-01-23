@@ -272,7 +272,8 @@ export const authApi = apiSlice.injectEndpoints({
 
     rankApplicants: builder.query({
       query: (jobId: string) => ({
-        url: "/employer/rank-applicants",
+        // url: "/employer/rank-applicants",
+        url:"/employer/ai-rank-applicants",
         method: "GET",
         params: { job_id: jobId },
       }),
