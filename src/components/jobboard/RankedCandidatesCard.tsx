@@ -49,9 +49,9 @@ const RankedCandidatesCard = ({
 
   return (
     <div className="bg-[#F9FAFB] border border-main-200 rounded-lg  w-full cursor-pointer">
-      <div className="p-6 flex items-start justify-between">
+      <div className="p-[1em] flex items-start justify-between">
         <div>
-          <div className="flex items-center justify-between gap-4 mb-4">
+          <div className="flex items-center justify-between gap-[1em] mb-4">
             <div className="ml-4 lg:ml-0">
               <h2 className="text-lg font-semibold capitalize">
                 {applicantName}
@@ -66,7 +66,7 @@ const RankedCandidatesCard = ({
               </p> */}
 
               <ScoreGauge
-                overallScore={overallScore ? Number(overallScore) : null}
+                overallScore={overallScore ? Number(overallScore)/100 : null}
               />
             </div>
 
@@ -92,44 +92,44 @@ const RankedCandidatesCard = ({
         </div>
       </div> */}
 
-          <div className="mb-4">
-            <h3 className="font-medium text-gray-700 mb-2">Core Strength:</h3>
-            <div className="flex flex-wrap gap-2">
+          <div className="mb-4 flex gap-[1em] items-center">
+            <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700 ">Core Strength:</h3>
+            <div className="flex flex-wrap gap-[.5em]">
               {Array.isArray(strengths) ? (
                 <div>
                   {(strengths ?? []).map((item, id) => (
                     <span
                       key={id.toString()}
-                      className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full"
+                      className="px-[.75em] py-[.25em] bg-green-100 text-green-900 text-[.8em] rounded-full"
                     >
                       {item}
                     </span>
                   ))}
                 </div>
               ) : (
-                <span className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full">
+                <span className="px-[.75em] py-[.25em] bg-green-100 text-green-900 text-[.8em] font-[400] rounded-[.5em]">
                   {strengths}
                 </span>
               )}
             </div>
           </div>
 
-          <div className="mb-4">
-            <h3 className="font-medium text-gray-700 mb-2">Weakness:</h3>
+          <div className="mb-4 flex gap-[1em] items-center">
+            <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700">Weakness:</h3>
             <div className="flex flex-wrap gap-2">
               {Array.isArray(weaknesses) ? (
-                <div>
+                <div className="flex gap-[.5em] " >
                   {(weaknesses ?? []).map((item, id) => (
                     <span
                       key={id.toString()}
-                      className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full"
+                      className="px-[.75em] py-[.25em] bg-red-100 text-red-900 text-[.8em] rounded-full"
                     >
                       {item}
                     </span>
                   ))}
                 </div>
               ) : (
-                <span className="px-6 py-1 bg-green-100 text-green-900 text-sm rounded-full">
+                <span className="px-[.75em] py-[.25em] bg-red-100 text-red-900 text-[.8em] font-[400] rounded-[.5em]">
                   {weaknesses}
                 </span>
               )}
@@ -142,7 +142,7 @@ const RankedCandidatesCard = ({
             </p>
           </div> */}
 
-          <div className=" bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
+          <div className=" bg-blue50 border-l-4 border-blue-400 p-4  mt-[2em]">
             <p className="text-blue-600 text-sm">
               <strong>AI Comment:</strong>
             </p>
