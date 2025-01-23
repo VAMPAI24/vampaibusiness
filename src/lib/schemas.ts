@@ -289,6 +289,7 @@ export const EventFormSchema = z.object({
       z.string().min(1, "Start date and time are required")
     ),
   }),
+  time: z.string().min(1, "Time is required"),
   duration: z.string().min(1, "Duration is required"),
   link: z.string().min(1, "Link is required"),
   attendees: z.string().min(1, "Attendees is required"),
