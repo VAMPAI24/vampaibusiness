@@ -5,6 +5,7 @@ import { useGetAllEventQuery } from "@/redux/features/job-posting/jobpostingApi"
 import { BallsLoader } from "@/components/ui/BallsLoader";
 import { openExternalLink } from "@/lib/utils";
 import { Platformbtn } from "@/components/common/buttons";
+import moment from "moment";
 
 const ScheduleInterview = () => {
   // Fetch Event Data
@@ -42,7 +43,7 @@ const ScheduleInterview = () => {
           </p>
         </div>
       ) : (
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 gap-[1em]">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-[1em]">
           {eventData?.data?.map((interview: any, index: any) => (
             <div
               key={index.toString()}
@@ -63,7 +64,9 @@ const ScheduleInterview = () => {
                   </div>
                 </div>
                 <div className="text-right flex flex-col items-end">
-                  <p className="text-sm text-gray-600">{interview.date_time}</p>
+                  <p className="text-sm text-gray-600">
+                    {moment(interview.date_time).format("YYYY-DD-MM")}
+                  </p>
                   <Platformbtn
                     name="Join"
                     type="normal"
