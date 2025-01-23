@@ -33,14 +33,12 @@ const EventModalContent = ({
       },
       duration: "",
       link: "",
+      time: "",
       attendees: "",
     },
   });
 
-
-
   const { control } = form;
-
 
   const [createEvent, { isLoading }] = useEmployerCreateEventMutation();
 
@@ -53,27 +51,24 @@ const EventModalContent = ({
       },
       duration: data.duration,
       link: data.link,
+      time:data.time,
       // attendees:  data.attendees.split(",")
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
         .filter(Boolean),
-        profile_Id: applicant_Id,
+      profile_Id: applicant_Id,
       // attendees: [data.candidateemail, ...data.attendees.split(",")].map(item => item.trim()).filter(Boolean)
     };
 
     try {
       await createEvent(payload).unwrap();
       onClose();
-      // router.push("/scheduleinterview"); 
+      // router.push("/scheduleinterview");
       window.location.href = "/scheduleinterview";
     } catch (error) {
       console.error(error);
     }
   };
-
-
-
- 
 
   return (
     <div className="w-full px-4 max-w-2xl mx-auto overflow-y-auto  hide-scrollbar overflow-hidden">
@@ -123,6 +118,16 @@ const EventModalContent = ({
               />
 
               <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={control}
+                type="time"
+                name="time"
+                label="Time"
+                placeholder="Enter your Event Team"
+                variant="h-[40px] w-full"
+              />
+
+              <CustomFormField
                 fieldType={FormFieldType.SELECT}
                 control={control}
                 name="duration"
@@ -147,12 +152,11 @@ const EventModalContent = ({
                 placeholder="Enter the Meeting Link"
                 variant="h-[40px] w-full"
               />
-              {form.watch("link") &&
-                !form.watch("link")?.includes("https") && (
-                  <p className="text-red-800 text-[.75em]  font-300">
-                    Is this a valid link ?
-                  </p>
-                )}
+              {form.watch("link") && !form.watch("link")?.includes("https") && (
+                <p className="text-red-800 text-[.75em]  font-300">
+                  Is this a valid link ?
+                </p>
+              )}
             </div>
 
             <CustomFormField
