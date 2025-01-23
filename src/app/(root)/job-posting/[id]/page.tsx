@@ -34,6 +34,7 @@ import { BallsLoader } from "@/components/ui/BallsLoader";
 import { Empty } from "@/components/ui/empty";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Loader from "@/components/common/loader/Loader";
+import { formatAndTransformString } from "@/lib/utils";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
@@ -440,10 +441,20 @@ const JobPostingDetails = () => {
                             {candidate.role || "Role not specified"}{" "}
                             {/* Candidate's role */}
                           </p>
-                          <p className="text-gray-700 text-sm mt-1 line-clamp-3">
+
+                          <div
+                            className="text-[.875em] text-gray-700 mt-1 line-clamp-3 font-[300] "
+                            dangerouslySetInnerHTML={{
+                              __html: formatAndTransformString(
+                                candidate.description ||
+                                  "No description provided"
+                              ),
+                            }}
+                          ></div>
+
+                          {/* <p className="text-gray-700 text-sm mt-1 line-clamp-3">
                             {candidate.description || "No description provided"}{" "}
-                            {/* Candidate's description */}
-                          </p>
+                          </p> */}
                         </div>
                       </div>
                     ))
