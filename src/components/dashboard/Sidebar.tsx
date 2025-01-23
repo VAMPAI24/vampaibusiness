@@ -58,7 +58,7 @@ const Sidebar = () => {
               className={cn(
                 "flex gap-3 items-center py-1 p-2 lg:p-4 rounded-md justify-center lg:justify-start",
                 {
-                  "bg-red-200 rounded-full mt-36": isLastItem,
+                  "bg-red-100 rounded-full mt-36": isLastItem,
                   "bg-white": isActive && !isLastItem,
                 }
               )}
@@ -69,15 +69,15 @@ const Sidebar = () => {
                   alt={item.label}
                   fill
                   className={cn(
-                    { "brightness-0 invert-10": isActive && !isLastItem },
+                    { "brightness-0 invert-40": isActive && !isLastItem },
                     { "text-main-900": isLastItem }
                   )}
                 />
               </div>
               <p
                 className={cn(
-                  "text-16 font-semibold hidden lg:flex",
-                  { "!text-main-900": isActive && !isLastItem },
+                  "text-16 font-[300] text-white hidden lg:flex",
+                  { "!text-main-600 font-[600] ": isActive && !isLastItem },
                   { "text-red-900 ": isLastItem }
                 )}
               >
