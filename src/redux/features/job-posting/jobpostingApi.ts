@@ -272,7 +272,8 @@ export const authApi = apiSlice.injectEndpoints({
 
     rankApplicants: builder.query({
       query: (jobId: string) => ({
-        url: "/employer/rank-applicants",
+        // url: "/employer/rank-applicants",
+        url:"/employer/ai-rank-applicants",
         method: "GET",
         params: { job_id: jobId },
       }),
@@ -343,7 +344,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
 
-          console.log(result);
+          // console.log(result);
 
           ToastNotification({
             // title: result?.data?.message,

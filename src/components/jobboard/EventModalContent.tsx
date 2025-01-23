@@ -33,6 +33,7 @@ const EventModalContent = ({
       },
       duration: "",
       link: "",
+      time: "",
       attendees: "",
     },
   });
@@ -50,6 +51,7 @@ const EventModalContent = ({
       },
       duration: data.duration,
       link: data.link,
+      time:data.time,
       // attendees:  data.attendees.split(",")
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
@@ -120,6 +122,16 @@ const EventModalContent = ({
                   today.setHours(0, 0, 0, 0);
                   return date < today;
                 }}
+              />
+
+              <CustomFormField
+                fieldType={FormFieldType.INPUT}
+                control={control}
+                type="time"
+                name="time"
+                label="Time"
+                placeholder="Enter your Event Team"
+                variant="h-[40px] w-full"
               />
 
               <CustomFormField
