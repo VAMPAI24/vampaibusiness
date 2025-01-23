@@ -92,11 +92,11 @@ const RankedCandidatesCard = ({
         </div>
       </div> */}
 
-          <div className="mb-4 flex gap-[1em] items-center">
+          <div className="mb-4 flex flex-col gap-[1em] itemscenter">
             <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700 ">Core Strength:</h3>
             <div className="flex flex-wrap gap-[.5em]">
               {Array.isArray(strengths) ? (
-                <div>
+                <div className="flex flex-wrap gap-[.5em] " >
                   {(strengths ?? []).map((item, id) => (
                     <span
                       key={id.toString()}
@@ -114,15 +114,15 @@ const RankedCandidatesCard = ({
             </div>
           </div>
 
-          <div className="mb-4 flex gap-[1em] items-center">
+          <div className="mb-4 flex flex-col gap-[1em] items-">
             <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700">Weakness:</h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="w-full flex flex-wrap gap-2">
               {Array.isArray(weaknesses) ? (
-                <div className="flex gap-[.5em] " >
+                <div className="flex flex-wrap gap-[.5em] " >
                   {(weaknesses ?? []).map((item, id) => (
                     <span
                       key={id.toString()}
-                      className="px-[.75em] py-[.25em] bg-red-100 text-red-900 text-[.8em] rounded-full"
+                      className="px-[.75em] py-[.25em] bg-red-100 text-red-900 text-[.8em] rounded-full whitespace-pre"
                     >
                       {item}
                     </span>
