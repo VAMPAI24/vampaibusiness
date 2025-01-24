@@ -239,7 +239,7 @@ export const SidebarLinks = [
   {
     imgURL: ScheduleInterview,
     route: "/scheduleinterview",
-    label: "Schedule Interview",
+    label: "Scheduled Interviews",
   },
   {
     imgURL: Recruitmnet,
@@ -268,7 +268,7 @@ export const SidebarLinksMobile = [
   {
     imgURL: ScheduleInterviewMobile,
     route: "/scheduleinterview",
-    label: "Schedule Interview",
+    label: "Scheduled Interviews",
   },
   {
     imgURL: RecruitmnetMobile,

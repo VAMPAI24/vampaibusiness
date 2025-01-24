@@ -49,24 +49,48 @@ const ScheduleInterview = () => {
               key={index.toString()}
               onClick={() => openExternalLink(interview.link)}
             >
-              <div
-                key={index.toString()}
-                className="flex justify-between items-center bg-white px-[1em] py-[.8em] rounded-[.25em] border border-main-100"
-              >
-                <div className="flex mb-2 items-center">
-                  <div>
-                    <h2 className="text-[1.25em] font-[400] text-main-901 capitalize">
-                      {interview.title}
-                    </h2>
-                    <p className="text-sm font-[300] text-main-900 capitalize mt-[1em]">
-                      {interview.description}
+              <div className="w-full flex flex-col gap-[1.5em] bg-white px-[1em] py-[.8em] rounded-[.25em] border border-main-100">
+                <div
+                  key={index.toString()}
+                  className="flex justify-between items-start"
+                >
+                  <div className="flex mb-2 items-center">
+                    <div>
+                      <h2 className="text-[1em] font-[600] text-main-901 capitalize">
+                        {interview.title}
+                      </h2>
+                      <p className="text-[.875em] font-[300] text-main-900 capitalize mt-[.15em]">
+                        {interview.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right flex flex-col items-end">
+                    <p className="text-sm text-gray-600">
+                      {moment(interview.date_time).format("YYYY-DD-MM")}
                     </p>
+                    {/* <Platformbtn
+                      name="Join"
+                      type="normal"
+                      addOns="!w-fit !h-[2em] mt-[1em]"
+                      click={() => openExternalLink(interview?.link)}
+                    /> */}
                   </div>
                 </div>
-                <div className="text-right flex flex-col items-end">
-                  <p className="text-sm text-gray-600">
-                    {moment(interview.date_time).format("YYYY-DD-MM")}
-                  </p>
+
+                <div className="w-full flex items-start justify-between">
+                  <span className="w-full flex flex-col gap-[.15em]">
+                    <p className="font-outfit font-[400] text-sm text-gray-600">
+                      {interview?.applicantFullName ? "with" : ""}{" "}
+                      {interview?.applicantFullName ?? " "}
+                    </p>
+                    <p className="text-[.875em] font-[300] text-gray-600">
+                      <strong className="font-[400]">
+                        {" "}
+                        {interview?.applicant_email ?? " "}{" "}
+                      </strong>
+                    </p>
+                  </span>
+
                   <Platformbtn
                     name="Join"
                     type="normal"
