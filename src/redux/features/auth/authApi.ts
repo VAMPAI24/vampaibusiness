@@ -3,7 +3,7 @@
 import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
 import { userRegistration, userLoggedIn } from "./authSlice";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { setSession } from "@/redux/app/cookies";
 
 // Define the error type
