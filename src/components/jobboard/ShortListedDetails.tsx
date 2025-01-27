@@ -90,6 +90,10 @@ const ShortListedDetails = ({
   // Fetch Event Data
   const { data: eventData } = useGetAllEventQuery({ max_result: 200 });
 
+
+
+  console.log("profileId", data.data?.profile?.id )
+
   if (!candidate) return null;
 
   return (

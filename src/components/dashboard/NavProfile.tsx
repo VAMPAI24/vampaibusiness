@@ -21,7 +21,7 @@ const NavProfile = () => {
   return (
     <div className="flex items-center justify-center gap-2">
       <Avatar>
-        {/* <AvatarImage src={userData?.data?.company_logo} /> */}
+        <AvatarImage src={userData?.data?.company_logo} />
         <div className="w-[2.5em] h-[2.5em] overflow-hidden rounded-full ">
           <Image
             src={userData?.data?.company_logo}
