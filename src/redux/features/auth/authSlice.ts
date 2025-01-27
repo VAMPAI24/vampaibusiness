@@ -81,6 +81,7 @@
 
 // export default authSlice.reducer;
 
+import { clearSession, getSession } from "@/redux/app/cookies";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
@@ -119,22 +120,43 @@ const getExpirationDate = () => {
 //   userSignUpInfo: Cookies.get("userSignUpInfo") || null,
 // };
 
+// const initialState: AuthState = {
+//   token: Cookies.get("token") || "",
+//   refreshToken: Cookies.get("refreshToken") || "",
+//   userInfo: (() => {
+//     const userInfoCookie = Cookies.get("userInfo");
+//     if (userInfoCookie && userInfoCookie !== "undefined") {
+//       try {
+//         return JSON.parse(userInfoCookie); // Parse the cookie value
+//       } catch (error) {
+//         console.error("Failed to parse userInfo cookie:", error);
+//         return null;
+//       }
+//     }
+//     return null;
+//   })(),
+//   userSignUpInfo: Cookies.get("userSignUpInfo") || null, // Fallback to null if userSignUpInfo is undefined
+// };
+
 const initialState: AuthState = {
-  token: Cookies.get("token") || "",
+  token: getSession()?.token || Cookies.get("token") || "",
   refreshToken: Cookies.get("refreshToken") || "",
   userInfo: (() => {
-    const userInfoCookie = Cookies.get("userInfo");
-    if (userInfoCookie && userInfoCookie !== "undefined") {
-      try {
-        return JSON.parse(userInfoCookie); // Parse the cookie value
-      } catch (error) {
-        console.error("Failed to parse userInfo cookie:", error);
-        return null;
-      }
+    try {
+      const userInfoCookie = Cookies.get("userInfo");
+      console.log(userInfoCookie);
+      console.log(typeof userInfoCookie);
+      return userInfoCookie &&
+        userInfoCookie !== "undefined" &&
+        userInfoCookie !== undefined
+        ? JSON.parse(userInfoCookie)
+        : null;
+    } catch (error) {
+      console.error("Failed to parse userInfo :", error);
+      return null;
     }
-    return null; 
   })(),
-  userSignUpInfo: Cookies.get("userSignUpInfo") || null, // Fallback to null if userSignUpInfo is undefined
+  userSignUpInfo: Cookies.get("userSignUpInfo") || null,
 };
 
 // Auth slice
@@ -184,6 +206,7 @@ const authSlice = createSlice({
       state.token = "";
       state.refreshToken = "";
 
+      clearSession();
       // Remove cookies
       Cookies.remove("userInfo");
       Cookies.remove("token");
