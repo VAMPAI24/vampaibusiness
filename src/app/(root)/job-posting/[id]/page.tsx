@@ -115,6 +115,8 @@ const JobPostingDetails = () => {
     setOpenApplicationDrawer(true);
   };
 
+  // console.log(candidateData?.data);
+
   if (loadingJobDetails) {
     return <JobDetailsSkeleton />;
   }
@@ -249,7 +251,7 @@ const JobPostingDetails = () => {
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="all">
+              <TabsContent value="all" className="w-full">
                 <>
                   {loadCandidates ? (
                     <div className="w-full  flex items-center justify-center">
@@ -266,16 +268,19 @@ const JobPostingDetails = () => {
                       <div className="mt-10 !lg:mt-0 flex justify-between items-center">
                         <h1 className="text-xl font-semibold text-[#001633] flex items-center">
                           Candidates
-                          <span className="ml-2 text-sm bg-main-200 text-main-600 font-semibold px-2 py-1 rounded">
-                            {candidateData?.data?.jobApplicant.length}
-                          </span>
+                          {candidateData?.data?.length > 0 ||
+                            (candidateData?.data?.jobApplicant?.length > 0 && (
+                              <span className="ml-2 text-sm bg-main-200 text-main-600 font-semibold px-2 py-1 rounded">
+                                { candidateData?.data?.length ?? candidateData?.data?.jobApplicant?.length}
+                              </span>
+                            ))}
                         </h1>
                       </div>
 
                       <div className="w-full min-h-screen flex items-start">
-                        {candidateData?.data?.jobApplicant?.length > 0 ? (
+                        {(candidateData?.data?.length > 0 || candidateData?.data?.jobApplicant?.length > 0 )? (
                           <div className="grid grid-cols-1 gap-[1em]">
-                            {(candidateData?.data?.jobApplicant ?? [])?.map(
+                            {(candidateData?.data  ?? candidateData?.data?.jobApplicant ??  [])?.map(
                               (candidate: any, index: any) => (
                                 <CandidateCard
                                   key={index}
@@ -305,7 +310,7 @@ const JobPostingDetails = () => {
                 </>
               </TabsContent>
 
-              <TabsContent value="Ranked">
+              <TabsContent value="Ranked" className="w-full">
                 <>
                   {loadRanked ? (
                     <div className="w-full flex items-center justify-center">
@@ -322,9 +327,11 @@ const JobPostingDetails = () => {
                       <div className="mt-10 !lg:mt-0 flex justify-between items-center">
                         <h1 className="text-xl font-semibold text-[#001633] flex items-center">
                           Ranked Candidates
-                          <span className="ml-2 text-sm bg-main-200 text-main-600 font-semibold px-2 py-1 rounded">
-                            {rankedCandidate?.data?.length}
-                          </span>
+                          {rankedCandidate?.data?.length > 0 && (
+                            <span className="ml-2 text-sm bg-main-200 text-main-600 font-semibold px-2 py-1 rounded">
+                              {rankedCandidate?.data?.length}
+                            </span>
+                          )}
                         </h1>
                       </div>
 

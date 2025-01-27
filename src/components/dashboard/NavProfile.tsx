@@ -20,23 +20,32 @@ const NavProfile = () => {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <Avatar>
-        {/* <AvatarImage src={userData?.data?.company_logo} /> */}
+      {userData?.data?.company_logo ? (
         <div className="w-[2.5em] h-[2.5em] overflow-hidden rounded-full ">
-          <Image
+          <img
             src={userData?.data?.company_logo}
             alt="profile"
-            width={40}
-            height={40}
+            className="object-cover w-full"
           />
         </div>
-        <AvatarFallback>
-          {userData?.data?.first_name?.[0] && userData?.data?.last_name?.[0]
-            ? `${userData.data.first_name[0]}${userData.data.last_name[0]}`.toUpperCase()
-            : "NA"}
-        </AvatarFallback>
-      </Avatar>
-
+      ) : (
+        <Avatar>
+          {/* <AvatarImage src={userData?.data?.company_logo} /> */}
+          {/* <div className="w-[2.5em] h-[2.5em] overflow-hidden rounded-full ">
+          <img
+            src={userData?.data?.company_logo}
+            alt="profile"
+            className="object-cover w-full"
+            // height={40}
+          />
+        </div> */}
+          <AvatarFallback>
+            {userData?.data?.first_name?.[0] && userData?.data?.last_name?.[0]
+              ? `${userData.data.first_name[0]}${userData.data.last_name[0]}`.toUpperCase()
+              : "NA"}
+          </AvatarFallback>
+        </Avatar>
+      )}
       <div className="hidden md:block">
         <div className="flex gap-1">
           <p className="text-main-902 font-semibold font-jakarta text-m§d">
