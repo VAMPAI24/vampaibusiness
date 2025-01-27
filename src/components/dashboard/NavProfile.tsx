@@ -10,22 +10,26 @@ const NavProfile = () => {
   const [token, setToken] = useState<string | null>(null);
   const { data: userData, refetch } = useGetSingleEmployerQuery(token);
 
- 
-
   useEffect(() => {
     refetch();
-    const storedToken = Cookies.get("token"); 
+    const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, [refetch]);
 
- 
-
   return (
     <div className="flex items-center justify-center gap-2">
       <Avatar>
-        <AvatarImage src={userData?.data?.company_logo} />
+        {/* <AvatarImage src={userData?.data?.company_logo} /> */}
+        <div className="w-[2.5em] h-[2.5em] overflow-hidden rounded-full ">
+          <Image
+            src={userData?.data?.company_logo}
+            alt="profile"
+            width={40}
+            height={40}
+          />
+        </div>
         <AvatarFallback>
           {userData?.data?.first_name?.[0] && userData?.data?.last_name?.[0]
             ? `${userData.data.first_name[0]}${userData.data.last_name[0]}`.toUpperCase()
