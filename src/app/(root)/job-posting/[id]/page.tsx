@@ -78,10 +78,6 @@ const JobPostingDetails = () => {
       { skip: tab !== "Shortlisted" }
     );
 
-  // shortlisted tab interviewed
-  // const { data: interviewedData, isLoading: loadingInterviewed } =
-  //   useGetShortlistedCandidateQuery({id, status:"Interviewed"}, {skip: tab !=="Shortlisted"});
-
   // shortlisted  drawer control
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
