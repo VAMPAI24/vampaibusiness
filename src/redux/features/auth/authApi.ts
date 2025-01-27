@@ -4,6 +4,7 @@ import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
 import { userRegistration, userLoggedIn } from "./authSlice";
 import Cookies from "js-cookie";
+import { setSession } from "@/redux/app/cookies";
 
 // Define the error type
 interface ApiError {
@@ -118,6 +119,10 @@ export const authApi = apiSlice.injectEndpoints({
             description: "Signed In Successfully",
             type: "success",
           });
+          
+          setSession(result?.data?.data?.tokens?.access_token);
+          // setToken(res?.tokens?.access_token);
+
           dispatch(
             userLoggedIn({
               accessToken: result?.data?.data?.tokens?.access_token,

@@ -259,7 +259,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-        
+      
         } catch (error: any) {
           ToastNotification({
             title: error?.error?.data?.error || error?.error?.error,

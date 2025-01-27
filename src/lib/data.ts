@@ -12,7 +12,7 @@ export const heroProfilesL = [
     image: Tola,
   },
   {
-    name: "Olaoluwa Yomi",
+    name: "Lethabo Bandile",
     role: "Backend Developer",
     image: Olaoluwa,
   },
