@@ -51,7 +51,7 @@ const EventModalContent = ({
       },
       duration: data.duration,
       link: data.link,
-      time:data.time,
+      time: data.time,
       // attendees:  data.attendees.split(",")
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
@@ -92,21 +92,14 @@ const EventModalContent = ({
               variant="h-[40px] w-full"
             />
 
-        
-              <CustomFormField
-                fieldType={FormFieldType.INPUT}
-                control={control}
-                name="description"
-                label="Description"
-                placeholder="Enter the description"
-                variant="h-[40px] w-full"
-              />
-
-          
-
-
-
-           
+            <CustomFormField
+              fieldType={FormFieldType.INPUT}
+              control={control}
+              name="description"
+              label="Description"
+              placeholder="Enter the description"
+              variant="h-[40px] w-full"
+            />
 
             <div className="flex gap-3">
               <CustomFormField
@@ -150,8 +143,6 @@ const EventModalContent = ({
               </CustomFormField>
             </div>
 
-
-
             <div className="w-full flex flex-col gap-[.25em]">
               <CustomFormField
                 fieldType={FormFieldType.INPUT}
@@ -167,7 +158,6 @@ const EventModalContent = ({
                 </p>
               )}
             </div>
-
 
             <CustomFormField
               fieldType={FormFieldType.INPUT}

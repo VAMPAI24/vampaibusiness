@@ -866,14 +866,7 @@ const JobPosting = () => {
                           dateFormat="PPP"
                         />
 
-                        {/* <CustomFormField
-                          fieldType={FormFieldType.INPUT}
-                          control={methods.control}
-                          name="applicationDeadline"
-                          label="Application Deadline"
-                          placeholder="DD/MM/YYYY"
-                          variant="h-[40px] w-full"
-                        /> */}
+                    
 
                         <div className="flex justify-end items-center mt-6">
                           <SubmitButton className="w-full sm:w-[120px] h-11">
@@ -953,16 +946,7 @@ const JobPosting = () => {
                           variant="h-40 w-full"
                         />
 
-                        {/* <h1>CKEditor 5 in React</h1>
-                        <CKEditor
-                          editor={ClassicEditor}
-                          config={{
-
-                            toolbar: ["undo", "redo", "|", "bold", "italic"],
-                            initialData: "",
-                          }}
-                          onChange={handleEditorChange} // Handle content changes
-                        /> */}
+                      
 
                         <CustomFormField
                           fieldType={FormFieldType.TEXTAREA}

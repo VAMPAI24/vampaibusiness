@@ -68,7 +68,7 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
     const intervalId = setTimeout(() => {
       activeRefetch();
       draftRefetch();
-    }, 1000);
+    }, 10);
 
     return () => clearTimeout(intervalId);
   }, [activeRefetch, draftRefetch]);
