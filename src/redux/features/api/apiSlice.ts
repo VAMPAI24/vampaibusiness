@@ -9,7 +9,7 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: BASE_URL,
     baseUrl: isLocalOrStaging() ? BASE_URL : PROD_BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers, {  }) => {
       // Access the token from the Redux state, assuming it's stored in `token`
       // const token = (getState() as RootState).auth?.token;
       const token = getSession()?.token;

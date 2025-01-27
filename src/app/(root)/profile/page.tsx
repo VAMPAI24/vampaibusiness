@@ -18,7 +18,7 @@ import {
 } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import Image from "next/image";
+
 
 const Profile = () => {
   const router = useRouter();
@@ -146,7 +146,9 @@ const Profile = () => {
                   //   className="h-full w-full object-cover"
                   // />
 
-                  <div className="w-[3.5em] h-[3.5em] overflow-hidden rounded-full ">
+                
+
+                  <div className="w-[3.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
                     <img
                       src={image}
                       alt="profile"
