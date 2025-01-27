@@ -40,8 +40,8 @@ const Navbar = () => {
         {/* Desktop Buttons */}
         <div className="lg:flex items-center justify-center -mt-4 gap-4">
           <Button
-            text="Login"
-            variant=" hidden lg:flex text-white border rounded-lg w-[150px] mt-4"
+            text="Employer Login"
+            variant=" hidden lg:flex text-white border-none rounded-lg w-[150px] mt-4"
             clickFn={() =>  router.push("/sign-in")}
           />
           <Button

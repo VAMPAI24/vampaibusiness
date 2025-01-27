@@ -1,6 +1,5 @@
 // import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-
 // type UserInfoProps = {
 //   first_name: string;
 //   last_name: string;
@@ -15,7 +14,6 @@
 //   company_bio: string;
 // };
 
-
 // interface AuthState {
 //   token: string;
 //   refreshToken: string;
@@ -23,14 +21,12 @@
 //   userSignUpInfo: string | null;
 // }
 
-
-
 // const initialState: AuthState = {
-//   token: 
+//   token:
 //     typeof window !== "undefined" && localStorage.getItem("token")
 //       ? JSON.parse(localStorage.getItem("token") as string)
 //       : "",
-//   refreshToken: 
+//   refreshToken:
 //     typeof window !== "undefined" && localStorage.getItem("refreshToken")
 //       ? JSON.parse(localStorage.getItem("refreshToken") as string)
 //       : "",
@@ -43,7 +39,6 @@
 //       ? JSON.parse(localStorage.getItem("userSignUpInfo") as string)
 //       : null,
 // };
-
 
 // const authSlice = createSlice({
 //   name: "auth",
@@ -86,7 +81,6 @@
 
 // export default authSlice.reducer;
 
-
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
@@ -118,11 +112,29 @@ const getExpirationDate = () => {
 };
 
 // Initialize state with cookies if available
+// const initialState: AuthState = {
+//   token: Cookies.get("token") || "",
+//   refreshToken: Cookies.get("refreshToken") || "",
+//   userInfo: Cookies.get("userInfo") ? JSON.parse(Cookies.get("userInfo") as string) : null,
+//   userSignUpInfo: Cookies.get("userSignUpInfo") || null,
+// };
+
 const initialState: AuthState = {
   token: Cookies.get("token") || "",
   refreshToken: Cookies.get("refreshToken") || "",
-  userInfo: Cookies.get("userInfo") ? JSON.parse(Cookies.get("userInfo") as string) : null,
-  userSignUpInfo: Cookies.get("userSignUpInfo") || null,
+  userInfo: (() => {
+    const userInfoCookie = Cookies.get("userInfo");
+    if (userInfoCookie && userInfoCookie !== "undefined") {
+      try {
+        return JSON.parse(userInfoCookie); // Parse the cookie value
+      } catch (error) {
+        console.error("Failed to parse userInfo cookie:", error);
+        return null;
+      }
+    }
+    return null; 
+  })(),
+  userSignUpInfo: Cookies.get("userSignUpInfo") || null, // Fallback to null if userSignUpInfo is undefined
 };
 
 // Auth slice
@@ -166,7 +178,6 @@ const authSlice = createSlice({
       });
     },
 
-   
     // User logged out (clear cookies)
     userLogout: (state: AuthState) => {
       state.userInfo = null;
