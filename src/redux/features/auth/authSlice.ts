@@ -144,8 +144,8 @@ const initialState: AuthState = {
   userInfo: (() => {
     try {
       const userInfoCookie = Cookies.get("userInfo");
-      console.log(userInfoCookie);
-      console.log(typeof userInfoCookie);
+      // console.log(userInfoCookie);
+      // console.log(typeof userInfoCookie);
       return userInfoCookie &&
         userInfoCookie !== "undefined" &&
         userInfoCookie !== undefined

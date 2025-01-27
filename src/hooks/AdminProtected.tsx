@@ -17,10 +17,10 @@
 
 "use client";
 import { getSession } from "@/redux/app/cookies";
-import { RootState } from "@/redux/app/store";
+// import { RootState } from "@/redux/app/store";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 interface ProtectedProps {
   children: React.ReactNode;
