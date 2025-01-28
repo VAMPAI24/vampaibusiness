@@ -92,8 +92,6 @@ const ShortListedDetails = ({
 
 
 
-  console.log("profileId", data.data?.profile?.id )
-
   if (!candidate) return null;
 
   return (
