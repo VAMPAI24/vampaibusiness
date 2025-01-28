@@ -15,19 +15,20 @@
 
 // export default AdminProtected;
 
-
 "use client";
-import { RootState } from "@/redux/app/store";
+import { getSession } from "@/redux/app/cookies";
+// import { RootState } from "@/redux/app/store";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 interface ProtectedProps {
   children: React.ReactNode;
 }
 
 const AdminProtected = ({ children }: ProtectedProps) => {
-  const { token } = useSelector((state: RootState) => state.auth);
+  // const { token } = useSelector((state: RootState) => state.auth);
+  const token = getSession();
   const router = useRouter();
 
   // Local state to manage hydration error
@@ -41,10 +42,10 @@ const AdminProtected = ({ children }: ProtectedProps) => {
   useEffect(() => {
     if (!isHydrated) return; // Avoid redirecting during SSR
 
-    if (!token) {
+    if (!token?.token) {
       router.push("/sign-in"); // Redirect to sign-in if no token
     }
-  }, [token, isHydrated, router]);
+  }, [token?.token, isHydrated, router]);
 
   if (!isHydrated) {
     return null; // Render nothing during SSR to avoid hydration issues
