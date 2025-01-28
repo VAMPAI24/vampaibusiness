@@ -242,6 +242,11 @@ export const SidebarLinks = [
     label: "Scheduled Interviews",
   },
   {
+    imgURL: ScheduleInterview,
+    route: "/cv-screener",
+    label: "Cv Screener",
+  },
+  {
     imgURL: Recruitmnet,
     route: "/recruitment",
     label: "Recruitment",
@@ -271,10 +276,16 @@ export const SidebarLinksMobile = [
     label: "Scheduled Interviews",
   },
   {
+    imgURL: ScheduleInterviewMobile,
+    route: "/cv-screener",
+    label: "Cv Screener",
+  },
+  {
     imgURL: RecruitmnetMobile,
     route: "/recruitment",
     label: "Recruitment",
   },
+  
 
   {
     imgURL: Logout,

@@ -58,7 +58,7 @@ const Sidebar = () => {
               className={cn(
                 "flex gap-3 items-center py-1 p-2 lg:p-4 rounded-md justify-center lg:justify-start",
                 {
-                  "bg-red-50 py-[1em] w-fit rounded-full mt-36": isLastItem,
+                  "bg-red-50 py-[1em] w-fit rounded-full mt-20": isLastItem,
                   "bg-white": isActive && !isLastItem,
                 }
               )}

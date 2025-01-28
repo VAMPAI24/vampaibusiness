@@ -8,6 +8,8 @@ const PathnameDisplay = () => {
     ? "job posting"
     : pathname?.startsWith("/scheduleinterview")
     ? "Scheduled Interviews"
+    : pathname?.startsWith("/cv-screener")
+    ? "CV Screener"
     : pathname?.replace(/^\//, "").replace(/-/g, " ") || "dashboard";
     
   return (
