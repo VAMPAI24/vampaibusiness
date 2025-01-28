@@ -45,7 +45,7 @@ interface CustomProps {
   type?: string;
   control: Control<any>;
   name: string;
-  label?: string;
+  label?: any;
   placeholder?: string;
   iconSrc?: string;
   iconAlt?: string;
