@@ -168,3 +168,17 @@ export interface CandidateProps {
   clickFn?: () => void;
   refetchFn?: () => void;
 }
+
+
+
+export interface uploadProps extends Inputs {
+  id?: string;
+  name: string;
+  value?: File;
+  title: string;
+  type?: string;
+  max_size?: number;
+  accept?: string;
+  body?:string;
+  onChange: (name: string, value?: File) => void;
+}
