@@ -207,3 +207,16 @@ export interface UploadCVProps {
   onSubmit: () => void;
 }
 
+
+
+// export interface UploadCVProps {
+
+//   files: FileItem[];
+
+//   setFiles: React.Dispatch<React.SetStateAction<FileItem[]>>;
+
+//   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+
+// }
+
+
