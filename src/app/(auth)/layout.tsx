@@ -4,8 +4,8 @@ import ImageSection from "@/components/auth/ImageSection";
 import SignInImage from "@/public/pngs/auth/signin-img.png";
 import SignUpImage from "@/public/pngs/auth/signup-img.png";
 import { usePathname } from "next/navigation";
-import VampLogo from "@/public/svgs/auth/vamp-logo.svg"
-
+import VampLogo from "@/public/svgs/auth/vamp-logo.svg";
+import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -29,13 +29,15 @@ export default function RootLayout({
               className="h-10 w-fit"
               placeholder="blur"
             />
-             <Image
-              src={VampLogo}
-              alt="Vamp Logo"
-              width={100}
-              height={100}
-              className="absolute top-8 left-8"
-            />
+            <Link href="/">
+              <Image
+                src={VampLogo}
+                alt="Vamp Logo"
+                width={100}
+                height={100}
+                className="absolute top-8 left-8"
+              />
+            </Link>
           </div>
           <div className="flex w-full lg:w-[60%] justify-center lg:justify-start px-4">
             {children}
