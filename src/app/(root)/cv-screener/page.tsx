@@ -96,7 +96,6 @@
 //             />
 //           </FormProvider>
 
-        
 //         );
 
 //       case "uploadcv":
@@ -110,7 +109,6 @@
 //                 </p>
 
 //                 <CVUpload />
-               
 
 //                 <div className="flex justify-end items-center">
 //                   <SubmitButton className="w-full sm:w-[120px] h-11 mt-2">
@@ -132,7 +130,7 @@
 //                     Attach the candidate's CV for screening.
 //                   </p>
 //                   <p>gradeandevaluation</p>
-  
+
 //                   </div>
 //               </form>
 //             </FormProvider>
@@ -160,43 +158,30 @@
 
 
 
+
+
 "use client";
 
 import React, { useState } from "react";
 import CvHeaders from "./_components/cv-headers";
-import SubmitButton from "@/components/shared/SubmitButton";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import JobTitleAndDescription from "./_components/cases/JobTitleAndDescription";
-import CVUpload from "@/components/common/CVUpload";
+import UploadCV from "./_components/cases/UploadCV";
+import { FileItem } from "@/types";
+import { titleanddesCVScreenerschema, uploadCVScreenerSchema } from "@/lib/schemas";
 
-export const titleanddesCVScreenerschema = z.object({
-  job_title: z.string().min(1, "Job title is required"),
-  jobDescription: z
-    .string()
-    .min(10, "Job Description must be at least 10 characters long")
-    .max(5000, "Job Description cannot exceed 5000 characters"),
-});
 
-export const uploadCVScreenerSchema = z.object({
-  job_title: z.string().min(1, "Job title is required"),
-  jobDescription: z
-    .string()
-    .min(10, "Job Description must be at least 10 characters long")
-    .max(5000, "Job Description cannot exceed 5000 characters"),
-  candidateCV: z.instanceof(File).nullable(),
-});
+
+
 
 const CvScreener = () => {
-  const [currentScreener, setCurrentScreener] = useState(
-    "jobtitleanddescription"
-  );
+  const [currentScreener, setCurrentScreener] = useState("jobtitleanddescription");
+  const [files, setFiles] = useState<FileItem[]>([]);
 
-  // Form Initialization
-  const methods = useForm<
-    z.infer<typeof titleanddesCVScreenerschema | typeof uploadCVScreenerSchema>
-  >({
+  // Form Initialization case one controls
+  const methods = useForm<z.infer<typeof titleanddesCVScreenerschema | typeof uploadCVScreenerSchema>>({
     resolver: zodResolver(
       currentScreener === "jobtitleanddescription"
         ? titleanddesCVScreenerschema
@@ -205,40 +190,64 @@ const CvScreener = () => {
     defaultValues: {
       job_title: "",
       jobDescription: "",
-      candidateCV: null,
+      candidateCV: currentScreener === "uploadcv" ? null : undefined,
     },
   });
 
   const { control, setValue, watch, handleSubmit } = methods;
 
-  // Form Submission Handler
-  const onSubmit = async (
-    values: z.infer<typeof uploadCVScreenerSchema>
-  ) => {
-    const formData = new FormData();
-    formData.append("job_title", values.job_title);
-    formData.append("jobDescription", values.jobDescription);
-
-    if (values.candidateCV) {
-      formData.append("candidateCV", values.candidateCV);
-    }
-
+  const onSubmit = async (values: z.infer<typeof uploadCVScreenerSchema>) => {
     try {
-      const response = await fetch("", {
-        method: "POST",
-        body: formData,
-      });
+      if (currentScreener === "jobtitleanddescription") {
+        setCurrentScreener("uploadcv");
+      } else if (currentScreener === "uploadcv") {
+        const payload = {
+          job_title: values.job_title,
+          jobDescription: values.jobDescription,
+          candidateCV: files.length > 0 ? files.map(file => file.file) : null,
+        };
 
-      if (!response.ok) {
-        throw new Error("Failed to upload CV");
+        console.log("Payload Data", payload);
+
+        const formData = new FormData();
+        formData.append("job_title", payload.job_title);
+        formData.append("jobDescription", payload.jobDescription);
+
+        if (files.length > 0) {
+          files.forEach((file, index) => {
+            formData.append(`candidateCV[${index}]`, file.file);
+          });
+        } else {
+          formData.append("candidateCV", "");
+        }
+
+        console.log("Final FormData submitted successfully!");
       }
-
-      console.log("CV uploaded successfully!");
-      alert("CV submitted successfully");
-      setCurrentScreener("uploadcv");
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error(error);
     }
+  };
+
+  // Case Two Controls
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadedFiles = event.target.files ? Array.from(event.target.files) : [];
+    const validFiles = uploadedFiles.filter(
+      (file) => file.type === "application/pdf" && file.size <= 1024 * 1024
+    );
+
+    if (files.length + validFiles.length > 5) {
+      alert("You can upload a maximum of 5 CVs at once.");
+      return;
+    }
+
+    setFiles([
+      ...files,
+      ...validFiles.map((file) => ({ name: file.name, size: file.size, file })),
+    ]);
+  };
+
+  const handleRemove = (index: number) => {
+    setFiles(files.filter((_, i) => i !== index));
   };
 
   // Render Screener Views
@@ -259,39 +268,12 @@ const CvScreener = () => {
 
       case "uploadcv":
         return (
-          <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex flex-col gap-2 lg:w-1/2">
-                <h2 className="text-lg font-bold">Upload CV</h2>
-                <p className="text-gray-600">
-                  Attach the candidate's CV for screening.
-                </p>
-
-                <CVUpload />
-
-                <div className="flex justify-end items-center">
-                  <SubmitButton className="w-full sm:w-[120px] h-11 mt-2">
-                    Next
-                  </SubmitButton>
-                </div>
-              </div>
-            </form>
-          </FormProvider>
-        );
-
-      case "gradeandevaluation":
-        return (
-          <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex flex-col gap-2 lg:w-1/2">
-                <h2 className="text-lg font-bold">Grade & Evaluation</h2>
-                <p className="text-gray-600">
-                  Review and evaluate the submitted CVs.
-                </p>
-                <p>Evaluation content will be here.</p>
-              </div>
-            </form>
-          </FormProvider>
+          <UploadCV
+            files={files}
+            handleFileUpload={handleFileUpload}
+            handleRemove={handleRemove}
+            onSubmit={handleSubmit(onSubmit)}
+          />
         );
 
       default:
@@ -301,14 +283,10 @@ const CvScreener = () => {
 
   return (
     <section>
-      <CvHeaders
-        title="CV Screener"
-        description="Grade and evaluate candidate CVs"
-      />
+      <CvHeaders title="CV Screener" description="Grade and evaluate candidate CVs" />
       {renderScreener()}
     </section>
   );
 };
 
 export default CvScreener;
-
