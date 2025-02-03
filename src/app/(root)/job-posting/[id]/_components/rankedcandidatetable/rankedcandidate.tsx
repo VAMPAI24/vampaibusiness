@@ -18,9 +18,15 @@
 //     setOpenApplicationDrawer(true);
 //   };
 
-//   // schdule modal control
+//   // Schedule modal control
 //   const [open, setOpen] = useState(false);
+//   const [selectedCandidate, setSelectedCandidate] = useState<any>(null);
 //   const openCloseModalFn = () => setOpen(!open);
+
+//   const handleScheduleInterview = (candidate: any) => {
+//     setSelectedCandidate(candidate);
+//     openCloseModalFn();
+//   };
 
 //   // Application tab Ranked Candidate
 //   const {
@@ -88,6 +94,7 @@
 //         columns={createColumnsRannkedCandidate(rankedRefetch)}
 //         data={transformedData || []}
 //         onViewProfile={handleViewProfile}
+//         onScheduleInterview={handleScheduleInterview} // Pass the onScheduleInterview prop
 //       />
 
 //       {/* Ranked candidate Drawer */}
@@ -97,23 +104,19 @@
 //         onClose={() => setOpenApplicationDrawer(false)}
 //       />
 
-//       {/* Ranked candidate Schucdule event  modal */}
-
+//       {/* Ranked candidate Schedule event modal */}
 //       <CustomModal
 //         isOpen={open}
 //         onClose={openCloseModalFn}
 //         className={"w-[95%] md:max-w-lg"}
-//         // className={"w-[95%] h-[95%] lg:h-[90%] md:max-w-lg"}
 //       >
 //         <EventModalContent
 //           name={
-//             data?.data.applicant_first_name +
-//             " " +
-//             data?.data.applicant_last_name
+//             selectedCandidate?.applicantName
 //           }
-//           email={data?.data.applicant_email ?? ""}
+//           email={selectedCandidate?.email ?? ""}
 //           onClose={openCloseModalFn}
-//           applicant_Id={data.data?.profile?.id ?? ""}
+//           applicant_Id={selectedCandidate?.id ?? ""}
 //         />
 //       </CustomModal>
 //     </div>
@@ -155,7 +158,7 @@ const RankedCandidate = ({ id }: { id: string }) => {
     openCloseModalFn();
   };
 
-  // Application tab Ranked Candidate
+  // Fetch Ranked Candidates
   const {
     data: rankedCandidate,
     isLoading: loadRanked,
@@ -180,10 +183,7 @@ const RankedCandidate = ({ id }: { id: string }) => {
   if (isError) {
     return (
       <p>
-        Error:{" "}
-        {isError && "status" in error
-          ? `Error: ${error.status}`
-          : "Failed to load ranked candidates"}
+        Error: {isError && "status" in error ? `Error: ${error.status}` : "Failed to load ranked candidates"}
       </p>
     );
   }
@@ -191,6 +191,7 @@ const RankedCandidate = ({ id }: { id: string }) => {
   const transformedData = rankedCandidate?.data?.map(
     (applicant: {
       id: string;
+      profile_id: string;
       date: string;
       profile_picture: string;
       applied_position: string;
@@ -202,6 +203,7 @@ const RankedCandidate = ({ id }: { id: string }) => {
       weaknesses: string[];
     }) => ({
       id: applicant.id,
+      profile_id: applicant.profile_id, // Ensure profile_id is stored
       date: applicant.date,
       profile_picture: applicant.profile_picture,
       applied_position: applicant.applied_position,
@@ -216,34 +218,28 @@ const RankedCandidate = ({ id }: { id: string }) => {
 
   return (
     <div className="mt-5">
-      {/* Ranked candidate Table */}
+      {/* Ranked Candidate Table */}
       <DataTableRankedCandidate
         columns={createColumnsRannkedCandidate(rankedRefetch)}
         data={transformedData || []}
         onViewProfile={handleViewProfile}
-        onScheduleInterview={handleScheduleInterview} // Pass the onScheduleInterview prop
+        onScheduleInterview={handleScheduleInterview}
       />
 
-      {/* Ranked candidate Drawer */}
+      {/* Ranked Candidate Drawer */}
       <ApplicantRankingDetails
         isOpen={openApplicationDrawer}
         candidate={selectedApplicant}
         onClose={() => setOpenApplicationDrawer(false)}
       />
 
-      {/* Ranked candidate Schedule event modal */}
-      <CustomModal
-        isOpen={open}
-        onClose={openCloseModalFn}
-        className={"w-[95%] md:max-w-lg"}
-      >
+      {/* Ranked Candidate Schedule Event Modal */}
+      <CustomModal isOpen={open} onClose={openCloseModalFn} className={"w-[95%] md:max-w-lg"}>
         <EventModalContent
-          name={
-            selectedCandidate?.applicantName
-          }
+          name={selectedCandidate?.applicantName}
           email={selectedCandidate?.email ?? ""}
           onClose={openCloseModalFn}
-          applicant_Id={selectedCandidate?.id ?? ""}
+          applicant_Id={selectedCandidate?.profile_id ?? ""} // FIX: Use profile_id instead of id
         />
       </CustomModal>
     </div>
