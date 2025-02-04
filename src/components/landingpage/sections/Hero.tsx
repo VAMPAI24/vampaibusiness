@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Container, Button, BrandCarousel } from "@/components/landingpage";
+import { Container, Button } from "@/components/landingpage";
 import { useRouter } from "next/navigation";
 import { BrandCarouselImage } from "@/constants";
 import PersonCard from "@/components/landingpage/PersonCard";
@@ -43,8 +43,8 @@ const Hero = () => {
     const carousel = carouselRef.current;
 
     if (carousel) {
-      const totalWidth = Array.from(carousel.children).reduce(
-        (acc, child: any) => acc + child.offsetWidth,
+      const totalWidth = Array.from(carousel.children as HTMLCollectionOf<HTMLElement> ).reduce(
+        (acc, child) => acc + child.offsetWidth,
         0
       );
       gsap.fromTo(
