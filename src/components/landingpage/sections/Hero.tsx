@@ -15,7 +15,7 @@ const Hero = () => {
 
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const [isClient, setIsClient] = useState(false); // Ensure client-side rendering
+  const [isClient, setIsClient] = useState(true); // Ensure client-side rendering
 
   useEffect(() => {
     setIsClient(true); // Mark as client-side
@@ -102,7 +102,7 @@ const Hero = () => {
   if (!isClient) return null;
   return (
     <Container>
-      <div className="flex flex-col 2xl:flex-row items-center justify-between gap-8 2xl:gap-5 ">
+      <div className="flex flex-col 2xl:flex-row items-center justify-between gap-8 2xl:gap-5 overflow-hidden ">
         {/* Text Content */}
         <div className="w-full 2xl:w-1/2 text-center 2xl:text-left px-4 2xl:-mt-36">
           <h1 className="font-rubik font-semibold text-[2.5em] md:text-[4em] lg:text-[4.75em] 2xl:w-[600px] leading-[1.3em] md:leading-[1.2em] lg:leading-[1em] text-sec-901 mb-4">
