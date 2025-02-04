@@ -10,7 +10,7 @@ interface PersonCardProps {
 
 const PersonCard = ({ src, name, role, alt }: PersonCardProps) => {
   return (
-    <div>
+    <div className="min-w-fit w-fit">
       <Image
         src={src}
         width={250}
