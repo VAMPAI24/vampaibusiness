@@ -46,8 +46,8 @@ export const FaqItems: { id: string; title: string; body: string }[] = [
     id: "01",
     title:
       "Can VampAI help me find candidates for highly specialised or niche roles?",
-    body: `VampAI is a Resume  builder powered by Artificial intelligence developed to empower  ambitious professionals across the globe
- by crafting compelling CVs, unlocking their career potential, and securing jobs they love`,
+    body: `Yes, VampAI excels in finding talent for both broad and specialised positions. By leveraging advanced AI algorithms and an expansive database of job seekers, the platform identifies candidates with the exact expertise required for your niche roles.
+`,
   },
   {
     id: "02",

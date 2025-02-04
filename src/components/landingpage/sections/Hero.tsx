@@ -13,6 +13,8 @@ const Hero = () => {
   const leftColumnRef = useRef<HTMLDivElement>(null);
   const rightColumnRef = useRef<HTMLDivElement>(null);
 
+  const carouselRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     // Animate the first column
     if (leftColumnRef.current) {
@@ -34,6 +36,27 @@ const Hero = () => {
         repeat: -1,
         yoyo: true,
       });
+    }
+  }, []);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+
+    if (carousel) {
+      const totalWidth = Array.from(carousel.children).reduce(
+        (acc, child: any) => acc + child.offsetWidth,
+        0
+      );
+      gsap.fromTo(
+        carousel,
+        { x: 0 },
+        {
+          x: -totalWidth,
+          duration: 400,
+          ease: "none",
+          repeat: -1,
+        }
+      );
     }
   }, []);
 
@@ -67,11 +90,24 @@ const Hero = () => {
           </div>
 
           <div className="mt-10 font-jakarta  text-[18px] text-main-901">
-            <p className="font-jakarta text-[18px] text-main-901">Smart Hiring Trusted by Innovative Companies</p>
-            <div className="flex items-center gap-5 mt-5">
-              {BrandCarouselImage.map((brands, index) => (
-                <BrandCarousel key={index} {...brands} />
-              ))}
+            <p className="font-jakarta text-[18px] text-main-901">
+              Smart Hiring Trusted by Innovative Companies
+            </p>
+            <div className="flex items-center gap-[1em] mt-5 overflow-hidden">
+              <div ref={carouselRef} className="flex items-center gap-[2em]">
+                {Array(50)
+                  .fill(BrandCarouselImage)
+                  .flat()
+                  .map((image, index) => (
+                    <div key={index} className="flex-shrink-0">
+                      <img
+                        src={image.imgUrl.src}
+                        alt={image.id.toString()}
+                        className=" h-[2em] object-contain"
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
