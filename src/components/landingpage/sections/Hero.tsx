@@ -33,12 +33,12 @@ const Hero = () => {
           leftColumnRef.current,
           { x: 0, y: 0 },
           {
-            [isMobileOrTablet ? "x" : "y"]: `-${
+            [isMobileOrTablet ? "x" : "y"]: `${
               isMobileOrTablet
                 ? leftColumnRef.current.scrollWidth / 2
                 : leftColumnRef.current.scrollHeight / 2
             }px`,
-            duration: 150,
+            duration: 300,
             ease: "linear",
             repeat: -1,
             yoyo: true,
@@ -56,7 +56,7 @@ const Hero = () => {
                 ? rightColumnRef.current.scrollWidth / 2
                 : rightColumnRef.current.scrollHeight / 2
             }px`,
-            duration: 150,
+            duration: 300,
             ease: "linear",
             repeat: -1,
             yoyo: true,
@@ -156,7 +156,7 @@ const Hero = () => {
           {/* First Column with Auto Scroll */}
           <div
             ref={leftColumnRef}
-            className="flex flex-row 2xl:flex-col h-full gap-4 overflowhidden flex-nowrap autoscroll"
+            className="flex flex-row 2xl:flex-col items-center justify-center h-full gap-4 overflowhidden flex-nowrap autoscroll"
           >
             {Array(20)
               .fill(heroProfilesL)
