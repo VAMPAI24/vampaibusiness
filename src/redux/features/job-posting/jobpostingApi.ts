@@ -325,11 +325,11 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
         } catch (error: any) {
-          ToastNotification({
-            title: error?.error?.data?.error || error?.error?.error,
-            description: error?.error?.data?.message || error?.error?.status,
-            type: "error",
-          });
+          // ToastNotification({
+          //   title: error?.error?.data?.error || error?.error?.error,
+          //   description: error?.error?.data?.message || error?.error?.status,
+          //   type: "error",
+          // });
         }
       },
     }),
