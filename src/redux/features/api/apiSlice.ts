@@ -29,7 +29,7 @@ export const apiSlice = createApi({
     responseHandler: async (response) => {
       const abortController = new AbortController();
 
-      if (response.status === 401) {
+      if (response && response?.status === 401) {
         if (abortController) {
           abortController.abort("User is unauthorized. Logging out...");
         }
