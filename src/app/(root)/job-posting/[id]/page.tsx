@@ -543,7 +543,7 @@ const JobPostingDetails = () => {
                     Assessment
                   </h1>
                   <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
-                    {Evaluation.length} Candidates
+                    Candidates
                   </span>
                 </div>
 
@@ -596,7 +596,7 @@ const JobPostingDetails = () => {
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#0061F9] rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">Offer</h1>
                   <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3  rounded text-sm">
-                    {Evaluation.length} Candidates
+                    Candidates
                   </span>
                 </div>
 
@@ -649,7 +649,7 @@ const JobPostingDetails = () => {
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#057A55] rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">Hired</h1>
                   <span className="bg-white whitespace-nowrap text-gray-700 font-medium px-3  rounded text-sm">
-                    {Offer.length} Candidates
+                   Candidates
                   </span>
                 </div>
 
