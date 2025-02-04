@@ -22,15 +22,14 @@ import { JobOverviewProps } from "@/types";
 import OverviewSkelton from "../common/skeltons/OverviewSkelton";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { Empty } from "../ui/empty";
 
 const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   // const [tabToFetch, setTabToFetch] = useState("active");
 
-
-
- // Active Jobs
+  // Active Jobs
   const {
     data: activeJobs,
     isLoading: activeJobsLoader,
@@ -59,10 +58,6 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
 
   //   return () => clearInterval(intervalId);
   // }, [tabToFetch, activeRefetch, draftRefetch]);
-
-
-
-
 
   useEffect(() => {
     const intervalId = setTimeout(() => {
@@ -157,7 +152,12 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
               ))
             ) : activeJobs?.data?.jobs?.length === 0 ? (
               <div className="col-span-full text-center text-gray-500">
-                No active jobs available.
+                <Empty
+                  title="Active Jobs"
+                  subtitle="You are yet to post jobs. "
+                  btnName="Start Posting"
+                  click={() => setCurrentView("createJob")}
+                />
               </div>
             ) : (
               activeJobs?.data?.jobs.map((recipe: any) => (
@@ -218,7 +218,11 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
               ))
             ) : draftJobs?.data?.jobs?.length === 0 ? (
               <div className="col-span-full text-center text-gray-500">
-                No draft jobs available.
+                {/* No draft jobs available. */}
+                <Empty
+                  title="Draft"
+                  subtitle="You have saved no job in draft. "
+                />
               </div>
             ) : (
               draftJobs?.data?.jobs.map((recipe: any) => (
