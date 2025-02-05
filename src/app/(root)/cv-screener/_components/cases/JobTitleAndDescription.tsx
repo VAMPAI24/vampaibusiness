@@ -89,14 +89,14 @@ const JobTitleAndDescription = ({
   return (
     <div className="flex flex-col items-start justify-start gap-5 mt-10">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="w-[300px] lg:w-[350px]">
+        <div className="w-full lg:w-[350px]">
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={control}
             name="job_title"
             label="Job Title"
             placeholder="Product Manager"
-            variant="h-[40px] w-[300px] lg:w-[350px]"
+            variant="h-[40px] w-full lg:w-[350px]"
           />
         </div>
 

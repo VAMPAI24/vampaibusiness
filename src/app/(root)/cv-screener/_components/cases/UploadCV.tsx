@@ -3,9 +3,11 @@ import React from "react";
 import { Upload, X } from "lucide-react";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { UploadCVProps } from "@/types";
+import Image from "next/image";
+import Pdf from "@/public/svgs/cs-scoring/pdf-cv-screener.svg"
 
 
-const UploadCV: React.FC<UploadCVProps> = ({ files, handleFileUpload, handleRemove, onSubmit }) => {
+const UploadCV: React.FC<UploadCVProps> = ({ files, handleFileUpload, handleRemove, onSubmit, isLoadCVScreener }) => {
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="flex flex-col gap-2 lg:w-1/2">
@@ -38,7 +40,7 @@ const UploadCV: React.FC<UploadCVProps> = ({ files, handleFileUpload, handleRemo
                     className="flex justify-between items-center bg-gray-100 p-3 rounded-md"
                   >
                     <div className="flex items-center space-x-3">
-                      <span className="text-red-500">PDF</span>
+                      <Image src={Pdf} alt="pdf image" width={50} height={50} />
                       <span className="text-sm">{file.name}</span>
                     </div>
                     <button
@@ -57,7 +59,7 @@ const UploadCV: React.FC<UploadCVProps> = ({ files, handleFileUpload, handleRemo
 
      
         <div className="flex justify-end items-center">
-          <SubmitButton className="w-full sm:w-[120px] h-11 mt-2">Submit</SubmitButton>
+          <SubmitButton isLoading={isLoadCVScreener} className="w-full sm:w-[120px] h-11 mt-2">Submit</SubmitButton>
         </div>
       </div>
     </form>

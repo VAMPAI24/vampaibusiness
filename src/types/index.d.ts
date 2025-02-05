@@ -205,6 +205,7 @@ export interface UploadCVProps {
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemove: (index: number) => void;
   onSubmit: () => void;
+  isLoadCVScreener: boolean;
 }
 
 
