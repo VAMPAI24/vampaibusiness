@@ -5,7 +5,6 @@ import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -26,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Empty } from "@/components/ui/empty";
 import { ChevronDown } from "lucide-react";
-import Interview from '@/public/svgs/dashboard/interview.svg';
+
 
 interface CandidateData {
   insights: string;

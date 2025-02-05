@@ -115,14 +115,14 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
   {
     accessorKey: "action",
     header: "Action",
-    cell: ({ row }) => {
+    cell: function ActionCell({ row }) {
       const { id: candidateId } = row.original;
-
+  
       const [shortlistCandidate, { isLoading: isShortlist }] =
         useShortlistCandidateMutation();
       const [rejectCandidate, { isLoading: isRejecting }] =
         useRejectCandidateMutation();
-
+  
       const handleShortlist = async () => {
         try {
           await shortlistCandidate({
@@ -130,12 +130,11 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
             status: "Shortlisted",
           }).unwrap();
           candidateRefetch();
-         
         } catch (error) {
           console.error(error);
         }
       };
-
+  
       const handleReject = async () => {
         try {
           await rejectCandidate({ id: candidateId }).unwrap();
@@ -144,18 +143,18 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
           console.error(error);
         }
       };
-
+  
       return (
-        <div className="flex  gap-4">
+        <div className="flex gap-4">
           <SubmitButton
             isLoading={isShortlist}
             clickFn={handleShortlist}
             className="rounded-full px-4"
             disabled={isShortlist || isRejecting}
-            >
+          >
             Shortlist
           </SubmitButton>
-
+  
           <SubmitButton
             isLoading={isRejecting}
             clickFn={handleReject}
@@ -167,11 +166,11 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
         </div>
       );
     },
-  },
+  }, 
   {
     id: "actions",
-    cell: ({ row }) => {
-      const payment = row.original;
+    cell: ({ }) => {
+   
 
       return (
         <EllipsisVertical className="h-4 w-4" />

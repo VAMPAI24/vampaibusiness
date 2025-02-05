@@ -19,17 +19,12 @@ import { Evaluation, Offer } from "@/constants";
 import {
   useGetByJobsIdQuery,
   useGetShortlistedCandidateQuery,
-  useRankApplicantsQuery,
 } from "@/redux/features/job-posting/jobpostingApi";
 import { useParams } from "next/navigation";
 import ShortListedDetails from "@/components/jobboard/ShortListedDetails";
-import RankedCandidatesCard from "@/components/jobboard/RankedCandidatesCard";
 import JobDetailsSkeleton from "@/components/common/skeltons/JobDetailsSkeleton";
 import Cookies from "js-cookie";
 import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
-import ApplicantRankingDetails from "@/components/jobboard/ApplicantRankingDetails";
-import { BallsLoader } from "@/components/ui/BallsLoader";
-import { Empty } from "@/components/ui/empty";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Loader from "@/components/common/loader/Loader";
 import { formatAndTransformString } from "@/lib/utils";
@@ -40,11 +35,7 @@ import RankedCandidate from "./_components/rankedcandidatetable/rankedcandidate"
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
-  const [rankedTab, setRankedTab] = useState("");
 
-  useEffect(() => {
-    setRankedTab("");
-  }, [tab]);
 
   // Job Details
   const params = useParams();
@@ -77,7 +68,6 @@ const JobPostingDetails = () => {
       { skip: tab !== "Shortlisted" }
     );
 
-
   // shortlisted  drawer control
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -91,6 +81,7 @@ const JobPostingDetails = () => {
 
 
 
+  // console.log(candidateData?.data);
   if (loadingJobDetails) {
     return <JobDetailsSkeleton />;
   }
@@ -219,7 +210,7 @@ const JobPostingDetails = () => {
                 <TabsTrigger
                   value="Ranked"
                   className="flex items-center justify-center w-full md:w-auto py-2 rounded bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
-                  onClick={() => setRankedTab("Ranked")}
+                 
                 >
                   Ranked Candidate
                 </TabsTrigger>

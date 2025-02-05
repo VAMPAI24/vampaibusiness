@@ -550,6 +550,7 @@ export const ExperienceLevel = [
   "Executive/C-Level",
 ];
 
+
 export const WorkPattern = ["OnSite", "Hybrid", "Remote"];
 
 export const EmploymentType = [

@@ -18,7 +18,8 @@ import {
 } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import Image from 'next/image'
+import Image from "next/image";
+
 
 const Profile = () => {
   const router = useRouter();
@@ -26,8 +27,6 @@ const Profile = () => {
   const { data: userInfo, refetch } = useGetSingleEmployerQuery(token);
   const [updateProfile, { isLoading: isUpdatingProfile }] =
     useUpdateProfileMutation();
-
-
 
   useEffect(() => {
     const storedToken = Cookies.get("token");
@@ -50,7 +49,7 @@ const Profile = () => {
       no_employees: "",
       industry: "",
       company_bio: "",
-      file: null
+      file: null,
     },
   });
 
@@ -77,8 +76,6 @@ const Profile = () => {
       }
     }
   }, [userInfo, setValue]);
-
-
 
   const [image, setImage] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -113,7 +110,7 @@ const Profile = () => {
       if (imageFile) {
         formData.append("file", imageFile);
       }
-     
+
       await updateProfile(formData).unwrap();
       await refetch();
       setTimeout(() => {
@@ -142,17 +139,27 @@ const Profile = () => {
               />
               <div className="h-14 w-14 bg-blue-50 flex items-center justify-center rounded-md overflow-hidden">
                 {image ? (
-                  <Image
-                    src={image}
-                    alt="Uploaded Logo"
-                    width={50}
-                    height={50}
-                    className="h-full w-full object-cover"
-                  />
+                  // <Image
+                  //   src={image}
+                  //   alt="Uploaded Logo"
+                  //   width={50}
+                  //   height={50}
+                  //   className="h-full w-full object-cover"
+                  // />
+
+                
+
+                  <div className="w-[3.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
+                    <Image
+                      src={image}
+                      alt="profile"
+                      className="object-cover w-full"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
                 ) : (
-                  <span className="text-lg font-semibold text-blue-800">
-                    V
-                  </span>
+                  <span className="text-lg font-semibold text-blue-800">V</span>
                 )}
               </div>
               <div>
@@ -328,11 +335,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-
-
-
-
-
-
-

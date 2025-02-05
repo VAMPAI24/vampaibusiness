@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { EllipsisVertical } from "lucide-react";
+
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,7 +12,7 @@ import {
   useShortlistCandidateMutation,
 } from "@/redux/features/job-posting/jobpostingApi";
 import SubmitButton from "@/components/shared/SubmitButton";
-import { ChevronDown } from 'lucide-react';
+
 import ScoreIndicator from "../ScoreIndicator";
 
 
@@ -134,14 +134,14 @@ export const createColumnsRannkedCandidate = (rankedRefetch: () => void): Column
   {
     accessorKey: "action",
     header: "Action",
-    cell: ({ row }) => {
+    cell: function ActionCell({ row }) {  
       const { id: candidateId } = row.original;
-
+  
       const [shortlistCandidate, { isLoading: isShortlist }] =
         useShortlistCandidateMutation();
       const [rejectCandidate, { isLoading: isRejecting }] =
         useRejectCandidateMutation();
-
+  
       const handleShortlist = async () => {
         try {
           await shortlistCandidate({
@@ -149,12 +149,11 @@ export const createColumnsRannkedCandidate = (rankedRefetch: () => void): Column
             status: "Shortlisted",
           }).unwrap();
           rankedRefetch();
-         
         } catch (error) {
           console.error(error);
         }
       };
-
+  
       const handleReject = async () => {
         try {
           await rejectCandidate({ id: candidateId }).unwrap();
@@ -163,18 +162,18 @@ export const createColumnsRannkedCandidate = (rankedRefetch: () => void): Column
           console.error(error);
         }
       };
-
+  
       return (
-        <div className="flex  gap-4">
+        <div className="flex gap-4">
           <SubmitButton
             isLoading={isShortlist}
             clickFn={handleShortlist}
             className="rounded-full px-4"
             disabled={isShortlist || isRejecting}
-            >
+          >
             Shortlist
           </SubmitButton>
-
+  
           <SubmitButton
             isLoading={isRejecting}
             clickFn={handleReject}
@@ -186,7 +185,7 @@ export const createColumnsRannkedCandidate = (rankedRefetch: () => void): Column
         </div>
       );
     },
-  },
+  },  
   {
     id: "actions",
    
