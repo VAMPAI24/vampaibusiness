@@ -66,7 +66,7 @@ const RankedCandidatesCard = ({
               </p> */}
 
               <ScoreGauge
-                overallScore={overallScore ? Number(overallScore)/100 : null}
+                overallScore={overallScore ? Number(overallScore) / 100 : null}
               />
             </div>
 
@@ -93,10 +93,12 @@ const RankedCandidatesCard = ({
       </div> */}
 
           <div className="mb-4 flex flex-col gap-[1em] itemscenter">
-            <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700 ">Core Strength:</h3>
+            <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700 ">
+              Core Strength:
+            </h3>
             <div className="flex flex-wrap gap-[.5em]">
               {Array.isArray(strengths) ? (
-                <div className="flex flex-wrap gap-[.5em] " >
+                <div className="flex flex-wrap gap-[.5em] ">
                   {(strengths ?? []).map((item, id) => (
                     <span
                       key={id.toString()}
@@ -115,10 +117,12 @@ const RankedCandidatesCard = ({
           </div>
 
           <div className="mb-4 flex flex-col gap-[1em] items-">
-            <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700">Weakness:</h3>
+            <h3 className="font-[600] font-rubik text-[.75em] uppercase text-gray-700">
+              Weakness:
+            </h3>
             <div className="w-full flex flex-wrap gap-2">
               {Array.isArray(weaknesses) ? (
-                <div className="flex flex-wrap gap-[.5em] " >
+                <div className="flex flex-wrap gap-[.5em] ">
                   {(weaknesses ?? []).map((item, id) => (
                     <span
                       key={id.toString()}
@@ -141,7 +145,6 @@ const RankedCandidatesCard = ({
               <strong>AI Comment:</strong> {insights}
             </p>
           </div> */}
-
           <div className=" bg-blue50 border-l-4 border-blue-400 p-4  mt-[2em]">
             <p className="text-blue-600 text-sm">
               <strong>AI Comment:</strong>
