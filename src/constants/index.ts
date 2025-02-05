@@ -947,10 +947,6 @@ export const BrandCarouselImage = [
     imgUrl: BCovenLabs,
   },
   {
-    id: 3,
-    imgUrl: BCovenLabs,
-  },
-  {
     id: 4,
     imgUrl: BAgile,
   },
