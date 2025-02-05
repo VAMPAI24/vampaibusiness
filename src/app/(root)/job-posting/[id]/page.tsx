@@ -18,31 +18,24 @@ import ShorlistedColun from "@/public/svgs/Jobs/shortlistedcolumn.svg";
 import { Evaluation, Offer } from "@/constants";
 import {
   useGetByJobsIdQuery,
-  useGetJobApplicationsQuery,
   useGetShortlistedCandidateQuery,
-  useRankApplicantsQuery,
 } from "@/redux/features/job-posting/jobpostingApi";
 import { useParams } from "next/navigation";
 import ShortListedDetails from "@/components/jobboard/ShortListedDetails";
-import CandidateCard from "@/components/jobboard/CandidateCard";
-import RankedCandidatesCard from "@/components/jobboard/RankedCandidatesCard";
 import JobDetailsSkeleton from "@/components/common/skeltons/JobDetailsSkeleton";
 import Cookies from "js-cookie";
 import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
-import ApplicantRankingDetails from "@/components/jobboard/ApplicantRankingDetails";
-import { BallsLoader } from "@/components/ui/BallsLoader";
-import { Empty } from "@/components/ui/empty";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Loader from "@/components/common/loader/Loader";
 import { formatAndTransformString } from "@/lib/utils";
+import AllCandidate from "./_components/allcandidatetable/allcandidate";
+import RankedCandidate from "./_components/rankedcandidatetable/rankedcandidate";
+
+
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
-  const [rankedTab, setRankedTab] = useState("");
 
-  useEffect(() => {
-    setRankedTab("");
-  }, [tab]);
 
   // Job Details
   const params = useParams();
@@ -59,10 +52,7 @@ const JobPostingDetails = () => {
 
   const { data: userInfo } = useGetSingleEmployerQuery(token);
 
-  //shortlisted
-  // shortlisted tab applied
-  // const { data: applieddData, isLoading: loadingApplied } =
-  //   useGetShortlistedCandidateQuery({id, status:"Applied"}, {skip: tab !=="Shortlisted"});
+
 
   // shortlisted tab shortlisted
   const { data: shortlistedData, isLoading: shortlistedDataLoading } =
@@ -87,32 +77,11 @@ const JobPostingDetails = () => {
     setIsOpen(true);
   };
 
-  // Application tab All Candidate
-  const {
-    data: candidateData,
-    isLoading: loadCandidates,
-    refetch: candidateRefetch,
-  } = useGetJobApplicationsQuery(id, { skip: tab !== "applications_0" });
 
-  // Application tab Ranked Candidate
 
-  const {
-    data: rankedCandidate,
-    isLoading: loadRanked,
-    refetch: rankedRefetch,
-  } = useRankApplicantsQuery(id, { skip: rankedTab === "" });
 
-  // Application drawer control
-  const [openApplicationDrawer, setOpenApplicationDrawer] = useState(false);
-  const [selectedApplicant, setSelectedApplicant] = useState(null);
-
-  const handleApplicationCardClick = (applicant: any) => {
-    setSelectedApplicant(applicant);
-    setOpenApplicationDrawer(true);
-  };
 
   // console.log(candidateData?.data);
-
   if (loadingJobDetails) {
     return <JobDetailsSkeleton />;
   }
@@ -241,136 +210,24 @@ const JobPostingDetails = () => {
                 <TabsTrigger
                   value="Ranked"
                   className="flex items-center justify-center w-full md:w-auto py-2 rounded bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
-                  onClick={() => setRankedTab("Ranked")}
+                 
                 >
                   Ranked Candidate
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="all" className="w-full">
-                <>
-                  {loadCandidates ? (
-                    <div className="w-full  flex items-center justify-center">
-                      <div className="w-fit h-[10em] mt-10 lg:mt-0 flex flex-col items-center justify-center gap-[.5em]">
-                        <BallsLoader />
-                        <p className="text-[.875em] text-main-900 text-center">
-                          Loading Candidates...
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      {/* Header */}
-                      <div className="mt-10 !lg:mt-0 flex justify-between items-center">
-                        <h1 className="text-xl font-semibold text-[#001633] flex items-center">
-                          Candidates
-                          {candidateData?.data?.length > 0 ||
-                            (candidateData?.data?.jobApplicant?.length > 0 && (
-                              <span className="ml-2 text-sm bg-main-200 text-main-600 font-semibold px-2 py-1 rounded">
-                                { candidateData?.data?.length ?? candidateData?.data?.jobApplicant?.length}
-                              </span>
-                            ))}
-                        </h1>
-                      </div>
-
-                      <div className="w-full min-h-screen flex items-start">
-                        {(candidateData?.data?.length > 0 || candidateData?.data?.jobApplicant?.length > 0 )? (
-                          <div className="grid grid-cols-1 gap-[1em]">
-                            {(candidateData?.data  ?? candidateData?.data?.jobApplicant ??  [])?.map(
-                              (candidate: any, index: any) => (
-                                <CandidateCard
-                                  key={index}
-                                  {...candidate}
-                                  clickFn={() =>
-                                    handleApplicationCardClick(candidate)
-                                  }
-                                  candidateId={candidate.id}
-                                  refetchFn={candidateRefetch}
-                                />
-                              )
-                            )}
-                          </div>
-                        ) : (
-                          <div className="w-full flex items-center justify-center">
-                            <div className="w-fit mx-auto empty-box">
-                              <Empty
-                                title="No Candidates"
-                                subtitle="No candidate has applied for this job."
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </>
+              <TabsContent value="all">
+                <AllCandidate id={id} />
               </TabsContent>
 
-              <TabsContent value="Ranked" className="w-full">
-                <>
-                  {loadRanked ? (
-                    <div className="w-full flex items-center justify-center">
-                      <div className="w-fit h-[10em] flex flex-col items-center justify-center gap-[.5em]">
-                        <BallsLoader />
-                        <p className="text-[.875em] text-main-900 text-center">
-                          Ranking Candidates...
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      {/* Header */}
-                      <div className="mt-10 !lg:mt-0 flex justify-between items-center">
-                        <h1 className="text-xl font-semibold text-[#001633] flex items-center">
-                          Ranked Candidates
-                          {rankedCandidate?.data?.length > 0 && (
-                            <span className="ml-2 text-sm bg-main-200 text-main-600 font-semibold px-2 py-1 rounded">
-                              {rankedCandidate?.data?.length}
-                            </span>
-                          )}
-                        </h1>
-                      </div>
-
-                      <div className="w-full min-h-screen flex items-start">
-                        {rankedCandidate?.data.length > 0 ? (
-                          <div className="flex flex-col gap-[1em] w-full max-w-7xl">
-                            {(rankedCandidate?.data ?? [])?.map(
-                              (candidate: any) => (
-                                <RankedCandidatesCard
-                                  key={candidate.id}
-                                  {...candidate}
-                                  clickFn={() =>
-                                    handleApplicationCardClick(candidate)
-                                  }
-                                  candidateId={candidate.id}
-                                  refetchFn={rankedRefetch}
-                                />
-                              )
-                            )}
-                          </div>
-                        ) : (
-                          <div className="w-full flex items-center justify-center">
-                            <div className="w-fit mx-auto empty-box">
-                              <Empty
-                                title="No Candidates"
-                                subtitle="No candidate has applied for this job."
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </>
+              <TabsContent value="Ranked">
+                <RankedCandidate id={id}  />
+            
               </TabsContent>
             </Tabs>
           </div>
 
-          <ApplicantRankingDetails
-            isOpen={openApplicationDrawer}
-            candidate={selectedApplicant}
-            onClose={() => setOpenApplicationDrawer(false)}
-          />
+
         </TabsContent>
 
         {/* Shortlisted Tab Content */}

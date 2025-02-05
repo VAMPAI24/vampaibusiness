@@ -3,13 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Jobbox from "@/components/jobboard/Jobbox";
-import {
-  Briefcase,
-  CalendarClock,
-  Gift,
-  Sun,
-  Pencil,
-} from "lucide-react";
+import { Briefcase, CalendarClock, Gift, Sun, Pencil } from "lucide-react";
 import AvaterJobs from "@/public/svgs/Jobs/avatar.svg";
 import CustomFormField, {
   FormFieldType,
@@ -58,6 +52,7 @@ import ToastNotification from "@/components/shared/ToastNotification";
 import JobOverview from "@/components/jobboard/JobOverview";
 import Cookies from "js-cookie";
 import DratfEditSkeleton from "@/components/common/skeltons/DratfEditSkeleton";
+import { Button } from "antd";
 
 const JobPosting = () => {
   // const [currentView, setCurrentView] = useState("jobAds");
@@ -428,7 +423,6 @@ const JobPosting = () => {
   const { data: draftEditdata, isLoading: draftEditLoader } =
     useGetJobsInDraftQuery(draftId);
 
-
   // 2. Update the data
   // Save Job To draft Handler
   const [updateJobInDraft, { isLoading: updateDraftLoading }] =
@@ -490,7 +484,6 @@ const JobPosting = () => {
         // Try submitting the job to the API
         try {
           await updateJobInDraft({ id: draftId, data: payload }).unwrap();
-          
 
           setCurrentView("overview");
         } catch (error) {
@@ -502,6 +495,7 @@ const JobPosting = () => {
     }
   };
 
+  // setter to put the data from the api into the form so user can update draft
   useEffect(() => {
     if (draftEditdata?.data?.job_title) {
       methods.setValue("job_title", draftEditdata?.data?.job_title);
@@ -537,10 +531,7 @@ const JobPosting = () => {
         "rate",
         draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.rate
       );
-      methods.setValue(
-        "benefits",
-        draftEditdata?.data?.benefits
-      );
+      methods.setValue("benefits", draftEditdata?.data?.benefits);
       methods.setValue(
         "jobDescription",
         draftEditdata?.data?.job_specifications?.[0]?.jobDescription
@@ -626,12 +617,23 @@ const JobPosting = () => {
                     fieldType={FormFieldType.INPUT}
                     control={methods.control}
                     name="job_title"
-                    label="Job Title"
+                    label={
+                      <span>
+                        Job Title <span className="text-red-600">*</span>
+                      </span>
+                    }
                     placeholder="Product Manager"
                     variant="h-[40px] w-[300px] lg:w-[350px]"
                   />
 
-                  <div className="flex justify-end items-center">
+                  <div className="flex gap-2 justify-end items-center">
+                    <Button
+                      variant="outlined"
+                      onClick={() => setCurrentView("overview")}
+                      className="w-full sm:w-[120px] border-main-600 text-main-600 h-11"
+                    >
+                      Previous
+                    </Button>
                     <SubmitButton className="w-full sm:w-[120px] h-11">
                       Next
                     </SubmitButton>
@@ -702,7 +704,12 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="experienceLevel"
-                            label="Experience Level"
+                          
+                            label={
+                              <span>
+                                Experience Level <span className="text-red-600">*</span>
+                              </span>
+                            }
                             placeholder="Enter Experience Level"
                             variant="h-[40px] w-full"
                             defaultValue=""
@@ -721,7 +728,12 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="workPattern"
-                            label="Work pattern"
+                            
+                            label={
+                              <span>
+                                Work pattern <span className="text-red-600">*</span>
+                              </span>
+                            }
                             placeholder="Enter Work pattern"
                             variant="h-[40px] w-full"
                             defaultValue=""
@@ -742,7 +754,12 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="employmentType"
-                            label="Employment Type"
+                            
+                            label={
+                              <span>
+                                Employment Type <span className="text-red-600">*</span>
+                              </span>
+                            }
                             placeholder="Enter Employment Type"
                             variant="h-[40px] w-full"
                             defaultValue=""
@@ -763,7 +780,12 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="currency_code"
-                            label="Salary Currency"
+                           
+                            label={
+                              <span>
+                                Salary Currency <span className="text-red-600">*</span>
+                              </span>
+                            }
                             placeholder="Currency"
                             variant="h-[40px] w-full sm:w-40"
                             defaultValue=""
@@ -831,8 +853,8 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="rate"
-                            label="Salary Rate"
-                            placeholder="Select Rate"
+                            label="Salary Frequency"
+                            placeholder="Select Frequency"
                             variant="h-[40px] w-full sm:w-40"
                             defaultValue=""
                           >
@@ -853,22 +875,26 @@ const JobPosting = () => {
                           fieldType={FormFieldType.DATE}
                           control={control}
                           name="applicationDeadline"
-                          label="Application Deadline"
+                        
+                          label={
+                            <span>
+                              Application Deadline <span className="text-red-600">*</span>
+                            </span>
+                          }
+                          
                           placeholder="Select a date"
                           variant="w-full h-[40px] border border-main-500 text-sm shadow-sm rounded"
                           dateFormat="PPP"
                         />
 
-                        {/* <CustomFormField
-                          fieldType={FormFieldType.INPUT}
-                          control={methods.control}
-                          name="applicationDeadline"
-                          label="Application Deadline"
-                          placeholder="DD/MM/YYYY"
-                          variant="h-[40px] w-full"
-                        /> */}
-
-                        <div className="flex justify-end items-center mt-6">
+                        <div className="flex gap-2 justify-end items-center mt-6">
+                          <Button
+                            variant="outlined"
+                            onClick={() => setCurrentView("createJob")}
+                            className="w-full sm:w-[120px] border-main-600 text-main-600 h-11"
+                          >
+                            Previous
+                          </Button>
                           <SubmitButton className="w-full sm:w-[120px] h-11">
                             Next
                           </SubmitButton>
@@ -941,27 +967,25 @@ const JobPosting = () => {
                           fieldType={FormFieldType.TEXTAREA}
                           control={methods.control}
                           name="jobDescription"
-                          label="Job Description"
+                          label={
+                            <span>
+                              Job Description <span className="text-red-600">*</span>
+                            </span>
+                          }
+                          
                           placeholder="Do you have a JD? Paste it here. If not, feel free to write one with AI. separate description with a comma"
                           variant="h-40 w-full"
                         />
-
-                        {/* <h1>CKEditor 5 in React</h1>
-                        <CKEditor
-                          editor={ClassicEditor}
-                          config={{
-
-                            toolbar: ["undo", "redo", "|", "bold", "italic"],
-                            initialData: "",
-                          }}
-                          onChange={handleEditorChange} // Handle content changes
-                        /> */}
 
                         <CustomFormField
                           fieldType={FormFieldType.TEXTAREA}
                           control={methods.control}
                           name="requiredSkills"
-                          label="Required Skills"
+                          label={
+                            <span>
+                              Required Skills <span className="text-red-600">*</span>
+                            </span>
+                          }
                           placeholder="Skill required for the job you want to post."
                           variant="h-40 w-full"
                         />
@@ -991,7 +1015,14 @@ const JobPosting = () => {
                           )}
                         </div>
 
-                        <div className="flex justify-end items-center">
+                        <div className="flex gap-2 justify-end items-center">
+                        <Button
+                            variant="outlined"
+                            onClick={() => { setCurrentTab("details"); setCurrentView("editJob"); }}
+                            className="w-full sm:w-[120px] border-main-600 text-main-600 h-11"
+                          >
+                            Previous
+                          </Button>
                           <SubmitButton className="w-full sm:w-[120px] h-11">
                             Next
                           </SubmitButton>
@@ -1070,7 +1101,17 @@ const JobPosting = () => {
                           variant="h-40 w-full"
                         />
 
-                        <div className="flex justify-end items-center">
+                        <div className="flex gap-2 justify-end items-center">
+                        <Button
+                            variant="outlined"
+                            onClick={() => {
+                              setCurrentTab("specification");
+                              setCurrentView("editJob");
+                            }}
+                            className="w-full sm:w-[120px] border-main-600 text-main-600 h-11"
+                          >
+                            Previous
+                          </Button>
                           <SubmitButton className="w-full sm:w-[120px] h-11">
                             Next
                           </SubmitButton>

@@ -51,7 +51,7 @@ const EventModalContent = ({
       },
       duration: data.duration,
       link: data.link,
-      time:data.time,
+      time: data.time,
       // attendees:  data.attendees.split(",")
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())

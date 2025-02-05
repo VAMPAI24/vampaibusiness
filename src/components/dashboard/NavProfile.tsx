@@ -21,31 +21,17 @@ const NavProfile = () => {
   return (
     <div className="flex items-center justify-center gap-2">
       {userData?.data?.company_logo ? (
-        // <div className="w-[2.5em] h-[2.5em] overflow-hidden rounded-full ">
-        //   <img
-        //     src={userData?.data?.company_logo}
-        //     alt="profile"
-        //     className="object-cover w-full"
-        //   />
-        // </div>
         <div className="w-[2.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
-        <img
+        <Image
           src={userData?.data?.company_logo}
           alt="profile"
           className="object-cover w-full"
+          width={50}
+          height={50}
         />
       </div>
       ) : (
         <Avatar>
-          {/* <AvatarImage src={userData?.data?.company_logo} /> */}
-          {/* <div className="w-[2.5em] h-[2.5em] overflow-hidden rounded-full ">
-          <img
-            src={userData?.data?.company_logo}
-            alt="profile"
-            className="object-cover w-full"
-            // height={40}
-          />
-        </div> */}
           <AvatarFallback>
             {userData?.data?.first_name?.[0] && userData?.data?.last_name?.[0]
               ? `${userData.data.first_name[0]}${userData.data.last_name[0]}`.toUpperCase()
