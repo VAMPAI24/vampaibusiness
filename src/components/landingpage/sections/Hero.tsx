@@ -23,7 +23,7 @@ const Hero = () => {
     const restartAnimation = () => {
       if (typeof window === "undefined") return; // Prevent server errors
 
-      const isMobileOrTablet = window.innerWidth <= 1280;
+      const isMobileOrTablet = window.innerWidth <= 1550;
 
       gsap.killTweensOf(leftColumnRef.current);
       gsap.killTweensOf(rightColumnRef.current);
