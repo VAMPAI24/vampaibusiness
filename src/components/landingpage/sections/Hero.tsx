@@ -23,7 +23,7 @@ const Hero = () => {
     const restartAnimation = () => {
       if (typeof window === "undefined") return; // Prevent server errors
 
-      const isMobileOrTablet = window.innerWidth <= 1024;
+      const isMobileOrTablet = window.innerWidth <= 1280;
 
       gsap.killTweensOf(leftColumnRef.current);
       gsap.killTweensOf(rightColumnRef.current);
@@ -38,7 +38,7 @@ const Hero = () => {
                 ? leftColumnRef.current.scrollWidth / 2
                 : leftColumnRef.current.scrollHeight / 2
             }px`,
-            duration: 300,
+            duration: 100,
             ease: "linear",
             repeat: -1,
             yoyo: true,
@@ -56,7 +56,7 @@ const Hero = () => {
                 ? rightColumnRef.current.scrollWidth / 2
                 : rightColumnRef.current.scrollHeight / 2
             }px`,
-            duration: 300,
+            duration: 100,
             ease: "linear",
             repeat: -1,
             yoyo: true,
