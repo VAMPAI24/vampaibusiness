@@ -1,8 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ScoreGauge from "@/components/common/ScoreGauge";
 import React from "react";
+import ScoreGauge from "@/components/common/ScoreGauge";
+import SubmitButton from "@/components/shared/SubmitButton";
 
-const GradeAndEvaluation = ({ scoredData }: { scoredData: any }) => {
+
+
+interface GradeAndEvaluationProps { 
+  scoredData: any;
+  setCurrentScreener: (view: string) => void;
+}
+
+const GradeAndEvaluation = ({
+  scoredData,
+  setCurrentScreener,
+}: GradeAndEvaluationProps) => {
   return (
     <div className="">
       <div className="overflow-hidden border rounded">
@@ -53,6 +64,15 @@ const GradeAndEvaluation = ({ scoredData }: { scoredData: any }) => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="mt-4 flex justify-end items-center ">
+        <SubmitButton
+          className="w-full sm:w-[120px] h-11"
+          clickFn={() => setCurrentScreener("jobtitleanddescription")}
+        >
+          Score Again
+        </SubmitButton>
       </div>
     </div>
   );

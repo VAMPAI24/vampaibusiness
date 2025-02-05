@@ -206,18 +206,9 @@ export interface UploadCVProps {
   handleRemove: (index: number) => void;
   onSubmit: () => void;
   isLoadCVScreener: boolean;
+  setCurrentScreener: (view: string) => void;
 }
 
 
-
-// export interface UploadCVProps {
-
-//   files: FileItem[];
-
-//   setFiles: React.Dispatch<React.SetStateAction<FileItem[]>>;
-
-//   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
-
-// }
 
 

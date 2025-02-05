@@ -182,7 +182,7 @@
 
 
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CvHeaders from "./_components/cv-headers";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -245,6 +245,10 @@ const CvScreener = () => {
         const response = await cvscoring(formData).unwrap();
         setScoredData(response?.data);
 
+      // ✅ Reset state after successful API submission
+      setFiles([]); // Clears uploaded files
+      methods.reset(); // Reset form fields
+
         setCurrentScreener("gradeandevaluation");
       }
     } catch (error) {
@@ -302,11 +306,12 @@ const CvScreener = () => {
             handleRemove={handleRemove}
             onSubmit={handleSubmit(onSubmit)}
             isLoadCVScreener={isLoadCVScreener}
+            setCurrentScreener={setCurrentScreener}
           />
         );
 
       case "gradeandevaluation":
-        return <GradeAndEvaluation scoredData={scoredData} />; 
+        return <GradeAndEvaluation scoredData={scoredData} setCurrentScreener={setCurrentScreener} />; 
 
       default:
         return <div>Invalid screener view</div>;
