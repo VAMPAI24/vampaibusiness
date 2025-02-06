@@ -38,6 +38,7 @@ export default function RootLayout({
           <main>{children}</main>
         </ReduxProvider>
         <TawkToScript />
+        {/* <MixPanelInit/> */}
         <Toaster
           position="top-right"
           toastOptions={{
