@@ -53,7 +53,7 @@ interface EventData {
   customData?: Record<string, string | number>;
 }
 export const sendEvents = (data: EventData) => {
-  let isProd = isLocalOrStaging();
+  const isProd = isLocalOrStaging();
   if (!isProd) {
     mixpanel.track(data.eventName, data.customData);
     sendConversionEvent(data);

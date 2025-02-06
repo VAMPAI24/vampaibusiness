@@ -54,10 +54,10 @@ export const isLocalOrStaging = () => {
 
 export const setStorage = <T>(
   name: string,
-  value: string | number | any | T
+  value: string | number | T
 ) => {
   if (typeof window !== "undefined") {
-    var localStorage = window.localStorage;
+    const localStorage = window.localStorage;
     localStorage.setItem(name, JSON.stringify(value));
   }
 };
@@ -106,7 +106,7 @@ export const getBizBasicInfo = (): BasicUserInfo => {
   userInfo.os = navigator.platform;
   userInfo.language = navigator.language;
 
-  let userAgent = getStorage<{
+  const userAgent = getStorage<{
     ipAddress: string;
     location: string;
   }>("businessAgent");
