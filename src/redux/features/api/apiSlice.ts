@@ -29,11 +29,10 @@ export const apiSlice = createApi({
     responseHandler: async (response) => {
       const abortController = new AbortController();
 
-      if (response && response?.status === 401) {
+      if (response && response.status === 401) {
         if (abortController) {
           abortController.abort("User is unauthorized. Logging out...");
         }
-
 
         ToastNotification({
           title: "Session",
@@ -43,10 +42,21 @@ export const apiSlice = createApi({
 
         clearSession();
         window.location.href = "/sign-in";
+
+        return;
       }
 
-      // Return the response for valid cases
-      return response.json();
+      // Check if the response is OK (status 200-299) and has a body
+      if (response.ok) {
+        try {
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Failed to parse JSON:", error);
+        }
+      } else {
+        throw new Error(`Request failed with status ${response?.status}`);
+      }
     },
   }),
 
