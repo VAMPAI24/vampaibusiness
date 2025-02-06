@@ -168,3 +168,47 @@ export interface CandidateProps {
   clickFn?: () => void;
   refetchFn?: () => void;
 }
+
+
+
+export interface uploadProps extends Inputs {
+  id?: string;
+  name: string;
+  value?: File;
+  title: string;
+  type?: string;
+  max_size?: number;
+  accept?: string;
+  body?:string;
+  onChange: (name: string, value?: File) => void;
+}
+
+
+
+
+
+
+// cv scoring interface
+export interface FileItem {
+  name: string;
+  size: number;
+  file: File;
+}
+
+
+
+
+
+
+export interface UploadCVProps {
+  files: FileItem[];
+  handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRemove: (index: number) => void;
+  onSubmit: () => void;
+  isLoadCVScreener: boolean;
+  setCurrentScreener: (view: string) => void;
+}
+
+
+
+

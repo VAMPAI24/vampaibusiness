@@ -56,6 +56,7 @@ export interface ShortListedDetailsProps {
   } | null;
 }
 
+
 const ShortListedDetails = ({
   isOpen,
   onClose,

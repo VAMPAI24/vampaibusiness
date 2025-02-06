@@ -303,3 +303,22 @@ export const ShareInviteSchema = z.object({
   search_terms: z.string().min(1, "Search terms is required"),
 
 });
+
+
+//cv scoring sechema
+export const titleanddesCVScreenerschema = z.object({
+  job_title: z.string().min(1, "Job title is required"),
+  jobDescription: z
+    .string()
+    .min(10, "Job Description must be at least 10 characters long")
+    .max(5000, "Job Description cannot exceed 5000 characters"),
+});
+
+export const uploadCVScreenerSchema = z.object({
+  job_title: z.string().min(1, "Job title is required"),
+  jobDescription: z
+    .string()
+    .min(10, "Job Description must be at least 10 characters long")
+    .max(5000, "Job Description cannot exceed 5000 characters"),
+  candidateCV: z.instanceof(File).nullable().optional(),
+});

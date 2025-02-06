@@ -12,6 +12,7 @@ import Dashboard from "@/public/svgs/dashboard/dashboard.svg";
 import JobAds from "@/public/svgs/dashboard/job-ads.svg";
 import Recruitmnet from "@/public/svgs/dashboard/recruitment.svg";
 import ScheduleInterview from "@/public/svgs/dashboard/schedule-interview.svg";
+import CvScreener from "@/public/svgs/dashboard/cv-screener.svg"
 import Logout from "@/public/svgs/dashboard/logout.svg";
 import Job from "@/public/svgs/dashboard/jobs.svg";
 import Interview from "@/public/svgs/dashboard/interview.svg";
@@ -22,6 +23,7 @@ import DashboardMobile from "@/public/svgs/dashboard/dashboard-mobile.svg";
 import JobAdsMobile from "@/public/svgs/dashboard/job-ads-mobile.svg";
 import RecruitmnetMobile from "@/public/svgs/dashboard/recruitment-mobile.svg";
 import ScheduleInterviewMobile from "@/public/svgs/dashboard/schedule-interview-mobile.svg";
+import CvScreenerMobile from "@/public/svgs/dashboard/cv-screener-mobile.svg"
 import GoogleMeet from "@/public/svgs/Jobs/google-meet.svg";
 import Zoom from "@/public/svgs/Jobs/zoom.svg";
 import Onsite from "@/public/svgs/Jobs/onsite.svg";
@@ -242,6 +244,11 @@ export const SidebarLinks = [
     label: "Scheduled Interviews",
   },
   {
+    imgURL: CvScreener,
+    route: "/cv-screener",
+    label: "Cv Screener",
+  },
+  {
     imgURL: Recruitmnet,
     route: "/recruitment",
     label: "Recruitment",
@@ -271,10 +278,16 @@ export const SidebarLinksMobile = [
     label: "Scheduled Interviews",
   },
   {
+    imgURL: CvScreenerMobile,
+    route: "/cv-screener",
+    label: "Cv Screener",
+  },
+  {
     imgURL: RecruitmnetMobile,
     route: "/recruitment",
     label: "Recruitment",
   },
+  
 
   {
     imgURL: Logout,
