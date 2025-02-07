@@ -73,8 +73,8 @@ export const authApi = apiSlice.injectEndpoints({
           // });
         } catch (error: any) {
           ToastNotification({
-            title: error.error.data.error,
-            description: error.error.data.message,
+            title: error?.error?.data?.error,
+            description: error?.error?.data?.message,
             type: "error",
           });
         }

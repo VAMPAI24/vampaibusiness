@@ -15,8 +15,6 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
-    
-
       <JobPosting />
       <Candidate />
       <Hiring />
