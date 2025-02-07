@@ -191,8 +191,8 @@ export const footerLinks = [
   {
     title: "CONTACT",
     links: [
-      { name: "Support: 1 (000) 000-6000", link: "/" },
-      { name: "Sales: 1 (000) 000-0000", link: "/" },
+      // { name: "Support: 1 (000) 000-6000", link: "/" },
+      { name: "Sales: 08140045364", link: "/" },
       { name: "hello@usevampai.com", link: "/" },
     ],
   },
