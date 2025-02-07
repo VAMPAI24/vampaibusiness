@@ -25,7 +25,7 @@ export const Platformbtn: React.FC<btnProps> = (props) => {
     props.click?.();
   };
 
-  const btnClass = `bg-main-600 font-jakarta w-full h-[50px] flex items-center justify-center gap-[20px] rounded-[10px] text-white hover:scale-[1.1] capitalize text-[1em] font-[400] hover:bg-main-800 disabled:bg-main-902 whitespace-nowrap px-[1em] disabled:cursor-not-allowed transition-all duration-300 ease-in-out
+  const btnClass = `bg-main-600 font-jakarta w-full h-[50px] flex items-center justify-center gap-[20px] rounded-[10px] text-white hover:scale-[1] capitalize text-[1em] font-[400] hover:bg-main-800 disabled:bg-main-902 whitespace-nowrap px-[1em] disabled:cursor-not-allowed transition-all duration-300 ease-in-out
  ${props.small && " h-[48px]"}  ${props.addOns} `;
 
   const _renderbtn = () => {

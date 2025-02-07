@@ -2,16 +2,18 @@ import React from "react";
 
 interface copyClipProps {
   body: string;
+  clickFn: () => void;
 }
 export const CopyClipboard: React.FC<copyClipProps> = (props) => {
   const [copied, setCopied] = React.useState(false);
 
-  const { body } = props;
+  const { body, clickFn } = props;
   const board = React.useRef(null);
 
   const copyCodeToClipboard = () => {
     navigator.clipboard.writeText(body);
     setCopied(true);
+    clickFn();
   };
 
   return (
@@ -20,13 +22,17 @@ export const CopyClipboard: React.FC<copyClipProps> = (props) => {
       ref={board}
       onClick={copyCodeToClipboard}
     >
-      <p className="my-0 text-[1em] w[60%] whitespace-normal font-[300] text-main-900 ">
+      <p className="my-0 w-[80%] text-[1em] w[60%] whitespace-normal font-[300] text-main-900 ">
         {body}
       </p>
       {body !== "No Referral" && (
         <p
           className={`my-0 text-[1em] lg:text-[1em] font-[400] px-[1em] py-[.5em] text-main-white cursor-pointer  rounded-full
-                ${copied ? 'bg-green-800 text-white':'bg-yellow-700 text-white'}
+                ${
+                  copied
+                    ? "bg-green-800 text-white"
+                    : "bg-yellow-700 text-white"
+                }
             `}
         >
           {copied ? "Copied" : "Copy"}

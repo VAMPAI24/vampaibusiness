@@ -35,10 +35,20 @@ import { Empty } from "@/components/ui/empty";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Loader from "@/components/common/loader/Loader";
 import { formatAndTransformString } from "@/lib/utils";
+import { RootState } from "@/redux/app/store";
+import { MainModal } from "@/components/common/modal";
+import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
+import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
+import { Platformbtn } from "@/components/common/buttons";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
   const [rankedTab, setRankedTab] = useState("");
+
+  const { showJobSuccess } = useAppSelector(
+    (store: RootState) => store.jobPost
+  );
 
   useEffect(() => {
     setRankedTab("");
@@ -49,6 +59,8 @@ const JobPostingDetails = () => {
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const { data, isLoading: loadingJobDetails } = useGetByJobsIdQuery(id);
   const [token, setToken] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const storedToken = Cookies.get("token");
@@ -113,12 +125,27 @@ const JobPostingDetails = () => {
 
   // console.log(candidateData?.data);
 
+  const openCloseShare = (value?: string) => {
+    const payload = {
+      showJobSuccess: value ? true : false,
+      postId: value ? id : "",
+    };
+    dispatch(setCurrJobPost(payload));
+  };
+
   if (loadingJobDetails) {
     return <JobDetailsSkeleton />;
   }
 
   return (
     <div className="w-full">
+      <MainModal
+        visible={showJobSuccess}
+        close={openCloseShare}
+        closable={false}
+      >
+        <JobPostSuccess showSuccess={false} clickFn={openCloseShare} />
+      </MainModal>
       <Tabs defaultValue="jobdetails" className="w-full mt-3">
         <TabsList className="relative">
           <TabsTrigger
@@ -149,10 +176,18 @@ const JobPostingDetails = () => {
         <TabsContent value="jobdetails">
           <div className="bg-white rounded-md p-4 mt-10">
             {/* Job Title */}
-            <Jobbox
-              title={data?.data?.job_title || "Job Title Not Specified"}
-              variant="mb-4 text-[26px] capitalize"
-            />
+            <div className="w-full flex items-end justify-between mb-[1.5em]">
+              <Jobbox
+                title={data?.data?.job_title || "Job Title Not Specified"}
+                variant="mb-4 text-[26px] capitalize"
+              />
+              <Platformbtn
+                type="secondary"
+                name="Share Job"
+                click={() => openCloseShare("open")}
+                addOns="!w-fit  md:!px-[1.5em] rounded-full"
+              />
+            </div>
 
             {/* Preview Cards */}
             <div className="flex flex-wrap gap-5 sm:gap-3">
@@ -267,28 +302,32 @@ const JobPostingDetails = () => {
                           {candidateData?.data?.length > 0 ||
                             (candidateData?.data?.jobApplicant?.length > 0 && (
                               <span className="ml-2 text-sm bg-main-200 text-main-600 font-semibold px-2 py-1 rounded">
-                                { candidateData?.data?.length ?? candidateData?.data?.jobApplicant?.length}
+                                {candidateData?.data?.length ??
+                                  candidateData?.data?.jobApplicant?.length}
                               </span>
                             ))}
                         </h1>
                       </div>
 
                       <div className="w-full min-h-screen flex items-start">
-                        {(candidateData?.data?.length > 0 || candidateData?.data?.jobApplicant?.length > 0 )? (
+                        {candidateData?.data?.length > 0 ||
+                        candidateData?.data?.jobApplicant?.length > 0 ? (
                           <div className="grid grid-cols-1 gap-[1em]">
-                            {(candidateData?.data  ?? candidateData?.data?.jobApplicant ??  [])?.map(
-                              (candidate: any, index: any) => (
-                                <CandidateCard
-                                  key={index}
-                                  {...candidate}
-                                  clickFn={() =>
-                                    handleApplicationCardClick(candidate)
-                                  }
-                                  candidateId={candidate.id}
-                                  refetchFn={candidateRefetch}
-                                />
-                              )
-                            )}
+                            {(
+                              candidateData?.data ??
+                              candidateData?.data?.jobApplicant ??
+                              []
+                            )?.map((candidate: any, index: any) => (
+                              <CandidateCard
+                                key={index}
+                                {...candidate}
+                                clickFn={() =>
+                                  handleApplicationCardClick(candidate)
+                                }
+                                candidateId={candidate.id}
+                                refetchFn={candidateRefetch}
+                              />
+                            ))}
                           </div>
                         ) : (
                           <div className="w-full flex items-center justify-center">
@@ -649,7 +688,7 @@ const JobPostingDetails = () => {
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#057A55] rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">Hired</h1>
                   <span className="bg-white whitespace-nowrap text-gray-700 font-medium px-3  rounded text-sm">
-                   Candidates
+                    Candidates
                   </span>
                 </div>
 

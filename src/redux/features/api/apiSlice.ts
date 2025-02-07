@@ -49,7 +49,7 @@ export const apiSlice = createApi({
       // Check if the response is OK (status 200-299) and has a body
       if (response.ok) {
         try {
-          const data = await response.json();
+          const data = await response?.json();
           return data;
         } catch (error) {
           console.error("Failed to parse JSON:", error);

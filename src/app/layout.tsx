@@ -5,6 +5,7 @@ import ReduxProvider from "@/redux/ReduxProvider";
 import { ShieldX, CircleCheck, InfoIcon } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import TawkToScript from "./TawkTo";
+import MixPanelInit from "./MixPanel";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -38,7 +39,7 @@ export default function RootLayout({
           <main>{children}</main>
         </ReduxProvider>
         <TawkToScript />
-        {/* <MixPanelInit/> */}
+        <MixPanelInit/>
         <Toaster
           position="top-right"
           toastOptions={{
