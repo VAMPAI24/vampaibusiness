@@ -215,6 +215,7 @@ const JobPosting = () => {
       }
     }
   };
+  
 
   // Save Job To draft Handler
   const handleSaveToDraft = async (

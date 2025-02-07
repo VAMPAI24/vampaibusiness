@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_MIX_PANEL: ${{ secrets.NEXT_PUBLIC_EMP_MIX_PANEL }}
+      NEXT_PUBLIC_MIX: ${{ secrets.NEXT_PUBLIC_MIX_PANEL }}
     steps:
       - name: Debug environment variables
         run: |
