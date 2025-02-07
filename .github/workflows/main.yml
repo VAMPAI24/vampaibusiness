@@ -10,6 +10,10 @@ jobs:
       NEXT_PUBLIC_MIX_PANEL: ${{ secrets.NEXT_PUBLIC_EMP_MIX_PANEL }}
       NEXT_PUBLIC_MIX: ${{ secrets.NEXT_PUBLIC_MIX_PANEL }}
     steps:
+      - run: echo "NEXT_PUBLIC_MIX_PANEL=${NEXT_PUBLIC_EMP_MIX_PANEL}"
+        shell: bash
+      - run: echo "NEXT_PUBLIC_MIX=${NEXT_PUBLIC_MIX_PANEL}"
+        shell: bash
       - name: Debug environment variables
         run: |
           echo "Checking if env variables are set (showing only presence, not values)"
