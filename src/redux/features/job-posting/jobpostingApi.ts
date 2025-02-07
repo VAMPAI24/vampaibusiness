@@ -22,14 +22,13 @@ export const authApi = apiSlice.injectEndpoints({
             type: "success",
           });
 
-          dispatch(
-            setCurrJobPost({
-              postId: result?.data?.data?.id,
-              showJobSuccess: true,
-            })
-          );
-
-         
+          if (result?.data?.data?.id)
+            dispatch(
+              setCurrJobPost({
+                postId: result?.data?.data?.id,
+                showJobSuccess: true,
+              })
+            );
         } catch (error: any) {
           ToastNotification({
             title: error.error.data.error,
