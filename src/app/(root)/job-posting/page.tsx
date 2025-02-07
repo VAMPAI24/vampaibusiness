@@ -53,11 +53,23 @@ import JobOverview from "@/components/jobboard/JobOverview";
 import Cookies from "js-cookie";
 import DratfEditSkeleton from "@/components/common/skeltons/DratfEditSkeleton";
 import { Button } from "antd";
+import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
+import { RootState } from "@/redux/app/store";
+import { MainModal } from "@/components/common/modal";
+import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
+import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
+import { sendEvents } from "@/lib/events";
 
 const JobPosting = () => {
   // const [currentView, setCurrentView] = useState("jobAds");
   const [currentView, setCurrentView] = useState("overview");
   const [currentTab, setCurrentTab] = useState("details");
+
+  const { showJobSuccess } = useAppSelector(
+    (store: RootState) => store.jobPost
+  );
+
+  const dispatch = useAppDispatch();
 
   //// Active job control
   const methods = useForm<
@@ -182,9 +194,19 @@ const JobPosting = () => {
 
         // Try submitting the job to the API
         try {
-          await postActiveJob(payload).unwrap();
+          await postActiveJob(payload)
+            .unwrap()
+            .then(() => {
+              sendEvents({
+                eventName: "Post Job",
+                customData: {
+                  email: payload.job_title ?? "",
+                  action: "job post",
+                },
+              });
+            });
 
-          setCurrentView("overview");
+          // setCurrentView("overview");
         } catch (error) {
           console.error("Error submitting job:", error);
         }
@@ -249,7 +271,17 @@ const JobPosting = () => {
 
         // Try submitting the job to the API
         try {
-          await saveJobToDraft(payload).unwrap();
+          await saveJobToDraft(payload)
+            .unwrap()
+            .then(() => {
+              sendEvents({
+                eventName: "Post Job Draft",
+                customData: {
+                  email: payload.job_title ?? "",
+                  action: "draft post",
+                },
+              });
+            });
 
           setCurrentView("overview");
         } catch (error) {
@@ -704,10 +736,10 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="experienceLevel"
-                          
                             label={
                               <span>
-                                Experience Level <span className="text-red-600">*</span>
+                                Experience Level{" "}
+                                <span className="text-red-600">*</span>
                               </span>
                             }
                             placeholder="Enter Experience Level"
@@ -728,10 +760,10 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="workPattern"
-                            
                             label={
                               <span>
-                                Work pattern <span className="text-red-600">*</span>
+                                Work pattern{" "}
+                                <span className="text-red-600">*</span>
                               </span>
                             }
                             placeholder="Enter Work pattern"
@@ -754,10 +786,10 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="employmentType"
-                            
                             label={
                               <span>
-                                Employment Type <span className="text-red-600">*</span>
+                                Employment Type{" "}
+                                <span className="text-red-600">*</span>
                               </span>
                             }
                             placeholder="Enter Employment Type"
@@ -780,10 +812,10 @@ const JobPosting = () => {
                             fieldType={FormFieldType.SELECT}
                             control={control}
                             name="currency_code"
-                           
                             label={
                               <span>
-                                Salary Currency <span className="text-red-600">*</span>
+                                Salary Currency{" "}
+                                <span className="text-red-600">*</span>
                               </span>
                             }
                             placeholder="Currency"
@@ -875,13 +907,12 @@ const JobPosting = () => {
                           fieldType={FormFieldType.DATE}
                           control={control}
                           name="applicationDeadline"
-                        
                           label={
                             <span>
-                              Application Deadline <span className="text-red-600">*</span>
+                              Application Deadline{" "}
+                              <span className="text-red-600">*</span>
                             </span>
                           }
-                          
                           placeholder="Select a date"
                           variant="w-full h-[40px] border border-main-500 text-sm shadow-sm rounded"
                           dateFormat="PPP"
@@ -969,10 +1000,10 @@ const JobPosting = () => {
                           name="jobDescription"
                           label={
                             <span>
-                              Job Description <span className="text-red-600">*</span>
+                              Job Description{" "}
+                              <span className="text-red-600">*</span>
                             </span>
                           }
-                          
                           placeholder="Do you have a JD? Paste it here. If not, feel free to write one with AI. separate description with a comma"
                           variant="h-40 w-full"
                         />
@@ -983,7 +1014,8 @@ const JobPosting = () => {
                           name="requiredSkills"
                           label={
                             <span>
-                              Required Skills <span className="text-red-600">*</span>
+                              Required Skills{" "}
+                              <span className="text-red-600">*</span>
                             </span>
                           }
                           placeholder="Skill required for the job you want to post."
@@ -1016,9 +1048,12 @@ const JobPosting = () => {
                         </div>
 
                         <div className="flex gap-2 justify-end items-center">
-                        <Button
+                          <Button
                             variant="outlined"
-                            onClick={() => { setCurrentTab("details"); setCurrentView("editJob"); }}
+                            onClick={() => {
+                              setCurrentTab("details");
+                              setCurrentView("editJob");
+                            }}
                             className="w-full sm:w-[120px] border-main-600 text-main-600 h-11"
                           >
                             Previous
@@ -1102,7 +1137,7 @@ const JobPosting = () => {
                         />
 
                         <div className="flex gap-2 justify-end items-center">
-                        <Button
+                          <Button
                             variant="outlined"
                             onClick={() => {
                               setCurrentTab("specification");
@@ -1332,7 +1367,24 @@ const JobPosting = () => {
     }
   };
 
-  return <section>{renderView()}</section>;
+  const continueToOvw = () => {
+    dispatch(setCurrJobPost({ showJobSuccess: false, postId: "" }));
+    setCurrentView("overview");
+  };
+
+  return (
+    <section>
+      <MainModal
+        visible={showJobSuccess}
+        close={continueToOvw}
+        closable={false}
+      >
+        <JobPostSuccess showSuccess={true} clickFn={continueToOvw} />
+      </MainModal>
+
+      {renderView()}
+    </section>
+  );
 };
 
 export default JobPosting;

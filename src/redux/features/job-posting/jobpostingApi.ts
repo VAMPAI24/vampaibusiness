@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
+import { setCurrJobPost } from "./jobpostingSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,12 +16,19 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-
           ToastNotification({
             title: result?.data?.message,
             description: "Job Created Successfully",
             type: "success",
           });
+
+          if (result?.data?.data?.id)
+            dispatch(
+              setCurrJobPost({
+                postId: result?.data?.data?.id,
+                showJobSuccess: true,
+              })
+            );
         } catch (error: any) {
           ToastNotification({
             title: error.error.data.error,
@@ -273,7 +281,7 @@ export const authApi = apiSlice.injectEndpoints({
     rankApplicants: builder.query({
       query: (jobId: string) => ({
         // url: "/employer/rank-applicants",
-        url:"/employer/ai-rank-applicants",
+        url: "/employer/ai-rank-applicants",
         method: "GET",
         params: { job_id: jobId },
       }),
@@ -428,29 +436,27 @@ export const authApi = apiSlice.injectEndpoints({
     updateJobInDraft: builder.mutation({
       query: ({ id, data }) => ({
         url: `/employer/jobs-draft/${id}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: data,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
           ToastNotification({
-            title: 'Success',
-            description: 'Job draft updated successfully.',
-            type: 'success',
+            title: "Success",
+            description: "Job draft updated successfully.",
+            type: "success",
           });
-         
         } catch (error: any) {
           ToastNotification({
-            title: 'Error',
+            title: "Error",
             description:
-              error?.data?.error || error?.error || 'Something went wrong',
-            type: 'error',
+              error?.data?.error || error?.error || "Something went wrong",
+            type: "error",
           });
         }
       },
     }),
-
 
     searchTeamMember: builder.query({
       query: (search_terms) => ({
@@ -495,5 +501,5 @@ export const {
   useGetProfilePercentageCountQuery,
   useGetJobsInDraftQuery,
   useUpdateJobInDraftMutation,
-  useSearchTeamMemberQuery
+  useSearchTeamMemberQuery,
 } = authApi;

@@ -56,6 +56,6 @@ export const sendEvents = (data: EventData) => {
   const isProd = isLocalOrStaging();
   if (!isProd) {
     mixpanel.track(data.eventName, data.customData);
-    sendConversionEvent(data);
+    // sendConversionEvent(data);
   }
 };

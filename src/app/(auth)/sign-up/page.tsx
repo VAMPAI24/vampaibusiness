@@ -12,12 +12,15 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/app/store";
 import SubmitButton from "@/components/shared/SubmitButton";
-import { useEmailVerificationMutation, useResendOtpMutation } from "@/redux/features/auth/authApi";
+import {
+  useEmailVerificationMutation,
+  useResendOtpMutation,
+} from "@/redux/features/auth/authApi";
+import { sendEvents } from "@/lib/events";
 
 type UserSignUpInfo = {
   work_email: string;
 };
-
 
 const SignUp = () => {
   const router = useRouter();
@@ -30,9 +33,10 @@ const SignUp = () => {
   };
 
   const { userSignUpInfo } = useSelector(
-    (state: RootState) => state.auth as { userSignUpInfo: UserSignUpInfo | null }
+    (state: RootState) =>
+      state.auth as { userSignUpInfo: UserSignUpInfo | null }
   );
-  
+
   // OTP Verification
   const data = {
     otp: otp,
@@ -53,30 +57,34 @@ const SignUp = () => {
     }
   };
 
-
-
   // Resend OTP
   const resendOtpData = {
     work_email: userSignUpInfo?.work_email,
   };
 
-
-  const [resendOtp ] = useResendOtpMutation();
+  const [resendOtp] = useResendOtpMutation();
 
   const handleResendOtp = async (values: {
     work_email: string | undefined;
   }) => {
     try {
-      await resendOtp(values).unwrap();
+      await resendOtp(values)
+        .unwrap()
+        .then(() => {
+          sendEvents({
+            eventName: "verify account",
+            customData: {
+              email: values.work_email ?? "",
+              action: "verify",
+            },
+          });
+        });
     } catch (error) {
       console.log(error);
     }
   };
 
-
   const RenderSteps = () => {
-   
-
     switch (active) {
       case 0:
         return (
@@ -112,8 +120,6 @@ const SignUp = () => {
                   <InputOTPSlot className="shad-otp-slot" index={3} />
                 </InputOTPGroup>
               </InputOTP>
-
-            
 
               <SubmitButton
                 clickFn={() => onSubmit(data)}

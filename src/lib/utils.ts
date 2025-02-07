@@ -52,10 +52,24 @@ export const isLocalOrStaging = () => {
   }
 };
 
-export const setStorage = <T>(
-  name: string,
-  value: string | number | T
-) => {
+export const isLocalStagingOrProd = () => {
+  if (typeof window !== "undefined") {
+    const { origin } = window.location;
+
+    const localRegex = /localhost(:\d+)?/; // Matches localhost with optional port
+    const stagingRegex = /\.staging(-frontend)?\./i; // Matches 'staging' or 'staging-frontend' in a subdomain, case-insensitive
+
+    if (localRegex.test(origin)) {
+      return "local";
+    } else if (stagingRegex.test(origin)) {
+      return "staging";
+    }
+
+    return "prod";
+  }
+};
+
+export const setStorage = <T>(name: string, value: string | number | T) => {
   if (typeof window !== "undefined") {
     const localStorage = window.localStorage;
     localStorage.setItem(name, JSON.stringify(value));
@@ -84,7 +98,6 @@ export const hashWord = (str: string) => {
   const hashedWord = CryptoJS.SHA256(formattedWord).toString(CryptoJS.enc.Hex);
   return hashedWord;
 };
-
 
 interface BasicUserInfo {
   device: string | null;
@@ -115,4 +128,38 @@ export const getBizBasicInfo = (): BasicUserInfo => {
   userInfo.location = userAgent?.location ?? "";
 
   return userInfo;
+};
+
+export const handleShare = (
+  referralLink: string,
+  platform: string,
+  message?: string
+) => {
+  const url = encodeURIComponent(referralLink);
+  const text = encodeURIComponent(message ?? "");
+
+  switch (platform.toLowerCase()) {
+    case "facebook":
+    case "instagram":
+    case "fb":
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        "_blank"
+      );
+      break;
+    case "x":
+    case "twitter":
+      window.open(
+        `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
+        "_blank"
+      );
+      break;
+    case "linkedin":
+      window.open(`https://www.linkedin.com/shareArticle?url=${url}`, "_blank");
+      break;
+
+    default:
+      console.warn("Unsupported platform");
+      break;
+  }
 };
