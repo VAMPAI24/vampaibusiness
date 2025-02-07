@@ -1,6 +1,3 @@
-import Profile from "@/public/svgs/Profile.svg";
-import Work from "@/public/svgs/Work.svg";
-import Candidate from "@/public/svgs/Candidate.svg";
 import Facebook from "@/public/svgs/facebook.svg";
 import Twiter from "@/public/svgs/twitter.svg";
 import Linkdein from "@/public/svgs/linkedin.svg";
@@ -25,6 +22,23 @@ import DashboardMobile from "@/public/svgs/dashboard/dashboard-mobile.svg";
 import JobAdsMobile from "@/public/svgs/dashboard/job-ads-mobile.svg";
 import RecruitmnetMobile from "@/public/svgs/dashboard/recruitment-mobile.svg";
 import ScheduleInterviewMobile from "@/public/svgs/dashboard/schedule-interview-mobile.svg";
+import GoogleMeet from "@/public/svgs/Jobs/google-meet.svg";
+import Zoom from "@/public/svgs/Jobs/zoom.svg";
+import Onsite from "@/public/svgs/Jobs/onsite.svg";
+import Teams from "@/public/svgs/Jobs/teams.svg";
+import Janet from "@/public/svgs/landing-page/janet.svg";
+import Henry from "@/public/svgs/landing-page/henry.svg";
+import Anna from "@/public/svgs/landing-page/anna.svg";
+import Lawson from "@/public/svgs/landing-page/lawson.svg";
+import Harrison from "@/public/svgs/landing-page/harrison.svg";
+import BVesti from "@/public/pngs/brands/vesti.png";
+import BFez from "@/public/pngs/brands/fez.png";
+import BCovenLabs from "@/public/pngs/brands/coven.png";
+import BAgile from "@/public/pngs/brands/agile.png";
+import BShalom from "@/public/pngs/brands/shalom.png";
+import Firstelec from "@/public/pngs/brands/firstelec.png";
+import ClockChain from "@/public/pngs/brands/clockchain.png";
+import Realtec from "@/public/pngs/brands/realtec.png";
 
 export const NavLinks = [
   {
@@ -89,24 +103,71 @@ export const HeroData = [
   },
 ];
 
-export const RecruitmentData = [
+export const CandidateCardData = [
   {
-    imgURL: Profile,
-    title: "Create Your Employer Profile",
-    subtitle:
-      "Craft a personalized profile that showcases your company’s unique culture",
+    imgURL: Janet,
+    name: "Janet Lawson",
+    role: "Product Manager ",
+    yearsExp: "5 years of experience",
+    skills: [
+      "Product Roadmap Planning",
+      "Data Analysis",
+      "Market Research",
+      "Business Acumen",
+      "Leadership",
+    ],
   },
   {
-    imgURL: Work,
-    title: "Post Your Work",
-    subtitle:
-      "Easily create and customize job listings that stand out with AI suggestions ",
+    imgURL: Henry,
+    name: "Henry Harrison",
+    role: "Software Engineer ",
+    yearsExp: "5 years of experience",
+    skills: [
+      "Programming",
+      "Problem-Solving",
+      "Debugging",
+      "Version Control",
+      "Collaboration",
+    ],
   },
   {
-    imgURL: Candidate,
-    title: "Get Matched with Top Candidate",
-    subtitle:
-      "Our AI instantly connects you with the most qualified candidates ",
+    imgURL: Anna,
+    name: "Anna Finn",
+    role: "Marketing Manager",
+    yearsExp: "5 years of experience",
+    skills: [
+      "Campaign Management",
+      "Content Strategy",
+      "SEO/SEM",
+      "Analytical Thinking",
+      "Communication",
+    ],
+  },
+  {
+    imgURL: Lawson,
+    name: "Janet Lawson",
+    role: "Product Manager ",
+    yearsExp: "5 years of experience",
+    skills: [
+      "Product Roadmap Planning",
+      "Data Analysis",
+      "Market Research",
+      "Business Acumen",
+      "Leadership",
+    ],
+  },
+  {
+    imgURL: Harrison,
+    name: "Henry Harrison",
+    role: "Software Engineer",
+    yearsExp: "5 year experience",
+    skills: [
+      "Programming",
+      "Problem-Solving",
+      "Debugging",
+      "Version Control",
+      "Collaboration",
+    ],
   },
 ];
 
@@ -130,8 +191,8 @@ export const footerLinks = [
   {
     title: "CONTACT",
     links: [
-      { name: "Support: 1 (000) 000-6000", link: "/" },
-      { name: "Sales: 1 (000) 000-0000", link: "/" },
+      // { name: "Support: 1 (000) 000-6000", link: "/" },
+      { name: "Sales: 08140045364", link: "/" },
       { name: "hello@usevampai.com", link: "/" },
     ],
   },
@@ -202,15 +263,16 @@ export const SidebarLinks = [
     label: "Job Posting",
   },
   {
-    imgURL: Recruitmnet,
-    route: "/recruitment",
-    label: "Recruitmnet",
-  },
-  {
     imgURL: ScheduleInterview,
     route: "/scheduleinterview",
-    label: "Schedule Interview",
+    label: "Scheduled Interviews",
   },
+  {
+    imgURL: Recruitmnet,
+    route: "/recruitment",
+    label: "Recruitment",
+  },
+
   {
     imgURL: Logout,
     route: "/sign-in",
@@ -230,15 +292,16 @@ export const SidebarLinksMobile = [
     label: "Job Posting",
   },
   {
-    imgURL: RecruitmnetMobile,
-    route: "/recruitment",
-    label: "Recruitmnet",
-  },
-  {
     imgURL: ScheduleInterviewMobile,
     route: "/scheduleinterview",
-    label: "Schedule Interview",
+    label: "Scheduled Interviews",
   },
+  {
+    imgURL: RecruitmnetMobile,
+    route: "/recruitment",
+    label: "Recruitment",
+  },
+
   {
     imgURL: Logout,
     route: "/sign-in",
@@ -253,6 +316,7 @@ export const DashboardCardData = [
     description:
       "Quickly create a job listing to attract top talent and grow your team.",
     imgSrc: Arrow,
+    route: "/job-posting",
   },
   {
     imgIcon: Interview,
@@ -260,6 +324,7 @@ export const DashboardCardData = [
     description:
       "Schedule interviews with top candidates to streamline hiring.",
     imgSrc: Arrow,
+    route: "/scheduleinterview",
   },
   {
     imgIcon: Application,
@@ -267,6 +332,7 @@ export const DashboardCardData = [
     description:
       "Review candidate applications in one place to find the perfect fit.",
     imgSrc: Arrow,
+    route: "/job-posting",
   },
 ];
 
@@ -507,10 +573,10 @@ export const ExperienceLevel = [
   "Entry-Level",
   "Mid-Level",
   "Senior-Level",
-  "Excutive/C-Level",
+  "Executive/C-Level",
 ];
 
-export const WorkPattern = ["OnSite", "Remote", "Hybrid"];
+export const WorkPattern = ["OnSite", "Hybrid", "Remote"];
 
 export const EmploymentType = [
   "Full-Time",
@@ -522,52 +588,52 @@ export const EmploymentType = [
 
 export const SalaryRange = ["NGN", "USD", "GBP"];
 
-export const sections = [
-  {
-    title: "About the Company",
-    content:
-      "NovaTech is a forward-thinking technology company committed to innovating solutions that empower businesses and improve lives. With a focus on cutting-edge software development, data analytics, and digital transformation, we help companies of all sizes enhance efficiency, security, and customer engagement.",
-  },
+// export const sections = [
+//   {
+//     title: "About the Company",
+//     content:
+//       "NovaTech is a forward-thinking technology company committed to innovating solutions that empower businesses and improve lives. With a focus on cutting-edge software development, data analytics, and digital transformation, we help companies of all sizes enhance efficiency, security, and customer engagement.",
+//   },
 
-  {
-    title: "Job Description",
-    content:
-      "We are seeking a dynamic and experienced Product Manager to join our innovative team. In this role, you will be responsible for leading the entire product lifecycle from conception to launch and beyond. The ideal candidate will have a strong mix of strategic thinking, technical expertise, and a passion for delivering exceptional user experiences. You will work closely with cross-functional teams including engineering, design, marketing, and sales to ensure successful product delivery and alignment with company goals.",
-  },
-  {
-    title: "Responsibilities",
-    items: [
-      "Lead the development and execution of product strategies and roadmaps, aligned with business objectives and market demands.",
-      "Manage the end-to-end product lifecycle, from ideation and research to design, development, launch, and iteration.",
-      "Collaborate closely with engineering, design, and marketing teams to ensure seamless product development and launch.",
-      "Prioritize and manage the product backlog, ensuring clarity of requirements for the development team.",
-      "Define and monitor key product metrics, using data-driven insights to inform decisions and measure success.",
-    ],
-  },
-  {
-    title: "Qualifications",
-    items: [
-      "Bachelor’s degree in business, engineering, or a related field (MBA preferred).",
-      "5+ years of experience in product management, ideally in the tech or digital product space.",
-      "Proven track record of successfully launching products and managing their growth in a competitive market.",
-      "Strong understanding of agile development methodologies and experience working with cross-functional teams.",
-      "Excellent communication, collaboration, and stakeholder management skills.",
-      "Strong analytical and problem-solving abilities, with a focus on data-driven decision-making.",
-      "",
-    ],
-  },
-  {
-    title: "What We Offer:",
-    items: [
-      "Bachelor’s degree in business, engineering, or a related field (MBA preferred).",
-      "5+ years of experience in product management, ideally in the tech or digital product space.",
-      "Proven track record of successfully launching products and managing their growth in a competitive market.",
-      "Strong understanding of agile development methodologies and experience working with cross-functional teams.",
-      "Excellent communication, collaboration, and stakeholder management skills.",
-      "Strong analytical and problem-solving abilities, with a focus on data-driven decision-making.",
-    ],
-  },
-];
+//   {
+//     title: "Job Description",
+//     content:
+//       "We are seeking a dynamic and experienced Product Manager to join our innovative team. In this role, you will be responsible for leading the entire product lifecycle from conception to launch and beyond. The ideal candidate will have a strong mix of strategic thinking, technical expertise, and a passion for delivering exceptional user experiences. You will work closely with cross-functional teams including engineering, design, marketing, and sales to ensure successful product delivery and alignment with company goals.",
+//   },
+//   {
+//     title: "Responsibilities",
+//     items: [
+//       "Lead the development and execution of product strategies and roadmaps, aligned with business objectives and market demands.",
+//       "Manage the end-to-end product lifecycle, from ideation and research to design, development, launch, and iteration.",
+//       "Collaborate closely with engineering, design, and marketing teams to ensure seamless product development and launch.",
+//       "Prioritize and manage the product backlog, ensuring clarity of requirements for the development team.",
+//       "Define and monitor key product metrics, using data-driven insights to inform decisions and measure success.",
+//     ],
+//   },
+//   {
+//     title: "Qualifications",
+//     items: [
+//       "Bachelor’s degree in business, engineering, or a related field (MBA preferred).",
+//       "5+ years of experience in product management, ideally in the tech or digital product space.",
+//       "Proven track record of successfully launching products and managing their growth in a competitive market.",
+//       "Strong understanding of agile development methodologies and experience working with cross-functional teams.",
+//       "Excellent communication, collaboration, and stakeholder management skills.",
+//       "Strong analytical and problem-solving abilities, with a focus on data-driven decision-making.",
+//       "",
+//     ],
+//   },
+//   {
+//     title: "What We Offer:",
+//     items: [
+//       "Bachelor’s degree in business, engineering, or a related field (MBA preferred).",
+//       "5+ years of experience in product management, ideally in the tech or digital product space.",
+//       "Proven track record of successfully launching products and managing their growth in a competitive market.",
+//       "Strong understanding of agile development methodologies and experience working with cross-functional teams.",
+//       "Excellent communication, collaboration, and stakeholder management skills.",
+//       "Strong analytical and problem-solving abilities, with a focus on data-driven decision-making.",
+//     ],
+//   },
+// ];
 
 export const recipes = [
   {
@@ -605,5 +671,300 @@ export const recipes = [
     title: "Grilled Mushrooms",
     description:
       "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+];
+
+export const interviews = [
+  {
+    title: "Product Manager",
+    type: "Google Meet Interview",
+    icon: GoogleMeet,
+    date: "22 November 2024",
+    time: "13:30 - 14:00",
+  },
+  {
+    title: "Product Manager",
+    type: "Zoom Interview",
+    icon: Zoom,
+    date: "22 November 2024",
+    time: "13:30 - 14:00",
+  },
+  {
+    title: "Product Manager",
+    type: "On-Site Interview",
+    icon: Onsite,
+    date: "22 November 2024",
+    time: "13:30 - 14:00",
+  },
+  {
+    title: "Product Manager",
+    type: "Teams Interview",
+    icon: Teams,
+    date: "22 November 2024",
+    time: "13:30 - 14:00",
+  },
+];
+
+export const Times = [
+  "0:00",
+  "0:30",
+  "1:00",
+  "1:30",
+  "2:00",
+  "2:30",
+  "3:00",
+  "3:30",
+  "4:30",
+  "5:00",
+  "5:30",
+  "6:00",
+  "6:30",
+  "7:00",
+  "7:30",
+  "8:00",
+  "8:30",
+  "9:00",
+  "9:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+  "20:00",
+  "20:30",
+  "21:00",
+  "21:30",
+  "22:00",
+  "22:30",
+  "23:00",
+  "23:30",
+];
+
+export const Durations = ["15", "30", "45", "60"];
+
+export const EventType = [
+  {
+    title: "Google Ment",
+    icon: GoogleMeet,
+  },
+
+  {
+    title: "Microsoft Teams",
+    icon: Teams,
+  },
+  {
+    title: "On-Site Interview",
+    icon: Onsite,
+  },
+  {
+    title: "Zoom",
+    icon: Zoom,
+  },
+];
+
+export const teamMembers = [
+  {
+    name: "John Paul",
+    email: "john@novatech.com",
+    role: "Owner",
+    initials: "JP",
+  },
+  {
+    name: "Kate Peterson",
+    email: "kate@novatech.com",
+    role: "can edit",
+    initials: "KP",
+  },
+];
+
+export const candidatesShorlist = [
+  {
+    name: "Janet Lawson",
+    role: "Senior Product Manager",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+  {
+    name: "Alex Carter",
+    role: "Senior Product Manager",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+  {
+    name: "Taylor Morgan",
+    role: "Product Manager",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+];
+
+export const Interviewed = [
+  {
+    id: "1",
+    name: "Janet Lawson",
+    title: "Senior Product Manager",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+  {
+    id: "2",
+    name: "Alex Carter",
+    title: "Senior Frontend Developer",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+];
+
+export const Evaluation = [
+  {
+    id: "1",
+
+    name: "Janet Lawson",
+    title: "Senior Product Manager",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+];
+
+export const Offer = [
+  {
+    id: "1",
+    name: "Janet Lawson",
+    title: "Senior Product Manager",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+  {
+    id: "2",
+    name: "Taylor Morgan",
+    title: "Senior Backend Developer",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+];
+
+export const Hired = [
+  {
+    id: "1",
+    name: "Janet Lawson",
+    title: "Senior Product Manager",
+    description:
+      "Highly skilled Product Manager with 7 years of experience in driving product innovation, strategy, and execution. With expertise in market analysis, agile methodologies, and cross-functional leadership...",
+  },
+  {
+    id: "2",
+    name: "Taylor Morgan",
+    title: "Senior Backend Developer",
+    description:
+      "Drive the vision, strategy, and execution of products from concept to launch. Collaborate with cross-functio...",
+  },
+];
+
+export const experiences = [
+  {
+    title: "Senior UX Designer",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+    date: "2023 - Present",
+    company: "Google Inc",
+  },
+  {
+    title: "Senior UX Designer",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+    date: "2023 - Present",
+    company: "Google Inc",
+  },
+  {
+    title: "Senior UX Designer",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+    date: "2023 - Present",
+    company: "Google Inc",
+  },
+];
+
+export const projects = [
+  {
+    title: "Project Title",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+  },
+  {
+    title: "Project Title",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+  },
+  {
+    title: "Project Title",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+  },
+  {
+    title: "Project Title",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+  },
+  {
+    title: "Project Title",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+  },
+  {
+    title: "Project Title",
+    description:
+      "Wondering what questions you might encounter in your upcoming interview. Know what to expect...",
+  },
+];
+
+// landinpage hero carousel
+export const BrandCarouselImage = [
+  {
+    id: 1,
+    imgUrl: BVesti,
+  },
+  {
+    id: 2,
+    imgUrl: BFez,
+  },
+  {
+    id: 3,
+    imgUrl: BCovenLabs,
+  },
+  {
+    id: 4,
+    imgUrl: BAgile,
+  },
+
+  {
+    id: 5,
+    imgUrl: BShalom,
+  },
+  {
+    id: 6,
+    imgUrl: Firstelec,
+  },
+  {
+    id: 7,
+    imgUrl: ClockChain,
+  },
+  {
+    id: 8,
+    imgUrl: Realtec,
   },
 ];

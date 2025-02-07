@@ -6,7 +6,9 @@ import { z } from "zod";
 import { ProfileSchema } from "@/lib/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomFormField, { FormFieldType, } from "@/components/shared/inputs/CustomFormField";
+import CustomFormField, {
+  FormFieldType,
+} from "@/components/shared/inputs/CustomFormField";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { Countries, Industries, numberOfEmployees } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
@@ -16,19 +18,18 @@ import {
 } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-
-
+import Image from "next/image";
 
 
 const Profile = () => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   const { data: userInfo, refetch } = useGetSingleEmployerQuery(token);
-  const [updateProfile, { isLoading: isUpdatingProfile }] = useUpdateProfileMutation();
-
+  const [updateProfile, { isLoading: isUpdatingProfile }] =
+    useUpdateProfileMutation();
 
   useEffect(() => {
-    const storedToken = Cookies.get("token"); 
+    const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
@@ -39,15 +40,16 @@ const Profile = () => {
     defaultValues: {
       first_name: "",
       last_name: "",
-      Position_in_company: "",
+      position_in_company: "",
       work_email: "",
       phone_Number: "",
       country: "",
       company_name: "",
       company_website: "",
-      No_Employees: "",
+      no_employees: "",
       industry: "",
       company_bio: "",
+      file: null,
     },
   });
 
@@ -57,30 +59,63 @@ const Profile = () => {
     if (userInfo) {
       setValue("first_name", userInfo?.data?.first_name || "");
       setValue("last_name", userInfo?.data?.last_name || "");
-      setValue("Position_in_company", userInfo?.data?.Position_in_company || "");
+      setValue(
+        "position_in_company",
+        userInfo?.data?.Position_in_company || ""
+      );
       setValue("work_email", userInfo?.data?.work_email || "");
       setValue("phone_Number", userInfo?.data?.phone_Number || "");
       setValue("country", userInfo?.data?.country || "");
       setValue("company_name", userInfo?.data?.company_name || "");
       setValue("company_website", userInfo?.data?.company_website || "");
-      setValue("No_Employees", userInfo?.data?.No_Employees || "");
+      setValue("no_employees", userInfo?.data?.No_Employees || "");
       setValue("industry", userInfo?.data?.industry || "");
       setValue("company_bio", userInfo?.data?.company_bio || "");
+      if (userInfo?.data?.company_logo) {
+        setImage(userInfo.data.company_logo);
+      }
     }
   }, [userInfo, setValue]);
 
+  const [image, setImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      setImageFile(file);
+    }
+  };
 
+  const handleClick = () => {
+    document.getElementById("fileInput")?.click();
+  };
 
   const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
-
     try {
-      await updateProfile(values).unwrap();
+      const formData = new FormData();
+      formData.append("first_name", values.first_name);
+      formData.append("last_name", values.last_name);
+      formData.append("position_in_company", values.position_in_company);
+      formData.append("work_email", values.work_email);
+      formData.append("phone_Number", values.phone_Number);
+      formData.append("country", values.country);
+      formData.append("company_name", values.company_name);
+      formData.append("company_website", values.company_website);
+      formData.append("no_employees", values.no_employees || "");
+      formData.append("industry", values.industry);
+      formData.append("company_bio", values.company_bio);
+      if (imageFile) {
+        formData.append("file", imageFile);
+      }
+
+      await updateProfile(formData).unwrap();
       await refetch();
       setTimeout(() => {
         router.push("/dashboard");
-      }, 5000)
-      
+      }, 5000);
     } catch (error) {
       console.log(error);
     }
@@ -90,6 +125,61 @@ const Profile = () => {
     <section className="hide-scrollbar">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="bg-white rounded-md p-4 flex items-center justify-between w-full">
+            <div
+              className="flex items-center space-x-4 cursor-pointer"
+              onClick={handleClick}
+            >
+              <input
+                type="file"
+                id="fileInput"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
+              <div className="h-14 w-14 bg-blue-50 flex items-center justify-center rounded-md overflow-hidden">
+                {image ? (
+                  // <Image
+                  //   src={image}
+                  //   alt="Uploaded Logo"
+                  //   width={50}
+                  //   height={50}
+                  //   className="h-full w-full object-cover"
+                  // />
+
+                
+
+                  <div className="w-[3.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
+                    <Image
+                      src={image}
+                      alt="profile"
+                      className="object-cover w-full"
+                      width={50}
+                      height={50}
+                    />
+                  </div>
+                ) : (
+                  <span className="text-lg font-semibold text-blue-800">V</span>
+                )}
+              </div>
+              <div>
+                <h1 className="text-[#001633] font-rubik text-lg font-medium">
+                  Company&apos;s Logo
+                </h1>
+                <p className=" text-main-901 text-[14px] font-jakarta'">
+                  Upload your company logo to help build brand recognition
+                </p>
+              </div>
+            </div>
+            <a
+              href="#"
+              onClick={handleClick}
+              className="text-sm text-blue-500 font-medium hover:underline cursor-pointer"
+            >
+              Edit
+            </a>
+          </div>
+
           <div className="bg-white px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 lg:gap-10">
             <ProfileBox
               title="Personal Information"
@@ -118,7 +208,7 @@ const Profile = () => {
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
                   control={form.control}
-                  name="Position_in_company"
+                  name="position_in_company"
                   label="Position in Company"
                   placeholder="Enter Position in Company"
                   variant="h-[40px] w-full"
@@ -159,7 +249,6 @@ const Profile = () => {
                   placeholder="Enter your Company's Name"
                   variant="h-[40px] w-full"
                   disabled={true}
-                  
                 />
                 <CustomFormField
                   fieldType={FormFieldType.INPUT}
@@ -174,11 +263,11 @@ const Profile = () => {
                 <CustomFormField
                   fieldType={FormFieldType.SELECT}
                   control={control}
-                  name="No_Employees"
+                  name="no_employees"
                   label="Number of Employees"
                   placeholder="Enter the Number of Employees"
                   variant="h-[40px] w-full"
-                  defaultValue={userInfo?.data?.No_Employees || ""}
+                  defaultValue={userInfo?.data?.no_employees || ""}
                 >
                   {numberOfEmployees.map((employ, index) => (
                     <SelectItem key={`${employ}-${index}`} value={employ}>
@@ -191,7 +280,7 @@ const Profile = () => {
                   fieldType={FormFieldType.SELECT}
                   control={control}
                   name="industry"
-                  label="industry"
+                  label="Industry"
                   placeholder="Enter your industry"
                   variant="h-[40px] w-full"
                   defaultValue={userInfo?.data?.industry || ""}

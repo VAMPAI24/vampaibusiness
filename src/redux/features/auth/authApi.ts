@@ -3,11 +3,14 @@
 import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
 import { userRegistration, userLoggedIn } from "./authSlice";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+import { setSession } from "@/redux/app/cookies";
 
 // Define the error type
 interface ApiError {
   error: {
+    status: string;
+    error: string;
     data: {
       error: string;
       message: string;
@@ -40,8 +43,33 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError; 
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+    resendOtp: builder.mutation({ 
+      query: (data) => ({
+        url: "/employer/auth/resend-otp",
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          ToastNotification({
+            title: result?.data?.message,
+            description: "OTP Resent Successfully",
+            type: "success",
+          });
+        } catch (error) {
+          const apiError = error as ApiError; 
+          console.log(apiError);
+          ToastNotification({
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -66,8 +94,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -91,6 +119,10 @@ export const authApi = apiSlice.injectEndpoints({
             description: "Signed In Successfully",
             type: "success",
           });
+          
+          setSession(result?.data?.data?.tokens?.access_token);
+          // setToken(res?.tokens?.access_token);
+
           dispatch(
             userLoggedIn({
               accessToken: result?.data?.data?.tokens?.access_token,
@@ -100,10 +132,9 @@ export const authApi = apiSlice.injectEndpoints({
           );
         } catch (error) {
           const apiError = error as ApiError; 
-          console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -119,17 +150,20 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
+        
           ToastNotification({
             title: "Reset Password Successful",
             description: result?.data?.message,
             type: "success",
           });
+
+
         } catch (error) {
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -150,12 +184,16 @@ export const authApi = apiSlice.injectEndpoints({
             description: result?.data?.message,
             type: "success",
           });
+
+          
+
+         
         } catch (error) {
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -180,8 +218,8 @@ export const authApi = apiSlice.injectEndpoints({
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
+            title: apiError?.error?.data?.error || apiError?.error?.error,
+            description: apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -199,12 +237,11 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error) {
           const apiError = error as ApiError; 
-          console.log(apiError);
-          ToastNotification({
-            title: apiError?.error?.data?.error,
-            description: apiError?.error?.data?.message,
-            type: "error",
-          });
+          // ToastNotification({
+          //   title: apiError?.error?.data?.error || apiError?.error?.error,
+          //   description: apiError?.error?.data?.message || apiError?.error?.status,
+          //   type: "error",
+          // });
         }
       },
     }),
@@ -213,6 +250,7 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
   useRegisterMutation,
+  useResendOtpMutation,
   useEmailVerificationMutation,
   useLoginMutation,
   useSendResetPasswordLinkMutation,

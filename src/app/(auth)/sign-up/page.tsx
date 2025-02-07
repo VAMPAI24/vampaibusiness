@@ -12,12 +12,15 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/app/store";
 import SubmitButton from "@/components/shared/SubmitButton";
-import { useEmailVerificationMutation } from "@/redux/features/auth/authApi";
+import {
+  useEmailVerificationMutation,
+  useResendOtpMutation,
+} from "@/redux/features/auth/authApi";
+import { sendEvents } from "@/lib/events";
 
 type UserSignUpInfo = {
   work_email: string;
 };
-
 
 const SignUp = () => {
   const router = useRouter();
@@ -30,10 +33,11 @@ const SignUp = () => {
   };
 
   const { userSignUpInfo } = useSelector(
-    (state: RootState) => state.auth as { userSignUpInfo: UserSignUpInfo | null }
+    (state: RootState) =>
+      state.auth as { userSignUpInfo: UserSignUpInfo | null }
   );
-  
 
+  // OTP Verification
   const data = {
     otp: otp,
     work_email: userSignUpInfo?.work_email,
@@ -47,15 +51,40 @@ const SignUp = () => {
   }) => {
     try {
       await emailVerification(values).unwrap();
-      router.push("/dashboard");
+      router.push("/sign-in");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Resend OTP
+  const resendOtpData = {
+    work_email: userSignUpInfo?.work_email,
+  };
+
+  const [resendOtp] = useResendOtpMutation();
+
+  const handleResendOtp = async (values: {
+    work_email: string | undefined;
+  }) => {
+    try {
+      await resendOtp(values)
+        .unwrap()
+        .then(() => {
+          sendEvents({
+            eventName: "verify account",
+            customData: {
+              email: values.work_email ?? "",
+              action: "verify",
+            },
+          });
+        });
     } catch (error) {
       console.log(error);
     }
   };
 
   const RenderSteps = () => {
-    const router = useRouter();
-
     switch (active) {
       case 0:
         return (
@@ -92,12 +121,6 @@ const SignUp = () => {
                 </InputOTPGroup>
               </InputOTP>
 
-              {/* {error && (
-                <p className="shad-error text-14-regular mt-4 flex justify-center">
-                  {error}
-                </p>
-              )} */}
-
               <SubmitButton
                 clickFn={() => onSubmit(data)}
                 isLoading={isLoading}
@@ -108,11 +131,11 @@ const SignUp = () => {
               </SubmitButton>
 
               <p
-                onClick={() => router.push("/sign-in")}
+                onClick={() => handleResendOtp(resendOtpData)}
                 className="text-center cursor-pointer mt-4 font-jakarta text-base"
               >
-                Do have an account?&nbsp;
-                <span className="text-main-600">Login</span>
+                Didn&apos;t get the link?&nbsp;
+                <span className="text-main-600">Resend</span>
               </p>
             </div>
           </div>

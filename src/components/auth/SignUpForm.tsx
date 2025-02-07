@@ -11,6 +11,7 @@ import { SignUpFormProps } from "@/types";
 import CustomInput from "../shared/inputs/CustomInput";
 import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "../shared/SubmitButton";
+import { sendEvents } from "@/lib/events";
 
 const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
   const router = useRouter();
@@ -28,7 +29,17 @@ const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
     try {
-      await register(values).unwrap();
+      await register(values).unwrap()
+      .then(()=> {
+        sendEvents({
+          eventName: "create account",
+          customData: {
+            company:values.company_name,
+            email:values.work_email,
+            action: "register",
+          },
+        });
+      })
       onSuccess();
     } catch (error) {
       console.log(error);

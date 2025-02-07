@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export const convertListToText = (htmlString: string | any) => {
   // Match the entire <ul> element along with its contents
   const regex = /<ul[^>]*>(.*?)<\/ul>/g;
@@ -34,7 +36,7 @@ export const arrayToUlString = (arr: string[]) => {
   return ulString;
 };
 
-export const formatStringToList = (string: string | any, delimiter = "\n") => {
+export const formatStringToList = (string: string | any) => {
   // Split the string into an array of items using a regular expression to match newline characters or periods
   if (string === " ") {
     return " ";
@@ -109,7 +111,7 @@ export const splitIntoSentences = (str: string) => {
   return splitAndFormat(str, sentenceRegex);
 };
 
-export const splitAndFormat = (str: String, delimiter: RegExp | string) => {
+export const splitAndFormat = (str: string, delimiter: RegExp | string) => {
   const sentences = str.split(delimiter).map((sentence) => sentence.trim());
 
   // Remove empty strings, format each sentence, and handle edge cases
@@ -155,4 +157,76 @@ export const modifyText = (value: string) => {
   } else {
     return [""];
   }
+};
+
+export const cleanSkillsHTML = (html: string) => {
+  if (!html) return [];
+
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  return Array.from(tempDiv.querySelectorAll("ul > li"))
+    .map((li) => li.textContent?.trim())
+    .filter((text) => text && text !== " ");
+};
+
+// Convert HTML <ul><li>...</li></ul> to an array of strings
+export const htmlToArray = (html: string): string[] => {
+  if (!html) return [];
+
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  return Array.from(tempDiv.querySelectorAll("ul > li"))
+    .map((li) => li.textContent?.trim() ?? "")
+    .filter((text) => text.length > 0 && text !== " ");
+};
+
+// Convert an array of strings back to an HTML list
+export const arrayToHtml = (skills: string[]): string => {
+  if (Array.isArray(skills)) {
+    const flatSkills = skills.flatMap((skill) =>
+      skill.split(",").map((s) => s.trim())
+    );
+
+    return `<ul>${flatSkills
+      .map((skill) => `<li>${skill}</li>`)
+      .join("")}</ul>`;
+  }
+
+  return skills;
+};
+
+export const formatTextToHtml = (text: string): string => {
+  const lines = text.split("\n").map((line) => line.trim()); // Split by new lines and trim spaces
+
+  let html = "";
+  let inList = false;
+
+  for (const line of lines) {
+    if (!line) continue; // Skip empty lines
+
+    if (line.endsWith(":")) {
+      // Convert headings like "Key Responsibilities:"
+      html += `<p><strong>${line}</strong></p>`;
+    } else if (line.startsWith("- ")) {
+      // Convert bullet points into <ul><li>...</li></ul>
+      if (!inList) {
+        html += "<ul>";
+        inList = true;
+      }
+      html += `<li>${line.substring(2)}</li>`; // Remove "- " and wrap in <li>
+    } else {
+      // Convert normal text to <p>
+      if (inList) {
+        html += "</ul>"; // Close the list if transitioning to a new section
+        inList = false;
+      }
+      html += `<p>${line}</p>`;
+    }
+  }
+
+  if (inList) html += "</ul>"; // Ensure the list is closed at the end
+
+  return html;
 };

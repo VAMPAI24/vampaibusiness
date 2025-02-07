@@ -1,11 +1,22 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-
 const PathnameDisplay = () => {
-    const pathname = usePathname()?.replace(/^\//, "").replace(/job-posting/, "job posting") || "dashboard";
+  const pathname = usePathname();
 
-    return <p className="hidden lg:flex capitalize text-[#001633] font-medium font-rubik text-[24px]">{pathname}</p>;
-}
+  const formattedPathname = pathname?.startsWith("/job-posting")
+    ? "job posting"
+    : pathname?.startsWith("/scheduleinterview")
+    ? "Scheduled Interviews"
+    : pathname?.replace(/^\//, "").replace(/-/g, " ") || "dashboard";
+    
+  return (
+    <p className="hidden lg:flex capitalize text-[#001633] font-medium font-rubik text-[24px]">
+      {formattedPathname}
+    </p>
+  );
+};
 
-export default PathnameDisplay
+export default PathnameDisplay;
+
+

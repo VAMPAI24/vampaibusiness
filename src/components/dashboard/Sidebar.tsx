@@ -6,16 +6,13 @@ import Image from "next/image";
 import VampLogoSmall from "@/public/pngs/dashboard/v-logo-white.png";
 import VampLogo from "@/public/svgs/auth/vamp-white.svg";
 import { SidebarLinks } from "@/constants";
-import { usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { userLogout } from "@/redux/features/auth/authSlice";
 
 const Sidebar = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
-
-
-
 
   const handleLogout = () => {
     try {
@@ -25,10 +22,8 @@ const Sidebar = () => {
     }
   };
 
- 
-
   return (
-    <section className="sticky left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 2xl:w-[355px]">
+    <section className="left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 2xl:w-[355px] relative">
       <nav className="flex flex-col gap-4">
         <Link
           href="/dashboard"
@@ -59,10 +54,13 @@ const Sidebar = () => {
             <Link
               key={item.label}
               href={item.route}
-              onClick={isLastItem ? handleLogout : undefined} 
+              onClick={isLastItem ? handleLogout : undefined}
               className={cn(
                 "flex gap-3 items-center py-1 p-2 lg:p-4 rounded-md justify-center lg:justify-start",
-                { "bg-white": isActive }
+                {
+                  "bg-red-50 py-[1em] w-fit rounded-full mt-36": isLastItem,
+                  "bg-white": isActive && !isLastItem,
+                }
               )}
             >
               <div className="relative w-6 h-6">
@@ -70,14 +68,17 @@ const Sidebar = () => {
                   src={item.imgURL}
                   alt={item.label}
                   fill
-                  className={cn({ "brightness-0 invert-10": isActive })}
+                  className={cn(
+                    { "brightness-0 invert-40": isActive && !isLastItem },
+                    { "text-main-900": isLastItem }
+                  )}
                 />
               </div>
               <p
                 className={cn(
-                  "text-16 font-semibold text-white hidden lg:flex",
-                  { "!text-main-900": isActive },
-                  { "text-red-500": isLastItem && !isActive }
+                  "text-16 font-[300] text-white hidden lg:flex",
+                  { "!text-main-600 font-[600] ": isActive && !isLastItem },
+                  { "text-red-900 ": isLastItem }
                 )}
               >
                 {item.label}
@@ -86,8 +87,6 @@ const Sidebar = () => {
           );
         })}
       </nav>
-
-
     </section>
   );
 };

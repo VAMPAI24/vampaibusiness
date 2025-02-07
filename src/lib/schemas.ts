@@ -138,7 +138,7 @@ export const ProfileSchema = z.object({
     .min(1, { message: "Last name is required" })
     .max(50, { message: "Last name must be 50 characters or less" }),
 
-  Position_in_company: z
+  position_in_company: z
     .string()
     .min(1, { message: "Position in company is required" })
     .max(100, {
@@ -147,12 +147,9 @@ export const ProfileSchema = z.object({
 
   work_email: z.string().email({ message: "Invalid email address" }),
 
-
-
-  phone_Number: z
-  .string()
-  .regex(/^\+?[0-9]{10,50}$/, {
-    message: "Phone number must contain only numbers and may start with +, and must be between 10 and 50 digits long.",
+  phone_Number: z.string().regex(/^\+?[0-9]{10,50}$/, {
+    message:
+      "Phone number must contain only numbers and may start with +, and must be between 10 and 50 digits long.",
   }),
 
   company_name: z
@@ -165,7 +162,7 @@ export const ProfileSchema = z.object({
     .min(1, { message: "Company website is required" })
     .max(100, { message: "Company website must be 100 characters or less" }),
 
-    No_Employees: z
+  no_employees: z
     .union([z.enum(["1-10", "11-50", "51-100", "100+"]), z.literal("")])
     .optional()
     .or(z.undefined()),
@@ -180,15 +177,12 @@ export const ProfileSchema = z.object({
     .min(1, { message: "Country is required" })
     .max(100, { message: "Country must be 100 characters or less" }),
 
-    company_bio: z
+  company_bio: z
     .string()
     .min(1, { message: "company bio is required" })
     .max(200, { message: "company_bio must be 200 characters or less" }),
+  file: z.null().optional(),
 });
-
-
-
-
 
 export const jobTitleSchema = z.object({
   job_title: z.string().min(1, "Job title is required"),
@@ -199,20 +193,22 @@ export const jobDetailsSchema = z.object({
   experienceLevel: z.string().min(1, "Experience level is required"),
   workPattern: z.string().min(1, "Work pattern is required"),
   employmentType: z.string().min(1, "Employment type is required"),
-  currency_code: z.string().optional(),
-  salary_min: z
-    .string() 
-    .optional(),  
-  salary_max: z
-    .string() 
-    .optional(), 
-    applicationDeadline: z
-    .string()
-    .min(1, "Application deadline is required")
-    .regex(
-      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
-      "Application deadline must be in the format DD/MM/YYYY"
-    ),
+  currency_code: z.string().min(1, "Currency type is required"),
+  salary_min: z.string().optional(),
+  salary_max: z.string().optional(),
+  rate: z.string().optional(),
+  // applicationDeadline: z
+  // .union([z.string(), z.date()])
+  applicationDeadline: z.preprocess(
+    (value) => (value instanceof Date ? value.toISOString() : value),
+
+    z
+      .string()
+      .min(1, "Application deadline is required")
+      .refine((date) => !isNaN(Date.parse(date as string)), {
+        message: "Application deadline must be a valid date",
+      })
+  ),
 });
 
 export const jobSpecificationSchema = z.object({
@@ -220,28 +216,30 @@ export const jobSpecificationSchema = z.object({
   experienceLevel: z.string().min(1, "Experience level is required"),
   workPattern: z.string().min(1, "Work pattern is required"),
   employmentType: z.string().min(1, "Employment type is required"),
-  currency_code: z.string().optional(),
-  salary_min: z
-    .string() 
-    .optional(),  
-    salary_max: z
-    .string() 
-    .optional(), 
-    applicationDeadline: z
-    .string()
-    .min(1, "Application deadline is required")
-    .regex(
-      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
-      "Application deadline must be in the format DD/MM/YYYY"
-    ),
-    jobDescription: z
+  currency_code: z.string().min(1, "Currency type is required"),
+  salary_min: z.string().optional(),
+  salary_max: z.string().optional(),
+  rate: z.string().optional(),
+  applicationDeadline: z.preprocess(
+    (value) => (value instanceof Date ? value.toISOString() : value),
+
+    z
+      .string()
+      .min(1, "Application deadline is required")
+      .refine((date) => !isNaN(Date.parse(date as string)), {
+        message: "Application deadline must be a valid date",
+      })
+  ),
+  jobDescription: z
     .string()
     .min(10, "Job Description must be at least 10 characters long")
     .max(5000, "Job Description cannot exceed 5000 characters"),
-    requiredSkills: z
-    .string()
-    .min(10, "Required Skills must be at least 10 characters long")
-    .max(5000, "Required Skills cannot exceed 5000 characters"),
+  requiredSkills: z
+    .union([
+      z.string(),
+      z.array(z.string()).nonempty("Array of skills cannot be empty"),
+    ])
+    .transform((value) => (Array.isArray(value) ? value.join(", ") : value)),
 });
 
 export const benefitDetailsSchema = z.object({
@@ -249,43 +247,59 @@ export const benefitDetailsSchema = z.object({
   experienceLevel: z.string().min(1, "Experience level is required"),
   workPattern: z.string().min(1, "Work pattern is required"),
   employmentType: z.string().min(1, "Employment type is required"),
-  currency_code: z.string().optional(),
-  salary_min: z
-    .string() 
-    .optional(),  
-    salary_max: z
-    .string() 
-    .optional(), 
+  currency_code: z.string().min(1, "Currency type is required"),
+  salary_min: z.string().optional(),
+  salary_max: z.string().optional(),
+  rate: z.string().optional(),
+  applicationDeadline: z.preprocess(
+    (value) => (value instanceof Date ? value.toISOString() : value),
 
-    applicationDeadline: z
-    .string()
-    .min(1, "Application deadline is required")
-    .regex(
-      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
-      "Application deadline must be in the format DD/MM/YYYY"
-    ),
+    z
+      .string()
+      .min(1, "Application deadline is required")
+      .refine((date) => !isNaN(Date.parse(date as string)), {
+        message: "Application deadline must be a valid date",
+      })
+  ),
 
-    jobDescription: z
+  jobDescription: z
     .string()
     .min(10, "Job Description must be at least 10 characters long")
     .max(5000, "Job Description cannot exceed 5000 characters"),
-    requiredSkills: z
-    .string()
-    .min(10, "Required Skills must be at least 10 characters long")
-    .max(5000, "Required Skills cannot exceed 5000 characters"),
-    benefits: z
-    .string()
-    .optional(),
+  // requiredSkills: z
+  //   .string()
+  //   .min(10, "Required Skills must be at least 10 characters long")
+  //   .max(5000, "Required Skills cannot exceed 5000 characters"),
+  requiredSkills: z
+    .union([
+      z.string(),
+      z.array(z.string()).nonempty("Array of skills cannot be empty"),
+    ])
+    .transform((value) => (Array.isArray(value) ? value.join(", ") : value)),
+  benefits: z.string().optional(),
 });
 
 
 
+export const EventFormSchema = z.object({
+  title: z.string().min(1, "Event Title is required"),
+  start: z.object({
+    date_time: z.preprocess(
+      (value) => (value instanceof Date ? value.toISOString() : value),
+      z.string().min(1, "Start date and time are required")
+    ),
+  }),
+  time: z.string().min(1, "Time is required"),
+  duration: z.string().min(1, "Duration is required"),
+  link: z.string().min(1, "Link is required"),
+  attendees: z.string().min(1, "Attendees is required"),
+  description: z.string().min(1, "Description is required"),
+  // applicant_Id: z.string().min(1, "applicant_Id is required"),
+});
 
-export interface PreviewCardProps {
-  imgUrl: string; 
-  text: string;   
-}
 
 
+export const ShareInviteSchema = z.object({
+  search_terms: z.string().min(1, "Search terms is required"),
 
-
+});

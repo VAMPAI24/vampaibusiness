@@ -8,11 +8,10 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMultiply, faBars } from "@fortawesome/free-solid-svg-icons";
 import { openExternalLink } from "@/lib/utils";
-import { useRouter  } from 'next/navigation'
-
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -40,9 +39,16 @@ const Navbar = () => {
         {/* Desktop Buttons */}
         <div className="lg:flex items-center justify-center -mt-4 gap-4">
           <Button
-            text="Login"
-            variant=" hidden lg:flex text-white border rounded-lg w-[150px] mt-4"
-            clickFn={() =>  router.push("/sign-in")}
+            text="See Jobs"
+            variant=" hidden lg:flex text-white border-none rounded-lg w-[150px] mt-4"
+            clickFn={() =>
+              openExternalLink("https://talent.usevampai.com/job-board")
+            }
+          />
+          <Button
+            text="Employer Login"
+            variant=" hidden lg:flex text-white border-none rounded-lg w-[150px] mt-4"
+            clickFn={() => router.push("/sign-in")}
           />
           <Button
             text="For Talent"
@@ -82,16 +88,23 @@ const Navbar = () => {
               </span>
               <div className="flex items-start justify-start gap-4 mt-4">
                 <Button
-                  text="Login"
-                  variant="text-black border rounded-lg w-[150px] mt-4"
-                  clickFn={() =>  router.push("/sign-in")}
+                  text="See Jobs"
+                  variant=" hidden lg:flex text-white border-none rounded-lg w-[150px] mt-4"
+                  clickFn={() =>
+                    openExternalLink("https://talent.usevampai.com/job-board")
+                  }
                 />
+                <Button
+                  text="Employer Login"
+                  variant="text-black border rounded-lg w-[150px] mt-4"
+                  clickFn={() => router.push("/sign-in")}
+                />
+
                 <Button
                   text="For Talent"
                   variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
                   clickFn={() => openExternalLink("https://www.usevampai.com")}
                 />
-               
               </div>
             </div>
           </div>
@@ -102,5 +115,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
