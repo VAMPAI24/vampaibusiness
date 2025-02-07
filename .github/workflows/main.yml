@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-     env:
+    env:
       NEXT_PUBLIC_BASE_URL: ${{ business-secrets.NEXT_PUBLIC_BASE_URL }}
       NEXT_PUBLIC_STAGING_URL: ${{ business-secrets.NEXT_PUBLIC_STAGING_URL }}
       # NEXT_PUBLIC_STRIPE_KEY: ${{ business-secrets.NEXT_PUBLIC_STRIPE_KEY }}
