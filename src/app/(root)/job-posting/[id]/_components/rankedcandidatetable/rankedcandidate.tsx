@@ -44,8 +44,8 @@ const RankedCandidate = ({ id }: { id: string }) => {
 
   if (loadRanked) {
     return (
-      <div className="w-full flex items-center justify-center">
-        <div className="w-fit h-[10em] flex flex-col items-center justify-center gap-[.5em]">
+      <div className="w-full mx-auto flex items-center justify-center">
+        <div className="w-full h-[10em] flex flex-col items-center justify-center gap-[.5em]">
           <BallsLoader />
           <p className="text-[.875em] text-main-900 text-center">
             Loading ranked candidates...

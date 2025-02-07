@@ -44,8 +44,8 @@ const AllCandidate = ({ id }: { id: string }) => {
   if (loadCandidates) {
     // return <p className="mt-10">Loading candidates...</p>;
     return (
-      <div className="w-full flex items-center justify-center">
-        <div className="w-fit h-[10em] flex flex-col items-center justify-center gap-[.5em]">
+      <div className=" w-full mx-auto flex items-center justify-center">
+        <div className="w-full h-[10em] flex flex-col items-center justify-center gap-[.5em]">
           <BallsLoader />
           <p className="text-[.875em] text-main-900 text-center">
             Loading candidates...
@@ -67,7 +67,7 @@ const AllCandidate = ({ id }: { id: string }) => {
   }
 
   return (
-    <div className="mt-5">
+    <div className="max-w-full mt-5">
       <DataTable
         columns={createColumns(candidateRefetch)}
         data={transformedData || []}

@@ -46,7 +46,10 @@ const Footer = () => {
           <span className="max-w-full md:max-w-[60%] lg:max-w-[450px] flex flex-col gap-[20px]">
             <h3 className="font-rubik font-[400] text-white text-[1em] md:text-[2em] leading-[1.4em]">
               Stay in the loop with{" "}
-              <strong className="text-main-600 font-[400]"> hiring tips,</strong>
+              <strong className="text-main-600 font-[400]">
+                {" "}
+                hiring tips,
+              </strong>
               ,{" "}
               <strong className="text-main-600 font-[400]">
                 trends, and exclusive offers.
@@ -106,20 +109,21 @@ const Footer = () => {
           <p className="font-jakarta text-base font-normal mt-4">
             &copy; {currentYear} VampAI, Inc. All rights reserved.
           </p>
-          <p className="font-jakarta mt-4 text-sm font-normal">
+          <p className="font-jarkata font-[300] text-white text-[.875em]">
             We use cookies and similar technologies to enhance your interactions
-            with our website and Services, including when you reach out to us on
+            with our website and services, including when you reach out to us on
             chat. This comprises traffic analysis, delivering personalized
             content, and supporting our marketing efforts. By accessing our
-            website, interacting with our Services, you agree to let us and our
+            website, interacting with our services, you agree to let us and our
             partners employ cookies and related technologies on your computer or
-            devices
+            devices.
           </p>
-          <p className="mt-8 font-jakarta text-sm">
-            Click the Cookies Policy to check how you can control the use of
-            cookies through your device. To understand how we process your data,
-            including through cookies, and interactions with us, please read our
-            Privacy Policy.
+          <p className="font-jarkata font-[300] italic text-white text-[1em] mt-[1em]">
+            {/* Vamp Technologies Ltd registered in England and Wales with the
+          15850092, Registered Address: 128 City Road, London EC1V 2NX */}
+            Vamp Technologies Ltd, a company registered in England and Wales
+            with the company number 15850092. Registered Address: 128 City Road,
+            London EC1V 2NX
           </p>
         </div>
       </Container>

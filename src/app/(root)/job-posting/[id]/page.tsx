@@ -31,17 +31,31 @@ import { formatAndTransformString } from "@/lib/utils";
 import AllCandidate from "./_components/allcandidatetable/allcandidate";
 import RankedCandidate from "./_components/rankedcandidatetable/rankedcandidate";
 
-
+import { RootState } from "@/redux/app/store";
+import { MainModal } from "@/components/common/modal";
+import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
+import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
+import { Platformbtn } from "@/components/common/buttons";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
 
+  const { showJobSuccess } = useAppSelector(
+    (store: RootState) => store.jobPost
+  );
+
+  useEffect(() => {
+    setTab("");
+  }, [tab]);
 
   // Job Details
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const { data, isLoading: loadingJobDetails } = useGetByJobsIdQuery(id);
   const [token, setToken] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const storedToken = Cookies.get("token");
@@ -51,8 +65,6 @@ const JobPostingDetails = () => {
   }, []);
 
   const { data: userInfo } = useGetSingleEmployerQuery(token);
-
-
 
   // shortlisted tab shortlisted
   const { data: shortlistedData, isLoading: shortlistedDataLoading } =
@@ -77,17 +89,29 @@ const JobPostingDetails = () => {
     setIsOpen(true);
   };
 
-
-
-
-
   // console.log(candidateData?.data);
+
+  const openCloseShare = (value?: string) => {
+    const payload = {
+      showJobSuccess: value ? true : false,
+      postId: value ? id : "",
+    };
+    dispatch(setCurrJobPost(payload));
+  };
+
   if (loadingJobDetails) {
     return <JobDetailsSkeleton />;
   }
 
   return (
     <div className="w-full">
+      <MainModal
+        visible={showJobSuccess}
+        close={openCloseShare}
+        closable={false}
+      >
+        <JobPostSuccess showSuccess={false} clickFn={openCloseShare} />
+      </MainModal>
       <Tabs defaultValue="jobdetails" className="w-full mt-3">
         <TabsList className="relative">
           <TabsTrigger
@@ -118,10 +142,18 @@ const JobPostingDetails = () => {
         <TabsContent value="jobdetails">
           <div className="bg-white rounded-md p-4 mt-10">
             {/* Job Title */}
-            <Jobbox
-              title={data?.data?.job_title || "Job Title Not Specified"}
-              variant="mb-4 text-[26px] capitalize"
-            />
+            <div className="w-full flex items-end justify-between mb-[1.5em]">
+              <Jobbox
+                title={data?.data?.job_title || "Job Title Not Specified"}
+                variant="mb-4 text-[26px] capitalize"
+              />
+              <Platformbtn
+                type="secondary"
+                name="Share Job"
+                click={() => openCloseShare("open")}
+                addOns="!w-fit  md:!px-[1.5em] rounded-full"
+              />
+            </div>
 
             {/* Preview Cards */}
             <div className="flex flex-wrap gap-5 sm:gap-3">
@@ -194,8 +226,8 @@ const JobPostingDetails = () => {
         </TabsContent>
 
         {/* Applications Tab Content */}
-        <TabsContent value="applications_0">
-          <div className="mt-5">
+        <TabsContent value="applications_0" className="w-full">
+          <div className="w-full  mt-5">
             <Tabs
               defaultValue="all"
               className="w-full flex flex-col items-start"
@@ -210,24 +242,20 @@ const JobPostingDetails = () => {
                 <TabsTrigger
                   value="Ranked"
                   className="flex items-center justify-center w-full md:w-auto py-2 rounded bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
-                 
                 >
                   Ranked Candidate
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="all">
+              <TabsContent value="all" className="w-full">
                 <AllCandidate id={id} />
               </TabsContent>
 
-              <TabsContent value="Ranked">
-                <RankedCandidate id={id}  />
-            
+              <TabsContent value="Ranked" className="w-full">
+                <RankedCandidate id={id} />
               </TabsContent>
             </Tabs>
           </div>
-
-
         </TabsContent>
 
         {/* Shortlisted Tab Content */}
@@ -400,7 +428,7 @@ const JobPostingDetails = () => {
                     Assessment
                   </h1>
                   <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3 rounded text-sm">
-                    {Evaluation.length} Candidates
+                    Candidates
                   </span>
                 </div>
 
@@ -453,7 +481,7 @@ const JobPostingDetails = () => {
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#0061F9] rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">Offer</h1>
                   <span className="bg-white  whitespace-nowrap text-gray-700 font-medium px-3  rounded text-sm">
-                    {Evaluation.length} Candidates
+                    Candidates
                   </span>
                 </div>
 
@@ -506,7 +534,7 @@ const JobPostingDetails = () => {
                 <div className="flex gap-2 lg:gap-20 items-center justify-between bg-[#057A55] rounded-md px-6 py-2 mb-4">
                   <h1 className="text-white font-semibold  text-lg">Hired</h1>
                   <span className="bg-white whitespace-nowrap text-gray-700 font-medium px-3  rounded text-sm">
-                    {Offer.length} Candidates
+                    Candidates
                   </span>
                 </div>
 

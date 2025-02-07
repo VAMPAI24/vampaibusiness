@@ -132,7 +132,6 @@ export const authApi = apiSlice.injectEndpoints({
           );
         } catch (error) {
           const apiError = error as ApiError; 
-          console.log(apiError);
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
             description: apiError?.error?.data?.message || apiError?.error?.status,
@@ -238,12 +237,11 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
         } catch (error) {
           const apiError = error as ApiError; 
-          console.log(apiError);
-          ToastNotification({
-            title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
-            type: "error",
-          });
+          // ToastNotification({
+          //   title: apiError?.error?.data?.error || apiError?.error?.error,
+          //   description: apiError?.error?.data?.message || apiError?.error?.status,
+          //   type: "error",
+          // });
         }
       },
     }),
