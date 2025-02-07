@@ -7,7 +7,7 @@ const PathnameDisplay = () => {
   const formattedPathname = pathname?.startsWith("/job-posting")
     ? "job posting"
     : pathname?.startsWith("/scheduleinterview")
-    ? "Scheduled Interviews"
+    ? "Interviews"
     : pathname?.startsWith("/cv-screener")
     ? "CV Screener"
     : pathname?.replace(/^\//, "").replace(/-/g, " ") || "dashboard";
