@@ -7,13 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BASE_URL: ${{ business-secrets.NEXT_PUBLIC_BASE_URL }}
-      NEXT_PUBLIC_STAGING_URL: ${{ business-secrets.NEXT_PUBLIC_STAGING_URL }}
+      # NEXT_PUBLIC_BASE_URL: ${{ business-secrets.NEXT_PUBLIC_BASE_URL }}
+      # NEXT_PUBLIC_STAGING_URL: ${{ business-secrets.NEXT_PUBLIC_STAGING_URL }}
       # NEXT_PUBLIC_STRIPE_KEY: ${{ business-secrets.NEXT_PUBLIC_STRIPE_KEY }}
-      # NEXT_PUBLIC_GEO_KEY: ${{ business-secrets.NEXT_PUBLIC_GEO_KEY }}
-      NEXT_PUBLIC_MIX_PANEL: ${{ business-secrets.NEXT_PUBLIC_MIX_PANEL }}
-      # NEXT_PUBLIC_PIXEL: ${{ business-secrets.NEXT_PUBLIC_PIXEL }}
-      # NEXT_PUBLIC_META_TOKEN: ${{ business-secrets.NEXT_META_TOKEN }}
+      NEXT_PUBLIC_MIX_PANEL: ${{ secrets.NEXT_PUBLIC_EMP_MIX_PANEL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
