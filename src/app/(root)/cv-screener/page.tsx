@@ -144,12 +144,3 @@ const CvScreener = () => {
 };
 
 export default CvScreener;
-
-
-
-
-
-
-
-
-

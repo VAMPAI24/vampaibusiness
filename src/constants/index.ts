@@ -267,12 +267,13 @@ export const SidebarLinks = [
   {
     imgURL: ScheduleInterview,
     route: "/scheduleinterview",
-    label: "Scheduled Interviews",
+    label: "Interviews",
   },
   {
     imgURL: CvScreener,
     route: "/cv-screener",
-    label: "Cv Screener",
+    label: "CV Screener",
+    // comment line
   },
   {
     imgURL: Recruitmnet,
