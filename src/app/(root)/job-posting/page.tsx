@@ -480,6 +480,8 @@ const JobPosting = () => {
   //  draft edit control
   // 1. get the data
   const [draftId, setDraftId] = useState("");
+
+  console.log("draftId", draftId);
   const { data: draftEditdata, isLoading: draftEditLoader } =
     useGetJobsInDraftQuery(draftId);
 
