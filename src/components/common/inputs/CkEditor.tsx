@@ -67,14 +67,16 @@ function TextEditor({
   // console.log(editorData)
   // console.log(value)
   useEffect(() => {
-    if (value) {
-      const newValue =
-        noList || toolbarCtrl ? value : formatStringToList(value);
-      onChange?.(name, value);
+   
+    if (!value) return;
 
+    const newValue = noList || toolbarCtrl ? value : formatStringToList(value);
+
+    if (newValue !== editorData.editorData) {
+      onChange?.(name, newValue);
       setEditorData({ editorData: newValue });
     }
-  }, []);
+  }, [value]);
 
   const toolbar = (): string[] => {
     if (toolbarCtrl) {
