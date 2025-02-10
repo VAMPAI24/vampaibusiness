@@ -41,6 +41,7 @@ import {
   useBenefitDetailReWriteAIMutation,
   useBenefitDetailWriteAIMutation,
   useGetJobsInDraftQuery,
+  useGetSingleActiveJobQuery,
   useJobDescriptionAIMutation,
   useJobDescriptionAIRewiteMutation,
   usePostActiveJobMutation,
@@ -480,10 +481,11 @@ const JobPosting = () => {
   //  draft edit control
   // 1. get the data
   const [draftId, setDraftId] = useState("");
-
-  console.log("draftId", draftId);
   const { data: draftEditdata, isLoading: draftEditLoader } =
-    useGetJobsInDraftQuery(draftId);
+    useGetJobsInDraftQuery(draftId, {skip: !draftId});
+
+
+    console.log("draftEditdata", draftEditdata)
 
   // 2. Update the data
   // Save Job To draft Handler
@@ -611,6 +613,26 @@ const JobPosting = () => {
       );
     }
   }, [draftEditdata, methods]);
+
+
+
+
+
+
+
+  // 1.Update Active Job 
+  const [activeJobId, setActiveJobId] = useState("")
+  const { data: singleActiveJob, error, isLoading } = useGetSingleActiveJobQuery(activeJobId, {
+    skip: !activeJobId,
+  });
+
+
+
+
+
+
+  console.log("singleActiveJob", singleActiveJob)
+
 
   const renderView = () => {
     switch (currentView) {
@@ -1285,7 +1307,7 @@ const JobPosting = () => {
                 <Jobbox
                   title={
                     formData.job_title ||
-                    draftEditdata?.data?.job_title ||
+                    draftEditdata?.data?.job_title || singleActiveJob?.data?.job_title ||
                     "Untitled"
                   }
                   variant="mb-4 text-[26px] capitalize"
@@ -1301,7 +1323,8 @@ const JobPosting = () => {
                     imgUrl={Location}
                     text={
                       formData.workPattern ||
-                      draftEditdata?.data?.job_details?.[0]?.workPattern ||
+                      draftEditdata?.data?.job_details?.[0]?.workPattern || 
+                      singleActiveJob?.data?.job_details?.[0]?.workPattern || 
                       "Not Specified"
                     }
                     addOn="bg-orange-200 text-orange-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
@@ -1310,7 +1333,8 @@ const JobPosting = () => {
                     imgUrl={Years}
                     text={`${
                       formData.experienceLevel ||
-                      draftEditdata?.data?.job_details?.[0]?.experienceLevel ||
+                      draftEditdata?.data?.job_details?.[0]?.experienceLevel || 
+                      singleActiveJob?.data?.job_details?.[0]?.experienceLevel ||
                       "N/A"
                     } years`}
                     addOn="bg-yellow-200 text-yellow-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
@@ -1320,8 +1344,7 @@ const JobPosting = () => {
                     imgUrl={Amount}
                     text={`${
                       formData.salary_min ||
-                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
-                        ?.salary_min ||
+                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_min || singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_min ||
                       "N/A"
                     } - ${
                       formData.salary_max ||
@@ -1464,6 +1487,7 @@ const JobPosting = () => {
           <JobOverview
             setCurrentView={setCurrentView}
             setDraftId={setDraftId}
+            setActiveJobId={setActiveJobId}
           />
         );
 

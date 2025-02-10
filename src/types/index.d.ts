@@ -127,6 +127,7 @@ export interface PreviewCardProps {
 export interface JobOverviewProps {
   setCurrentView: (view: string) => void;
   setDraftId: (view: string) => void;
+  setActiveJobId: (view: string) => void;
 }
 
 export interface EventModalContentProps {

@@ -29,7 +29,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
+const JobOverview = ({ setCurrentView, setDraftId, setActiveJobId }: JobOverviewProps) => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   // const [tabToFetch, setTabToFetch] = useState("active");
@@ -183,12 +183,15 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
                       >
                         <Image src={Colum} alt="card-img" />
                       </PopoverTrigger>
-                      <PopoverContent className="w-20">
-                        <div onClick={(e) => {
-                        e.stopPropagation();
-                        setCurrentView("jobPreview");
-                        setDraftId(recipe.id);
-                      }} className="text-white rounded-lg text-center cursor-pointer text-sm bg-main-700">
+                      <PopoverContent className="w-40">
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentView("jobPreview");
+                            setActiveJobId(recipe.id);
+                          }}
+                          className="text-white rounded-lg text-center cursor-pointer text-sm bg-main-700"
+                        >
                           Edit
                         </div>
                       </PopoverContent>
