@@ -427,13 +427,13 @@ const JobPostingDetails = () => {
                 title="Shortlisted Candidate"
                 count={shortlistedData?.data?.count}
                 icon={<Users className="text-main-901" size={20} />}
-                className="flex-shrink-0 hover:bg-main-600  hover:text-white hover:text-white"
+                className="flex-shrink-0 hover:bg-main-600  hover:text-white"
               />
               <OverviewCard
                 title="Rejected Candidate"
                 count={rejectedData?.data?.count}
                 icon={<Users className="text-main-901" size={20} />}
-                className="flex-shrink-0 hover:bg-main-600  hover:text-white hover:text-white"
+                className="flex-shrink-0 hover:bg-main-600  hover:text-white"
               />
             </div>
 

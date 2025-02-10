@@ -23,6 +23,11 @@ import OverviewSkelton from "../common/skeltons/OverviewSkelton";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { Empty } from "../ui/empty";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
   const router = useRouter();
@@ -63,7 +68,7 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
     const intervalId = setTimeout(() => {
       activeRefetch();
       draftRefetch();
-    }, 1000);
+    }, 200);
 
     return () => clearTimeout(intervalId);
   }, [activeRefetch, draftRefetch]);
@@ -169,7 +174,35 @@ const JobOverview = ({ setCurrentView, setDraftId }: JobOverviewProps) => {
                   <CardHeader className="flex flex-row gap-10 justify-between items-start">
                     <Badge className="px-2 rounded-lg">Active</Badge>
                     {/* column */}
-                    {/* <Image src={Colum} alt="card-img" /> */}
+
+                    <Popover>
+                      <PopoverTrigger
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevents click from bubbling to the Card
+                        }}
+                      >
+                        <Image src={Colum} alt="card-img" />
+                      </PopoverTrigger>
+                      <PopoverContent className="w-20">
+                        <div onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentView("jobPreview");
+                        setDraftId(recipe.id);
+                      }} className="text-white rounded-lg text-center cursor-pointer text-sm bg-main-700">
+                          Edit
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+
+                    {/* <Image
+                      src={Colum}
+                      alt="card-img"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentView("jobPreview");
+                        setDraftId(recipe.id);
+                      }}
+                    /> */}
                   </CardHeader>
                   <CardContent>
                     <h2 className="mb-2 text-main-901 font-rubik text-base capitalize">

@@ -1114,7 +1114,7 @@ const JobPosting = () => {
                               .map((skill: string) => (
                                 <p
                                   key={skill}
-                                  className="border text-sm hover:bg-main-600  hover:text-white hover:text-white border-bankGradient rounded-full px-2 py-1 cursor-pointer"
+                                  className="border text-sm hover:bg-main-600  hover:text-white border-bankGradient rounded-full px-2 py-1 cursor-pointer"
                                   onClick={() => handleOptionClick(skill)}
                                 >
                                   {skill}
@@ -1386,6 +1386,8 @@ const JobPosting = () => {
                     description={
                       formData.requiredSkills ||
                       arrayToHtml(
+
+                        
                         draftEditdata?.data?.job_specifications?.[0]?.requiredSkills?.join(
                           ", "
                         )
