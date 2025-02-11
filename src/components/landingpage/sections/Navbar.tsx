@@ -103,7 +103,8 @@ const Navbar = () => {
                 <Button
                   text="For Talent"
                   variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
-                  clickFn={() => openExternalLink("https://www.usevampai.com")}
+                  // clickFn={() => openExternalLink("https://www.usevampai.com")}
+                  clickFn={() => openExternalLink("https://talent.usevampai.com")}
                 />
               </div>
             </div>
