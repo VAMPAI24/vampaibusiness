@@ -497,6 +497,60 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+
+    editActiveJob: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/employer/jobs/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          ToastNotification({
+            title: "Success",
+            description: "Active Job Updated successfully.",
+            type: "success",
+          });
+        } catch (error: any) {
+          ToastNotification({
+            title: "Error",
+            description:
+              error?.data?.error || error?.error || "Something went wrong",
+            type: "error",
+          });
+        }
+      },
+    }),
+
+
+
+    deleteActiveJob: builder.mutation({
+      query: ({ job_id }) => ({
+        url: `/employer/delete-jobs`,
+        method: "DELETE",
+        params: { job_id },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          ToastNotification({
+            title: "Delete",
+            description: "Job Deleted successfully.",
+            type: "error",
+          });
+        } catch (error: any) {
+          ToastNotification({
+            title: "Error",
+            description: error?.data?.error || error?.error || "Something went wrong",
+            type: "error",
+          });
+        }
+      },
+    }),
+
+
   }),
 });
 
@@ -523,5 +577,7 @@ export const {
   useGetJobsInDraftQuery,
   useUpdateJobInDraftMutation,
   useSearchTeamMemberQuery,
-  useGetSingleActiveJobQuery
+  useGetSingleActiveJobQuery,
+  useEditActiveJobMutation,
+  useDeleteActiveJobMutation,
 } = authApi;

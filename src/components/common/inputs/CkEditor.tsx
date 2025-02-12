@@ -76,7 +76,7 @@ function TextEditor({
       onChange?.(name, newValue);
       setEditorData({ editorData: newValue });
     }
-  }, [value]);
+  }, [value, editorData.editorData, name, noList, onChange, toolbarCtrl]);
 
   const toolbar = (): string[] => {
     if (toolbarCtrl) {

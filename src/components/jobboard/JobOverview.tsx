@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import {
+  useDeleteActiveJobMutation,
   useGetActiveJobsQuery,
   useGetDraftJobsQuery,
 } from "@/redux/features/job-posting/jobpostingApi";
@@ -28,8 +29,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-const JobOverview = ({ setCurrentView, setDraftId, setActiveJobId }: JobOverviewProps) => {
+import EditPencil from "@/public/svgs/Jobs/edit-pencil.svg";
+import DeleteTrash from "@/public/svgs/Jobs/trash-delete.svg";
+import SubmitButton from "@/components/shared/SubmitButton";
+const JobOverview = ({
+  setCurrentView,
+  setDraftId,
+  setActiveJobId,
+}: JobOverviewProps) => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   // const [tabToFetch, setTabToFetch] = useState("active");
@@ -52,18 +59,6 @@ const JobOverview = ({ setCurrentView, setDraftId, setActiveJobId }: JobOverview
     router.push(`/job-posting/${id}`);
   };
 
-  // useEffect(() => {
-  //   const intervalId = setTimeout(() => {
-  //     if (tabToFetch === "active") {
-  //       activeRefetch();
-  //     } else if (tabToFetch === "Drafts") {
-  //       draftRefetch();
-  //     }
-  //   }, 1000);
-
-  //   return () => clearInterval(intervalId);
-  // }, [tabToFetch, activeRefetch, draftRefetch]);
-
   useEffect(() => {
     const intervalId = setTimeout(() => {
       activeRefetch();
@@ -80,6 +75,22 @@ const JobOverview = ({ setCurrentView, setDraftId, setActiveJobId }: JobOverview
       setToken(storedToken);
     }
   }, []);
+
+  // Delete Active  Job Control
+  const [activeJobTodeleteId, setActiveJobTodeleteId] = useState("");
+  console.log("activeJobTodeleteId", activeJobTodeleteId);
+  const [deleteActiveJob, { isLoading: deleteActiveJoblLoading }] =
+    useDeleteActiveJobMutation();
+
+  const handleDeleteActiveJob = async () => {
+    try {
+      await deleteActiveJob({ job_id: activeJobTodeleteId }).unwrap();
+      // Refetch the job lists after successful deletion
+      activeRefetch();
+    } catch (err) {
+      console.error("Failed to delete the job:", err);
+    }
+  };
 
   return (
     <div className="">
@@ -130,12 +141,6 @@ const JobOverview = ({ setCurrentView, setDraftId, setActiveJobId }: JobOverview
             Active
           </TabsTrigger>
           <TabsTrigger
-            value="inactive"
-            className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500 hidden"
-          >
-            Inactive
-          </TabsTrigger>
-          <TabsTrigger
             value="Drafts"
             className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
             // onClick={() => setTabToFetch("Drafts")}
@@ -179,21 +184,43 @@ const JobOverview = ({ setCurrentView, setDraftId, setActiveJobId }: JobOverview
                       <PopoverTrigger
                         onClick={(e) => {
                           e.stopPropagation(); // Prevents click from bubbling to the Card
+                          setActiveJobTodeleteId(recipe.id);
                         }}
                       >
                         <Image src={Colum} alt="card-img" />
                       </PopoverTrigger>
-                      <PopoverContent className="w-40">
+                      <PopoverContent className="w-40 flex flex-col gap-2">
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
                             setCurrentView("jobPreview");
                             setActiveJobId(recipe.id);
                           }}
-                          className="text-white rounded-lg text-center cursor-pointer text-sm bg-main-700"
+                          className="flex w-[100px] gap-2 rounded-lg cursor-pointer text-base p-2 hover:bg-main-600 hover:text-white transition-colors group"
                         >
+                          <Image
+                            src={EditPencil}
+                            alt="edit-pencil"
+                            className="group-hover:filter group-hover:invert group-hover:brightness-0 group-hover:contrast-200 transition-all"
+                          />
                           Edit
                         </div>
+
+                        <SubmitButton
+                          isLoading={deleteActiveJoblLoading}
+                          clickFn={(e) => {
+                            e.stopPropagation();
+                            handleDeleteActiveJob();
+                          }}
+                          className="flex w-[100px] text-white mr-36  gap-2 rounded-lg cursor-pointer text-base bg-red-500  hover:bg-red-500 hover:text-white transition-colors group"
+                        >
+                          <Image
+                            src={DeleteTrash}
+                            alt="delete-pencil"
+                            className="group-hover:filter group-hover:invert group-hover:brightness-0 invert  brightness-0 contrast-200  group-hover:contrast-200 transition-all"
+                          />
+                          Delete
+                        </SubmitButton>
                       </PopoverContent>
                     </Popover>
 

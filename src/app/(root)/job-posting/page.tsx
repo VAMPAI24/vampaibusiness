@@ -40,6 +40,7 @@ import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
 import {
   useBenefitDetailReWriteAIMutation,
   useBenefitDetailWriteAIMutation,
+  useEditActiveJobMutation,
   useGetJobsInDraftQuery,
   useGetSingleActiveJobQuery,
   useJobDescriptionAIMutation,
@@ -119,7 +120,7 @@ const JobPosting = () => {
     },
   });
 
-  const { control, setValue, watch } = methods;
+  const { control, setValue, watch, reset } = methods;
 
   const handleNextTab = () => {
     const tabOrder = ["details", "specification", "benefit"];
@@ -141,7 +142,7 @@ const JobPosting = () => {
       .map((s) => `<li>${s}</li>`)
       .join("")}</ul>`;
 
-    console.log(updatedSkills);
+    // console.log(updatedSkills);
 
     // Set updated skills correctly
     setValue("requiredSkills", updatedSkills);
@@ -213,7 +214,7 @@ const JobPosting = () => {
               // requiredSkills: Array.isArray(values.requiredSkills)
               //   ? values.requiredSkills
               //   : [values.requiredSkills],
-              requiredSkill: Array.isArray(values.requiredSkills)
+              requiredSkills: Array.isArray(values.requiredSkills)
                 ? values.requiredSkills
                 : htmlToArray(values.requiredSkills),
             },
@@ -234,8 +235,9 @@ const JobPosting = () => {
                 },
               });
             });
+            reset()
 
-          // setCurrentView("overview");
+          setCurrentView("overview");
         } catch (error) {
           console.error("Error submitting job:", error);
         }
@@ -290,7 +292,7 @@ const JobPosting = () => {
           job_specifications: [
             {
               jobDescription: values.jobDescription,
-              requiredSkill: Array.isArray(values.requiredSkills)
+              requiredSkills: Array.isArray(values.requiredSkills)
                 ? values.requiredSkills
                 : htmlToArray(values.requiredSkills),
             },
@@ -311,6 +313,7 @@ const JobPosting = () => {
                 },
               });
             });
+            reset()
 
           setCurrentView("overview");
         } catch (error) {
@@ -482,10 +485,7 @@ const JobPosting = () => {
   // 1. get the data
   const [draftId, setDraftId] = useState("");
   const { data: draftEditdata, isLoading: draftEditLoader } =
-    useGetJobsInDraftQuery(draftId, {skip: !draftId});
-
-
-    console.log("draftEditdata", draftEditdata)
+    useGetJobsInDraftQuery(draftId, { skip: !draftId });
 
   // 2. Update the data
   // Save Job To draft Handler
@@ -547,6 +547,7 @@ const JobPosting = () => {
         // Try submitting the job to the API
         try {
           await updateJobInDraft({ id: draftId, data: payload }).unwrap();
+          reset()
 
           setCurrentView("overview");
         } catch (error) {
@@ -620,19 +621,148 @@ const JobPosting = () => {
 
 
 
-  // 1.Update Active Job 
-  const [activeJobId, setActiveJobId] = useState("")
-  const { data: singleActiveJob, error, isLoading } = useGetSingleActiveJobQuery(activeJobId, {
+
+  // 1.Update Active Job control
+  const [activeJobId, setActiveJobId] = useState("");
+  const { data: singleActiveJob } = useGetSingleActiveJobQuery(activeJobId, {
     skip: !activeJobId,
   });
 
 
+  const [editActiveJob, { isLoading: editActiveJobLoading }] =
+  useEditActiveJobMutation();
+
+
+
+  
+  //  control to edit Active Job
+  const handleEditActiveJob = async (
+    values: z.infer<
+      | typeof jobTitleSchema
+      | typeof jobDetailsSchema
+      | typeof jobSpecificationSchema
+      | typeof benefitDetailsSchema
+    >
+  ) => {
+    if (currentView === "createJob") {
+      setCurrentView("editJob");
+    } else if (currentTab === "details") {
+      handleNextTab();
+    } else if (currentTab === "specification") {
+      handleNextTab();
+    } else if (currentTab === "benefit" && currentView !== "jobPreview") {
+      setCurrentView("jobPreview");
+    } else {
+      if (
+        "experienceLevel" in values &&
+        "workPattern" in values &&
+        "jobDescription" in values &&
+        "benefits" in values
+      ) {
+        const payload = {
+          job_title: values.job_title,
+          job_details: [
+            {
+              experienceLevel: values.experienceLevel,
+              workPattern: values.workPattern,
+              employmentType: values.employmentType,
+              salaryRange: [
+                {
+                  currency_code: values.currency_code || "",
+                  salary_min: values.salary_min || "",
+                  salary_max: values.salary_max || "",
+                  rate: values.rate || "",
+                },
+              ],
+              applicationDeadline: values.applicationDeadline,
+            },
+          ],
+          job_specifications: [
+            {
+              jobDescription: values.jobDescription,
+              requiredSkills: Array.isArray(values.requiredSkills)
+                ? values.requiredSkills
+                : [values.requiredSkills],
+            },
+          ],
+          benefits: values.benefits,
+        };
+
+        // Try submitting the job to the API
+        try {
+          await editActiveJob({ id: activeJobId, data: payload }).unwrap();
+          reset()
+
+          setCurrentView("overview");
+        } catch (error) {
+          console.error("Error submitting job:", error);
+        }
+      } else {
+        console.error("Missing required fields:", values);
+      }
+    }
+  };
 
 
 
 
-  console.log("singleActiveJob", singleActiveJob)
 
+
+   // setter to put the data from the api into the form so user can Edit draft
+   useEffect(() => {
+    if (singleActiveJob?.data?.job_title) {
+      methods.setValue("job_title", singleActiveJob?.data?.job_title);
+      methods.setValue(
+        "workPattern",
+        singleActiveJob?.data?.job_details?.[0]?.workPattern
+      );
+      methods.setValue(
+        "employmentType",
+        singleActiveJob?.data?.job_details?.[0]?.employmentType
+      );
+      methods.setValue(
+        "applicationDeadline",
+        singleActiveJob?.data?.job_details?.[0]?.applicationDeadline
+      );
+      methods.setValue(
+        "experienceLevel",
+        singleActiveJob?.data?.job_details?.[0]?.experienceLevel
+      );
+      methods.setValue(
+        "salary_min",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_min
+      );
+      methods.setValue(
+        "salary_max",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_max
+      );
+      methods.setValue(
+        "currency_code",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.currency_code
+      );
+      methods.setValue(
+        "rate",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.rate
+      );
+      methods.setValue("benefits", singleActiveJob?.data?.benefits);
+
+      const jobDescrip =
+      singleActiveJob?.data?.job_specifications?.[0]?.jobDescription;
+      const newJobDesc =
+        /<ul>[\s\S]*<\/ul>/.test(jobDescrip) &&
+        /<li>[\s\S]*<\/li>/.test(jobDescrip)
+          ? jobDescrip
+          : formatTextToHtml(jobDescrip);
+
+      methods.setValue("jobDescription", newJobDesc);
+      methods.setValue(
+        "requiredSkills",
+        arrayToHtml(
+          singleActiveJob?.data?.job_specifications?.[0]?.requiredSkills
+        )
+      );
+    }
+  }, [singleActiveJob, methods]);
 
   const renderView = () => {
     switch (currentView) {
@@ -1307,7 +1437,8 @@ const JobPosting = () => {
                 <Jobbox
                   title={
                     formData.job_title ||
-                    draftEditdata?.data?.job_title || singleActiveJob?.data?.job_title ||
+                    draftEditdata?.data?.job_title ||
+                    singleActiveJob?.data?.job_title ||
                     "Untitled"
                   }
                   variant="mb-4 text-[26px] capitalize"
@@ -1323,8 +1454,8 @@ const JobPosting = () => {
                     imgUrl={Location}
                     text={
                       formData.workPattern ||
-                      draftEditdata?.data?.job_details?.[0]?.workPattern || 
-                      singleActiveJob?.data?.job_details?.[0]?.workPattern || 
+                      draftEditdata?.data?.job_details?.[0]?.workPattern ||
+                      singleActiveJob?.data?.job_details?.[0]?.workPattern ||
                       "Not Specified"
                     }
                     addOn="bg-orange-200 text-orange-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
@@ -1333,8 +1464,9 @@ const JobPosting = () => {
                     imgUrl={Years}
                     text={`${
                       formData.experienceLevel ||
-                      draftEditdata?.data?.job_details?.[0]?.experienceLevel || 
-                      singleActiveJob?.data?.job_details?.[0]?.experienceLevel ||
+                      draftEditdata?.data?.job_details?.[0]?.experienceLevel ||
+                      singleActiveJob?.data?.job_details?.[0]
+                        ?.experienceLevel ||
                       "N/A"
                     } years`}
                     addOn="bg-yellow-200 text-yellow-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
@@ -1344,21 +1476,30 @@ const JobPosting = () => {
                     imgUrl={Amount}
                     text={`${
                       formData.salary_min ||
-                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_min || singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_min ||
+                      draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.salary_min ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.salary_min ||
                       "N/A"
                     } - ${
                       formData.salary_max ||
                       draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.salary_max ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
                         ?.salary_max ||
                       "N/A"
                     } ${
                       formData.currency_code ||
                       draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
                         ?.currency_code ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.currency_code ||
                       ""
                     }  ${
                       formData.rate ||
                       draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.rate ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
                         ?.rate ||
                       ""
                     }`}
@@ -1376,6 +1517,7 @@ const JobPosting = () => {
                     text={`${
                       formData.employmentType ||
                       draftEditdata?.data?.job_details?.[0]?.employmentType ||
+                      singleActiveJob?.data?.job_details?.[0]?.employmentType ||
                       "N/A"
                     }`}
                     addOn="bg-blue-200 text-blue-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
@@ -1396,6 +1538,8 @@ const JobPosting = () => {
                       formData.jobDescription ||
                       draftEditdata?.data?.job_specifications?.[0]
                         ?.jobDescription ||
+                      singleActiveJob?.data?.job_specifications?.[0]
+                        ?.jobDescription ||
                       "Not Specified"
                     }
                     onEdit={() => {
@@ -1411,9 +1555,12 @@ const JobPosting = () => {
                     description={
                       formData.requiredSkills ||
                       arrayToHtml(
-
-                        
                         draftEditdata?.data?.job_specifications?.[0]?.requiredSkills?.join(
+                          ", "
+                        )
+                      ) ||
+                      arrayToHtml(
+                        singleActiveJob?.data?.job_specifications?.[0]?.requiredSkills?.join(
                           ", "
                         )
                       ) ||
@@ -1432,6 +1579,7 @@ const JobPosting = () => {
                     description={
                       formData.benefits ||
                       draftEditdata?.data?.benefits ||
+                      singleActiveJob?.data?.benefits ||
                       "Not Specified"
                     }
                     onEdit={() => {
@@ -1458,6 +1606,16 @@ const JobPosting = () => {
                     clickFn={methods.handleSubmit(onSubmit)}
                   >
                     Post Job
+                  </SubmitButton>
+                </div>
+              ) : activeJobId ? (
+                <div className="flex gap-5">
+                  <SubmitButton
+                    className="w-full sm:w-[120px] h-11"
+                    isLoading={editActiveJobLoading}
+                    clickFn={methods.handleSubmit(handleEditActiveJob)}
+                  >
+                    Edit Job
                   </SubmitButton>
                 </div>
               ) : (

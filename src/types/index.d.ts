@@ -89,7 +89,8 @@ export interface SubmitButtonProps {
   loadingText?: string;
   disabled?:boolean;
   children: React.ReactNode;
-  clickFn?: () => void;
+  // clickFn?: () => void;
+  clickFn?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export interface DashboardCardProp {
