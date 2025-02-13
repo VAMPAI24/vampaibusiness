@@ -3,9 +3,9 @@ import Image from "next/image";
 import { PreviewCardProps } from "@/types";
 import { Pencil } from "lucide-react";
 
-const PreviewCard = ({ imgUrl, text, onEdit }: PreviewCardProps) => {
+const PreviewCard = ({ imgUrl, addOn, text, onEdit }: PreviewCardProps) => {
   return (
-    <div className="flex gap-2 items-center justify-start">
+    <div className={`w-fit flex gap-2 items-center justify-start cursor-pointer hover:text-white ${addOn}`}>
       <Image
         src={imgUrl}
         alt="card-image"
@@ -14,7 +14,7 @@ const PreviewCard = ({ imgUrl, text, onEdit }: PreviewCardProps) => {
         className=""
       />
       <div className="flex gap-2">
-        <p>{text}</p>
+        <p className="font-jakarta !font-[500] whitespace-nowrap group-hover:text-white " >{text}</p>
         {onEdit && (
           <button
             onClick={onEdit}

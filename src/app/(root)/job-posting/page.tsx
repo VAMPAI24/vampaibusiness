@@ -40,7 +40,9 @@ import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
 import {
   useBenefitDetailReWriteAIMutation,
   useBenefitDetailWriteAIMutation,
+  useEditActiveJobMutation,
   useGetJobsInDraftQuery,
+  useGetSingleActiveJobQuery,
   useJobDescriptionAIMutation,
   useJobDescriptionAIRewiteMutation,
   usePostActiveJobMutation,
@@ -59,6 +61,19 @@ import { MainModal } from "@/components/common/modal";
 import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
 import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
 import { sendEvents } from "@/lib/events";
+import {
+  arrayToHtml,
+  cleanSkillsHTML,
+  formatTextToHtml,
+  htmlToArray,
+} from "@/lib/formatters";
+
+import dynamic from "next/dynamic";
+
+const TextEditor = dynamic(
+  () => import("@/components/common/inputs/CkEditor"),
+  { ssr: false }
+);
 
 const JobPosting = () => {
   // const [currentView, setCurrentView] = useState("jobAds");
@@ -105,7 +120,7 @@ const JobPosting = () => {
     },
   });
 
-  const { control, setValue, watch } = methods;
+  const { control, setValue, watch, reset } = methods;
 
   const handleNextTab = () => {
     const tabOrder = ["details", "specification", "benefit"];
@@ -117,7 +132,19 @@ const JobPosting = () => {
   // Required skill picker Controller
   const currentSkills = watch("requiredSkills");
   const handleOptionClick = (skill: string) => {
-    const updatedSkills = currentSkills ? `${currentSkills}, ${skill}` : skill;
+    // const updatedSkills = currentSkills ? `${currentSkills}, ${skill}` : skill;
+    // setValue("requiredSkills", `<li>${updatedSkills}</li>`);
+
+    const cleanedSkills = cleanSkillsHTML(currentSkills);
+
+    // Add the new skill
+    const updatedSkills = `<ul>${[...cleanedSkills, skill]
+      .map((s) => `<li>${s}</li>`)
+      .join("")}</ul>`;
+
+    // console.log(updatedSkills);
+
+    // Set updated skills correctly
     setValue("requiredSkills", updatedSkills);
   };
 
@@ -184,9 +211,12 @@ const JobPosting = () => {
           job_specifications: [
             {
               jobDescription: values.jobDescription,
+              // requiredSkills: Array.isArray(values.requiredSkills)
+              //   ? values.requiredSkills
+              //   : [values.requiredSkills],
               requiredSkills: Array.isArray(values.requiredSkills)
                 ? values.requiredSkills
-                : [values.requiredSkills],
+                : htmlToArray(values.requiredSkills),
             },
           ],
           benefits: values.benefits,
@@ -205,8 +235,9 @@ const JobPosting = () => {
                 },
               });
             });
+            reset()
 
-          // setCurrentView("overview");
+          setCurrentView("overview");
         } catch (error) {
           console.error("Error submitting job:", error);
         }
@@ -215,7 +246,6 @@ const JobPosting = () => {
       }
     }
   };
-  
 
   // Save Job To draft Handler
   const handleSaveToDraft = async (
@@ -264,7 +294,7 @@ const JobPosting = () => {
               jobDescription: values.jobDescription,
               requiredSkills: Array.isArray(values.requiredSkills)
                 ? values.requiredSkills
-                : [values.requiredSkills],
+                : htmlToArray(values.requiredSkills),
             },
           ],
           benefits: values.benefits,
@@ -283,6 +313,7 @@ const JobPosting = () => {
                 },
               });
             });
+            reset()
 
           setCurrentView("overview");
         } catch (error) {
@@ -454,7 +485,7 @@ const JobPosting = () => {
   // 1. get the data
   const [draftId, setDraftId] = useState("");
   const { data: draftEditdata, isLoading: draftEditLoader } =
-    useGetJobsInDraftQuery(draftId);
+    useGetJobsInDraftQuery(draftId, { skip: !draftId });
 
   // 2. Update the data
   // Save Job To draft Handler
@@ -469,7 +500,6 @@ const JobPosting = () => {
       | typeof benefitDetailsSchema
     >
   ) => {
-    console.log("hello");
     if (currentView === "createJob") {
       setCurrentView("editJob");
     } else if (currentTab === "details") {
@@ -517,6 +547,7 @@ const JobPosting = () => {
         // Try submitting the job to the API
         try {
           await updateJobInDraft({ id: draftId, data: payload }).unwrap();
+          reset()
 
           setCurrentView("overview");
         } catch (error) {
@@ -565,16 +596,173 @@ const JobPosting = () => {
         draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]?.rate
       );
       methods.setValue("benefits", draftEditdata?.data?.benefits);
-      methods.setValue(
-        "jobDescription",
-        draftEditdata?.data?.job_specifications?.[0]?.jobDescription
-      );
+
+      const jobDescrip =
+        draftEditdata?.data?.job_specifications?.[0]?.jobDescription;
+      const newJobDesc =
+        /<ul>[\s\S]*<\/ul>/.test(jobDescrip) &&
+        /<li>[\s\S]*<\/li>/.test(jobDescrip)
+          ? jobDescrip
+          : formatTextToHtml(jobDescrip);
+
+      methods.setValue("jobDescription", newJobDesc);
       methods.setValue(
         "requiredSkills",
-        draftEditdata?.data?.job_specifications?.[0]?.requiredSkills
+        arrayToHtml(
+          draftEditdata?.data?.job_specifications?.[0]?.requiredSkills
+        )
       );
     }
   }, [draftEditdata, methods]);
+
+
+
+
+
+
+
+
+  // 1.Update Active Job control
+  const [activeJobId, setActiveJobId] = useState("");
+  const { data: singleActiveJob } = useGetSingleActiveJobQuery(activeJobId, {
+    skip: !activeJobId,
+  });
+
+
+  const [editActiveJob, { isLoading: editActiveJobLoading }] =
+  useEditActiveJobMutation();
+
+
+
+  
+  //  control to edit Active Job
+  const handleEditActiveJob = async (
+    values: z.infer<
+      | typeof jobTitleSchema
+      | typeof jobDetailsSchema
+      | typeof jobSpecificationSchema
+      | typeof benefitDetailsSchema
+    >
+  ) => {
+    if (currentView === "createJob") {
+      setCurrentView("editJob");
+    } else if (currentTab === "details") {
+      handleNextTab();
+    } else if (currentTab === "specification") {
+      handleNextTab();
+    } else if (currentTab === "benefit" && currentView !== "jobPreview") {
+      setCurrentView("jobPreview");
+    } else {
+      if (
+        "experienceLevel" in values &&
+        "workPattern" in values &&
+        "jobDescription" in values &&
+        "benefits" in values
+      ) {
+        const payload = {
+          job_title: values.job_title,
+          job_details: [
+            {
+              experienceLevel: values.experienceLevel,
+              workPattern: values.workPattern,
+              employmentType: values.employmentType,
+              salaryRange: [
+                {
+                  currency_code: values.currency_code || "",
+                  salary_min: values.salary_min || "",
+                  salary_max: values.salary_max || "",
+                  rate: values.rate || "",
+                },
+              ],
+              applicationDeadline: values.applicationDeadline,
+            },
+          ],
+          job_specifications: [
+            {
+              jobDescription: values.jobDescription,
+              requiredSkills: Array.isArray(values.requiredSkills)
+                ? values.requiredSkills
+                : [values.requiredSkills],
+            },
+          ],
+          benefits: values.benefits,
+        };
+
+        // Try submitting the job to the API
+        try {
+          await editActiveJob({ id: activeJobId, data: payload }).unwrap();
+          reset()
+
+          setCurrentView("overview");
+        } catch (error) {
+          console.error("Error submitting job:", error);
+        }
+      } else {
+        console.error("Missing required fields:", values);
+      }
+    }
+  };
+
+
+
+
+
+
+   // setter to put the data from the api into the form so user can Edit draft
+   useEffect(() => {
+    if (singleActiveJob?.data?.job_title) {
+      methods.setValue("job_title", singleActiveJob?.data?.job_title);
+      methods.setValue(
+        "workPattern",
+        singleActiveJob?.data?.job_details?.[0]?.workPattern
+      );
+      methods.setValue(
+        "employmentType",
+        singleActiveJob?.data?.job_details?.[0]?.employmentType
+      );
+      methods.setValue(
+        "applicationDeadline",
+        singleActiveJob?.data?.job_details?.[0]?.applicationDeadline
+      );
+      methods.setValue(
+        "experienceLevel",
+        singleActiveJob?.data?.job_details?.[0]?.experienceLevel
+      );
+      methods.setValue(
+        "salary_min",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_min
+      );
+      methods.setValue(
+        "salary_max",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.salary_max
+      );
+      methods.setValue(
+        "currency_code",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.currency_code
+      );
+      methods.setValue(
+        "rate",
+        singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]?.rate
+      );
+      methods.setValue("benefits", singleActiveJob?.data?.benefits);
+
+      const jobDescrip =
+      singleActiveJob?.data?.job_specifications?.[0]?.jobDescription;
+      const newJobDesc =
+        /<ul>[\s\S]*<\/ul>/.test(jobDescrip) &&
+        /<li>[\s\S]*<\/li>/.test(jobDescrip)
+          ? jobDescrip
+          : formatTextToHtml(jobDescrip);
+
+      methods.setValue("jobDescription", newJobDesc);
+      methods.setValue(
+        "requiredSkills",
+        arrayToHtml(
+          singleActiveJob?.data?.job_specifications?.[0]?.requiredSkills
+        )
+      );
+    }
+  }, [singleActiveJob, methods]);
 
   const renderView = () => {
     switch (currentView) {
@@ -995,19 +1183,54 @@ const JobPosting = () => {
                         onSubmit={methods.handleSubmit(onSubmit)}
                         className="space-y-6"
                       >
-                        <CustomFormField
-                          fieldType={FormFieldType.TEXTAREA}
-                          control={methods.control}
-                          name="jobDescription"
-                          label={
-                            <span>
-                              Job Description{" "}
-                              <span className="text-red-600">*</span>
-                            </span>
-                          }
-                          placeholder="Do you have a JD? Paste it here. If not, feel free to write one with AI. separate description with a comma"
-                          variant="h-40 w-full"
-                        />
+                        <div className="w-full hidden">
+                          <CustomFormField
+                            fieldType={FormFieldType.TEXTAREA}
+                            control={methods.control}
+                            name="jobDescription"
+                            label={
+                              <span>
+                                Job Description{" "}
+                                <span className="text-red-600">*</span>
+                              </span>
+                            }
+                            placeholder="Do you have a JD? Paste it here. If not, feel free to write one with AI. separate description with a comma"
+                            variant="h-40 w-full"
+                          />
+                        </div>
+
+                        <div className="w-full flex flex-col gap-[.5em]">
+                          <span>
+                            Job Description{" "}
+                            <span className="text-red-600">*</span>
+                          </span>
+                          <TextEditor
+                            name="jobDescription"
+                            value={methods.getValues("jobDescription")}
+                            onChange={(name: string, value: string) => {
+                              setValue("jobDescription", value);
+                            }}
+                            toolbarCtrl={["bold", "bulletedList"]}
+                            context={""}
+                            section={""}
+                          />
+                        </div>
+
+                        <div className="w-full flex flex-col gap-[.5em]">
+                          <span>
+                            Requirements <span className="text-red-600">*</span>
+                          </span>
+                          <TextEditor
+                            name="requiredSkills"
+                            value={methods.getValues("requiredSkills")}
+                            onChange={(name: string, value: string) => {
+                              setValue("requiredSkills", value);
+                            }}
+                            toolbarCtrl={["bulletedList"]}
+                            context={""}
+                            section={""}
+                          />
+                        </div>
 
                         <CustomFormField
                           fieldType={FormFieldType.TEXTAREA}
@@ -1020,7 +1243,7 @@ const JobPosting = () => {
                             </span>
                           }
                           placeholder="Skill required for the job you want to post."
-                          variant="h-40 w-full"
+                          variant="h-40 w-full hidden"
                         />
 
                         <div className="flex flex-wrap gap-2 bg-[#F7FCFF] border border-[#D4EBFc] rounded-lg py-10 px-4">
@@ -1034,15 +1257,23 @@ const JobPosting = () => {
                           {loadingSkill ? (
                             <p>Loading skills...</p>
                           ) : skills.length > 0 ? (
-                            skills.map((skill: string) => (
-                              <p
-                                key={skill}
-                                className="border text-sm hover:bg-main-600 hover:text-white border-bankGradient rounded-full px-2 py-1 cursor-pointer"
-                                onClick={() => handleOptionClick(skill)}
-                              >
-                                {skill}
-                              </p>
-                            ))
+                            skills
+                              .filter((skill: string) => {
+                                const requiredSkills =
+                                  methods.getValues("requiredSkills") || "";
+                                return !requiredSkills.includes(
+                                  skill as unknown as string
+                                );
+                              })
+                              .map((skill: string) => (
+                                <p
+                                  key={skill}
+                                  className="border text-sm hover:bg-main-600  hover:text-white border-bankGradient rounded-full px-2 py-1 cursor-pointer"
+                                  onClick={() => handleOptionClick(skill)}
+                                >
+                                  {skill}
+                                </p>
+                              ))
                           ) : (
                             <p>No skills available</p>
                           )}
@@ -1134,8 +1365,24 @@ const JobPosting = () => {
                           name="benefits"
                           label="Benefit Details"
                           placeholder="Do you have a JD? Paste it here. If not, feel free to write one with AI."
-                          variant="h-40 w-full"
+                          variant="h-40 w-full hidden"
                         />
+
+                        <div className="w-full flex flex-col gap-[.5em]">
+                          <span>
+                            Benefit <span className="text-red-600">*</span>
+                          </span>
+                          <TextEditor
+                            name="benefits"
+                            value={methods.getValues("benefits")}
+                            onChange={(name: string, value: string) => {
+                              setValue("benefits", value);
+                            }}
+                            toolbarCtrl={["bold", "bulletedList"]}
+                            context={""}
+                            section={""}
+                          />
+                        </div>
 
                         <div className="flex gap-2 justify-end items-center">
                           <Button
@@ -1191,31 +1438,38 @@ const JobPosting = () => {
                   title={
                     formData.job_title ||
                     draftEditdata?.data?.job_title ||
+                    singleActiveJob?.data?.job_title ||
                     "Untitled"
                   }
                   variant="mb-4 text-[26px] capitalize"
                   onEdit={() => setCurrentView("createJob")}
                 />
-                <div className="flex flex-col lg:flex-row gap-5">
+                <div className="w-full flex flex-wrap gap-[1em]">
                   <PreviewCard
                     imgUrl={Company}
                     text={userInfo?.data?.company_name || "Not Specified"}
+                    addOn="bg-neutral-200 text-neutral-600 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group "
                   />
                   <PreviewCard
                     imgUrl={Location}
                     text={
                       formData.workPattern ||
                       draftEditdata?.data?.job_details?.[0]?.workPattern ||
+                      singleActiveJob?.data?.job_details?.[0]?.workPattern ||
                       "Not Specified"
                     }
+                    addOn="bg-orange-200 text-orange-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
                   />
                   <PreviewCard
                     imgUrl={Years}
                     text={`${
                       formData.experienceLevel ||
                       draftEditdata?.data?.job_details?.[0]?.experienceLevel ||
+                      singleActiveJob?.data?.job_details?.[0]
+                        ?.experienceLevel ||
                       "N/A"
                     } years`}
+                    addOn="bg-yellow-200 text-yellow-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
                   />
 
                   <PreviewCard
@@ -1224,20 +1478,28 @@ const JobPosting = () => {
                       formData.salary_min ||
                       draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
                         ?.salary_min ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.salary_min ||
                       "N/A"
                     } - ${
                       formData.salary_max ||
                       draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.salary_max ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
                         ?.salary_max ||
                       "N/A"
                     } ${
                       formData.currency_code ||
                       draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
                         ?.currency_code ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.currency_code ||
                       ""
                     }  ${
                       formData.rate ||
                       draftEditdata?.data?.job_details?.[0]?.salaryRange?.[0]
+                        ?.rate ||
+                      singleActiveJob?.data?.job_details?.[0]?.salaryRange?.[0]
                         ?.rate ||
                       ""
                     }`}
@@ -1245,6 +1507,7 @@ const JobPosting = () => {
                       setCurrentTab("details");
                       setCurrentView("editJob");
                     }}
+                    addOn="bg-green-200 text-green-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
                   />
                 </div>
 
@@ -1254,8 +1517,10 @@ const JobPosting = () => {
                     text={`${
                       formData.employmentType ||
                       draftEditdata?.data?.job_details?.[0]?.employmentType ||
+                      singleActiveJob?.data?.job_details?.[0]?.employmentType ||
                       "N/A"
                     }`}
+                    addOn="bg-blue-200 text-blue-800 px-[1em] py-[.85em] capitalize rounded-[.65em] hover:bg-main-600  hover:text-white group"
                   />
                 </div>
                 <hr className="mt-2" />
@@ -1273,6 +1538,8 @@ const JobPosting = () => {
                       formData.jobDescription ||
                       draftEditdata?.data?.job_specifications?.[0]
                         ?.jobDescription ||
+                      singleActiveJob?.data?.job_specifications?.[0]
+                        ?.jobDescription ||
                       "Not Specified"
                     }
                     onEdit={() => {
@@ -1284,11 +1551,18 @@ const JobPosting = () => {
 
                 <div className="mt-4">
                   <JobDescription
-                    title="Qualifications"
+                    title="Requirements"
                     description={
                       formData.requiredSkills ||
-                      draftEditdata?.data?.job_specifications?.[0]?.requiredSkills?.join(
-                        ", "
+                      arrayToHtml(
+                        draftEditdata?.data?.job_specifications?.[0]?.requiredSkills?.join(
+                          ", "
+                        )
+                      ) ||
+                      arrayToHtml(
+                        singleActiveJob?.data?.job_specifications?.[0]?.requiredSkills?.join(
+                          ", "
+                        )
                       ) ||
                       "Not Specified"
                     }
@@ -1305,6 +1579,7 @@ const JobPosting = () => {
                     description={
                       formData.benefits ||
                       draftEditdata?.data?.benefits ||
+                      singleActiveJob?.data?.benefits ||
                       "Not Specified"
                     }
                     onEdit={() => {
@@ -1331,6 +1606,16 @@ const JobPosting = () => {
                     clickFn={methods.handleSubmit(onSubmit)}
                   >
                     Post Job
+                  </SubmitButton>
+                </div>
+              ) : activeJobId ? (
+                <div className="flex gap-5">
+                  <SubmitButton
+                    className="w-full sm:w-[120px] h-11"
+                    isLoading={editActiveJobLoading}
+                    clickFn={methods.handleSubmit(handleEditActiveJob)}
+                  >
+                    Edit Job
                   </SubmitButton>
                 </div>
               ) : (
@@ -1360,6 +1645,7 @@ const JobPosting = () => {
           <JobOverview
             setCurrentView={setCurrentView}
             setDraftId={setDraftId}
+            setActiveJobId={setActiveJobId}
           />
         );
 

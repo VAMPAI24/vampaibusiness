@@ -37,6 +37,7 @@ import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
 import { Platformbtn } from "@/components/common/buttons";
+import { arrayToHtml } from "@/lib/formatters";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
@@ -151,16 +152,17 @@ const JobPostingDetails = () => {
                 type="secondary"
                 name="Share Job"
                 click={() => openCloseShare("open")}
-                addOns="!w-fit  md:!px-[1.5em] rounded-full"
+                addOns="!w-fit  md:!px-[1em] rounded-full"
               />
             </div>
 
             {/* Preview Cards */}
-            <div className="flex flex-wrap gap-5 sm:gap-3">
+            <div className="w-full flex flex-wrap gap-[.75em]">
               {/* Company */}
               <PreviewCard
                 imgUrl={Company}
                 text={userInfo?.data?.company_name || "Not Specified"}
+                addOn="bg-neutral-200 text-neutral-600 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group "
               />
 
               {/* Location */}
@@ -169,6 +171,7 @@ const JobPostingDetails = () => {
                 text={
                   data?.data?.job_details?.[0]?.workPattern || "Not Specified"
                 }
+                addOn="bg-orange-200 text-orange-800 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group"
               />
               {/* Experience */}
               <PreviewCard
@@ -176,6 +179,7 @@ const JobPostingDetails = () => {
                 text={`${
                   data?.data?.job_details?.[0]?.experienceLevel || "N/A"
                 }`}
+                addOn="bg-yellow-200 text-yellow-800 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group"
               />
               {/* Salary */}
               <PreviewCard
@@ -185,6 +189,7 @@ const JobPostingDetails = () => {
                     ? `${data.data.job_details[0].salaryRange[0].currency_code} ${data.data.job_details[0].salaryRange[0].salary_min} - ${data.data.job_details[0].salaryRange[0].salary_max}`
                     : "Salary Not Specified"
                 }
+                addOn="bg-green-200 text-green-800 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group"
               />
             </div>
             <hr className="mt-4" />
@@ -211,7 +216,9 @@ const JobPostingDetails = () => {
               <JobDescription
                 title="Qualifications"
                 description={
-                  data?.data?.job_specifications?.[0]?.requiredSkills ||
+                  // data?.data?.job_specifications?.[0]?.requiredSkills ||
+                  // "Not Specified"
+                   arrayToHtml(data?.data?.job_specifications?.[0]?.requiredSkills) ||
                   "Not Specified"
                 }
               />
@@ -266,13 +273,13 @@ const JobPostingDetails = () => {
                 title="Shortlisted Candidate"
                 count={shortlistedData?.data?.count}
                 icon={<Users className="text-main-901" size={20} />}
-                className="flex-shrink-0 hover:bg-main-600 hover:text-white"
+                className="flex-shrink-0 hover:bg-main-600  hover:text-white"
               />
               <OverviewCard
                 title="Rejected Candidate"
                 count={rejectedData?.data?.count}
                 icon={<Users className="text-main-901" size={20} />}
-                className="flex-shrink-0 hover:bg-main-600 hover:text-white"
+                className="flex-shrink-0 hover:bg-main-600  hover:text-white"
               />
             </div>
 

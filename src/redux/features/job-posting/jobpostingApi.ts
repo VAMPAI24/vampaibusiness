@@ -476,6 +476,81 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+
+
+    getSingleActiveJob: builder.query({
+      query: (id) => ({
+        url: `/employer/jobs/${id}`,
+        method: "GET",
+        params: { Id: id },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+        } catch (error: any) {
+          ToastNotification({
+            title: error?.error?.data?.error || error?.error?.error,
+            description: error?.error?.data?.message || error?.error?.status,
+            type: "error",
+          });
+        }
+      },
+    }),
+
+
+    editActiveJob: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/employer/jobs/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          ToastNotification({
+            title: "Success",
+            description: "Active Job Updated successfully.",
+            type: "success",
+          });
+        } catch (error: any) {
+          ToastNotification({
+            title: "Error",
+            description:
+              error?.data?.error || error?.error || "Something went wrong",
+            type: "error",
+          });
+        }
+      },
+    }),
+
+
+
+    deleteActiveJob: builder.mutation({
+      query: ({ job_id }) => ({
+        url: `/employer/delete-jobs`,
+        method: "DELETE",
+        params: { job_id },
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          ToastNotification({
+            title: "Delete",
+            description: "Job Deleted successfully.",
+            type: "error",
+          });
+        } catch (error: any) {
+          ToastNotification({
+            title: "Error",
+            description: error?.data?.error || error?.error || "Something went wrong",
+            type: "error",
+          });
+        }
+      },
+    }),
+
+
   }),
 });
 
@@ -502,4 +577,7 @@ export const {
   useGetJobsInDraftQuery,
   useUpdateJobInDraftMutation,
   useSearchTeamMemberQuery,
+  useGetSingleActiveJobQuery,
+  useEditActiveJobMutation,
+  useDeleteActiveJobMutation,
 } = authApi;

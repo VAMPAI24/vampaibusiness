@@ -89,7 +89,8 @@ export interface SubmitButtonProps {
   loadingText?: string;
   disabled?:boolean;
   children: React.ReactNode;
-  clickFn?: () => void;
+  // clickFn?: () => void;
+  clickFn?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export interface DashboardCardProp {
@@ -121,11 +122,13 @@ export interface JobpointerProps {
 export interface PreviewCardProps {
   imgUrl: string;
   text?: string;
+  addOn?:string;
 }
 
 export interface JobOverviewProps {
   setCurrentView: (view: string) => void;
   setDraftId: (view: string) => void;
+  setActiveJobId: (view: string) => void;
 }
 
 export interface EventModalContentProps {

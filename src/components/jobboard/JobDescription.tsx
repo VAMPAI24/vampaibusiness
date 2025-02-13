@@ -1,8 +1,5 @@
-import React from 'react'
+import React from "react";
 import { Pencil } from "lucide-react";
-
-
-
 
 export interface JobDescriptionProps {
   title: string;
@@ -10,12 +7,16 @@ export interface JobDescriptionProps {
   onEdit?: () => void;
 }
 
-const JobDescription = ({title, description, onEdit}: JobDescriptionProps) => {
+const JobDescription = ({
+  title,
+  description,
+  onEdit,
+}: JobDescriptionProps) => {
   return (
     <div>
-      <div className='flex gap-2'>
-      <h2 className='text-main-901 font-rubik text-base'>{title}</h2>
-      {onEdit && (
+      <div className="flex gap-2">
+        <h2 className="text-main-901 font-rubik text-base">{title}</h2>
+        {onEdit && (
           <button
             onClick={onEdit}
             className="text-main-902 hover:text-main-800 ml-2"
@@ -23,12 +24,19 @@ const JobDescription = ({title, description, onEdit}: JobDescriptionProps) => {
             <Pencil size={16} />
           </button>
         )}
-
       </div>
-     
-      <p className='mt-2 text-main-902 font-jakarta break-words text-xs'>{description}</p>
-    </div>
-  )
-}
 
-export default JobDescription
+      {/* <p className="mt-2 text-main-902 font-jakarta break-words text-xs">
+        {description}
+      </p> */}
+      <span
+        className="max-w-[80%] text-[.85em]  font-[200] text-main-901 mb-[1em] div-listed"
+        dangerouslySetInnerHTML={{
+          __html: description || "",
+        }}
+      ></span>
+    </div>
+  );
+};
+
+export default JobDescription;

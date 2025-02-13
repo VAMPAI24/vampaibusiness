@@ -1,8 +1,10 @@
+"use client";
 import Image from "next/image";
 import Logo from "@/public/svgs/auth/vamp-logo.svg";
 import SignInForm from "@/components/auth/SignInForm";
 import TextBox from "@/components/auth/TextBox";
 import Link from "next/link";
+
 
 const SignIn = () => {
   return (
@@ -23,7 +25,6 @@ const SignIn = () => {
           description="Login to unlock the power of AI in finding top talent and transforming your hiring process."
           variant="mt-0 text-center justify-center items-center"
         />
-
         <SignInForm />
       </div>
     </div>
