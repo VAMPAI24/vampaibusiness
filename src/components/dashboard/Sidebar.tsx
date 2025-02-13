@@ -23,7 +23,7 @@ const Sidebar = () => {
   };
 
   return (
-    <section className="left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 2xl:w-[355px] relative">
+    <section className="left-0 top-0 flex h-screen w-fit flex-col justify-between bg-main-600 text-white max-md:hidden p-6 lg:w-[270px] relative">
       <nav className="flex flex-col gap-4">
         <Link
           href="/dashboard"

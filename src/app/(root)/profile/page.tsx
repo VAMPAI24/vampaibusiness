@@ -20,13 +20,14 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
 
-
 const Profile = () => {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   const { data: userInfo, refetch } = useGetSingleEmployerQuery(token);
   const [updateProfile, { isLoading: isUpdatingProfile }] =
     useUpdateProfileMutation();
+
+  console.log("userInfo", userInfo);
 
   useEffect(() => {
     const storedToken = Cookies.get("token");
@@ -100,7 +101,7 @@ const Profile = () => {
       formData.append("last_name", values.last_name);
       formData.append("position_in_company", values.position_in_company);
       formData.append("work_email", values.work_email);
-      formData.append("phone_Number", values.phone_Number);
+      formData.append("phone_number", values.phone_Number);
       formData.append("country", values.country);
       formData.append("company_name", values.company_name);
       formData.append("company_website", values.company_website);
@@ -146,8 +147,6 @@ const Profile = () => {
                   //   height={50}
                   //   className="h-full w-full object-cover"
                   // />
-
-                
 
                   <div className="w-[3.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
                     <Image
@@ -267,7 +266,7 @@ const Profile = () => {
                   label="Number of Employees"
                   placeholder="Enter the Number of Employees"
                   variant="h-[40px] w-full"
-                  defaultValue={userInfo?.data?.no_employees || ""}
+                  defaultValue={userInfo?.data?.No_Employees || ""}
                 >
                   {numberOfEmployees.map((employ, index) => (
                     <SelectItem key={`${employ}-${index}`} value={employ}>

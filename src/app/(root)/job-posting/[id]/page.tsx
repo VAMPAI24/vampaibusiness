@@ -38,6 +38,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
 import { Platformbtn } from "@/components/common/buttons";
 import { arrayToHtml } from "@/lib/formatters";
+import TeamsMembers from "./_components/Tabs/teams-members";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
@@ -136,6 +137,14 @@ const JobPostingDetails = () => {
           >
             Shortlisted
           </TabsTrigger>
+
+          <TabsTrigger
+            value="Teams"
+            className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
+            // onClick={() => setTab("Shortlisted")}
+          >
+            Team Members
+          </TabsTrigger>
         </TabsList>
         <hr className="" />
 
@@ -218,8 +227,9 @@ const JobPostingDetails = () => {
                 description={
                   // data?.data?.job_specifications?.[0]?.requiredSkills ||
                   // "Not Specified"
-                   arrayToHtml(data?.data?.job_specifications?.[0]?.requiredSkills) ||
-                  "Not Specified"
+                  arrayToHtml(
+                    data?.data?.job_specifications?.[0]?.requiredSkills
+                  ) || "Not Specified"
                 }
               />
             </div>
@@ -594,6 +604,11 @@ const JobPostingDetails = () => {
             candidate={selectedCandidate}
             onClose={() => setIsOpen(false)}
           />
+        </TabsContent>
+
+        {/* Teams Members  */}
+        <TabsContent value="Teams">
+          <TeamsMembers />
         </TabsContent>
       </Tabs>
     </div>
