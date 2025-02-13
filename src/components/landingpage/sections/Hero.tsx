@@ -125,7 +125,7 @@ const Hero = () => {
             <Button
               text="Book a Demo"
               variant="bg-main-100 text-main-800 rounded-md w-full sm:w-[150px] h-[3em]"
-              clickFn={() => router.push("/sign-up")}
+              clickFn={() => router.push("/book-demo")}
             />
           </div>
 

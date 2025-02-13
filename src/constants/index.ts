@@ -272,7 +272,6 @@ export const SidebarLinks = [
     route: "/recruitment",
     label: "Recruitment",
   },
-
   {
     imgURL: Logout,
     route: "/sign-in",
