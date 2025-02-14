@@ -50,8 +50,18 @@ const SignUp = () => {
     work_email: string | undefined;
   }) => {
     try {
-      await emailVerification(values).unwrap();
-      router.push("/sign-in");
+      await emailVerification(values)
+        .unwrap()
+        .then(() => {
+          router.push("/sign-in");
+          sendEvents({
+            eventName: "verify account",
+            customData: {
+              email: values.work_email ?? "",
+              action: "verify",
+            },
+          });
+        });
     } catch (error) {
       console.log(error);
     }
@@ -68,17 +78,7 @@ const SignUp = () => {
     work_email: string | undefined;
   }) => {
     try {
-      await resendOtp(values)
-        .unwrap()
-        .then(() => {
-          sendEvents({
-            eventName: "verify account",
-            customData: {
-              email: values.work_email ?? "",
-              action: "verify",
-            },
-          });
-        });
+      await resendOtp(values);
     } catch (error) {
       console.log(error);
     }

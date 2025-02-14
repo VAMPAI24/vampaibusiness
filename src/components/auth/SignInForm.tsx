@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import CustomInput from "../shared/inputs/CustomInput";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "../shared/SubmitButton";
-
+import { sendEvents } from "@/lib/events";
 
 const SignInForm = () => {
   const router = useRouter();
@@ -25,13 +25,20 @@ const SignInForm = () => {
     },
   });
 
-
- 
-
   const onSubmit = async (values: z.infer<typeof SignInSchema>) => {
     try {
-      await login(values).unwrap();
-      router.push("/dashboard");
+      await login(values)
+        .unwrap()
+        .then(() => {
+          router.push("/dashboard");
+          sendEvents({
+            eventName: "login",
+            customData: {
+              email: values.work_email ?? "",
+              action: "login",
+            },
+          });
+        });
     } catch (error) {
       console.log(error);
     }
