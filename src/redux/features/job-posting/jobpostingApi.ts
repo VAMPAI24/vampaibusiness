@@ -5,7 +5,7 @@ import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
 import { setCurrJobPost } from "./jobpostingSlice";
 
-export const authApi = apiSlice.injectEndpoints({
+export const jobPostingApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     postActiveJob: builder.mutation({
       query: (data) => ({
@@ -381,7 +381,6 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
 
           ToastNotification({
-            // title: result?.data?.message,
             title: "Reject",
             description: "Candidate Rejected",
             type: "error",
@@ -580,4 +579,4 @@ export const {
   useGetSingleActiveJobQuery,
   useEditActiveJobMutation,
   useDeleteActiveJobMutation,
-} = authApi;
+} = jobPostingApi;

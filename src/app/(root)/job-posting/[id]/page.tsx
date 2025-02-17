@@ -143,7 +143,7 @@ const JobPostingDetails = () => {
             className="relative pb-3 rounded transition-colors after:absolute after:left-0 after:right-0 after:bottom-0 after:h-1 after:bg-transparent data-[state=active]:bg-[#F9FAFB] data-[state=active]:after:bg-blue-500"
             // onClick={() => setTab("Shortlisted")}
           >
-            Team Members
+            Teams
           </TabsTrigger>
         </TabsList>
         <hr className="" />
@@ -608,7 +608,7 @@ const JobPostingDetails = () => {
 
         {/* Teams Members  */}
         <TabsContent value="Teams">
-          <TeamsMembers />
+          <TeamsMembers Job_Id={id} />
         </TabsContent>
       </Tabs>
     </div>

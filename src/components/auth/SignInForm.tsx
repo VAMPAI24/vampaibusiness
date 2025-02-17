@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import CustomInput from "../shared/inputs/CustomInput";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "../shared/SubmitButton";
-
+import ToastNotification from "@/components/shared/ToastNotification";
 
 const SignInForm = () => {
   const router = useRouter();
@@ -25,13 +25,14 @@ const SignInForm = () => {
     },
   });
 
-
- 
-
   const onSubmit = async (values: z.infer<typeof SignInSchema>) => {
     try {
-      await login(values).unwrap();
-      router.push("/dashboard");
+      const res = await login(values).unwrap();
+      if (res?.data?.user?.is_invited) {
+        router.push("/reset-password");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (error) {
       console.log(error);
     }
