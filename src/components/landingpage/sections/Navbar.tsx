@@ -89,20 +89,20 @@ const Navbar = () => {
               <div className="flex items-start justify-start gap-4 mt-4">
                 <Button
                   text="See Jobs"
-                  variant=" hidden lg:flex text-white border-none rounded-lg w-[150px] mt-4"
+                  variant="flex text-white border-none rounded-lg w-full mt-4"
                   clickFn={() =>
                     openExternalLink("https://talent.usevampai.com/job-board")
                   }
                 />
                 <Button
                   text="Employer Login"
-                  variant="text-black border rounded-lg w-[150px] mt-4"
+                  variant="text-black border rounded-lg w-full mt-4"
                   clickFn={() => router.push("/sign-in")}
                 />
 
                 <Button
                   text="For Talent"
-                  variant="bg-main-600 text-white rounded-lg w-[150px] mt-4"
+                  variant="bg-main-600 text-white rounded-lg w-full mt-4"
                   // clickFn={() => openExternalLink("https://www.usevampai.com")}
                   clickFn={() => openExternalLink("https://talent.usevampai.com")}
                 />
