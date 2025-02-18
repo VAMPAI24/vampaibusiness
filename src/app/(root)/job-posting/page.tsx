@@ -954,7 +954,7 @@ const JobPosting = () => {
                               </span>
                             }
                             placeholder="Select Country"
-                            variant="h-[40px] w-full lg:w-[20clea0px]"
+                            variant="h-[40px] w-full lg:w-[200px]"
                             defaultValue={userInfo?.data?.country || ""}
                           >
                             {(fetchAllCountries() ?? []).map(
