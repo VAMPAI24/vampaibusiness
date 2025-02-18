@@ -998,7 +998,7 @@ const JobPosting = () => {
                               defaultValue={userInfo?.data?.state || ""}
                             >
                               {(
-                                fetchAllStates(formInfo.country) || "") ?? []
+                                fetchAllStates(formInfo.country || "") ?? []
                               ).map((state, index) => (
                                 <SelectItem
                                   key={state.value + index}
