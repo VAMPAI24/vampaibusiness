@@ -16,6 +16,7 @@ import SubmitButton from "@/components/shared/SubmitButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Jobpointer from "@/components/jobboard/Jobpointer";
 import {
+  Countries,
   EmploymentType,
   ExperienceLevel,
   SalaryRange,
@@ -36,7 +37,7 @@ import Years from "@/public/svgs/Jobs/years.svg";
 import Amount from "@/public/svgs/Jobs/amount.svg";
 import Country from "@/public/svgs/Jobs/country.svg";
 import Area from "@/public/svgs/Jobs/area.svg";
-import State from "@/public/svgs/Jobs/state.svg"
+import State from "@/public/svgs/Jobs/state.svg";
 import JobDescription from "@/components/jobboard/JobDescription";
 
 import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
@@ -62,6 +63,7 @@ import { MainModal } from "@/components/common/modal";
 import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
 import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
 import { sendEvents } from "@/lib/events";
+
 
 const JobPosting = () => {
   // const [currentView, setCurrentView] = useState("jobAds");
@@ -592,14 +594,8 @@ const JobPosting = () => {
         "country",
         draftEditdata?.data?.job_details?.[0]?.country
       );
-      methods.setValue(
-        "state",
-        draftEditdata?.data?.job_details?.[0]?.state
-      );
-      methods.setValue(
-        "area",
-        draftEditdata?.data?.job_details?.[0]?.area
-      );
+      methods.setValue("state", draftEditdata?.data?.job_details?.[0]?.state);
+      methods.setValue("area", draftEditdata?.data?.job_details?.[0]?.area);
     }
   }, [draftEditdata, methods]);
 
@@ -932,7 +928,7 @@ const JobPosting = () => {
                         </div>
 
                         <div className="flex flex-col gap-5 sm:flex-row">
-                          <CustomFormField
+                          {/* <CustomFormField
                             fieldType={FormFieldType.INPUT}
                             control={methods.control}
                             name="country"
@@ -943,7 +939,27 @@ const JobPosting = () => {
                             }
                             placeholder="Country"
                             variant="h-[40px] w-full  lg:w-[200px]"
-                          />
+                          /> */}
+
+                          <CustomFormField
+                            fieldType={FormFieldType.SELECT}
+                            control={control}
+                            name="country"
+                            label={
+                              <span>
+                                Country<span className="text-red-600">*</span>
+                              </span>
+                            }
+                            placeholder="Select Country"
+                            variant="h-[40px] w-full"
+                            defaultValue={userInfo?.data?.country || ""}
+                          >
+                            {Countries.map((country, index) => (
+                              <SelectItem key={country + index} value={country}>
+                                {country}
+                              </SelectItem>
+                            ))}
+                          </CustomFormField>
                           <div className="flex flex-col gap-5 sm:flex-row w-full">
                             <CustomFormField
                               fieldType={FormFieldType.DATE}
