@@ -34,6 +34,9 @@ import Company from "@/public/svgs/Jobs/company.svg";
 import Location from "@/public/svgs/Jobs/location.svg";
 import Years from "@/public/svgs/Jobs/years.svg";
 import Amount from "@/public/svgs/Jobs/amount.svg";
+import Country from "@/public/svgs/Jobs/country.svg";
+import Area from "@/public/svgs/Jobs/area.svg";
+import State from "@/public/svgs/Jobs/state.svg"
 import JobDescription from "@/components/jobboard/JobDescription";
 
 import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
@@ -99,6 +102,9 @@ const JobPosting = () => {
       salary_max: "",
       rate: "",
       applicationDeadline: "",
+      country: "",
+      state: "",
+      area: "",
       jobDescription: "",
       requiredSkills: "",
       benefits: "",
@@ -170,6 +176,9 @@ const JobPosting = () => {
               experienceLevel: values.experienceLevel,
               workPattern: values.workPattern,
               employmentType: values.employmentType,
+              country: values.country,
+              state: values.state,
+              area: values.area,
               salaryRange: [
                 {
                   currency_code: values.currency_code || "",
@@ -206,7 +215,7 @@ const JobPosting = () => {
               });
             });
 
-          // setCurrentView("overview");
+          setCurrentView("overview");
         } catch (error) {
           console.error("Error submitting job:", error);
         }
@@ -215,7 +224,6 @@ const JobPosting = () => {
       }
     }
   };
-  
 
   // Save Job To draft Handler
   const handleSaveToDraft = async (
@@ -248,6 +256,9 @@ const JobPosting = () => {
               experienceLevel: values.experienceLevel,
               workPattern: values.workPattern,
               employmentType: values.employmentType,
+              country: values.country,
+              state: values.state,
+              area: values.area,
               salaryRange: [
                 {
                   currency_code: values.currency_code || "",
@@ -456,6 +467,8 @@ const JobPosting = () => {
   const { data: draftEditdata, isLoading: draftEditLoader } =
     useGetJobsInDraftQuery(draftId);
 
+  console.log("draftEditdata", draftEditdata);
+
   // 2. Update the data
   // Save Job To draft Handler
   const [updateJobInDraft, { isLoading: updateDraftLoading }] =
@@ -469,7 +482,6 @@ const JobPosting = () => {
       | typeof benefitDetailsSchema
     >
   ) => {
-    console.log("hello");
     if (currentView === "createJob") {
       setCurrentView("editJob");
     } else if (currentTab === "details") {
@@ -492,6 +504,9 @@ const JobPosting = () => {
               experienceLevel: values.experienceLevel,
               workPattern: values.workPattern,
               employmentType: values.employmentType,
+              country: values.country,
+              state: values.state,
+              area: values.area,
               salaryRange: [
                 {
                   currency_code: values.currency_code || "",
@@ -572,6 +587,18 @@ const JobPosting = () => {
       methods.setValue(
         "requiredSkills",
         draftEditdata?.data?.job_specifications?.[0]?.requiredSkills
+      );
+      methods.setValue(
+        "country",
+        draftEditdata?.data?.job_details?.[0]?.country
+      );
+      methods.setValue(
+        "state",
+        draftEditdata?.data?.job_details?.[0]?.state
+      );
+      methods.setValue(
+        "area",
+        draftEditdata?.data?.job_details?.[0]?.area
       );
     }
   }, [draftEditdata, methods]);
@@ -782,32 +809,6 @@ const JobPosting = () => {
                           </CustomFormField>
                         </div>
 
-                        <div>
-                          <CustomFormField
-                            fieldType={FormFieldType.SELECT}
-                            control={control}
-                            name="employmentType"
-                            label={
-                              <span>
-                                Employment Type{" "}
-                                <span className="text-red-600">*</span>
-                              </span>
-                            }
-                            placeholder="Enter Employment Type"
-                            variant="h-[40px] w-full"
-                            defaultValue=""
-                          >
-                            {EmploymentType.map((employtype, index) => (
-                              <SelectItem
-                                key={`${employtype}-${index}`}
-                                value={employtype}
-                              >
-                                {employtype}
-                              </SelectItem>
-                            ))}
-                          </CustomFormField>
-                        </div>
-
                         <div className="flex flex-col gap-5 sm:flex-row">
                           <CustomFormField
                             fieldType={FormFieldType.SELECT}
@@ -904,7 +905,91 @@ const JobPosting = () => {
                           </CustomFormField>
                         </div>
 
-                        <CustomFormField
+                        <div>
+                          <CustomFormField
+                            fieldType={FormFieldType.SELECT}
+                            control={control}
+                            name="employmentType"
+                            label={
+                              <span>
+                                Employment Type{" "}
+                                <span className="text-red-600">*</span>
+                              </span>
+                            }
+                            placeholder="Enter Employment Type"
+                            variant="h-[40px] w-full"
+                            defaultValue=""
+                          >
+                            {EmploymentType.map((employtype, index) => (
+                              <SelectItem
+                                key={`${employtype}-${index}`}
+                                value={employtype}
+                              >
+                                {employtype}
+                              </SelectItem>
+                            ))}
+                          </CustomFormField>
+                        </div>
+
+                        <div className="flex flex-col gap-5 sm:flex-row">
+                          <CustomFormField
+                            fieldType={FormFieldType.INPUT}
+                            control={methods.control}
+                            name="country"
+                            label={
+                              <span>
+                                Country<span className="text-red-600">*</span>
+                              </span>
+                            }
+                            placeholder="Country"
+                            variant="h-[40px] w-full  lg:w-[200px]"
+                          />
+                          <div className="flex flex-col gap-5 sm:flex-row w-full">
+                            <CustomFormField
+                              fieldType={FormFieldType.DATE}
+                              control={control}
+                              name="applicationDeadline"
+                              label={
+                                <span>
+                                  Application Deadline{" "}
+                                  <span className="text-red-600">*</span>
+                                </span>
+                              }
+                              placeholder="Select a date"
+                              variant="w-full h-[40px] border border-main-500 text-sm shadow-sm rounded"
+                              dateFormat="PPP"
+                            />
+                            <CustomFormField
+                              fieldType={FormFieldType.INPUT}
+                              control={methods.control}
+                              name="state"
+                              label={
+                                <span>
+                                  State<span className="text-red-600">*</span>
+                                </span>
+                              }
+                              placeholder="State"
+                              variant="h-[40px] w-full  "
+                            />
+                          </div>
+
+                          <div>
+                            <CustomFormField
+                              fieldType={FormFieldType.INPUT}
+                              control={methods.control}
+                              name="area"
+                              label={
+                                <span>
+                                  City<span className="text-red-600">*</span>
+                                </span>
+                              }
+                              placeholder="City"
+                              variant="h-[40px] w-full   lg:w-[200px]"
+                            />
+                          </div>
+                        </div>
+
+                        {/* <CustomFormField
                           fieldType={FormFieldType.DATE}
                           control={control}
                           name="applicationDeadline"
@@ -917,7 +1002,7 @@ const JobPosting = () => {
                           placeholder="Select a date"
                           variant="w-full h-[40px] border border-main-500 text-sm shadow-sm rounded"
                           dateFormat="PPP"
-                        />
+                        /> */}
 
                         <div className="flex gap-2 justify-end items-center mt-6">
                           <Button
@@ -1172,6 +1257,9 @@ const JobPosting = () => {
           salary_max: string;
           rate: string;
           applicationDeadline: string;
+          country: string;
+          area: string;
+          state: string;
           jobDescription: string;
           requiredSkills: string;
           benefits: string;
@@ -1241,14 +1329,14 @@ const JobPosting = () => {
                         ?.rate ||
                       ""
                     }`}
-                    onEdit={() => {
-                      setCurrentTab("details");
-                      setCurrentView("editJob");
-                    }}
+                    // onEdit={() => {
+                    //   setCurrentTab("details");
+                    //   setCurrentView("editJob");
+                    // }}
                   />
                 </div>
 
-                <div className="mt-1">
+                <div className="flex flex-col lg:flex-row  gap-5 mt-2">
                   <PreviewCard
                     imgUrl={Years}
                     text={`${
@@ -1256,6 +1344,34 @@ const JobPosting = () => {
                       draftEditdata?.data?.job_details?.[0]?.employmentType ||
                       "N/A"
                     }`}
+                  />
+                  <PreviewCard
+                    imgUrl={Country}
+                    text={`${
+                      formData.country ||
+                      draftEditdata?.data?.job_details?.[0]?.country ||
+                      "N/A"
+                    }`}
+                  />
+                  <PreviewCard
+                    imgUrl={State}
+                    text={`${
+                      formData.state ||
+                      draftEditdata?.data?.job_details?.[0]?.state ||
+                      "N/A"
+                    }`}
+                  />
+                  <PreviewCard
+                    imgUrl={Area}
+                    text={`${
+                      formData.area ||
+                      draftEditdata?.data?.job_details?.[0]?.area ||
+                      "N/A"
+                    }`}
+                    onEdit={() => {
+                      setCurrentTab("details");
+                      setCurrentView("editJob");
+                    }}
                   />
                 </div>
                 <hr className="mt-2" />
