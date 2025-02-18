@@ -63,7 +63,7 @@ import { MainModal } from "@/components/common/modal";
 import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
 import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
 import { sendEvents } from "@/lib/events";
-
+import { fetchAllCountries, fetchAllStates } from "@/lib/utils";
 
 const JobPosting = () => {
   // const [currentView, setCurrentView] = useState("jobAds");
@@ -701,6 +701,9 @@ const JobPosting = () => {
         );
 
       case "editJob":
+        const formInfo = watch() as {
+          country: string;
+        };
         return (
           <div className="w-full lg:w-[90%]">
             <Jobbox title="Edit Job Post" variant="mb-4 text-[20px]" />
@@ -954,11 +957,16 @@ const JobPosting = () => {
                             variant="h-[40px] w-full lg:w-[20clea0px]"
                             defaultValue={userInfo?.data?.country || ""}
                           >
-                            {Countries.map((country, index) => (
-                              <SelectItem key={country + index} value={country}>
-                                {country}
-                              </SelectItem>
-                            ))}
+                            {(fetchAllCountries() ?? []).map(
+                              (country, index) => (
+                                <SelectItem
+                                  key={country.value + index}
+                                  value={country.value}
+                                >
+                                  {country.label}
+                                </SelectItem>
+                              )
+                            )}
                           </CustomFormField>
                           <div className="flex flex-col gap-5 sm:flex-row w-full">
                             <CustomFormField
@@ -975,18 +983,31 @@ const JobPosting = () => {
                               variant="w-full h-[40px] border border-main-500 text-sm shadow-sm rounded"
                               dateFormat="PPP"
                             />
+
                             <CustomFormField
-                              fieldType={FormFieldType.INPUT}
-                              control={methods.control}
+                              fieldType={FormFieldType.SELECT}
+                              control={control}
                               name="state"
                               label={
                                 <span>
                                   State<span className="text-red-600">*</span>
                                 </span>
                               }
-                              placeholder="State"
-                              variant="h-[40px] w-full  "
-                            />
+                              placeholder="Select State"
+                              variant="h-[40px] w-full"
+                              defaultValue={userInfo?.data?.state || ""}
+                            >
+                              {(
+                                fetchAllStates(formInfo.country || "") ?? []
+                              ).map((state, index) => (
+                                <SelectItem
+                                  key={state.value + index}
+                                  value={state.value}
+                                >
+                                  {state.label}
+                                </SelectItem>
+                              ))}
+                            </CustomFormField>
                           </div>
 
                           <div>
