@@ -269,8 +269,8 @@ export const SidebarLinks = [
   },
   {
     imgURL: Recruitmnet,
-    route: "/recruitment",
-    label: "Recruitment",
+    route: "/ai-agent",
+    label: "AI Agent",
   },
   {
     imgURL: Logout,
@@ -297,8 +297,8 @@ export const SidebarLinksMobile = [
   },
   {
     imgURL: RecruitmnetMobile,
-    route: "/recruitment",
-    label: "Recruitment",
+    route: "/ai-agent",
+    label: "AI Agent",
   },
 
   {

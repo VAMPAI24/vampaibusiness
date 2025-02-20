@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
-
+import { fetchAllCountries } from "@/lib/utils";
 
 const Profile = () => {
   const router = useRouter();
@@ -146,8 +146,6 @@ const Profile = () => {
                   //   height={50}
                   //   className="h-full w-full object-cover"
                   // />
-
-                
 
                   <div className="w-[3.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
                     <Image
@@ -302,9 +300,12 @@ const Profile = () => {
                   variant="h-[40px] w-full"
                   defaultValue={userInfo?.data?.country || ""}
                 >
-                  {Countries.map((country, index) => (
-                    <SelectItem key={country + index} value={country}>
-                      {country}
+                  {(fetchAllCountries() ?? []).map((country, index) => (
+                    <SelectItem
+                      key={country.value + index}
+                      value={country.value}
+                    >
+                      {country.label}
                     </SelectItem>
                   ))}
                 </CustomFormField>
