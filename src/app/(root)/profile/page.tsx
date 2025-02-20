@@ -10,7 +10,7 @@ import CustomFormField, {
   FormFieldType,
 } from "@/components/shared/inputs/CustomFormField";
 import SubmitButton from "@/components/shared/SubmitButton";
-import { Countries, Industries, numberOfEmployees } from "@/constants";
+import { Industries, numberOfEmployees } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
 import {
   useGetSingleEmployerQuery,
