@@ -1437,7 +1437,7 @@ const JobPosting = () => {
 
                 <div className="mt-4">
                   <JobDescription
-                    title="Qualifications"
+                    title="Skills"
                     description={
                       formData.requiredSkills ||
                       draftEditdata?.data?.job_specifications?.[0]?.requiredSkills?.join(
