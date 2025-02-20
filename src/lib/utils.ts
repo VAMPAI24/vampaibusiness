@@ -166,7 +166,7 @@ export const handleShare = (
 };
 
 export const fetchAllCountries = () => {
-  const options = allCountries.map((item, _index) => ({
+  const options = allCountries.map((item ) => ({
     label: item.countryName,
     value: item.countryShortCode,
   }));
