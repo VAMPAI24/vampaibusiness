@@ -13,19 +13,20 @@ import {
 } from "@/redux/features/job-posting/jobpostingApi";
 import SubmitButton from "@/components/shared/SubmitButton";
 
-
 // This type is used to define the shape of our data.
 export type createColumnsProps = {
   id: string;
-  email: string;
+  applicant_email: string;
   profile_pics: string;
-  firstName: string;
-  lastName: string;
+  applicant_first_name: string;
+  applicant_last_name: string;
   applied_possition: string;
   created_at: string;
 };
 
-export const createColumns = (candidateRefetch: () => void): ColumnDef<createColumnsProps>[] => [
+export const createColumns = (
+  candidateRefetch: () => void
+): ColumnDef<createColumnsProps>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -55,23 +56,24 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
     id: "name",
     header: "Name",
     cell: ({ row }) => {
-      const { profile_pics, firstName, lastName } = row.original;
+      const { profile_pics, applicant_first_name, applicant_last_name } =
+        row.original;
       return (
         <div className="flex items-center space-x-2 ">
           <Image
             src={profile_pics}
-            alt={`${firstName} ${lastName}`}
+            alt={`${applicant_first_name} ${applicant_last_name}`}
             className="w-8 h-8 rounded-full"
             width={32}
             height={32}
           />
-          <span>{`${firstName} ${lastName}`}</span>
+          <span>{`${applicant_first_name} ${applicant_last_name}`}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: "email",
+    accessorKey: "applicant_email",
     header: ({ column }) => {
       return (
         <Button
@@ -84,8 +86,8 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
       );
     },
     cell: ({ row }) => {
-      const { email } = row.original;
-      return <span className="text-sm  ml-4">{email}</span>;
+      const { applicant_email } = row.original;
+      return <span className="text-sm  ml-4">{applicant_email}</span>;
     },
   },
   {
@@ -117,12 +119,12 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
     header: "Action",
     cell: function ActionCell({ row }) {
       const { id: candidateId } = row.original;
-  
+
       const [shortlistCandidate, { isLoading: isShortlist }] =
         useShortlistCandidateMutation();
       const [rejectCandidate, { isLoading: isRejecting }] =
         useRejectCandidateMutation();
-  
+
       const handleShortlist = async () => {
         try {
           await shortlistCandidate({
@@ -134,7 +136,7 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
           console.error(error);
         }
       };
-  
+
       const handleReject = async () => {
         try {
           await rejectCandidate({ id: candidateId }).unwrap();
@@ -143,7 +145,7 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
           console.error(error);
         }
       };
-  
+
       return (
         <div className="flex gap-4">
           <SubmitButton
@@ -154,7 +156,7 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
           >
             Shortlist
           </SubmitButton>
-  
+
           <SubmitButton
             isLoading={isRejecting}
             clickFn={handleReject}
@@ -166,15 +168,11 @@ export const createColumns = (candidateRefetch: () => void): ColumnDef<createCol
         </div>
       );
     },
-  }, 
+  },
   {
     id: "actions",
-    cell: ({ }) => {
-   
-
-      return (
-        <EllipsisVertical className="h-4 w-4" />
-      );
+    cell: ({}) => {
+      return <EllipsisVertical className="h-4 w-4" />;
     },
   },
 ];
