@@ -87,31 +87,29 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
-          <div className="flex w-full items-center gap-3">
-            <div className="flex items-center">
-              <PhoneInput
-                defaultCountry="NG"
-                international
-                withCountryCallingCode
-                value={field.value as E164Number | undefined}
-                onChange={field.onChange}
-                className="w-14 h-11 rounded-[5px] px-3 text-16 placeholder:text-16 border bg-[#F7FCFF] border-bankGradient text-gray-900 placeholder:text-gray-500"
-              />
-            </div>
-
-            <input
-              type="tel"
-              value={field.value}
-              onChange={(e) => {
-                const onlyNums = e.target.value.replace(/\D/g, "");
-                field.onChange(onlyNums); 
-              }}
-          
-              placeholder={props.placeholder}
-              className="w-full h-11 rounded-[5px] px-3 text-16 placeholder:text-16 border bg-[#F7FCFF] border-bankGradient text-gray-900 placeholder:text-gray-500"
+        <div className="flex w-full items-center gap-3">
+          <div className="flex items-center">
+            <PhoneInput
+              international
+              withCountryCallingCode
+              value={field.value as E164Number | undefined}
+              onChange={field.onChange}
+              className="w-14 h-11 rounded-[5px] px-3 text-16 placeholder:text-16 border bg-[#F7FCFF] border-bankGradient text-gray-900 placeholder:text-gray-500"
             />
           </div>
-        </FormControl>
+    
+          <input
+            type="tel"
+            value={field.value}
+            onChange={(e) => {
+              const onlyValidChars = e.target.value.replace(/[^+\d]/g, ""); // Allows only '+' and digits
+              field.onChange(onlyValidChars);
+            }}
+            placeholder={props.placeholder}
+            className="w-full h-11 rounded-[5px] px-3 text-16 placeholder:text-16 border bg-[#F7FCFF] border-bankGradient text-gray-900 placeholder:text-gray-500"
+          />
+        </div>
+      </FormControl>
       );
 
     case FormFieldType.TEXTAREA:

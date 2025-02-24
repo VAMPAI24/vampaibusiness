@@ -16,7 +16,6 @@ import SubmitButton from "@/components/shared/SubmitButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Jobpointer from "@/components/jobboard/Jobpointer";
 import {
-  Countries,
   EmploymentType,
   ExperienceLevel,
   SalaryRange,
@@ -1706,7 +1705,7 @@ const JobPosting = () => {
 
                 <div className="mt-4">
                   <JobDescription
-                    title="Requirements"
+                    title="Skills"
                     description={
                       formData.requiredSkills ||
                       arrayToHtml(
