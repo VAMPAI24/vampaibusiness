@@ -786,7 +786,7 @@ const JobPosting = () => {
       methods.setValue("state", draftEditdata?.data?.job_details?.[0]?.state);
       methods.setValue("area", draftEditdata?.data?.job_details?.[0]?.area);
     }
-  }, [singleActiveJob, methods]);
+  }, [singleActiveJob, methods, draftEditdata?.data?.job_details]);
 
   const renderView = () => {
     switch (currentView) {

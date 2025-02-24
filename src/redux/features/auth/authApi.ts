@@ -34,23 +34,25 @@ export const authApi = apiSlice.injectEndpoints({
               userSignUpInfo: result?.data?.data,
             })
           );
+
           ToastNotification({
             title: result?.data?.message,
             description: "Signed Up Successfully",
             type: "success",
           });
         } catch (error) {
-          const apiError = error as ApiError; 
+          const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
+            description:
+              apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
       },
     }),
-    resendOtp: builder.mutation({ 
+    resendOtp: builder.mutation({
       query: (data) => ({
         url: "/employer/auth/resend-otp",
         method: "POST",
@@ -65,11 +67,12 @@ export const authApi = apiSlice.injectEndpoints({
             type: "success",
           });
         } catch (error) {
-          const apiError = error as ApiError; 
+          const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
+            description:
+              apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -95,7 +98,8 @@ export const authApi = apiSlice.injectEndpoints({
           console.log(apiError);
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
+            description:
+              apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -119,7 +123,7 @@ export const authApi = apiSlice.injectEndpoints({
             description: "Signed In Successfully",
             type: "success",
           });
-          
+
           setSession(result?.data?.data?.tokens?.access_token);
           // setToken(res?.tokens?.access_token);
 
@@ -131,10 +135,11 @@ export const authApi = apiSlice.injectEndpoints({
             })
           );
         } catch (error) {
-          const apiError = error as ApiError; 
+          const apiError = error as ApiError;
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
+            description:
+              apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -150,20 +155,19 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-        
+
           ToastNotification({
             title: "Reset Password Successful",
             description: result?.data?.message,
             type: "success",
           });
-
-
         } catch (error) {
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
+            description:
+              apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -184,16 +188,13 @@ export const authApi = apiSlice.injectEndpoints({
             description: result?.data?.message,
             type: "success",
           });
-
-          
-
-         
         } catch (error) {
           const apiError = error as ApiError;
           console.log(apiError);
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
+            description:
+              apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
@@ -219,13 +220,13 @@ export const authApi = apiSlice.injectEndpoints({
           console.log(apiError);
           ToastNotification({
             title: apiError?.error?.data?.error || apiError?.error?.error,
-            description: apiError?.error?.data?.message || apiError?.error?.status,
+            description:
+              apiError?.error?.data?.message || apiError?.error?.status,
             type: "error",
           });
         }
       },
     }),
-
 
     getSingleEmployer: builder.query({
       query: () => ({
@@ -236,7 +237,7 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
         } catch (error) {
-          const apiError = error as ApiError; 
+          const apiError = error as ApiError;
           // ToastNotification({
           //   title: apiError?.error?.data?.error || apiError?.error?.error,
           //   description: apiError?.error?.data?.message || apiError?.error?.status,

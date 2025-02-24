@@ -3,8 +3,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ToastNotification from "@/components/shared/ToastNotification";
 import { apiSlice } from "../api/apiSlice";
+import CvScreener from '../../../app/(root)/cv-screener/page';
 
-export const authApi = apiSlice.injectEndpoints({
+export const CvScreenerApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     cvscoring: builder.mutation({
       query: (data) => ({
@@ -39,4 +40,4 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
   useCvscoringMutation
-} = authApi;
+} = CvScreenerApi;

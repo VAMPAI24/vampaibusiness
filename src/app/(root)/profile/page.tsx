@@ -28,6 +28,8 @@ const Profile = () => {
   const [updateProfile, { isLoading: isUpdatingProfile }] =
     useUpdateProfileMutation();
 
+  console.log("userInfo", userInfo);
+
   useEffect(() => {
     const storedToken = Cookies.get("token");
     if (storedToken) {
@@ -265,7 +267,7 @@ const Profile = () => {
                   label="Number of Employees"
                   placeholder="Enter the Number of Employees"
                   variant="h-[40px] w-full"
-                  defaultValue={userInfo?.data?.no_employees || ""}
+                  defaultValue={userInfo?.data?.No_Employees || ""}
                 >
                   {numberOfEmployees.map((employ, index) => (
                     <SelectItem key={`${employ}-${index}`} value={employ}>
