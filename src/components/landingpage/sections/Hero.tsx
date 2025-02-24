@@ -152,6 +152,8 @@ const Hero = () => {
                         src={image.imgUrl.src}
                         alt={image.id.toString()}
                         className=" h-[2em] object-contain"
+                        width={60}
+                        height={60}
                       />
                     </div>
                   ))}

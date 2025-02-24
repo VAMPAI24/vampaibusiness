@@ -258,6 +258,28 @@ export const authApi = apiSlice.injectEndpoints({
       },
     }),
 
+
+
+    // getJobApplications: builder.query({
+    //   query: ({ jobId, page = 1, pageSize = 10 }) => ({
+    //     url: `/employer/get-job-applications`,
+    //     method: "GET",
+    //     params: { job_id: jobId, page, page_size: pageSize },
+    //   }),
+    //   async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+    //     try {
+    //       const result = await queryFulfilled;
+    //     } catch (error: any) {
+    //       ToastNotification({
+    //         title: error?.error?.data?.error || error?.error?.error,
+    //         description: error?.error?.data?.message || error?.error?.status,
+    //         type: "error",
+    //       });
+    //     }
+    //   },
+    // }),
+    
+
     getApplicationDetails: builder.query({
       query: (applicationId) => ({
         url: `/employer/get-application`,
