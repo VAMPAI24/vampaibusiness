@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import CryptoJS from "crypto-js";
+import { allCountries } from "@/constants/countries";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -162,4 +163,41 @@ export const handleShare = (
       console.warn("Unsupported platform");
       break;
   }
+};
+
+
+
+
+
+
+
+
+export const fetchAllCountries = () => {
+  const options = allCountries.map((item ) => ({
+    label: item.countryName,
+    value: item.countryShortCode,
+  }));
+  return options;
+};
+
+//   return all states
+export const fetchAllStates = (code: string) => {
+  if (!code) {
+    return [];
+  }
+
+  const country = allCountries.find(
+    (item) => item.countryShortCode.toLowerCase() === code.toLowerCase()
+  );
+
+  if (!country) {
+    return [];
+  }
+
+  const options = country.regions.map((item) => ({
+    value: item.name,
+    label: item.name,
+  }));
+
+  return options;
 };
