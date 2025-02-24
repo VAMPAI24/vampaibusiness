@@ -10,7 +10,7 @@ import CustomFormField, {
   FormFieldType,
 } from "@/components/shared/inputs/CustomFormField";
 import SubmitButton from "@/components/shared/SubmitButton";
-import { Countries, Industries, numberOfEmployees } from "@/constants";
+import { Industries, numberOfEmployees } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
 import {
   useGetSingleEmployerQuery,
@@ -19,6 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
+import { fetchAllCountries } from "@/lib/utils";
 
 const Profile = () => {
   const router = useRouter();
@@ -301,9 +302,12 @@ const Profile = () => {
                   variant="h-[40px] w-full"
                   defaultValue={userInfo?.data?.country || ""}
                 >
-                  {Countries.map((country, index) => (
-                    <SelectItem key={country + index} value={country}>
-                      {country}
+                  {(fetchAllCountries() ?? []).map((country, index) => (
+                    <SelectItem
+                      key={country.value + index}
+                      value={country.value}
+                    >
+                      {country.label}
                     </SelectItem>
                   ))}
                 </CustomFormField>

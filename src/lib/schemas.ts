@@ -188,6 +188,15 @@ export const jobTitleSchema = z.object({
   job_title: z.string().min(1, "Job title is required"),
 });
 
+
+
+
+
+
+
+
+
+
 export const jobDetailsSchema = z.object({
   job_title: z.string().min(1, "Job title is required"),
   experienceLevel: z.string().min(1, "Experience level is required"),
@@ -197,11 +206,8 @@ export const jobDetailsSchema = z.object({
   salary_min: z.string().optional(),
   salary_max: z.string().optional(),
   rate: z.string().optional(),
-  // applicationDeadline: z
-  // .union([z.string(), z.date()])
   applicationDeadline: z.preprocess(
     (value) => (value instanceof Date ? value.toISOString() : value),
-
     z
       .string()
       .min(1, "Application deadline is required")
@@ -209,7 +215,24 @@ export const jobDetailsSchema = z.object({
         message: "Application deadline must be a valid date",
       })
   ),
-});
+  country: z.string().min(1, "Country is required"),
+  state: z.string().min(1, "State is required"),
+  area: z.string().min(1, "City is required"),
+
+}).refine(
+  (data) => {
+    if (data.salary_min && data.salary_max) {
+      return parseFloat(data.salary_max) > parseFloat(data.salary_min);
+    }
+    return true; // If one of them is missing, skip the validation
+  },
+  {
+    message: "Salary max must be greater than salary min",
+    path: ["salary_max"], // Attach the error to salary_max field
+  }
+);
+
+
 
 export const jobSpecificationSchema = z.object({
   job_title: z.string().min(1, "Job title is required"),
@@ -222,7 +245,6 @@ export const jobSpecificationSchema = z.object({
   rate: z.string().optional(),
   applicationDeadline: z.preprocess(
     (value) => (value instanceof Date ? value.toISOString() : value),
-
     z
       .string()
       .min(1, "Application deadline is required")
@@ -230,6 +252,9 @@ export const jobSpecificationSchema = z.object({
         message: "Application deadline must be a valid date",
       })
   ),
+  country: z.string().min(1, "Country is required"),
+  state: z.string().min(1, "State is required"),
+  area: z.string().min(1, "City is required"),
   jobDescription: z
     .string()
     .min(10, "Job Description must be at least 10 characters long")
@@ -240,7 +265,19 @@ export const jobSpecificationSchema = z.object({
       z.array(z.string()).nonempty("Array of skills cannot be empty"),
     ])
     .transform((value) => (Array.isArray(value) ? value.join(", ") : value)),
-});
+}).refine(
+  (data) => {
+    if (data.salary_min && data.salary_max) {
+      return parseFloat(data.salary_max) > parseFloat(data.salary_min);
+    }
+    return true; // Skip validation if either field is missing
+  },
+  {
+    message: "Salary max must be greater than salary min",
+    path: ["salary_max"], // Attach the error to salary_max field
+  }
+);
+
 
 export const benefitDetailsSchema = z.object({
   job_title: z.string().min(1, "Job title is required"),
@@ -253,7 +290,6 @@ export const benefitDetailsSchema = z.object({
   rate: z.string().optional(),
   applicationDeadline: z.preprocess(
     (value) => (value instanceof Date ? value.toISOString() : value),
-
     z
       .string()
       .min(1, "Application deadline is required")
@@ -261,15 +297,14 @@ export const benefitDetailsSchema = z.object({
         message: "Application deadline must be a valid date",
       })
   ),
+  country: z.string().min(1, "Country is required"),
+  state: z.string().min(1, "State is required"),
+  area: z.string().min(1, "City is required"),
 
   jobDescription: z
     .string()
     .min(10, "Job Description must be at least 10 characters long")
     .max(5000, "Job Description cannot exceed 5000 characters"),
-  // requiredSkills: z
-  //   .string()
-  //   .min(10, "Required Skills must be at least 10 characters long")
-  //   .max(5000, "Required Skills cannot exceed 5000 characters"),
   requiredSkills: z
     .union([
       z.string(),
@@ -277,8 +312,18 @@ export const benefitDetailsSchema = z.object({
     ])
     .transform((value) => (Array.isArray(value) ? value.join(", ") : value)),
   benefits: z.string().optional(),
-});
-
+}).refine(
+  (data) => {
+    if (data.salary_min && data.salary_max) {
+      return parseFloat(data.salary_max) > parseFloat(data.salary_min);
+    }
+    return true; // Skip validation if either field is missing
+  },
+  {
+    message: "Salary max must be greater than salary min",
+    path: ["salary_max"], // Attach the error to salary_max field
+  }
+);
 
 
 export const EventFormSchema = z.object({
@@ -297,11 +342,8 @@ export const EventFormSchema = z.object({
   // applicant_Id: z.string().min(1, "applicant_Id is required"),
 });
 
-
-
 export const ShareInviteSchema = z.object({
   search_terms: z.string().min(1, "Search terms is required"),
-
 });
 
 
