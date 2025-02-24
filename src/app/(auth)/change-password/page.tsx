@@ -6,7 +6,7 @@ import TextBox from "@/components/auth/TextBox";
 import SubmitButton from "@/components/shared/SubmitButton";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const ChangePassword = () => {
   const router = useRouter();
 
   return (
@@ -42,4 +42,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ChangePassword;

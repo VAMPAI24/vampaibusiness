@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import SubmitButton from "@/components/shared/SubmitButton";
 import ToastNotification from "@/components/shared/ToastNotification";
 import {
@@ -27,7 +28,7 @@ const TeamsMembers = ({ Job_Id }: { Job_Id: string }) => {
 
 
   // Remove Invited Team Member
-  const [deleteTeamMember, { isLoading: loadingDeleteMember }] =
+  const [deleteTeamMember ] =
     useDeleteTeamMemberMutation();
 
     const handleDelete = async (team_Id: string) => {
