@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,14 +7,16 @@ import { z } from "zod";
 import { Eye, EyeOff } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { SignInSchema } from "@/lib/schemas";
-import { useRouter } from "next/navigation";
 import CustomInput from "../shared/inputs/CustomInput";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import SubmitButton from "../shared/SubmitButton";
+import { useRouter, useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
 import ToastNotification from "@/components/shared/ToastNotification";
 
 const SignInForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [login, { isLoading }] = useLoginMutation();
 
@@ -25,13 +28,34 @@ const SignInForm = () => {
     },
   });
 
+
+
+
   const onSubmit = async (values: z.infer<typeof SignInSchema>) => {
     try {
       const res = await login(values).unwrap();
-      if (res?.data?.user?.is_invited) {
+      
+   
+      const jobId = searchParams.get("job_id");
+
+      console.log("jobId", jobId);
+  
+    
+      if (jobId) {
+        Cookies.set("job_id", jobId, { expires: 1 }); 
+      }
+  
+      if (res?.data?.user?.is_invited === true) {
         router.push("/reset-password");
       } else {
-        router.push("/dashboard");
+       
+        const storedJobId = Cookies.get("job_id");
+        if (storedJobId) {
+          Cookies.remove("job_id"); 
+          router.push(`/job-posting/${storedJobId}`);
+        } else {
+          router.push("/dashboard");
+        }
       }
     } catch (error) {
       console.log(error);

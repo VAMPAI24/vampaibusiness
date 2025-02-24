@@ -45,7 +45,7 @@ const TeamsMembers = ({ Job_Id }: { Job_Id: string }) => {
       }
     };
 
-  console.log("InvitedMemberData", InvitedMemberData);
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
