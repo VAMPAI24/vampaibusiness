@@ -6,6 +6,7 @@ import { BrandCarouselImage } from "@/constants";
 import PersonCard from "@/components/landingpage/PersonCard";
 import { heroProfilesL, heroProfilesR } from "@/lib/data";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 const Hero = () => {
   const router = useRouter();
@@ -140,10 +141,12 @@ const Hero = () => {
                   .flat()
                   .map((image, index) => (
                     <div key={index} className="flex-shrink-0">
-                      <img
+                      <Image
                         src={image.imgUrl.src}
                         alt={image.id.toString()}
                         className=" h-[2em] object-contain"
+                        width={100}
+                        height={100}
                       />
                     </div>
                   ))}

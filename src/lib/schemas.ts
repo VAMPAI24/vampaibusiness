@@ -210,8 +210,8 @@ export const jobDetailsSchema = z.object({
       })
   ),
   country: z.string().min(1, "Country is required"),
-  state: z.string().min(1, "State is required"),
-  area: z.string().min(1, "City is required"),
+  state: z.string().optional(),
+  area: z.string().optional(),
 });
 
 export const jobSpecificationSchema = z.object({
