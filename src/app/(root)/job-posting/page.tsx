@@ -112,6 +112,8 @@ const JobPosting = () => {
     },
   });
 
+  console.log("workPattern:", methods.watch("workPattern"));
+
   const { control, setValue, watch } = methods;
 
   const handleNextTab = () => {
@@ -467,8 +469,6 @@ const JobPosting = () => {
   const [draftId, setDraftId] = useState("");
   const { data: draftEditdata, isLoading: draftEditLoader } =
     useGetJobsInDraftQuery(draftId);
-
-  console.log("draftEditdata", draftEditdata);
 
   // 2. Update the data
   // Save Job To draft Handler
@@ -930,19 +930,6 @@ const JobPosting = () => {
                         </div>
 
                         <div className="flex flex-col gap-5 sm:flex-row">
-                          {/* <CustomFormField
-                            fieldType={FormFieldType.INPUT}
-                            control={methods.control}
-                            name="country"
-                            label={
-                              <span>
-                                Country<span className="text-red-600">*</span>
-                              </span>
-                            }
-                            placeholder="Country"
-                            variant="h-[40px] w-full  lg:w-[200px]"
-                          /> */}
-
                           <CustomFormField
                             fieldType={FormFieldType.SELECT}
                             control={control}
@@ -953,7 +940,7 @@ const JobPosting = () => {
                               </span>
                             }
                             placeholder="Select Country"
-                            variant="h-[40px] w-full lg:w-[200px]"
+                            variant="h-[40px] w-full"
                             defaultValue={userInfo?.data?.country || ""}
                           >
                             {(fetchAllCountries() ?? []).map(
@@ -967,7 +954,7 @@ const JobPosting = () => {
                               )
                             )}
                           </CustomFormField>
-                          <div className="flex flex-col gap-5 sm:flex-row w-full">
+                       
                             <CustomFormField
                               fieldType={FormFieldType.DATE}
                               control={control}
@@ -983,45 +970,43 @@ const JobPosting = () => {
                               dateFormat="PPP"
                             />
 
-                            <CustomFormField
-                              fieldType={FormFieldType.SELECT}
-                              control={control}
-                              name="state"
-                              label={
-                                <span>
-                                  State<span className="text-red-600">*</span>
-                                </span>
-                              }
-                              placeholder="Select State"
-                              variant="h-[40px] w-full"
-                              defaultValue={userInfo?.data?.state || ""}
-                            >
-                              {(
-                                fetchAllStates(formInfo.country || "") ?? []
-                              ).map((state, index) => (
-                                <SelectItem
-                                  key={state.value + index}
-                                  value={state.value}
-                                >
-                                  {state.label}
-                                </SelectItem>
-                              ))}
-                            </CustomFormField>
-                          </div>
+                            {(methods.watch("workPattern") === "OnSite" ||
+                              methods.watch("workPattern") === "Hybrid") && (
+                              <CustomFormField
+                                fieldType={FormFieldType.SELECT}
+                                control={control}
+                                name="state"
+                                label="State"
+                                placeholder="Select State"
+                                variant="h-[40px] w-full"
+                                defaultValue={userInfo?.data?.state || ""}
+                              >
+                                {(
+                                  fetchAllStates(formInfo.country || "") ?? []
+                                ).map((state, index) => (
+                                  <SelectItem
+                                    key={state.value + index}
+                                    value={state.value}
+                                  >
+                                    {state.label}
+                                  </SelectItem>
+                                ))}
+                              </CustomFormField>
+                            )}
+                          
 
                           <div>
-                            <CustomFormField
-                              fieldType={FormFieldType.INPUT}
-                              control={methods.control}
-                              name="area"
-                              label={
-                                <span>
-                                  City<span className="text-red-600">*</span>
-                                </span>
-                              }
-                              placeholder="City"
-                              variant="h-[40px] w-full   lg:w-[200px]"
-                            />
+                            {(methods.watch("workPattern") === "OnSite" ||
+                              methods.watch("workPattern") === "Hybrid") && (
+                              <CustomFormField
+                                fieldType={FormFieldType.INPUT}
+                                control={methods.control}
+                                name="area"
+                                label="City"
+                                placeholder="City"
+                                variant="h-[40px] w-full lg:w-[200px]"
+                              />
+                            )}
                           </div>
                         </div>
 
