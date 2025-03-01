@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import { Users } from "lucide-react";
 import OverviewCard from "@/components/jobboard/OverviewCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Jobbox from "@/components/jobboard/Jobbox";
 import PreviewCard from "@/components/jobboard/PreviewCard";
 import Company from "@/public/svgs/Jobs/company.svg";
 import Location from "@/public/svgs/Jobs/location.svg";
@@ -41,6 +40,8 @@ import { setCurrJobPost } from "@/redux/features/job-posting/jobpostingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { JobPostSuccess } from "@/components/jobboard/JobPostSuccess";
 import { Platformbtn } from "@/components/common/buttons";
+import { Titlesubtitle } from "@/components/common/titlesub";
+import { Ovwcard } from "@/components/common/OvwCard";
 
 const JobPostingDetails = () => {
   const [tab, setTab] = useState("jobdetails");
@@ -175,26 +176,27 @@ const JobPostingDetails = () => {
         {/* Job Details Tab Content */}
         <TabsContent value="jobdetails">
           <div className="bg-white rounded-md p-4 mt-10">
-            {/* Job Title */}
-            <div className="w-full flex items-end justify-between mb-[1.5em]">
-              <Jobbox
-                title={data?.data?.job_title || "Job Title Not Specified"}
-                variant="mb-4 text-[26px] capitalize"
-              />
-              <Platformbtn
-                type="secondary"
-                name="Share Job"
-                click={() => openCloseShare("open")}
-                addOns="!w-fit  md:!px-[1.5em] rounded-full"
-              />
+            <div className="w-full flex flex-col gap-[1em]">
+              <div className="w-full flex items-end justify-between mb-[1.5em]">
+                <Titlesubtitle
+                  title={`${data?.data?.job_title ?? "N/A"} Overview`}
+                  tclass="!text-[1.25em]"
+                />
+                <Platformbtn
+                  type="secondary"
+                  name="Share Job"
+                  click={() => openCloseShare("open")}
+                  addOns="!w-fit  md:!px-[1.5em] rounded-full"
+                />
+              </div>
             </div>
 
-            {/* Preview Cards */}
-            <div className="flex flex-wrap gap-5 sm:gap-3">
+            <div className="w-full flex flex-wrap gap-[.75em]">
               {/* Company */}
               <PreviewCard
                 imgUrl={Company}
                 text={userInfo?.data?.company_name || "Not Specified"}
+                addOn="bg-neutral-200 text-neutral-600 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group "
               />
 
               {/* Location */}
@@ -203,6 +205,7 @@ const JobPostingDetails = () => {
                 text={
                   data?.data?.job_details?.[0]?.workPattern || "Not Specified"
                 }
+                addOn="bg-orange-200 text-orange-800 px-[1em]  py-[.75em]  capitalize rounded-[.65em] hover:bg-main-600  group"
               />
               {/* Experience */}
               <PreviewCard
@@ -210,29 +213,39 @@ const JobPostingDetails = () => {
                 text={`${
                   data?.data?.job_details?.[0]?.experienceLevel || "N/A"
                 }`}
+                addOn="bg-yellow-200 text-yellow-800 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group"
               />
               {/* Salary */}
               <PreviewCard
                 imgUrl={Amount}
                 text={
-                  data?.data?.job_details?.[0]?.salaryRange?.[0]
+                  data?.data?.job_details?.[0]?.salaryRange?.[0].salary_min
                     ? `${data.data.job_details[0].salaryRange[0].currency_code} ${data.data.job_details[0].salaryRange[0].salary_min} - ${data.data.job_details[0].salaryRange[0].salary_max}`
-                    : "Salary Not Specified"
+                    : "N/A"
                 }
+                addOn="bg-green-200 text-green-800 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group"
               />
             </div>
+
+            <div className="w-full flex flexwrap items-center gap-[10px] lg:gap-[20px] mt-[1.5em] overflow-x-scroll hide-scrollbar ">
+              <Ovwcard title="Total Views" value={data?.data?.views ?? 0} />
+              <Ovwcard
+                title="Total Applicants"
+                value={data?.data?.total_applicant ?? 0}
+              />
+              <Ovwcard
+                title="Total Shortlisted"
+                value={data?.data?.total_shortlisted ?? 0}
+              />
+            </div>
+
             <hr className="mt-4" />
 
-            {/* Job Description */}
-            <div className="mt-4">
+            <div className="w-full md:w-[70%] flex flex-col gap-[1em] mt-[1.5em]">
               <JobDescription
                 title="About the company"
                 description={userInfo?.data?.company_bio || "Not Specified"}
               />
-            </div>
-
-            {/* Detailed Job Information */}
-            <div className="mt-4">
               <JobDescription
                 title="Job Description"
                 description={
@@ -240,8 +253,6 @@ const JobPostingDetails = () => {
                   "Not Specified"
                 }
               />
-            </div>
-            <div className="mt-4">
               <JobDescription
                 title="Qualifications"
                 description={
@@ -249,8 +260,6 @@ const JobPostingDetails = () => {
                   "Not Specified"
                 }
               />
-            </div>
-            <div className="mt-4">
               <JobDescription
                 title="What We Offer"
                 description={data?.data?.benefits || "Not Specified"}

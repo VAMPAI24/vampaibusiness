@@ -6,7 +6,7 @@ const Recruitment = () => {
     <div className="w-full min-h-screen flex items-center justify-center">
       <ComingSoon
         title="Coming Soon"
-        subtitle="Stay tuned for an enhanced AI Recruitment. We are working on bringing new features."
+        subtitle="We are working hard to bring personalized AI agents that not only understand your company’s hiring needs but work closely with you as a member of your recruitment team."
       />
     </div>
   );

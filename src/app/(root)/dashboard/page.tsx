@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useGetProfilePercentageCountQuery } from "@/redux/features/job-posting/jobpostingApi";
 import Cookies from "js-cookie";
 import { CircularProgress } from "@/components/common/CircularProgress";
+import { getStorage, getUserCountry } from "@/lib/utils";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -25,6 +26,15 @@ const Dashboard = () => {
   const { data: percentageCount } = useGetProfilePercentageCountQuery(token);
 
   const isComplete = percentageCount?.data?.percentageCompletion;
+
+  useEffect(() => {
+    if (
+      !getStorage<{ ipAddress: string }>("userAgent") ||
+      getStorage<{ ipAddress: string }>("userAgent")?.ipAddress === "Not found"
+    )
+      getUserCountry();
+  }, []);
+
   return (
     <section className="lg:mt-[1em]">
       {/* <div className="mt-10 flex flex-col lg:flex-row gap-5">

@@ -9,6 +9,7 @@ import { CopyClipboard } from "../common/copyclipboard";
 import ToastNotification from "../shared/ToastNotification";
 import success from "@/public/svgs/success1.svg";
 import { Platformbtn } from "../common/buttons";
+import { sendEvents } from "@/lib/events";
 
 interface JobPostSuccessProps {
   showSuccess: boolean;
@@ -94,6 +95,14 @@ export const JobPostSuccess: React.FC<JobPostSuccessProps> = (props) => {
               <span
                 onClick={() => {
                   handleShare(jobUrl, item.title, "Find Jobs on Vamp");
+                  sendEvents({
+                    eventName: "Share job",
+                    customData: {
+                      social:item.title  ?? "",
+                      action: "job share",
+                      jobUrl: jobUrl,
+                    },
+                  });
                 }}
                 key={id.toString()}
                 className="w-auto"

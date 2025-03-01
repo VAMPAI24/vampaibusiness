@@ -19,7 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
-
+import { sendEvents } from "@/lib/events";
 
 const Profile = () => {
   const router = useRouter();
@@ -113,6 +113,15 @@ const Profile = () => {
 
       await updateProfile(formData).unwrap();
       await refetch();
+
+      sendEvents({
+        eventName: "Profile Update",
+        customData: {
+          url: values.company_website ?? "",
+          size:values.no_employees ?? "",
+          action: "profile update",
+        },
+      });
       setTimeout(() => {
         router.push("/dashboard");
       }, 5000);
@@ -146,8 +155,6 @@ const Profile = () => {
                   //   height={50}
                   //   className="h-full w-full object-cover"
                   // />
-
-                
 
                   <div className="w-[3.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
                     <Image

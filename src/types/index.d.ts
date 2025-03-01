@@ -121,6 +121,7 @@ export interface JobpointerProps {
 export interface PreviewCardProps {
   imgUrl: string;
   text?: string;
+  addOn?: string;
 }
 
 export interface JobOverviewProps {

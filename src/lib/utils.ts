@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import CryptoJS from "crypto-js";
+import axios from "axios";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -163,3 +164,27 @@ export const handleShare = (
       break;
   }
 };
+
+export const getUserCountry = () => {
+  axios
+    .get(
+      `https://geolocation-db.com/json/${
+        process.env.NEXT_PUBLIC_GEO_KEY ||
+        "eb94b630-6cef-11ef-a828-4b4353e7f1c2"
+      }`
+    )
+    .then((res) => {
+      setStorage("userAgent", {
+        ipAddress: res.data?.IPv4 ?? "",
+        location: res.data?.country_code ?? "",
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching the user location:", error);
+    });
+};
+
+export const formatterUSD = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});

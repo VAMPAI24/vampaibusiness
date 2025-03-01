@@ -200,7 +200,7 @@ const JobPosting = () => {
               sendEvents({
                 eventName: "Post Job",
                 customData: {
-                  email: payload.job_title ?? "",
+                  title: payload.job_title ?? "",
                   action: "job post",
                 },
               });
@@ -215,7 +215,6 @@ const JobPosting = () => {
       }
     }
   };
-  
 
   // Save Job To draft Handler
   const handleSaveToDraft = async (
@@ -1200,6 +1199,7 @@ const JobPosting = () => {
                   <PreviewCard
                     imgUrl={Company}
                     text={userInfo?.data?.company_name || "Not Specified"}
+                    addOn="bg-orange-200 text-orange-800 px-[1em]  py-[.75em]  capitalize rounded-[.65em] hover:bg-main-600  group"
                   />
                   <PreviewCard
                     imgUrl={Location}
@@ -1208,6 +1208,7 @@ const JobPosting = () => {
                       draftEditdata?.data?.job_details?.[0]?.workPattern ||
                       "Not Specified"
                     }
+                    addOn="bg-orange-200 text-orange-800 px-[1em]  py-[.75em]  capitalize rounded-[.65em] hover:bg-main-600  group"
                   />
                   <PreviewCard
                     imgUrl={Years}
@@ -1216,6 +1217,7 @@ const JobPosting = () => {
                       draftEditdata?.data?.job_details?.[0]?.experienceLevel ||
                       "N/A"
                     } years`}
+                    addOn="bg-yellow-200 text-yellow-800 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group"
                   />
 
                   <PreviewCard
@@ -1245,6 +1247,7 @@ const JobPosting = () => {
                       setCurrentTab("details");
                       setCurrentView("editJob");
                     }}
+                    addOn="bg-green-200 text-green-800 px-[1em]  py-[.75em]      capitalize rounded-[.65em] hover:bg-main-600  group"
                   />
                 </div>
 

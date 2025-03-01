@@ -26,7 +26,7 @@ export const sendConversionEvent = async (data: convData) => {
     eventName: data.eventName,
     userData: {
       em: hashWord(basicInfo?.email ?? ""),
-      //   ph: hashWord(basicInfo?.full_name ?? ""),
+        ph: hashWord(basicInfo?.full_name ?? ""),
       fn: hashWord(basicInfo?.full_name ?? ""),
       ln: hashWord(basicInfo?.last_name ?? ""),
       client_ip_address: otherUserInfo?.ipAddress ?? "",
@@ -56,6 +56,6 @@ export const sendEvents = (data: EventData) => {
   const isProd = isLocalOrStaging();
   if (!isProd) {
     mixpanel.track(data.eventName, data.customData);
-    // sendConversionEvent(data);
+    sendConversionEvent(data);
   }
 };

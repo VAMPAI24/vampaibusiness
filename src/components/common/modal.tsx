@@ -17,14 +17,14 @@ export const MainModal: React.FC<ModalProps> = (props) => {
       keyboard={props.closable ? false : true}
       cancelButtonProps={{ style: { display: "none" } }}
       open={props.visible}
-      onCancel={props.close}
+      onCancel={() => props.close()}
       destroyOnClose
       footer={null}
       className={`new-modal ${props.addOns}`}
       centered={true}
       okButtonProps={{ style: { display: "none" } }}
-      mask={true} 
-      maskClosable={false} 
+      mask={true}
+      maskClosable={false}
     >
       {props.children}
     </Modal>
