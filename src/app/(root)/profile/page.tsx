@@ -10,7 +10,7 @@ import CustomFormField, {
   FormFieldType,
 } from "@/components/shared/inputs/CustomFormField";
 import SubmitButton from "@/components/shared/SubmitButton";
-import { Countries, Industries, numberOfEmployees } from "@/constants";
+import { Industries, numberOfEmployees } from "@/constants";
 import { SelectItem } from "@/components/ui/select";
 import {
   useGetSingleEmployerQuery,
@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import { sendEvents } from "@/lib/events";
+import { fetchAllCountries } from "@/lib/utils";
 
 const Profile = () => {
   const router = useRouter();
@@ -100,7 +101,7 @@ const Profile = () => {
       formData.append("last_name", values.last_name);
       formData.append("position_in_company", values.position_in_company);
       formData.append("work_email", values.work_email);
-      formData.append("phone_Number", values.phone_Number);
+      formData.append("phone_number", values.phone_Number);
       formData.append("country", values.country);
       formData.append("company_name", values.company_name);
       formData.append("company_website", values.company_website);
@@ -118,7 +119,7 @@ const Profile = () => {
         eventName: "Profile Update",
         customData: {
           url: values.company_website ?? "",
-          size:values.no_employees ?? "",
+          size: values.no_employees ?? "",
           action: "profile update",
         },
       });
@@ -309,11 +310,13 @@ const Profile = () => {
                   variant="h-[40px] w-full"
                   defaultValue={userInfo?.data?.country || ""}
                 >
-                  {Countries.map((country, index) => (
-                    <SelectItem key={country + index} value={country}>
-                      {country}
-                    </SelectItem>
-                  ))}
+                  {(fetchAllCountries() || []).map(
+                    (country: { value: string; label: string }) => (
+                      <SelectItem key={country.value} value={country.value}>
+                        {country.label}
+                      </SelectItem>
+                    )
+                  )}
                 </CustomFormField>
               </div>
               <CustomFormField

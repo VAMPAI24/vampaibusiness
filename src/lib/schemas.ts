@@ -209,6 +209,9 @@ export const jobDetailsSchema = z.object({
         message: "Application deadline must be a valid date",
       })
   ),
+  country: z.string().min(1, "Country is required"),
+  state: z.string().optional(),
+  area: z.string().optional(),
 });
 
 export const jobSpecificationSchema = z.object({
@@ -230,6 +233,9 @@ export const jobSpecificationSchema = z.object({
         message: "Application deadline must be a valid date",
       })
   ),
+  country: z.string().min(1, "Country is required"),
+  state: z.string().min(1, "State is required"),
+  area: z.string().min(1, "City is required"),
   jobDescription: z
     .string()
     .min(10, "Job Description must be at least 10 characters long")
@@ -261,6 +267,9 @@ export const benefitDetailsSchema = z.object({
         message: "Application deadline must be a valid date",
       })
   ),
+  country: z.string().min(1, "Country is required"),
+  state: z.string().min(1, "State is required"),
+  area: z.string().min(1, "City is required"),
 
   jobDescription: z
     .string()
@@ -279,8 +288,6 @@ export const benefitDetailsSchema = z.object({
   benefits: z.string().optional(),
 });
 
-
-
 export const EventFormSchema = z.object({
   title: z.string().min(1, "Event Title is required"),
   start: z.object({
@@ -297,9 +304,6 @@ export const EventFormSchema = z.object({
   // applicant_Id: z.string().min(1, "applicant_Id is required"),
 });
 
-
-
 export const ShareInviteSchema = z.object({
   search_terms: z.string().min(1, "Search terms is required"),
-
 });

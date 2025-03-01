@@ -241,7 +241,7 @@ const JobPostingDetails = () => {
 
             <hr className="mt-4" />
 
-            <div className="w-full md:w-[70%] flex flex-col gap-[1em] mt-[1.5em]">
+            <div className="w-full md:w-[70%] flex flex-col gap-[1.5em] mt-[1.5em]">
               <JobDescription
                 title="About the company"
                 description={userInfo?.data?.company_bio || "Not Specified"}
@@ -254,7 +254,7 @@ const JobPostingDetails = () => {
                 }
               />
               <JobDescription
-                title="Qualifications"
+                title="Skills"
                 description={
                   data?.data?.job_specifications?.[0]?.requiredSkills ||
                   "Not Specified"
