@@ -280,14 +280,14 @@ const JobPostingDetails = () => {
                   value="all"
                   className="flex items-center justify-center w-full md:w-auto py-2 rounded bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
                 >
-                  All Candidate
+                  All Candidates
                 </TabsTrigger>
                 <TabsTrigger
                   value="Ranked"
                   className="flex items-center justify-center w-full md:w-auto py-2 rounded bg-[#EAEBF1] hover:bg-blue-100 text-[#254E7D] data-[state=active]:bg-main-600 data-[state=active]:text-white"
                   onClick={() => setRankedTab("Ranked")}
                 >
-                  Ranked Candidate
+                  Ranked Candidates
                 </TabsTrigger>
               </TabsList>
 
@@ -327,15 +327,16 @@ const JobPostingDetails = () => {
                               candidateData?.data?.jobApplicant ??
                               []
                             )?.map((candidate: any, index: any) => (
-                              <CandidateCard
-                                key={index}
-                                {...candidate}
-                                clickFn={() =>
-                                  handleApplicationCardClick(candidate)
-                                }
-                                candidateId={candidate.id}
-                                refetchFn={candidateRefetch}
-                              />
+                              <div key={index} className="w-full col-span-1">
+                                <CandidateCard
+                                  {...candidate}
+                                  clickFn={() =>
+                                    handleApplicationCardClick(candidate)
+                                  }
+                                  candidateId={candidate.id}
+                                  refetchFn={candidateRefetch}
+                                />
+                              </div>
                             ))}
                           </div>
                         ) : (

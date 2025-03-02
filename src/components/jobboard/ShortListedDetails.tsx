@@ -570,7 +570,8 @@ const ShortListedDetails = ({
               </div>
             </div>
             <SubmitButton className="w-full mt-4 rounded">
-              Next Stage
+              {/* Next Stage */}
+              Coming Soon
             </SubmitButton>
           </div>
 
@@ -590,7 +591,8 @@ const ShortListedDetails = ({
                   variant="h-20 w-full"
                 />
                 <SubmitButton className="w-full mt-4 rounded">
-                  Send
+                  {/* Send */}
+                  Coming Soon
                 </SubmitButton>
               </form>
             </Form>

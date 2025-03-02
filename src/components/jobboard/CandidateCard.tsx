@@ -48,7 +48,7 @@ const CandidateCard = ({
   return (
     <div
       key={id}
-      className="w-full  border border-main-200 rounded-xl bg-[#F9FAFB] cursor-pointer shadow-sm"
+      className="w-full border border-main-200 rounded-xl bg-[#F9FAFB] cursor-pointer shadow-sm"
     >
       <div className="p-6 flex w-full items-start justify-between">
         <div className="w-full">
@@ -76,7 +76,7 @@ const CandidateCard = ({
 
           {/* Message Section */}
           {message && (
-            <div className="mt-4 mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md w-full">
+            <div className="w-full mt-4 mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md w-full">
               <p className="text-blue-600 text-sm font-medium">
                 <strong>Message to you:</strong>
               </p>
