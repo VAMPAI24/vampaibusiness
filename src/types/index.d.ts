@@ -134,6 +134,7 @@ export interface EventModalContentProps {
   email?: string;
   name?: string;
   applicant_Id?: string;
+  firstName?:string;
 }
 
 export interface PreviewCardProps {

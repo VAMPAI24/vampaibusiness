@@ -21,6 +21,7 @@ const EventModalContent = ({
   email,
   name,
   applicant_Id,
+  firstName,
 }: EventModalContentProps) => {
   // const router = useRouter();
   const form = useForm<z.infer<typeof EventFormSchema>>({
@@ -51,7 +52,7 @@ const EventModalContent = ({
       },
       duration: data.duration,
       link: data.link,
-      time:data.time,
+      time: data.time,
       // attendees:  data.attendees.split(",")
       attendees: [email, ...data.attendees.split(",")]
         .map((item) => item.trim())
@@ -169,6 +170,11 @@ const EventModalContent = ({
             />
 
             <div className="w-full flex flex-wrap gap-[.5em] ">
+              {firstName && (
+                <p className="px-[.75em] py-[.25em] text-[.75em] text-main-900 rounded-full border-[.5px] border-sec-500">
+                  {firstName}
+                </p>
+              )}
               {form
                 .watch("attendees")
                 ?.split(",")

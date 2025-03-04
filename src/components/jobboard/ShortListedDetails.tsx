@@ -613,6 +613,7 @@ const ShortListedDetails = ({
             " " +
             data?.data.applicant_last_name
           }
+          firstName={data?.data.applicant_first_name ?? ""}
           email={data?.data.applicant_email ?? ""}
           onClose={openCloseModalFn}
           applicant_Id={data.data?.profile?.id ?? ""}
