@@ -43,6 +43,7 @@ const Dashboard = () => {
             key={index.toString()}
             {...cardItem}
             clickFn={() => router.push(cardItem.route)}
+            // isLast={index === DashboardCardData.length - 1}
           />
         ))}
       </div>

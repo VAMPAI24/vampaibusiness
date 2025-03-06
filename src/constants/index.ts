@@ -41,6 +41,7 @@ import BShalom from "@/public/pngs/brands/shalom.png";
 import Firstelec from "@/public/pngs/brands/firstelec.png";
 import ClockChain from "@/public/pngs/brands/clockchain.png";
 import Realtec from "@/public/pngs/brands/realtec.png";
+import Pricing from "@/public/pngs/pricing/pricing.png";
 
 export const NavLinks = [
   {
@@ -346,6 +347,14 @@ export const DashboardCardData = [
       "Review candidate applications in one place to find the perfect fit.",
     imgSrc: Arrow,
     route: "/job-posting",
+  },
+  {
+    imgIcon: Pricing,
+    title: "Product & Pricing",
+    description:
+      "Take a closer look at the details of our product pricing structure.",
+    imgSrc: Arrow,
+    route: "/pricing",
   },
 ];
 

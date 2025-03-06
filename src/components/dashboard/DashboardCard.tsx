@@ -7,6 +7,11 @@ import {
 import { DashboardCardProp } from "@/types";
 import Image from "next/image";
 
+
+// interface DashboardCardProps extends DashboardCardProp {
+//   isLast?: boolean; 
+// }
+
 const DashboardCard = ({
   imgIcon,
   title,
@@ -16,7 +21,7 @@ const DashboardCard = ({
   return (
     <Card
       onClick={clickFn}
-      className="w-full h-full bg-[#F8F9FF] border border-[#CFE1FF] cursor-pointer hadow"
+      className="w-full h-full bg-[#F8F9FF] border border-[#CFE1FF] cursor-pointer shadow"
     >
       <div className=" flex items-start justify-start px-[1em] py-[.75em] ">
         <div>
