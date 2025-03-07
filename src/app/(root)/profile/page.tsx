@@ -28,7 +28,7 @@ const Profile = () => {
   const [updateProfile, { isLoading: isUpdatingProfile }] =
     useUpdateProfileMutation();
 
-  console.log("userInfo", userInfo);
+  // console.log("userInfo", userInfo);
 
   useEffect(() => {
     const storedToken = Cookies.get("token");

@@ -80,6 +80,7 @@
 // export const { userRegistration, userLoggedIn, userLogout } = authSlice.actions;
 
 // export default authSlice.reducer;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { clearSession, getSession } from "@/redux/app/cookies";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
@@ -100,7 +101,18 @@ type UserInfoProps = {
   company_bio: string;
 };
 
+
+
+interface UserData {
+  first_name: string;
+  last_name: string;
+  work_email: string;
+  company_logo?: string;
+  [key: string]: any; // For additional fields
+}
+
 interface AuthState {
+  user: UserData | null
   token: string;
   refreshToken: string;
   userInfo: UserInfoProps | null;
@@ -139,6 +151,7 @@ const getExpirationDate = () => {
 // };
 
 const initialState: AuthState = {
+  user: null,
   token: getSession()?.token || Cookies.get("token") || "",
   refreshToken: Cookies.get("refreshToken") || "",
   userInfo: (() => {
@@ -164,6 +177,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setUser(state, action: PayloadAction<UserData>) {
+      state.user = action.payload;
+    },
     // Register user info and save it in cookies
     userRegistration: (
       state,
@@ -215,6 +231,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { userRegistration, userLoggedIn, userLogout } = authSlice.actions;
+export const { userRegistration, userLoggedIn, userLogout, setUser } = authSlice.actions;
 
 export default authSlice.reducer;

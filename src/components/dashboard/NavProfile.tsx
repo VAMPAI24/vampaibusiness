@@ -5,25 +5,60 @@ import ArrowDown from "@/public/svgs/dashboard/arrow-down.svg";
 import Image from "next/image";
 import { useGetSingleEmployerQuery } from "@/redux/features/auth/authApi";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/app/store";
+import { setUser } from "@/redux/features/auth/authSlice";
 
 const NavProfile = () => {
-  const [token, setToken] = useState<string | null>(null);
-  const { data: userData, refetch } = useGetSingleEmployerQuery(token);
+  // const [token, setToken] = useState<string | null>(null);
+  // const { data: userData, refetch } = useGetSingleEmployerQuery(token);
 
+  // useEffect(() => {
+  //   refetch();
+  //   const storedToken = Cookies.get("token");
+  //   if (storedToken) {
+  //     setToken(storedToken);
+  //   }
+  // }, [refetch]);
+
+
+  const dispatch = useDispatch();
+  const [token, setToken] = useState<string | null>(null);
+  const userData = useSelector((state: RootState) => state.auth.user); 
+  
+  console.log("userData", userData);
+
+  const { data, refetch } = useGetSingleEmployerQuery(token, {
+    skip: !token, 
+  });
+
+  
   useEffect(() => {
-    refetch();
     const storedToken = Cookies.get("token");
     if (storedToken) {
       setToken(storedToken);
     }
+    // refetch();
   }, [refetch]);
+
+  useEffect(() => {
+    if (data?.data) {
+      dispatch(setUser(data.data)); // Store user data in Redux
+    }
+  }, [data, dispatch]);
+
+  useEffect(() => {
+    if (token) {
+      refetch(); // Refetch when token changes
+    }
+  }, [token, refetch]);
 
   return (
     <div className="flex items-center justify-center gap-2">
-      {userData?.data?.company_logo ? (
+      {userData?.company_logo ? (
         <div className="w-[2.5em] h-[3.5em] overflow-hidden rounded-full flex justify-center items-center">
         <Image
-          src={userData?.data?.company_logo}
+          src={userData?.company_logo}
           alt="profile"
           className="object-cover w-full"
           width={50}
@@ -33,8 +68,8 @@ const NavProfile = () => {
       ) : (
         <Avatar>
           <AvatarFallback>
-            {userData?.data?.first_name?.[0] && userData?.data?.last_name?.[0]
-              ? `${userData.data.first_name[0]}${userData.data.last_name[0]}`.toUpperCase()
+            {userData?.first_name?.[0] && userData?.last_name?.[0]
+              ? `${userData?.irst_name[0]}${userData?.last_name[0]}`.toUpperCase()
               : "NA"}
           </AvatarFallback>
         </Avatar>
@@ -42,14 +77,14 @@ const NavProfile = () => {
       <div className="hidden md:block">
         <div className="flex gap-1">
           <p className="text-main-902 font-semibold font-jakarta text-m§d">
-            {userData?.data?.first_name}
+            {userData?.first_name}
           </p>
           <p className="text-main-902 font-semibold font-jakarta text-md">
-            {userData?.data?.last_name}
+            {userData?.last_name}
           </p>
         </div>
         <p className="text-main-900 font-jakarta font-semibold text-xs">
-          {userData?.data?.work_email}
+          {userData?.work_email}
         </p>
       </div>
 
