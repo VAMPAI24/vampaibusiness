@@ -218,7 +218,7 @@ const ShortListedDetails = ({
                             (role: any, index: any) => (
                               <span
                                 key={index}
-                                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
+                                className="max-w-fit px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
                               >
                                 {role}
                               </span>
@@ -235,7 +235,7 @@ const ShortListedDetails = ({
                             (role: any, index: any) => (
                               <span
                                 key={index}
-                                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
+                                className="max-w-fit px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
                               >
                                 {role}
                               </span>
@@ -252,7 +252,7 @@ const ShortListedDetails = ({
                             (skill: any, index: any) => (
                               <span
                                 key={index}
-                                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
+                                className="max-w-fit px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm"
                               >
                                 {skill}
                               </span>
@@ -286,13 +286,13 @@ const ShortListedDetails = ({
                                   </div>
 
                                   {/* Content */}
-                                  <div className="w-full flex  items-start justify-between gap-[1em] cursor-pointer capitalize mb-[1em]">
+                                  <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-[1em] cursor-pointer capitalize mb-[1em]">
                                     <span className="flex flex-col gap-[.25em]">
                                       <h2 className="text-[1em]  font-[400] text-main-901">
                                         {item.job_role}
                                       </h2>
                                       <span
-                                        className="max-w-[80%] text-[.85em]  font-[200] text-main-901 mb-[1em] div-listed"
+                                        className="w-full 2xl:max-w-[80%] text-[.85em]  font-[200] text-main-901 mb-[1em] div-listed"
                                         dangerouslySetInnerHTML={{
                                           __html:
                                             item?.job_description ||
@@ -347,7 +347,7 @@ const ShortListedDetails = ({
                         </h2>
 
                         {/* Grid Layout */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="w-full h-fit  grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
                           {data?.data?.profile?.projects.map(
                             (project: any, index: any) => (
                               <div
@@ -362,19 +362,21 @@ const ShortListedDetails = ({
                                 {/* Content */}
 
                                 <div className="flex justify-end mb-8">
-                                  <Image
-                                    src={Bluearrow}
-                                    alt="blue-arrow"
-                                    width={25}
-                                    height={25}
-                                  />
+                                  {project?.link && (
+                                    <Image
+                                      src={Bluearrow}
+                                      alt="blue-arrow"
+                                      width={25}
+                                      height={25}
+                                    />
+                                  )}
                                 </div>
-                                <div className="h-40">
+                                <div className="h-fit">
                                   <h3 className="text-lg font-semibold text-gray-800">
                                     {project.title}
                                   </h3>
-                                  <p className="text-sm text-gray-600 mt-2 line-clamp-5">
-                                    {project.description}
+                                  <p className="text-sm text-gray-600 mt-2">
+                                    {project.description?.subtring(0, 375)}
                                   </p>
                                 </div>
                               </div>
@@ -410,34 +412,36 @@ const ShortListedDetails = ({
                         </h2>
 
                         {/* Document Card */}
-                        <div className="flex items-center border border-gray-200 rounded-lg p-4 shadow-sm bg-white">
-                          {/* PDF Icon */}
-                          <div className="flex-shrink-0 w-10 h-10">
-                            <Image
-                              // src={data?.data?.cv_file}
-                              src={PdfImage}
-                              alt="PDF Icon"
-                              width={40}
-                              height={40}
-                              className="object-contain"
-                            />
-                          </div>
+                        {data?.data?.cv_file && (
+                          <div className="flex items-center border border-gray-200 rounded-lg p-4 shadow-sm bg-white">
+                            {/* PDF Icon */}
+                            <div className="flex-shrink-0 w-10 h-10">
+                              <Image
+                                // src={data?.data?.cv_file}
+                                src={PdfImage}
+                                alt="PDF Icon"
+                                width={40}
+                                height={40}
+                                className="object-contain"
+                              />
+                            </div>
 
-                          {/* Document Name and Download Link */}
-                          <div className="ml-4">
-                            <p className="text-sm font-medium text-gray-800">
-                              <a
-                                href={data?.data?.cv_file}
-                                download={pdfName}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:underline"
-                              >
-                                {pdfName}
-                              </a>
-                            </p>
+                            {/* Document Name and Download Link */}
+                            <div className="ml-4">
+                              <p className="text-sm font-medium text-gray-800">
+                                <a
+                                  href={data?.data?.cv_file}
+                                  download={pdfName}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 hover:underline"
+                                >
+                                  {pdfName}
+                                </a>
+                              </p>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     </>
                   )}
