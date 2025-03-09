@@ -26,7 +26,7 @@ import { RootState } from "@/redux/app/store";
 
 
 type Country = "NGN" | "EUR" | "USD" | "GBP" | "AED";
-type BillingCycle = "monthly" | "yearly";
+type BillingCycle = "monthly" | "annually";
 
 const countryFlags: Record<Country, string> = {
   USD: USD,
@@ -79,7 +79,7 @@ const Pricing = () => {
 
   const getPrice = (fixedPrices: Record<string, number>) => {
     const price = fixedPrices[country];
-    return billingCycle === "yearly" ? price * 10 : price;
+    return billingCycle === "annually" ? price * 10 : price;
   };
 
   //Modal Control
@@ -203,9 +203,9 @@ const Pricing = () => {
         </button>
         <button
           className={`px-4 py-2 rounded-r-lg ${
-            billingCycle === "yearly" ? "bg-blue-600 text-white" : "bg-gray-200"
+            billingCycle === "annually" ? "bg-blue-600 text-white" : "bg-gray-200"
           }`}
-          onClick={() => setBillingCycle("yearly")}
+          onClick={() => setBillingCycle("annually")}
         >
           Yearly
         </button>
