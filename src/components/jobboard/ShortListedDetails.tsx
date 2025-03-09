@@ -376,7 +376,7 @@ const ShortListedDetails = ({
                                     {project.title}
                                   </h3>
                                   <p className="text-sm text-gray-600 mt-2">
-                                    {project.description?.subtring(0, 375)}
+                                    {project.description?.substring(0, 375)}
                                   </p>
                                 </div>
                               </div>
